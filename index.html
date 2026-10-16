@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v3.5</title>
+  <title>CB Media Pipeline Suite v3.8</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -16,25 +16,43 @@
 <body class="p-4 md:p-8 min-h-screen">
   <div class="max-w-7xl mx-auto space-y-6">
 
-    <!-- TOP HEADER -->
+    <!-- TOP HEADER WITH API KEY & MODEL SELECTOR -->
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v3.5</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v3.8</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Standalone Packaging Sanitizer ➔ 15-Variant Lens ➔ Aesthetic Creator Board</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Fitting Deal Cards ➔ Full Zoom Inspector ➔ Visual AI Model Selector</p>
       </div>
 
-      <div class="flex items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
-        <label class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap">
-          <span>🔑</span> Gemini API:
-        </label>
-        <input 
-          type="password" 
-          id="apiKeyInput" 
-          placeholder="Paste AIzaSy... key" 
-          class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-48 sm:w-64 focus:outline-none focus:border-sky-500"
-        >
+      <div class="flex flex-wrap items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
+        <!-- API KEY -->
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
+            <span>🔑</span> Key:
+          </label>
+          <input 
+            type="password" 
+            id="apiKeyInput" 
+            placeholder="AIzaSy... key" 
+            class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-36 sm:w-48 focus:outline-none focus:border-sky-500"
+          >
+        </div>
+
+        <!-- VISIBLE MODEL SELECTOR -->
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
+            <span>✨</span> Model:
+          </label>
+          <select id="modelSelect" class="bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-lg text-sky-400 font-mono font-medium focus:outline-none focus:border-sky-500">
+            <option value="gemini-3.1-flash-lite" selected>gemini-3.1-flash-lite</option>
+            <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option>
+            <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+            <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+          </select>
+        </div>
+
         <span id="apiStatus" class="text-xs text-amber-400 font-medium">Ready</span>
       </div>
     </header>
@@ -60,8 +78,8 @@
       <div id="stepTab3" onclick="navToStep(3)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
-          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Creator Board</h3>
-          <p class="text-xs text-slate-400">4 organic aesthetic styles</p>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Deal Framer</h3>
+          <p class="text-xs text-slate-400">4 organic dynamic styles</p>
         </div>
       </div>
     </nav>
@@ -72,7 +90,7 @@
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
           <div>
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Upload & Mask Packaging</h2>
-            <p class="text-xs text-slate-400">Upload a deal photo to detect logos and claims, or drag manual patches.</p>
+            <p class="text-xs text-slate-400">Detect logos using selected model, or manually drag patches.</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
@@ -199,7 +217,7 @@
               id="goToStep3Btn" 
               class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
             >
-              Proceed to Step 3: Creator Board ➔
+              Proceed to Step 3: Deal Framer ➔
             </button>
           </div>
         </div>
@@ -219,14 +237,15 @@
       </div>
     </section>
 
-    <!-- ==================== STEP 3: AESTHETIC CREATOR BOARD ==================== -->
+    <!-- ==================== STEP 3: DEAL FRAMER ==================== -->
     <section id="step3Section" class="hidden space-y-6">
       
+      <!-- CONTROLS & PARSER -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Aesthetic Creator Board</h2>
-            <p class="text-xs text-slate-400">Non-commercial, human-curated visual mockups matching your product. Zero AI feel.</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Deal Details & Style Customization</h2>
+            <p class="text-xs text-slate-400">Pasted details dynamically fit all cards with auto-expanding boundaries. No text cutoff!</p>
           </div>
           <button 
             type="button" 
@@ -241,88 +260,130 @@
           <span>🚨</span> <strong>Facebook OCR Blacklist Alert:</strong> <span id="ocrWarningText"></span>
         </div>
 
-        <!-- TUNING INPUTS: CASUAL CREATOR VIBES -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Positive Affirmation</label>
-            <input type="text" id="mainNoteInput" value="Such a cozy find ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
-            <span class="text-[10px] text-slate-500 mt-1 block">e.g. 'Laundry room favorite', 'So cozy for fall'</span>
-          </div>
+        <div class="flex gap-2">
+          <textarea 
+            id="rawDealPaste" 
+            placeholder="Paste Command Center raw deal output or deal text here..." 
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-20"
+          ></textarea>
+          <button 
+            type="button" 
+            id="extractBtn" 
+            class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider"
+          >
+            ⚡ Extract Info
+          </button>
+        </div>
 
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag</label>
-            <input type="text" id="simpleValueInput" value="just $4.99 ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
-            <span class="text-[10px] text-slate-500 mt-1 block">e.g. 'all 3 for $5.99', '$3.49 complete'</span>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Now Price (Exact)</label>
+            <input type="text" id="nowPriceInput" value="$9.29 Shipped" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
           </div>
-
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Color Palette & Surface</label>
-            <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
-              <option value="warm_oatmeal" selected>Warm Oatmeal & Cream</option>
-              <option value="sage_linen">Sage Green & Linen</option>
-              <option value="terracotta_autumn">Autumn Terracotta & Spice</option>
-              <option value="buttercream_slate">Buttercream & Soft Slate</option>
-            </select>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Was Price (Original)</label>
+            <input type="text" id="wasPriceInput" value="$10.12" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-400 mt-1">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Bundle / Pack Tag</label>
+            <input type="text" id="bundleTagInput" value="Pack of 3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Card 1 Drop Phrase</label>
+            <input type="text" id="dropPhraseInput" value="Dropped to $9.29 Shipped!" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
           </div>
         </div>
       </div>
 
-      <!-- 4 CREATOR CARDS -->
+      <!-- 4 DIVERSE FEED CREATIVES (CLICK TO ZOOM) -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Dynamic Aesthetic Styles</h3>
-            <p class="text-xs text-slate-400">Rendered with organic textures, drop shadows, and zero robotic flyer banners.</p>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
+            <p class="text-xs text-slate-400">💡 <strong>Click any card image</strong> to open the full-size zoom inspection modal!</p>
           </div>
           <button 
             type="button" 
             id="downloadAllCardsBtn" 
             class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md uppercase tracking-wider flex items-center gap-1.5"
           >
-            <span>📥</span> Download All 4 Cards
+            <span>📥</span> Download All 4 Creatives
           </button>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <!-- Card 1 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400">Style 1: Polaroid Snap & Tape</span>
-            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
-              <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-auto"></canvas>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400">Style 1: Price Drop & Doodle Ring</span>
+            <div onclick="openZoomModal('cardCanvas1', 'Style 1: Price Drop & Doodle Ring')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+              <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
+              <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+              </div>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas1', 'aesthetic_polaroid')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
+            <button onclick="downloadSingleCard('cardCanvas1', 'deal_style1_drop')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
           </div>
 
           <!-- Card 2 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Style 2: Soft Tonal Review</span>
-            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
-              <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-auto"></canvas>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Style 2: Checkout Slip & Highlighter</span>
+            <div onclick="openZoomModal('cardCanvas2', 'Style 2: Checkout Slip & Highlighter')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+              <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
+              <div class="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+              </div>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas2', 'aesthetic_review')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
+            <button onclick="downloadSingleCard('cardCanvas2', 'deal_style2_receipt')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
           </div>
 
           <!-- Card 3 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400">Style 3: Scrapbook Journal</span>
-            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
-              <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-auto"></canvas>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400">Style 3: Bundle Value Bubble</span>
+            <div onclick="openZoomModal('cardCanvas3', 'Style 3: Bundle Value Bubble')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+              <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
+              <div class="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+              </div>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas3', 'aesthetic_scrapbook')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
+            <button onclick="downloadSingleCard('cardCanvas3', 'deal_style3_bundle')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
           </div>
 
           <!-- Card 4 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Style 4: Routine Flatlay</span>
-            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
-              <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-auto"></canvas>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Style 4: Minimalist Editorial Spotlight</span>
+            <div onclick="openZoomModal('cardCanvas4', 'Style 4: Minimalist Editorial Spotlight')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+              <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
+              <div class="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+              </div>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas4', 'aesthetic_flatlay')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
+            <button onclick="downloadSingleCard('cardCanvas4', 'deal_style4_minimal')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
           </div>
         </div>
       </div>
     </section>
 
+  </div>
+
+  <!-- ==================== ZOOM LIGHTBOX MODAL ==================== -->
+  <div id="zoomModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-5 space-y-4 shadow-2xl relative">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 id="modalTitle" class="text-sm font-bold uppercase tracking-wider text-sky-400">Card Preview</h3>
+        <button onclick="closeZoomModal()" class="text-slate-400 hover:text-white text-lg font-bold p-1">✕</button>
+      </div>
+
+      <div class="aspect-square bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
+        <img id="modalImg" class="w-full h-full object-contain">
+      </div>
+
+      <div class="flex justify-end gap-3 pt-2">
+        <button onclick="closeZoomModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 rounded-lg uppercase tracking-wider">Close</button>
+        <button id="modalDownloadBtn" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+          <span>📥</span> Download This Card
+        </button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -340,6 +401,7 @@
     let sanitizedCanvasSnapshot = null;
     let all15Variants = [];
     let chosen4Variants = [];
+    let activeModalCanvasId = null;
 
     const targetCanvas = document.getElementById('targetCanvas');
     const tCtx = targetCanvas.getContext('2d');
@@ -353,9 +415,10 @@
     ];
 
     // ==========================================
-    // API KEY STORAGE
+    // API KEY & MODEL INITIALIZATION
     // ==========================================
     const apiKeyInput = document.getElementById('apiKeyInput');
+    const modelSelect = document.getElementById('modelSelect');
     const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
     if (savedKey) {
       apiKeyInput.value = savedKey;
@@ -369,8 +432,16 @@
       document.getElementById('apiStatus').className = val ? "text-xs text-emerald-400 font-medium" : "text-xs text-amber-400 font-medium";
     });
 
+    const savedModel = localStorage.getItem('deal_gemini_model');
+    if (savedModel && modelSelect.querySelector(`option[value="${savedModel}"]`)) {
+      modelSelect.value = savedModel;
+    }
+    modelSelect.addEventListener('change', (e) => {
+      localStorage.setItem('deal_gemini_model', e.target.value);
+    });
+
     // ==========================================
-    // NAVIGATION
+    // STEP NAVIGATION
     // ==========================================
     function navToStep(stepNum) {
       for (let s = 1; s <= 3; s++) {
@@ -394,7 +465,7 @@
     }
 
     // ==========================================
-    // STEP 1: SANITIZER & AUTO-MASKER
+    // STEP 1: SANITIZER & MASKER LOGIC
     // ==========================================
     document.getElementById('rawImageInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -475,7 +546,6 @@
       });
     }
 
-    // High-Strength Frosted Diffusion (From Deal Sanitizer v1.2.58)
     function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
       const rw = Math.max(1, Math.round(w));
@@ -589,7 +659,6 @@
       oCtx.restore();
     }
 
-    // Drag-to-Patch
     outputCanvas.addEventListener('mousedown', (e) => {
       if (!rawLoadedImage) return;
       isDrawingPatch = true;
@@ -655,15 +724,17 @@
         .trim();
     }
 
-    // MULTI-MODEL FALLBACK CALLER
+    // MULTI-MODEL FALLBACK CALLER (RESPECTS HEADER SELECTION FIRST)
     async function callGeminiWithFallback(key, payload) {
+      const selected = document.getElementById('modelSelect').value;
       const candidateModels = [
+        selected,
         "gemini-3.1-flash-lite",
         "gemini-3.5-flash-lite",
         "gemini-2.5-flash-lite",
         "gemini-2.5-flash",
         "gemini-1.5-flash"
-      ];
+      ].filter((v, i, a) => v && a.indexOf(v) === i);
 
       let lastError = null;
       for (let i = 0; i < candidateModels.length; i++) {
@@ -680,6 +751,7 @@
             continue;
           }
           if (data.candidates && data.candidates[0]) {
+            document.getElementById('modelSelect').value = model; // reflect actual responding model
             return data;
           }
         } catch (err) {
@@ -770,7 +842,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // STEP 2: SILENT VARIANT LENS
+    // STEP 2: SILENT VARIANT LENS LOGIC
     // ==========================================
     document.getElementById('step2DirectUpload').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -904,17 +976,19 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     document.getElementById('goToStep3Btn').addEventListener('click', () => {
-      renderAll4CreatorCards();
+      renderAll4DealCards();
       navToStep(3);
     });
 
     // ==========================================
-    // STEP 3: AESTHETIC CREATOR BOARD ENGINE
+    // STEP 3: DYNAMIC AUTO-FITTING CREATIVE ENGINE
     // ==========================================
     function auditOcrSafety() {
       const textToScan = [
-        document.getElementById('mainNoteInput').value,
-        document.getElementById('simpleValueInput').value
+        document.getElementById('nowPriceInput').value,
+        document.getElementById('wasPriceInput').value,
+        document.getElementById('bundleTagInput').value,
+        document.getElementById('dropPhraseInput').value
       ].join(' ').toLowerCase();
 
       const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
@@ -927,238 +1001,262 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
-    ['mainNoteInput', 'simpleValueInput', 'themePaletteSelect'].forEach(id => {
+    ['nowPriceInput', 'wasPriceInput', 'bundleTagInput', 'dropPhraseInput'].forEach(id => {
       document.getElementById(id).addEventListener('input', () => {
         auditOcrSafety();
-        renderAll4CreatorCards();
+        renderAll4DealCards();
       });
     });
 
-    const PALETTES = {
-      warm_oatmeal: { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
-      sage_linen: { bg: "#E3E9DE", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
-      terracotta_autumn: { bg: "#EEDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
-      buttercream_slate: { bg: "#F8F5E9", polaroid: "#FFFFFF", accent: "#D1A153", text: "#2A2E33" }
-    };
+    document.getElementById('extractBtn').addEventListener('click', () => {
+      const raw = document.getElementById('rawDealPaste').value;
+      if (!raw) return;
 
-    function renderAll4CreatorCards() {
+      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
+      if (saleMatch) {
+        document.getElementById('nowPriceInput').value = saleMatch[0].trim();
+        document.getElementById('dropPhraseInput').value = `Dropped to ${saleMatch[0].trim()}!`;
+      }
+
+      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
+      if (wasMatch) {
+        document.getElementById('wasPriceInput').value = "$" + wasMatch[1].replace(' ', '.').trim();
+      }
+
+      const packMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk))\b/i);
+      if (packMatch) {
+        document.getElementById('bundleTagInput').value = packMatch[0].toUpperCase();
+      }
+
+      auditOcrSafety();
+      renderAll4DealCards();
+    });
+
+    function renderAll4DealCards() {
       if (chosen4Variants.length < 4) return;
 
-      const note = document.getElementById('mainNoteInput').value.trim();
-      const val = document.getElementById('simpleValueInput').value.trim();
-      const themeKey = document.getElementById('themePaletteSelect').value;
-      const pal = PALETTES[themeKey] || PALETTES.warm_oatmeal;
+      const now = document.getElementById('nowPriceInput').value.trim();
+      const was = document.getElementById('wasPriceInput').value.trim();
+      const tag = document.getElementById('bundleTagInput').value.trim();
+      const dropPhrase = document.getElementById('dropPhraseInput').value.trim();
 
-      renderCreator1(chosen4Variants[0].canvas, note, val, pal);
-      renderCreator2(chosen4Variants[1].canvas, note, val, pal);
-      renderCreator3(chosen4Variants[2].canvas, note, val, pal);
-      renderCreator4(chosen4Variants[3].canvas, note, val, pal);
+      renderCard1(chosen4Variants[0].canvas, now, was, dropPhrase);
+      renderCard2(chosen4Variants[1].canvas, now, was);
+      renderCard3(chosen4Variants[2].canvas, now, tag);
+      renderCard4(chosen4Variants[3].canvas, now);
     }
 
-    // STYLE 1: Polaroid Snap & Washi Tape
-    function renderCreator1(srcCanvas, note, val, pal) {
+    // STYLE 1: AUTO-EXPANDING PRICE DROP & DOODLE
+    function renderCard1(srcCanvas, now, was, dropPhrase) {
       const c = document.getElementById('cardCanvas1');
       const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
 
-      // Tilted Polaroid Card
-      ctx.save();
-      ctx.translate(540, 500);
-      ctx.rotate(-0.035);
-
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.18)";
-      ctx.shadowBlur = 28;
-      ctx.shadowOffsetY = 14;
-      ctx.fillRect(-340, -360, 680, 800);
-      ctx.shadowColor = "transparent";
-
-      // Product cutout inside polaroid
-      ctx.drawImage(srcCanvas, -290, -310, 580, 580);
-
-      // Casual note text on polaroid bottom margin
-      ctx.fillStyle = pal.text;
-      ctx.font = "bold 34px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 0, 360);
-
-      // Translucent Washi Tape on top
-      ctx.save();
-      ctx.translate(0, -370);
-      ctx.rotate(0.02);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
-      ctx.fillRect(-120, -18, 240, 42);
-      ctx.restore();
-
-      ctx.restore();
-
-      // Hand-Drawn Style Price Sticker in Corner
-      if (val) {
+      if (was) {
         ctx.save();
-        ctx.translate(760, 930);
-        ctx.rotate(-0.04);
-        ctx.fillStyle = pal.polaroid;
-        ctx.shadowColor = "rgba(0,0,0,0.15)";
-        ctx.shadowBlur = 12;
+        ctx.font = "bold 24px sans-serif";
+        const wasText = `WAS: ${was}`;
+        const wasWidth = ctx.measureText(wasText).width + 48;
+
+        ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
         ctx.beginPath();
-        ctx.roundRect(-120, -32, 240, 64, 14);
+        ctx.roundRect(40, 40, wasWidth, 56, 12);
         ctx.fill();
-        ctx.fillStyle = pal.text;
-        ctx.font = "800 28px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(val, 0, 10);
-        ctx.restore();
-      }
-    }
 
-    // STYLE 2: Soft Tonal Review
-    function renderCreator2(srcCanvas, note, val, pal) {
-      const c = document.getElementById('cardCanvas2');
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillStyle = "#94a3b8";
+        ctx.fillText(wasText, 64, 78);
 
-      // Top Organic Heading
-      ctx.fillStyle = pal.text;
-      ctx.font = "900 44px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 540, 140);
-
-      // Staged Card Inset with natural shadow
-      ctx.save();
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.14)";
-      ctx.shadowBlur = 32;
-      ctx.shadowOffsetY = 12;
-      ctx.beginPath();
-      ctx.roundRect(200, 200, 680, 680, 28);
-      ctx.fill();
-      ctx.shadowColor = "transparent";
-      ctx.drawImage(srcCanvas, 220, 220, 640, 640);
-      ctx.restore();
-
-      // Bottom Doodle Tag
-      if (val) {
-        ctx.save();
-        ctx.translate(540, 970);
-        ctx.fillStyle = pal.text;
-        ctx.font = "800 36px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(val, 0, 0);
-
-        // Subtle curved underline doodle
-        ctx.strokeStyle = pal.accent;
-        ctx.lineWidth = 4;
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.moveTo(-100, 16);
-        ctx.quadraticCurveTo(0, 28, 100, 16);
+        ctx.moveTo(110, 70);
+        ctx.lineTo(wasWidth + 20, 70);
         ctx.stroke();
         ctx.restore();
       }
-    }
 
-    // STYLE 3: Scrapbook Journal Collection
-    function renderCreator3(srcCanvas, note, val, pal) {
-      const c = document.getElementById('cardCanvas3');
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      // Staged Scrapbook Mat
-      ctx.save();
-      ctx.translate(540, 480);
-      ctx.rotate(0.025);
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.16)";
-      ctx.shadowBlur = 24;
-      ctx.shadowOffsetY = 10;
-      ctx.fillRect(-330, -350, 660, 720);
-      ctx.shadowColor = "transparent";
-
-      ctx.drawImage(srcCanvas, -280, -300, 560, 560);
-      ctx.restore();
-
-      // Illustrated Sparkles / Star Doodles (Canvas vectors)
-      ctx.save();
-      ctx.strokeStyle = pal.text;
-      ctx.lineWidth = 3.5;
-      drawSparkle(ctx, 160, 180, 22);
-      drawSparkle(ctx, 920, 320, 18);
-      drawMiniHeart(ctx, 890, 640, 24);
-      ctx.restore();
-
-      // Bottom aesthetic paper slip
+      // Dynamic Auto-Sizing Pill & Doodle
       ctx.save();
       ctx.translate(540, 940);
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.12)";
-      ctx.shadowBlur = 14;
-      ctx.beginPath();
-      ctx.roundRect(-300, -45, 600, 90, 18);
-      ctx.fill();
+      ctx.rotate(-0.02);
 
-      ctx.fillStyle = pal.text;
-      ctx.font = "bold 30px sans-serif";
+      ctx.font = "900 42px sans-serif";
+      const dropTextWidth = ctx.measureText(dropPhrase).width;
+      const pillWidth = Math.min(1000, Math.max(480, dropTextWidth + 80));
+      const pillHeight = 96;
+
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "rgba(0,0,0,0.25)";
+      ctx.shadowBlur = 18;
+      ctx.shadowOffsetY = 6;
+      ctx.beginPath();
+      ctx.roundRect(-pillWidth / 2, -pillHeight / 2, pillWidth, pillHeight, 24);
+      ctx.fill();
+      ctx.shadowColor = "transparent";
+
+      ctx.fillStyle = "#0f172a";
       ctx.textAlign = "center";
-      ctx.fillText(`${note} · ${val}`, 0, 10);
+      ctx.fillText(dropPhrase, 0, 14);
+
+      // Dynamic Doodle Loop wrapping the exact text width
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      const doodleRadiusX = Math.min(480, (dropTextWidth / 2) + 24);
+      ctx.ellipse(0, 4, doodleRadiusX, 44, -0.04, 0, Math.PI * 2);
+      ctx.stroke();
       ctx.restore();
     }
 
-    function drawSparkle(ctx, cx, cy, size) {
+    // STYLE 2: AUTO-FITTING CHECKOUT SLIP & HIGHLIGHTER
+    function renderCard2(srcCanvas, now, was) {
+      const c = document.getElementById('cardCanvas2');
+      const ctx = c.getContext('2d');
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+
+      ctx.save();
+      ctx.font = "900 30px monospace";
+      const totalWidth = ctx.measureText(now).width;
+      const rw = Math.min(620, Math.max(480, totalWidth + 280));
+      const rh = 280;
+      const rx = 1040 - rw;
+      const ry = 740;
+
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "rgba(0,0,0,0.3)";
+      ctx.shadowBlur = 24;
+      ctx.shadowOffsetY = 8;
       ctx.beginPath();
-      ctx.moveTo(cx, cy - size);
-      ctx.lineTo(cx, cy + size);
-      ctx.moveTo(cx - size, cy);
-      ctx.lineTo(cx + size, cy);
-      ctx.stroke();
+      ctx.roundRect(rx, ry, rw, rh, 18);
+      ctx.fill();
+      ctx.shadowColor = "transparent";
+
+      ctx.fillStyle = "#475569";
+      ctx.font = "bold 24px monospace";
+      ctx.fillText("Order Summary", rx + 24, ry + 46);
+
+      ctx.font = "500 22px monospace";
+      ctx.fillText("Subtotal:", rx + 24, ry + 100);
+      ctx.fillText(was || "$12.99", rx + rw - 140, ry + 100);
+
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText("Savings:", rx + 24, ry + 146);
+      ctx.fillText("-Applied", rx + rw - 140, ry + 146);
+
+      // Auto-expanding highlighter bar
+      ctx.fillStyle = "rgba(253, 224, 71, 0.85)";
+      ctx.fillRect(rx + 16, ry + 195, rw - 32, 58);
+
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "900 28px monospace";
+      ctx.fillText("Order Total:", rx + 24, ry + 236);
+      ctx.textAlign = "right";
+      ctx.fillText(now, rx + rw - 24, ry + 236);
+      ctx.restore();
     }
 
-    function drawMiniHeart(ctx, cx, cy, s) {
+    // STYLE 3: BUNDLE VALUE BUBBLE
+    function renderCard3(srcCanvas, now, tag) {
+      const c = document.getElementById('cardCanvas3');
+      const ctx = c.getContext('2d');
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+
+      if (tag) {
+        ctx.save();
+        ctx.font = "900 26px sans-serif";
+        const tagW = ctx.measureText(tag).width + 48;
+        ctx.fillStyle = "#f97316";
+        ctx.shadowColor = "rgba(0,0,0,0.25)";
+        ctx.shadowBlur = 14;
+        ctx.beginPath();
+        ctx.roundRect(40, 40, tagW, 58, 16);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "center";
+        ctx.fillText(tag, 40 + (tagW / 2), 78);
+        ctx.restore();
+      }
+
+      ctx.save();
+      ctx.font = "800 34px sans-serif";
+      const calloutText = `Just ${now} for all of these!`;
+      const calloutW = Math.min(1000, ctx.measureText(calloutText).width + 64);
+      const pillH = 84;
+
+      ctx.fillStyle = "#0f172a";
+      ctx.shadowColor = "rgba(0,0,0,0.3)";
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetY = 6;
       ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.bezierCurveTo(cx - s, cy - s, cx - s * 1.5, cy + s / 3, cx, cy + s);
-      ctx.bezierCurveTo(cx + s * 1.5, cy + s / 3, cx + s, cy - s, cx, cy);
-      ctx.stroke();
+      ctx.roundRect(540 - (calloutW / 2), 940, calloutW, pillH, 20);
+      ctx.fill();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.textAlign = "center";
+      ctx.fillText(calloutText, 540, 994);
+      ctx.restore();
     }
 
-    // STYLE 4: Routine Flatlay
-    function renderCreator4(srcCanvas, note, val, pal) {
+    // STYLE 4: MINIMALIST EDITORIAL SPOTLIGHT
+    function renderCard4(srcCanvas, now) {
       const c = document.getElementById('cardCanvas4');
       const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
 
-      // Hero cutout centered directly with soft diffused shadow
       ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.18)";
-      ctx.shadowBlur = 36;
-      ctx.shadowOffsetY = 24;
-      ctx.drawImage(srcCanvas, 160, 140, 760, 760);
-      ctx.restore();
+      ctx.font = "bold 28px sans-serif";
+      const pillText = `Today's pick · ${now}`;
+      const pillW = Math.min(960, ctx.measureText(pillText).width + 64);
+      const pillH = 72;
 
-      // Quiet floating pill at bottom
-      ctx.save();
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.12)";
-      ctx.shadowBlur = 18;
+      ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
+      ctx.shadowColor = "rgba(0,0,0,0.3)";
+      ctx.shadowBlur = 16;
       ctx.beginPath();
-      ctx.roundRect(280, 940, 520, 74, 9999);
+      ctx.roundRect(540 - (pillW / 2), 950, pillW, pillH, 9999);
       ctx.fill();
 
-      ctx.fillStyle = pal.text;
-      ctx.font = "bold 26px sans-serif";
+      ctx.fillStyle = "#ffffff";
       ctx.textAlign = "center";
-      ctx.fillText(`${note} · ${val}`, 540, 986);
+      ctx.fillText(pillText, 540, 996);
 
-      ctx.fillStyle = "#94a3b8";
+      ctx.fillStyle = "#64748b";
       ctx.font = "bold 14px sans-serif";
       ctx.textAlign = "right";
       ctx.fillText("#ad", 1040, 1050);
       ctx.restore();
     }
 
-    // Download Helpers
+    // ==========================================
+    // ZOOM LIGHTBOX MODAL LOGIC
+    // ==========================================
+    function openZoomModal(canvasId, title) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      activeModalCanvasId = canvasId;
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalImg').src = canvas.toDataURL('image/png');
+      document.getElementById('zoomModal').classList.remove('hidden');
+    }
+
+    function closeZoomModal() {
+      document.getElementById('zoomModal').classList.add('hidden');
+      activeModalCanvasId = null;
+    }
+
+    document.getElementById('modalDownloadBtn').addEventListener('click', () => {
+      if (activeModalCanvasId) {
+        downloadSingleCard(activeModalCanvasId, 'inspected_deal_card');
+      }
+    });
+
+    document.getElementById('zoomModal').addEventListener('click', (e) => {
+      if (e.target.id === 'zoomModal') closeZoomModal();
+    });
+
+    // ==========================================
+    // DOWNLOAD HELPERS
+    // ==========================================
     function downloadCanvasData(dataUrl, filename) {
       const link = document.createElement('a');
       link.download = `${filename}_${Date.now()}.png`;
@@ -1174,7 +1272,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     document.getElementById('downloadAllCardsBtn').addEventListener('click', () => {
       ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => {
         setTimeout(() => {
-          downloadSingleCard(id, `aesthetic_deal_${i+1}`);
+          downloadSingleCard(id, `deal_creative_${i+1}`);
         }, i * 250);
       });
     });
