@@ -76,12 +76,13 @@
             <p class="text-xs text-slate-400">Upload a deal photo to detect logos and claims, or manually drag patches.</p>
           </div>
 
+          <!-- CONTROLS WITH MASKING STYLE SELECTOR -->
           <div class="flex flex-wrap items-center gap-2.5">
             <input type="file" id="rawImageInput" accept="image/*" class="hidden">
             <button 
               type="button" 
               onclick="document.getElementById('rawImageInput').click()" 
-              class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
+              class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider"
             >
               <span>📁</span> Choose Photo
             </button>
@@ -89,10 +90,18 @@
             <button 
               type="button" 
               id="aiAuditBtn" 
-              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
+              class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider"
             >
               <span>✨</span> Process Image with AI
             </button>
+
+            <!-- MASKING STYLE DROPDOWN -->
+            <select id="maskModeSelect" class="bg-slate-900 border border-slate-700 text-xs text-white px-2.5 py-2 rounded-lg font-medium focus:outline-none focus:border-sky-500">
+              <option value="diffusion" selected>Frosted Diffusion</option>
+              <option value="ambient">Ambient Gradient Block</option>
+              <option value="pixelate">Mosaic Pixelation</option>
+              <option value="solid">Clean Dark Tape</option>
+            </select>
 
             <button 
               type="button" 
@@ -102,7 +111,6 @@
               Reset
             </button>
 
-            <!-- STANDALONE FALLBACK BUTTON -->
             <button 
               type="button" 
               id="skipSanitizerBtn" 
@@ -115,7 +123,7 @@
             <button 
               type="button" 
               id="goToStep2Btn" 
-              class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider ml-auto"
+              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider ml-auto"
             >
               Next: Send to Variant Lens ➔
             </button>
@@ -450,33 +458,94 @@
       });
     }
 
+    // Re-render when changing mask style dropdown
+    document.getElementById('maskModeSelect').addEventListener('change', () => {
+      renderOutputCanvas();
+    });
+
     function renderOutputCanvas() {
       if (!rawLoadedImage) return;
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
       oCtx.drawImage(rawLoadedImage, 0, 0);
 
+      const mode = document.getElementById('maskModeSelect').value;
       const all = detectedBoxes.concat(manualBoxes);
+
       all.forEach(b => {
         const x = (b[1] / 1000) * outputCanvas.width;
         const y = (b[0] / 1000) * outputCanvas.height;
         const w = ((b[3] - b[1]) / 1000) * outputCanvas.width;
         const h = ((b[2] - b[0]) / 1000) * outputCanvas.height;
-        applyFrostedMask(x, y, w, h);
+
+        if (mode === "ambient") {
+          applyAmbientBlock(x, y, w, h);
+        } else if (mode === "pixelate") {
+          applyPixelation(x, y, w, h);
+        } else if (mode === "solid") {
+          applySolidTape(x, y, w, h);
+        } else {
+          applyFrostedDiffusion(x, y, w, h);
+        }
       });
     }
 
-    function applyFrostedMask(x, y, w, h) {
+    // 1. Organic Frosted Diffusion
+    function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
-      const off = document.createElement('canvas');
-      off.width = Math.max(2, Math.floor(w * 0.04));
-      off.height = Math.max(2, Math.floor(h * 0.04));
-      const offCtx = off.getContext('2d');
-      offCtx.drawImage(outputCanvas, x, y, w, h, 0, 0, off.width, off.height);
+      const rw = Math.max(1, Math.round(w));
+      const rh = Math.max(1, Math.round(h));
+
+      const off = document.createElement("canvas");
+      off.width = Math.max(2, Math.floor(rw * 0.04));
+      off.height = Math.max(2, Math.floor(rh * 0.04));
+      const offCtx = off.getContext("2d");
+      offCtx.drawImage(outputCanvas, x, y, rw, rh, 0, 0, off.width, off.height);
 
       oCtx.save();
       oCtx.imageSmoothingEnabled = true;
-      oCtx.filter = "blur(12px)";
+      oCtx.filter = "blur(14px)";
+      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, rw, rh);
+      oCtx.restore();
+    }
+
+    // 2. Ambient Gradient Block
+    function applyAmbientBlock(x, y, w, h) {
+      const rw = Math.max(1, Math.round(w));
+      const rh = Math.max(1, Math.round(h));
+      const sCanvas = document.createElement("canvas");
+      sCanvas.width = 4; sCanvas.height = 4;
+      sCanvas.getContext("2d").drawImage(rawLoadedImage, x, y, rw, rh, 0, 0, 4, 4);
+
+      const off = document.createElement("canvas");
+      off.width = rw; off.height = rh;
+      const offCtx = off.getContext("2d");
+      offCtx.imageSmoothingEnabled = true;
+      offCtx.drawImage(sCanvas, 0, 0, 4, 4, 0, 0, rw, rh);
+
+      oCtx.save();
+      oCtx.filter = "blur(18px)";
+      oCtx.drawImage(off, x, y, rw, rh);
+      oCtx.restore();
+    }
+
+    // 3. Mosaic Pixelation
+    function applyPixelation(x, y, w, h) {
+      const off = document.createElement("canvas");
+      off.width = Math.max(1, Math.floor(w * 0.04));
+      off.height = Math.max(1, Math.floor(h * 0.04));
+      const offCtx = off.getContext("2d");
+      offCtx.drawImage(outputCanvas, x, y, w, h, 0, 0, off.width, off.height);
+      oCtx.save();
+      oCtx.imageSmoothingEnabled = false;
       oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, w, h);
+      oCtx.restore();
+    }
+
+    // 4. Clean Dark Tape
+    function applySolidTape(x, y, w, h) {
+      oCtx.save();
+      oCtx.fillStyle = "#0f172a";
+      oCtx.fillRect(x - 2, y - 2, w + 4, h + 4);
       oCtx.restore();
     }
 
@@ -534,11 +603,11 @@
       renderOutputCanvas();
     });
 
-    // Sanitizer Title Cleaner
+    // Generic Title Sanitizer
     function cleanGenericTitle(raw) {
       if (!raw) return "";
       return raw
-        .replace(/\b(lysol|clorox|aussie|febreze|arm & hammer|oxiclean)\b/gi, "")
+        .replace(/\b(lysol|clorox|aussie|febreze|hempz|arm & hammer|oxiclean)\b/gi, "")
         .replace(/\b(laundry\s+)?sanitizer\b/gi, "Fabric Refresher")
         .replace(/\bdisinfectant(\s+spray)?\b/gi, "Cleaning Spray")
         .replace(/\bantibacterial\b/gi, "Odor-Fighting")
@@ -547,34 +616,77 @@
         .trim();
     }
 
-    // Gemini Packaging Detection API Call
+    // MULTI-MODEL AUTO-FAILOVER CALLER (From your Deal Sanitizer app)
+    async function callGeminiWithFallback(key, payload) {
+      const candidateModels = [
+        "gemini-3.1-flash-lite",
+        "gemini-3.5-flash-lite",
+        "gemini-2.5-flash-lite",
+        "gemini-2.5-flash",
+        "gemini-1.5-flash"
+      ];
+
+      let lastError = null;
+      for (let i = 0; i < candidateModels.length; i++) {
+        const model = candidateModels[i];
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (!res.ok || data.error) {
+            lastError = new Error((data.error && data.error.message) || `HTTP ${res.status}`);
+            continue;
+          }
+          if (data.candidates && data.candidates[0]) {
+            return data;
+          }
+        } catch (err) {
+          lastError = err;
+          continue;
+        }
+      }
+      throw lastError || new Error("All candidate Gemini vision models failed or returned empty candidates.");
+    }
+
+    // AI AUDIT EVENT
     document.getElementById('aiAuditBtn').addEventListener('click', async () => {
       const key = apiKeyInput.value.trim();
       if (!key) return alert("Please enter your Gemini API Key in the top header!");
       if (!base64ApiPayload) return alert("Please select a photo first!");
 
       const btn = document.getElementById('aiAuditBtn');
-      btn.innerText = "⏳ Auditing...";
+      btn.innerText = "⏳ Auditing Packaging...";
       btn.disabled = true;
 
       const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for:
-1. Brand logos, trademarks, emblems (Amazon smile, Lysol, Clorox, brand text).
+1. Brand logos, trademarks, emblems (Amazon smile, Lysol, Clorox, Hempz, brand text).
 2. Regulated medical/claim text: 'SANITIZER', 'DISINFECTANT', 'KILLS 99.9%', 'COVID-19', 'BACTERIA'.
-Do not mask generic category nouns or sizes. Return JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
+Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
 
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }],
-            generationConfig: { responseMimeType: "application/json" }
-          })
-        });
+        const payload = {
+          contents: [{
+            parts: [
+              { text: promptText },
+              { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }
+            ]
+          }],
+          generationConfig: {
+            temperature: 0.0,
+            responseMimeType: "application/json"
+          }
+        };
 
-        const data = await res.json();
-        const parsed = JSON.parse(data.candidates[0].content.parts[0].text);
-        detectedBoxes = parsed.boxes || [];
+        const data = await callGeminiWithFallback(key, payload);
+        let rawText = data.candidates[0]?.content?.parts[0]?.text || "{}";
+        rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+        const parsed = JSON.parse(rawText);
+        detectedBoxes = Array.isArray(parsed) ? parsed : (parsed.boxes || []);
+
         if (parsed.suggested_title) {
           document.getElementById('suggestedTitleInput').value = cleanGenericTitle(parsed.suggested_title);
         }
