@@ -3,14 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v4.5</title>
+  <title>CB Media Pipeline Suite v5.0</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     .card-dark { background-color: #151d30; border: 1px solid #1e293b; border-radius: 14px; }
     .step-active { border-color: #38bdf8; background: linear-gradient(180deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%); }
     .step-inactive { border-color: #1e293b; opacity: 0.6; }
-    canvas { width: 100% !important; max-width: 100% !important; height: auto !important; aspect-ratio: 1 / 1; display: block; border-radius: 10px; background-color: #000; }
+    canvas { 
+      width: 100% !important; 
+      max-width: 100% !important; 
+      height: auto !important; 
+      aspect-ratio: 1 / 1; 
+      display: block; 
+      border-radius: 10px; 
+      background-color: #000; 
+      box-sizing: border-box;
+    }
   </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen">
@@ -20,9 +29,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v4.5</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v5.0</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Organic Creator Board</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Multi-Zone Creator Board</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
@@ -42,7 +51,7 @@
           <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
             <span>✨</span> Model:
           </label>
-          <select id="modelSelect" class="bg-slate-950 border border-slate-700 text-xs px-2 py-1.5 rounded-lg text-sky-400 font-mono font-medium focus:outline-none focus:border-sky-500">
+          <select id="modelSelect" class="bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-lg text-sky-400 font-mono font-medium focus:outline-none focus:border-sky-500">
             <option value="auto">⏳ Auto-Detecting...</option>
           </select>
         </div>
@@ -104,7 +113,7 @@
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
           <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Creator Board</h3>
-          <p class="text-xs text-slate-400">Custom scales & Run Deal cues</p>
+          <p class="text-xs text-slate-400">Multi-zone aesthetic styles</p>
         </div>
       </div>
     </nav>
@@ -115,7 +124,7 @@
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
           <div>
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Upload & Mask Packaging</h2>
-            <p class="text-xs text-slate-400">Automatic bounding box detection with 7.5s silent failover, or drag manual patches.</p>
+            <p class="text-xs text-slate-400">Automatic packaging audit with 7.5s failover, or drag manual patches.</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
@@ -177,7 +186,7 @@
               <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span> Detected Packaging Targets (Audit)</span>
               <span class="text-[10px] text-slate-500">Red dashed outline</span>
             </div>
-            <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px]">
+            <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px] overflow-hidden">
               <canvas id="targetCanvas" class="w-full h-auto"></canvas>
             </div>
           </div>
@@ -187,7 +196,7 @@
               <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Masked Output Preview (Interactive)</span>
               <span class="text-[10px] text-sky-400">Click & drag to manually patch</span>
             </div>
-            <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px]">
+            <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px] overflow-hidden">
               <canvas id="outputCanvas" class="w-full h-auto cursor-crosshair"></canvas>
             </div>
           </div>
@@ -268,8 +277,8 @@
       <div class="card-dark p-5 space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Aesthetic Creator Board</h2>
-            <p class="text-xs text-slate-400">Non-commercial, organic visual mockups with individual card sliders & Run Deal cues.</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Multi-Zone Creator Board</h2>
+            <p class="text-xs text-slate-400">Non-commercial, organic visual mockups with individual sliders & Run Deal cues.</p>
           </div>
 
           <div class="flex items-center gap-2">
@@ -279,7 +288,7 @@
                 type="button" 
                 id="modeRegularBtn" 
                 onclick="setDealMode('regular')" 
-                class="px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all"
+                class="px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md"
               >
                 ☕ Regular Deal
               </button>
@@ -333,7 +342,7 @@
           </button>
         </div>
 
-        <!-- GLOBAL TEXT & PALETTE CONTROLS (WITH COLOR SAMPLER & SHUFFLER) -->
+        <!-- GLOBAL CONTROLS WITH SHUFFLERS -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
@@ -364,11 +373,11 @@
         </div>
       </div>
 
-      <!-- 4 CREATOR CARDS WITH INDIVIDUAL SLIDERS & CLICK-TO-ZOOM -->
+      <!-- 4 CONSTRAINED CREATIVE CARDS WITH INDIVIDUAL SLIDERS & CLICK-TO-ZOOM -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Dynamic Aesthetic Styles</h3>
             <p class="text-xs text-slate-400">💡 <strong>Click any card image</strong> to open the full-size zoom inspection modal!</p>
           </div>
           <button 
@@ -380,7 +389,7 @@
           </button>
         </div>
 
-        <!-- CONSTRAINED 4-COLUMN CARD GRID -->
+        <!-- STRICT 4-COLUMN CONSTRAINED GRID (PREVENTS OVERFLOW) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           <!-- Card 1 -->
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
@@ -545,11 +554,9 @@
     let chosen4Variants = [];
     let activeModalCanvasId = null;
 
-    // STEP 3 TUNING MODES
     let currentDealMode = 'regular'; // 'regular' or 'run'
-    let isPrivacyMode = false;       // Lookbook Fabric Focus Toggle
+    let isPrivacyMode = false;       // Lookbook Macro Crop Toggle
 
-    // Individual Per-Card Scales (1 to 4)
     let cardScales = {
       1: { product: 1.0, badge: 1.0 },
       2: { product: 1.0, badge: 1.0 },
@@ -567,6 +574,42 @@
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
       "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link"
     ];
+
+    // DYNAMIC CATEGORY AFFIRMATION POOLS
+    const AFFIRMATIONS = {
+      lawn_garden: [
+        "Yard project ready 🌾",
+        "Fall lawn prep sorted 🍂",
+        "Weekend outdoor project ✨",
+        "Ready for the season ahead 🌱",
+        "Grass is going to look so green!"
+      ],
+      home_kitchen: [
+        "Kitchen routine staple ✨",
+        "Pantry backup done ✅",
+        "Stocked up for months",
+        "Morning routine lifesaver ☕",
+        "Keeping this tucked away"
+      ],
+      beauty_personal: [
+        "Daily shower & body favorite ✨",
+        "Self-care evening pick 🧴",
+        "Such a lovely scent 🌸",
+        "Daily routine reset",
+        "Sweetest little staple"
+      ],
+      general: [
+        "Such a great find ✨",
+        "Always handy to keep nearby",
+        "Daily routine staple",
+        "Everyday home favorite",
+        "So glad to have this on hand"
+      ]
+    };
+
+    let activeCategory = "general";
+    const allStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook", "corner_flag", "flatlay"];
+    let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
 
     // ==========================================
     // API KEY & DYNAMIC MODEL MESH DISCOVERY
@@ -1193,7 +1236,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // STEP 3: CREATOR BOARD & INDIVIDUAL TUNING
+    // STEP 3: CREATOR BOARD & MULTI-ZONE ENGINE
     // ==========================================
     function setDealMode(mode) {
       currentDealMode = mode;
@@ -1204,7 +1247,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         runBtn.className = "px-3 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-md";
         regBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all";
         
-        // Auto-inject curiosity hooks
         const curNote = document.getElementById('mainNoteInput').value;
         if (!curNote.includes('👀')) {
           document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
@@ -1247,6 +1289,62 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
+    function shuffleNote() {
+      const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
+      const randomNote = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('mainNoteInput').value = randomNote;
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function reRollCardStyles() {
+      const shuffled = [...allStyles].sort(() => 0.5 - Math.random());
+      activeCardStyles = shuffled.slice(0, 4);
+
+      const labelNames = {
+        polaroid: "Style: Polaroid Snap",
+        kraft_tag: "Style: Top Kraft Tag",
+        split_horizon: "Style: Split Horizon",
+        notebook: "Style: Torn Notebook",
+        corner_flag: "Style: Top Corner Flag",
+        flatlay: "Style: Routine Flatlay"
+      };
+
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById(`cardLabel${i}`);
+        if (el) el.innerText = labelNames[activeCardStyles[i - 1]] || "Style: Custom";
+      }
+
+      renderAll4CreatorCards();
+    }
+
+    function sampleColorsFromCanvas(canvas) {
+      try {
+        const s = document.createElement("canvas");
+        s.width = 16; s.height = 16;
+        const sCtx = s.getContext("2d");
+        sCtx.drawImage(canvas, 0, 0, 16, 16);
+        const data = sCtx.getImageData(0, 0, 16, 16).data;
+
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          if (brightness > 35 && brightness < 235) {
+            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+          }
+        }
+        if (count > 0) {
+          r = Math.round(r / count);
+          g = Math.round(g / count);
+          b = Math.round(b / count);
+          const bg = `rgb(${Math.round(238 + r * 0.06)}, ${Math.round(238 + g * 0.06)}, ${Math.round(238 + b * 0.06)})`;
+          const accent = `rgb(${Math.max(30, r - 20)}, ${Math.max(30, g - 20)}, ${Math.max(30, b - 20)})`;
+          return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B" };
+        }
+      } catch (e) {}
+      return { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
+    }
+
     function auditOcrSafety() {
       const textToScan = [
         document.getElementById('mainNoteInput').value,
@@ -1270,121 +1368,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     });
 
-    // DYNAMIC CATEGORY AFFIRMATION POOLS
-    const AFFIRMATIONS = {
-      lawn_garden: [
-        "Yard project ready 🌾",
-        "Fall lawn prep sorted 🍂",
-        "Weekend outdoor project ✨",
-        "Ready for the season ahead 🌱",
-        "Grass is going to look so green!"
-      ],
-      home_kitchen: [
-        "Kitchen routine staple ✨",
-        "Pantry backup done ✅",
-        "Stocked up for months",
-        "Morning routine lifesaver ☕",
-        "Keeping this tucked away"
-      ],
-      beauty_personal: [
-        "Daily shower & body favorite ✨",
-        "Self-care evening pick 🧴",
-        "Such a lovely scent 🌸",
-        "Daily routine reset",
-        "Sweetest little staple"
-      ],
-      general: [
-        "Such a great find ✨",
-        "Always handy to keep nearby",
-        "Daily routine staple",
-        "Everyday home favorite",
-        "So glad to have this on hand"
-      ]
-    };
-
-    let activeCategory = "general";
-    // Curated high-converting layout styles (excludes the wide vertical spine from auto-roll)
-    const allStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook", "corner_flag", "flatlay"];
-    let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
-
-    function reRollCardStyles() {
-      const shuffled = [...allStyles].sort(() => 0.5 - Math.random());
-      activeCardStyles = shuffled.slice(0, 4);
-
-      const labelNames = {
-        polaroid: "Style: Polaroid Snap",
-        kraft_tag: "Style: Top Kraft Tag",
-        split_horizon: "Style: Split Horizon",
-        notebook: "Style: Torn Notebook",
-        corner_flag: "Style: Top Corner Flag",
-        flatlay: "Style: Routine Flatlay"
-      };
-
-      for (let i = 1; i <= 4; i++) {
-        const el = document.getElementById(`cardLabel${i}`);
-        if (el) el.innerText = labelNames[activeCardStyles[i - 1]] || "Style: Custom";
-      }
-
-      renderAll4CreatorCards();
-    }
-
-      const labelNames = {
-        polaroid: "Style: Polaroid Snap",
-        kraft_tag: "Style: Top Kraft Tag",
-        split_horizon: "Style: Split Horizon",
-        notebook: "Style: Torn Notebook",
-        corner_flag: "Style: Top Corner Flag",
-        vertical_spine: "Style: Vertical Spine",
-        flatlay: "Style: Routine Flatlay",
-        minimal_pill: "Style: Floating Pill"
-      };
-
-      for (let i = 1; i <= 4; i++) {
-        const el = document.getElementById(`cardLabel${i}`);
-        if (el) el.innerText = labelNames[activeCardStyles[i - 1]];
-      }
-
-      renderAll4CreatorCards();
-    }
-
-    // AUTOMATIC PACKAGING COLOR SAMPLER
-    function sampleColorsFromCanvas(canvas) {
-      try {
-        const s = document.createElement("canvas");
-        s.width = 16; s.height = 16;
-        const sCtx = s.getContext("2d");
-        sCtx.drawImage(canvas, 0, 0, 16, 16);
-        const data = sCtx.getImageData(0, 0, 16, 16).data;
-
-        let r = 0, g = 0, b = 0, count = 0;
-        for (let i = 0; i < data.length; i += 4) {
-          // Ignore pure white/black background noise
-          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
-          if (brightness > 35 && brightness < 235) {
-            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
-          }
-        }
-        if (count > 0) {
-          r = Math.round(r / count);
-          g = Math.round(g / count);
-          b = Math.round(b / count);
-          // Soft desaturated pastel tint for background mat
-          const bg = `rgb(${Math.round(238 + r * 0.06)}, ${Math.round(238 + g * 0.06)}, ${Math.round(238 + b * 0.06)})`;
-          const accent = `rgb(${Math.max(30, r - 20)}, ${Math.max(30, g - 20)}, ${Math.max(30, b - 20)})`;
-          return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B" };
-        }
-      } catch (e) {}
-      return { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
-    }
-
-    // CONTEXTUAL EXTRACTOR (STRICT BAN ON THE WORD 'PRICE')
+    // Smart Extractor (Bans the word "Price")
     document.getElementById('extractBtn').addEventListener('click', () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
 
       const rLower = raw.toLowerCase();
 
-      // Detect Category
       if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
         activeCategory = "lawn_garden";
       } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
@@ -1395,11 +1385,9 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         activeCategory = "general";
       }
 
-      // Pick category note
       const pool = AFFIRMATIONS[activeCategory];
       document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
 
-      // Extract Prices and Units WITHOUT using the word "Price"
       const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
       const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
       const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
@@ -1435,10 +1423,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const val = document.getElementById('simpleValueInput').value.trim();
       const themeKey = document.getElementById('themePaletteSelect').value;
 
-      // Sample dynamically from the photo if selected
       const sampledPal = themeKey === "auto_sampled" ? sampleColorsFromCanvas(chosen4Variants[0].canvas) : (FIXED_PALETTES[themeKey] || FIXED_PALETTES.warm_oatmeal);
 
-      // Render each card according to its assigned layout in activeCardStyles
       for (let i = 1; i <= 4; i++) {
         const layout = activeCardStyles[i - 1] || "polaroid";
         const canvasEl = document.getElementById(`cardCanvas${i}`);
@@ -1453,8 +1439,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           renderNotebookCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
         } else if (layout === "corner_flag") {
           renderCornerFlagCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
-        } else if (layout === "vertical_spine") {
-          renderVerticalSpineCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
         } else if (layout === "flatlay") {
           renderFlatlayCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
         } else {
@@ -1463,7 +1447,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
-    // 1. POLAROID SNAP (Bottom Scribble)
+    // 1. POLAROID SNAP
     function renderPolaroidCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
@@ -1482,7 +1466,16 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       const pw = 580 * scales.product;
       const ph = 580 * scales.product;
-      ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+      if (isPrivacyMode) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(-290, -310, 580, 580);
+        ctx.clip();
+        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw * 1.5, ph * 1.5);
+        ctx.restore();
+      } else {
+        ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+      }
 
       ctx.fillStyle = pal.text;
       ctx.font = "bold 32px sans-serif";
@@ -1520,30 +1513,28 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
-    // 2. KRAFT PARCEL TAG (Top Tag - Breaks bottom clutter)
+    // 2. KRAFT PARCEL TAG (Top Tag)
     function renderKraftTagCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Top-Left Angled Kraft Tag
       if (val) {
         ctx.save();
-        ctx.translate(160, 110);
+        ctx.translate(180, 110);
         ctx.rotate(-0.08);
 
         ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
         const tagW = Math.min(480, ctx.measureText(val).width + 64);
         const tagH = 68 * scales.badge;
 
-        ctx.fillStyle = "#C49A6C"; // Kraft paper tone
+        ctx.fillStyle = currentDealMode === 'run' ? "#eab308" : "#C49A6C";
         ctx.shadowColor = "rgba(0,0,0,0.16)";
         ctx.shadowBlur = 14;
         ctx.beginPath();
         ctx.roundRect(-tagW / 2, -tagH / 2, tagW, tagH, 12);
         ctx.fill();
 
-        // Tag eyelet & twine string
         ctx.fillStyle = "#FAF8F5";
         ctx.beginPath();
         ctx.arc(-tagW / 2 + 18, 0, 6, 0, Math.PI * 2);
@@ -1555,7 +1546,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.restore();
       }
 
-      // Product centered with room to breathe
       const pw = 680 * scales.product;
       const ph = 680 * scales.product;
       ctx.save();
@@ -1565,25 +1555,21 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
       ctx.restore();
 
-      // Quiet note text below
       ctx.fillStyle = pal.text;
       ctx.font = "bold 32px sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(note, 540, 970);
     }
 
-    // 3. SPLIT HORIZON (Center Seam Mat)
+    // 3. SPLIT HORIZON
     function renderSplitHorizonCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
-      // Top 65% Light Cream
       ctx.fillStyle = pal.polaroid;
       ctx.fillRect(0, 0, 1080, 700);
 
-      // Bottom 35% Sampled Accent Mat
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 700, 1080, 380);
 
-      // Delicate division seam
       ctx.strokeStyle = "rgba(0,0,0,0.06)";
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -1591,7 +1577,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.lineTo(1080, 700);
       ctx.stroke();
 
-      // Product floats across the seam
       const pw = 700 * scales.product;
       const ph = 700 * scales.product;
       ctx.save();
@@ -1601,33 +1586,31 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
       ctx.restore();
 
-      // Clean pill centered on bottom mat
       ctx.save();
       ctx.font = `bold ${Math.round(28 * scales.badge)}px sans-serif`;
       const pillText = `${note} · ${val}`;
       const pillW = Math.min(960, ctx.measureText(pillText).width + 64);
       const pillH = 74 * scales.badge;
 
-      ctx.fillStyle = pal.polaroid;
+      ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
       ctx.shadowColor = "rgba(0,0,0,0.1)";
       ctx.shadowBlur = 14;
       ctx.beginPath();
       ctx.roundRect(540 - (pillW / 2), 940, pillW, pillH, 9999);
       ctx.fill();
 
-      ctx.fillStyle = pal.text;
+      ctx.fillStyle = "#0f172a";
       ctx.textAlign = "center";
       ctx.fillText(pillText, 540, 940 + (pillH / 2) + 8);
       ctx.restore();
     }
 
-    // 4. TORN NOTEBOOK PAGE (Top Spiral Fray)
+    // 4. TORN NOTEBOOK PAGE
     function renderNotebookCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Ruled Notebook Card
       ctx.save();
       ctx.fillStyle = "#FFFFFF";
       ctx.shadowColor = "rgba(0,0,0,0.14)";
@@ -1637,7 +1620,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.roundRect(80, 80, 920, 920, 16);
       ctx.fill();
 
-      // Faint notebook lines
       ctx.strokeStyle = "rgba(226, 232, 240, 0.8)";
       ctx.lineWidth = 1.5;
       for (let y = 160; y < 960; y += 48) {
@@ -1647,7 +1629,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.stroke();
       }
 
-      // Spiral binder holes along top
       ctx.fillStyle = pal.bg;
       for (let x = 160; x < 940; x += 70) {
         ctx.beginPath();
@@ -1656,19 +1637,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
       ctx.restore();
 
-      // Top-right highlighter stamp for value
       if (val) {
         ctx.save();
         ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
         const valW = ctx.measureText(val).width + 36;
-        ctx.fillStyle = "rgba(253, 224, 71, 0.75)";
+        ctx.fillStyle = currentDealMode === 'run' ? "#fde047" : "rgba(253, 224, 71, 0.75)";
         ctx.fillRect(940 - valW, 160, valW, 44);
         ctx.fillStyle = "#0F172A";
         ctx.fillText(val, 940 - valW + 18, 192);
         ctx.restore();
       }
 
-      // Product
       const pw = 620 * scales.product;
       const ph = 620 * scales.product;
       ctx.save();
@@ -1677,25 +1656,23 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
       ctx.restore();
 
-      // Handwritten Note across bottom line
       ctx.fillStyle = "#334155";
       ctx.font = "bold 32px sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(`"${note}"`, 540, 930);
     }
 
-    // 5. TOP CORNER FLAG (Diagonal Ribbon)
+    // 5. TOP CORNER FLAG
     function renderCornerFlagCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Diagonal Ribbon in Top-Right
       if (val) {
         ctx.save();
         ctx.translate(920, 160);
-        ctx.rotate(0.785); // 45 degrees
-        ctx.fillStyle = pal.accent;
+        ctx.rotate(0.785);
+        ctx.fillStyle = currentDealMode === 'run' ? "#eab308" : pal.accent;
         ctx.fillRect(-200, -32, 400, 64);
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "bold 24px sans-serif";
@@ -1704,7 +1681,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.restore();
       }
 
-      // Product
       const pw = 680 * scales.product;
       const ph = 680 * scales.product;
       ctx.save();
@@ -1719,41 +1695,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.fillText(note, 540, 960);
     }
 
-    // 6. VERTICAL SPINE (Left Bar)
-    function renderVerticalSpineCard(c, srcCanvas, note, val, pal, scales) {
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.polaroid;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      // Left Vertical Spine
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 160, 1080);
-
-      ctx.save();
-      ctx.translate(80, 540);
-      ctx.rotate(-Math.PI / 2);
-      ctx.fillStyle = pal.accent;
-      ctx.font = "bold 28px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(val, 0, 10);
-      ctx.restore();
-
-      // Product in open right space
-      const pw = 680 * scales.product;
-      const ph = 680 * scales.product;
-      ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.15)";
-      ctx.shadowBlur = 30;
-      ctx.drawImage(srcCanvas, 620 - (pw / 2), 520 - (ph / 2), pw, ph);
-      ctx.restore();
-
-      ctx.fillStyle = pal.text;
-      ctx.font = "bold 32px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 620, 960);
-    }
-
-    // 7. ROUTINE FLATLAY (Quiet Pill)
+    // 6. ROUTINE FLATLAY
     function renderFlatlayCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
@@ -1765,7 +1707,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.shadowColor = "rgba(0,0,0,0.18)";
       ctx.shadowBlur = 36;
       ctx.shadowOffsetY = 24;
-      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
+
+      if (isPrivacyMode) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(160, 140, 760, 760, 24);
+        ctx.clip();
+        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, 540 - (pw * 1.4) / 2, 520 - (ph * 1.4) / 2, pw * 1.4, ph * 1.4);
+        ctx.restore();
+      } else {
+        ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
+      }
       ctx.restore();
 
       ctx.save();
