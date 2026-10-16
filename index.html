@@ -333,25 +333,32 @@
           </button>
         </div>
 
-        <!-- GLOBAL TEXT & PALETTE CONTROLS -->
+        <!-- GLOBAL TEXT & PALETTE CONTROLS (WITH COLOR SAMPLER & SHUFFLER) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Positive Affirmation</label>
-            <input type="text" id="mainNoteInput" value="Daily shower & body favorite ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <div class="flex justify-between items-center">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Affirmation</label>
+              <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase">🎲 Shuffle Note</button>
+            </div>
+            <input type="text" id="mainNoteInput" value="Yard project ready 🌾" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag</label>
-            <input type="text" id="simpleValueInput" value="$13.80 for all 3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag (Zero Banned Words)</label>
+            <input type="text" id="simpleValueInput" value="$13.81 complete" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Color Palette & Surface</label>
+            <div class="flex justify-between items-center">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Color Palette & Surface</label>
+              <button type="button" onclick="reRollCardStyles()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase">🔀 Re-Roll Styles</button>
+            </div>
             <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
-              <option value="warm_oatmeal" selected>Warm Oatmeal & Cream</option>
+              <option value="auto_sampled" selected>🎨 Auto-Sample Packaging Colors</option>
+              <option value="warm_oatmeal">Warm Oatmeal & Cream</option>
               <option value="sage_linen">Sage Green & Linen</option>
-              <option value="terracotta_autumn">Autumn Terracotta & Spice</option>
-              <option value="slate_blue">Oat-Slate & Blue</option>
+              <option value="terracotta_autumn">Autumn Terracotta & Earth</option>
+              <option value="slate_blue">Oat-Slate & Cool Grey</option>
             </select>
           </div>
         </div>
@@ -374,9 +381,7 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Card 1 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block">Style 1: Polaroid Snap & Tape</span>
+          <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block">Style: Polaroid Snap</span>
             <div onclick="openZoomModal('cardCanvas1', 'Style 1: Polaroid Snap & Tape')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -402,9 +407,7 @@
             <button onclick="downloadSingleCard('cardCanvas1', 'aesthetic_polaroid')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
           </div>
 
-          <!-- Card 2 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Style 2: Soft Tonal Review</span>
+          <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Style: Top Kraft Tag</span>
             <div onclick="openZoomModal('cardCanvas2', 'Style 2: Soft Tonal Review')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -430,9 +433,7 @@
             <button onclick="downloadSingleCard('cardCanvas2', 'aesthetic_review')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
           </div>
 
-          <!-- Card 3 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block">Style 3: Scrapbook Journal</span>
+          <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block">Style: Split Horizon</span>
             <div onclick="openZoomModal('cardCanvas3', 'Style 3: Scrapbook Journal')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -458,9 +459,7 @@
             <button onclick="downloadSingleCard('cardCanvas3', 'aesthetic_scrapbook')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
           </div>
 
-          <!-- Card 4 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">Style 4: Routine Flatlay</span>
+          <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">Style: Torn Notebook</span>
             <div onclick="openZoomModal('cardCanvas4', 'Style 4: Routine Flatlay')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -1254,24 +1253,148 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     });
 
+    // DYNAMIC CATEGORY AFFIRMATION POOLS
+    const AFFIRMATIONS = {
+      lawn_garden: [
+        "Yard project ready 🌾",
+        "Fall lawn prep sorted 🍂",
+        "Weekend outdoor project ✨",
+        "Ready for the season ahead 🌱",
+        "Grass is going to look so green!"
+      ],
+      home_kitchen: [
+        "Kitchen routine staple ✨",
+        "Pantry backup done ✅",
+        "Stocked up for months",
+        "Morning routine lifesaver ☕",
+        "Keeping this tucked away"
+      ],
+      beauty_personal: [
+        "Daily shower & body favorite ✨",
+        "Self-care evening pick 🧴",
+        "Such a lovely scent 🌸",
+        "Daily routine reset",
+        "Sweetest little staple"
+      ],
+      general: [
+        "Such a great find ✨",
+        "Always handy to keep nearby",
+        "Daily routine staple",
+        "Everyday home favorite",
+        "So glad to have this on hand"
+      ]
+    };
+
+    let activeCategory = "general";
+    let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
+
+    function shuffleNote() {
+      const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
+      const randomNote = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('mainNoteInput').value = randomNote;
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function reRollCardStyles() {
+      const allStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook", "corner_flag", "vertical_spine", "flatlay", "minimal_pill"];
+      const shuffled = [...allStyles].sort(() => 0.5 - Math.random());
+      activeCardStyles = shuffled.slice(0, 4);
+
+      const labelNames = {
+        polaroid: "Style: Polaroid Snap",
+        kraft_tag: "Style: Top Kraft Tag",
+        split_horizon: "Style: Split Horizon",
+        notebook: "Style: Torn Notebook",
+        corner_flag: "Style: Top Corner Flag",
+        vertical_spine: "Style: Vertical Spine",
+        flatlay: "Style: Routine Flatlay",
+        minimal_pill: "Style: Floating Pill"
+      };
+
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById(`cardLabel${i}`);
+        if (el) el.innerText = labelNames[activeCardStyles[i - 1]];
+      }
+
+      renderAll4CreatorCards();
+    }
+
+    // AUTOMATIC PACKAGING COLOR SAMPLER
+    function sampleColorsFromCanvas(canvas) {
+      try {
+        const s = document.createElement("canvas");
+        s.width = 16; s.height = 16;
+        const sCtx = s.getContext("2d");
+        sCtx.drawImage(canvas, 0, 0, 16, 16);
+        const data = sCtx.getImageData(0, 0, 16, 16).data;
+
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          // Ignore pure white/black background noise
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          if (brightness > 35 && brightness < 235) {
+            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+          }
+        }
+        if (count > 0) {
+          r = Math.round(r / count);
+          g = Math.round(g / count);
+          b = Math.round(b / count);
+          // Soft desaturated pastel tint for background mat
+          const bg = `rgb(${Math.round(238 + r * 0.06)}, ${Math.round(238 + g * 0.06)}, ${Math.round(238 + b * 0.06)})`;
+          const accent = `rgb(${Math.max(30, r - 20)}, ${Math.max(30, g - 20)}, ${Math.max(30, b - 20)})`;
+          return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B" };
+        }
+      } catch (e) {}
+      return { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
+    }
+
+    // CONTEXTUAL EXTRACTOR (STRICT BAN ON THE WORD 'PRICE')
     document.getElementById('extractBtn').addEventListener('click', () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
 
-      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
-      const packMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles))\b/i);
+      const rLower = raw.toLowerCase();
 
-      if (saleMatch && packMatch) {
-        document.getElementById('simpleValueInput').value = `${saleMatch[0].trim()} for ${packMatch[0]}`;
-      } else if (saleMatch) {
-        document.getElementById('simpleValueInput').value = `just ${saleMatch[0].trim()} ✨`;
+      // Detect Category
+      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
+        activeCategory = "lawn_garden";
+      } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
+        activeCategory = "beauty_personal";
+      } else if (rLower.includes('clean') || rLower.includes('kitchen') || rLower.includes('pantry') || rLower.includes('detergent') || rLower.includes('wipe') || rLower.includes('towel')) {
+        activeCategory = "home_kitchen";
+      } else {
+        activeCategory = "general";
       }
+
+      // Pick category note
+      const pool = AFFIRMATIONS[activeCategory];
+      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+
+      // Extract Prices and Units WITHOUT using the word "Price"
+      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
+      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
+      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
+
+      let extractedVal = "";
+      if (saleMatch && unitMatch) {
+        extractedVal = `${unitMatch[0]} · ${saleMatch[0].trim()}`;
+      } else if (saleMatch && wasMatch) {
+        extractedVal = `${saleMatch[0].trim()} (was $${wasMatch[1].replace(' ', '.')})`;
+      } else if (saleMatch) {
+        extractedVal = `${saleMatch[0].trim()} complete`;
+      } else {
+        extractedVal = "Under $15 ✨";
+      }
+
+      document.getElementById('simpleValueInput').value = extractedVal;
 
       auditOcrSafety();
       renderAll4CreatorCards();
     });
 
-    const PALETTES = {
+    const FIXED_PALETTES = {
       warm_oatmeal: { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
       sage_linen: { bg: "#E3E9DE", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
       terracotta_autumn: { bg: "#EEDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
@@ -1284,17 +1407,37 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const note = document.getElementById('mainNoteInput').value.trim();
       const val = document.getElementById('simpleValueInput').value.trim();
       const themeKey = document.getElementById('themePaletteSelect').value;
-      const pal = PALETTES[themeKey] || PALETTES.warm_oatmeal;
 
-      renderCreator1(chosen4Variants[0].canvas, note, val, pal, cardScales[1]);
-      renderCreator2(chosen4Variants[1].canvas, note, val, pal, cardScales[2]);
-      renderCreator3(chosen4Variants[2].canvas, note, val, pal, cardScales[3]);
-      renderCreator4(chosen4Variants[3].canvas, note, val, pal, cardScales[4]);
+      // Sample dynamically from the photo if selected
+      const sampledPal = themeKey === "auto_sampled" ? sampleColorsFromCanvas(chosen4Variants[0].canvas) : (FIXED_PALETTES[themeKey] || FIXED_PALETTES.warm_oatmeal);
+
+      // Render each card according to its assigned layout in activeCardStyles
+      for (let i = 1; i <= 4; i++) {
+        const layout = activeCardStyles[i - 1] || "polaroid";
+        const canvasEl = document.getElementById(`cardCanvas${i}`);
+        const srcCanvas = chosen4Variants[i - 1].canvas;
+        const scales = cardScales[i];
+
+        if (layout === "kraft_tag") {
+          renderKraftTagCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+        } else if (layout === "split_horizon") {
+          renderSplitHorizonCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+        } else if (layout === "notebook") {
+          renderNotebookCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+        } else if (layout === "corner_flag") {
+          renderCornerFlagCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+        } else if (layout === "vertical_spine") {
+          renderVerticalSpineCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+        } else if (layout === "flatlay") {
+          renderFlatlayCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+        } else {
+          renderPolaroidCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+        }
+      }
     }
 
-    // STYLE 1: Polaroid Snap & Washi Tape
-    function renderCreator1(srcCanvas, note, val, pal, scales) {
-      const c = document.getElementById('cardCanvas1');
+    // 1. POLAROID SNAP (Bottom Scribble)
+    function renderPolaroidCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
@@ -1310,20 +1453,9 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.fillRect(-340, -360, 680, 800);
       ctx.shadowColor = "transparent";
 
-      // Draw Product with scale or Macro Privacy Crop
       const pw = 580 * scales.product;
       const ph = 580 * scales.product;
-      if (isPrivacyMode) {
-        // Macro Fabric Focus: zoom in tight onto center upper 50%
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(-290, -310, 580, 580);
-        ctx.clip();
-        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw * 1.5, ph * 1.5);
-        ctx.restore();
-      } else {
-        ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
-      }
+      ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
 
       ctx.fillStyle = pal.text;
       ctx.font = "bold 32px sans-serif";
@@ -1337,10 +1469,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.fillStyle = currentDealMode === 'run' ? "rgba(251, 191, 36, 0.85)" : "rgba(255, 255, 255, 0.72)";
       ctx.fillRect(-120, -18, 240, 42);
       ctx.restore();
-
       ctx.restore();
 
-      // Price Tag Sticker with Badge Scale
       if (val) {
         ctx.save();
         ctx.font = "800 26px sans-serif";
@@ -1363,145 +1493,241 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
-    // STYLE 2: Soft Tonal Review Card
-    function renderCreator2(srcCanvas, note, val, pal, scales) {
-      const c = document.getElementById('cardCanvas2');
+    // 2. KRAFT PARCEL TAG (Top Tag - Breaks bottom clutter)
+    function renderKraftTagCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      ctx.fillStyle = pal.text;
-      ctx.font = "900 42px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 540, 140);
-
-      // Staged Card Inset
-      ctx.save();
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.14)";
-      ctx.shadowBlur = 32;
-      ctx.shadowOffsetY = 12;
-      ctx.beginPath();
-      ctx.roundRect(200, 200, 680, 680, 28);
-      ctx.fill();
-      ctx.shadowColor = "transparent";
-
-      const pw = 640 * scales.product;
-      const ph = 640 * scales.product;
-      if (isPrivacyMode) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(200, 200, 680, 680, 28);
-        ctx.clip();
-        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, 540 - (pw * 1.5) / 2, 540 - (ph * 1.5) / 2, pw * 1.5, ph * 1.5);
-        ctx.restore();
-      } else {
-        ctx.drawImage(srcCanvas, 540 - (pw / 2), 540 - (ph / 2), pw, ph);
-      }
-      ctx.restore();
-
-      // Bottom Doodle Tag
+      // Top-Left Angled Kraft Tag
       if (val) {
         ctx.save();
-        ctx.font = `${Math.round(36 * scales.badge)}px sans-serif`;
-        const valW = ctx.measureText(val).width;
+        ctx.translate(160, 110);
+        ctx.rotate(-0.08);
 
-        ctx.translate(540, 970);
-        ctx.fillStyle = pal.text;
-        ctx.textAlign = "center";
-        ctx.fillText(val, 0, 0);
+        ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
+        const tagW = Math.min(480, ctx.measureText(val).width + 64);
+        const tagH = 68 * scales.badge;
 
-        ctx.strokeStyle = currentDealMode === 'run' ? "#eab308" : pal.accent;
-        ctx.lineWidth = 4;
+        ctx.fillStyle = "#C49A6C"; // Kraft paper tone
+        ctx.shadowColor = "rgba(0,0,0,0.16)";
+        ctx.shadowBlur = 14;
         ctx.beginPath();
-        ctx.moveTo(-(valW / 2) - 10, 16);
-        ctx.quadraticCurveTo(0, 28, (valW / 2) + 10, 16);
-        ctx.stroke();
+        ctx.roundRect(-tagW / 2, -tagH / 2, tagW, tagH, 12);
+        ctx.fill();
+
+        // Tag eyelet & twine string
+        ctx.fillStyle = "#FAF8F5";
+        ctx.beginPath();
+        ctx.arc(-tagW / 2 + 18, 0, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.textAlign = "center";
+        ctx.fillText(val, 8, 8 * scales.badge);
         ctx.restore();
       }
+
+      // Product centered with room to breathe
+      const pw = 680 * scales.product;
+      const ph = 680 * scales.product;
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,0.16)";
+      ctx.shadowBlur = 32;
+      ctx.shadowOffsetY = 16;
+      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
+      ctx.restore();
+
+      // Quiet note text below
+      ctx.fillStyle = pal.text;
+      ctx.font = "bold 32px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(note, 540, 970);
     }
 
-    // STYLE 3: Scrapbook Journal Collection
-    function renderCreator3(srcCanvas, note, val, pal, scales) {
-      const c = document.getElementById('cardCanvas3');
+    // 3. SPLIT HORIZON (Center Seam Mat)
+    function renderSplitHorizonCard(c, srcCanvas, note, val, pal, scales) {
+      const ctx = c.getContext('2d');
+      // Top 65% Light Cream
+      ctx.fillStyle = pal.polaroid;
+      ctx.fillRect(0, 0, 1080, 700);
+
+      // Bottom 35% Sampled Accent Mat
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 700, 1080, 380);
+
+      // Delicate division seam
+      ctx.strokeStyle = "rgba(0,0,0,0.06)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 700);
+      ctx.lineTo(1080, 700);
+      ctx.stroke();
+
+      // Product floats across the seam
+      const pw = 700 * scales.product;
+      const ph = 700 * scales.product;
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,0.18)";
+      ctx.shadowBlur = 36;
+      ctx.shadowOffsetY = 20;
+      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
+      ctx.restore();
+
+      // Clean pill centered on bottom mat
+      ctx.save();
+      ctx.font = `bold ${Math.round(28 * scales.badge)}px sans-serif`;
+      const pillText = `${note} · ${val}`;
+      const pillW = Math.min(960, ctx.measureText(pillText).width + 64);
+      const pillH = 74 * scales.badge;
+
+      ctx.fillStyle = pal.polaroid;
+      ctx.shadowColor = "rgba(0,0,0,0.1)";
+      ctx.shadowBlur = 14;
+      ctx.beginPath();
+      ctx.roundRect(540 - (pillW / 2), 940, pillW, pillH, 9999);
+      ctx.fill();
+
+      ctx.fillStyle = pal.text;
+      ctx.textAlign = "center";
+      ctx.fillText(pillText, 540, 940 + (pillH / 2) + 8);
+      ctx.restore();
+    }
+
+    // 4. TORN NOTEBOOK PAGE (Top Spiral Fray)
+    function renderNotebookCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
+      // Ruled Notebook Card
       ctx.save();
-      ctx.translate(540, 480);
-      ctx.rotate(0.025);
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.16)";
+      ctx.fillStyle = "#FFFFFF";
+      ctx.shadowColor = "rgba(0,0,0,0.14)";
       ctx.shadowBlur = 24;
       ctx.shadowOffsetY = 10;
-      ctx.fillRect(-330, -350, 660, 720);
-      ctx.shadowColor = "transparent";
+      ctx.beginPath();
+      ctx.roundRect(80, 80, 920, 920, 16);
+      ctx.fill();
 
-      const pw = 560 * scales.product;
-      const ph = 560 * scales.product;
-      if (isPrivacyMode) {
-        ctx.save();
+      // Faint notebook lines
+      ctx.strokeStyle = "rgba(226, 232, 240, 0.8)";
+      ctx.lineWidth = 1.5;
+      for (let y = 160; y < 960; y += 48) {
         ctx.beginPath();
-        ctx.rect(-330, -350, 660, 720);
-        ctx.clip();
-        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw * 0.75, -ph * 0.75, pw * 1.5, ph * 1.5);
-        ctx.restore();
-      } else {
-        ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+        ctx.moveTo(120, y);
+        ctx.lineTo(960, y);
+        ctx.stroke();
+      }
+
+      // Spiral binder holes along top
+      ctx.fillStyle = pal.bg;
+      for (let x = 160; x < 940; x += 70) {
+        ctx.beginPath();
+        ctx.arc(x, 110, 8, 0, Math.PI * 2);
+        ctx.fill();
       }
       ctx.restore();
 
-      // Hand-drawn vector sparkles & leaves
+      // Top-right highlighter stamp for value
+      if (val) {
+        ctx.save();
+        ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
+        const valW = ctx.measureText(val).width + 36;
+        ctx.fillStyle = "rgba(253, 224, 71, 0.75)";
+        ctx.fillRect(940 - valW, 160, valW, 44);
+        ctx.fillStyle = "#0F172A";
+        ctx.fillText(val, 940 - valW + 18, 192);
+        ctx.restore();
+      }
+
+      // Product
+      const pw = 620 * scales.product;
+      const ph = 620 * scales.product;
       ctx.save();
-      ctx.strokeStyle = pal.text;
-      ctx.lineWidth = 3.5;
-      drawSparkle(ctx, 160, 180, 22 * scales.badge);
-      drawSparkle(ctx, 920, 320, 18 * scales.badge);
-      drawMiniHeart(ctx, 890, 640, 24 * scales.badge);
+      ctx.shadowColor = "rgba(0,0,0,0.15)";
+      ctx.shadowBlur = 24;
+      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
       ctx.restore();
 
-      // Auto-sizing Paper Slip
-      ctx.save();
-      ctx.font = `bold ${Math.round(28 * scales.badge)}px sans-serif`;
-      const fullText = `${note} · ${val}`;
-      const stripW = Math.min(1000, ctx.measureText(fullText).width + 64);
-      const stripH = 90 * scales.badge;
-
-      ctx.translate(540, 940);
-      ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.12)";
-      ctx.shadowBlur = 14;
-      ctx.beginPath();
-      ctx.roundRect(-(stripW / 2), -stripH / 2, stripW, stripH, 18);
-      ctx.fill();
-
-      ctx.fillStyle = "#0f172a";
+      // Handwritten Note across bottom line
+      ctx.fillStyle = "#334155";
+      ctx.font = "bold 32px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(fullText, 0, 10 * scales.badge);
+      ctx.fillText(`"${note}"`, 540, 930);
+    }
+
+    // 5. TOP CORNER FLAG (Diagonal Ribbon)
+    function renderCornerFlagCard(c, srcCanvas, note, val, pal, scales) {
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Diagonal Ribbon in Top-Right
+      if (val) {
+        ctx.save();
+        ctx.translate(920, 160);
+        ctx.rotate(0.785); // 45 degrees
+        ctx.fillStyle = pal.accent;
+        ctx.fillRect(-200, -32, 400, 64);
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "bold 24px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(val, 0, 8);
+        ctx.restore();
+      }
+
+      // Product
+      const pw = 680 * scales.product;
+      const ph = 680 * scales.product;
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,0.16)";
+      ctx.shadowBlur = 32;
+      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
       ctx.restore();
+
+      ctx.fillStyle = pal.text;
+      ctx.font = "bold 32px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(note, 540, 960);
     }
 
-    function drawSparkle(ctx, cx, cy, size) {
-      ctx.beginPath();
-      ctx.moveTo(cx, cy - size);
-      ctx.lineTo(cx, cy + size);
-      ctx.moveTo(cx - size, cy);
-      ctx.lineTo(cx + size, cy);
-      ctx.stroke();
+    // 6. VERTICAL SPINE (Left Bar)
+    function renderVerticalSpineCard(c, srcCanvas, note, val, pal, scales) {
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = pal.polaroid;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Left Vertical Spine
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 160, 1080);
+
+      ctx.save();
+      ctx.translate(80, 540);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillStyle = pal.accent;
+      ctx.font = "bold 28px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(val, 0, 10);
+      ctx.restore();
+
+      // Product in open right space
+      const pw = 680 * scales.product;
+      const ph = 680 * scales.product;
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,0.15)";
+      ctx.shadowBlur = 30;
+      ctx.drawImage(srcCanvas, 620 - (pw / 2), 520 - (ph / 2), pw, ph);
+      ctx.restore();
+
+      ctx.fillStyle = pal.text;
+      ctx.font = "bold 32px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(note, 620, 960);
     }
 
-    function drawMiniHeart(ctx, cx, cy, s) {
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.bezierCurveTo(cx - s, cy - s, cx - s * 1.5, cy + s / 3, cx, cy + s);
-      ctx.bezierCurveTo(cx + s * 1.5, cy + s / 3, cx + s, cy - s, cx, cy);
-      ctx.stroke();
-    }
-
-    // STYLE 4: Routine Flatlay
-    function renderCreator4(srcCanvas, note, val, pal, scales) {
-      const c = document.getElementById('cardCanvas4');
+    // 7. ROUTINE FLATLAY (Quiet Pill)
+    function renderFlatlayCard(c, srcCanvas, note, val, pal, scales) {
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
@@ -1512,20 +1738,9 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.shadowColor = "rgba(0,0,0,0.18)";
       ctx.shadowBlur = 36;
       ctx.shadowOffsetY = 24;
-
-      if (isPrivacyMode) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(160, 140, 760, 760, 24);
-        ctx.clip();
-        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, 540 - (pw * 1.4) / 2, 520 - (ph * 1.4) / 2, pw * 1.4, ph * 1.4);
-        ctx.restore();
-      } else {
-        ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
-      }
+      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
       ctx.restore();
 
-      // Floating bottom pill
       ctx.save();
       ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
       const pillText = `${note} · ${val}`;
@@ -1541,7 +1756,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       ctx.fillStyle = "#0f172a";
       ctx.textAlign = "center";
-      ctx.fillText(pillText, 540, 940 + (pillH / 2) + (8 * scales.badge));
+      ctx.fillText(pillText, 540, 940 + (pillH / 2) + 8);
 
       ctx.fillStyle = "#94a3b8";
       ctx.font = "bold 14px sans-serif";
