@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v3.0</title>
-  <!-- Tailwind CSS -->
+  <title>CB Media Pipeline Suite v3.5</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -17,13 +16,13 @@
 <body class="p-4 md:p-8 min-h-screen">
   <div class="max-w-7xl mx-auto space-y-6">
 
-    <!-- TOP HEADER WITH API KEY BAR -->
+    <!-- TOP HEADER -->
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v3.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v3.5</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Standalone Packaging Sanitizer ➔ 15-Variant Lens ➔ Organic Deal Framer</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Standalone Packaging Sanitizer ➔ 15-Variant Lens ➔ Aesthetic Creator Board</p>
       </div>
 
       <div class="flex items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
@@ -40,7 +39,7 @@
       </div>
     </header>
 
-    <!-- STEP PROGRESSION BAR (DEDICATED FULL ROW) -->
+    <!-- STEP PROGRESSION BAR -->
     <nav class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div id="stepTab1" onclick="navToStep(1)" class="card-dark p-4 border-2 step-active flex items-center gap-3.5 transition-all cursor-pointer">
         <div class="w-8 h-8 rounded-full bg-sky-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-sky-500/20">1</div>
@@ -61,22 +60,21 @@
       <div id="stepTab3" onclick="navToStep(3)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
-          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Deal Framer</h3>
-          <p class="text-xs text-slate-400">4 organic creative styles</p>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Creator Board</h3>
+          <p class="text-xs text-slate-400">4 organic aesthetic styles</p>
         </div>
       </div>
     </nav>
 
-    <!-- ==================== STEP 1: SANITIZER & MASKER ==================== -->
+    <!-- ==================== STEP 1: SANITIZER ==================== -->
     <section id="step1Section" class="space-y-6">
       <div class="card-dark p-5">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
           <div>
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Upload & Mask Packaging</h2>
-            <p class="text-xs text-slate-400">Upload a deal photo to detect logos and claims, or manually drag patches.</p>
+            <p class="text-xs text-slate-400">Upload a deal photo to detect logos and claims, or drag manual patches.</p>
           </div>
 
-          <!-- CONTROLS WITH MASKING STYLE SELECTOR -->
           <div class="flex flex-wrap items-center gap-2.5">
             <input type="file" id="rawImageInput" accept="image/*" class="hidden">
             <button 
@@ -95,7 +93,6 @@
               <span>✨</span> Process Image with AI
             </button>
 
-            <!-- MASKING STYLE DROPDOWN -->
             <select id="maskModeSelect" class="bg-slate-900 border border-slate-700 text-xs text-white px-2.5 py-2 rounded-lg font-medium focus:outline-none focus:border-sky-500">
               <option value="diffusion" selected>Frosted Diffusion</option>
               <option value="ambient">Ambient Gradient Block</option>
@@ -115,7 +112,7 @@
               type="button" 
               id="skipSanitizerBtn" 
               class="px-3.5 py-2 bg-amber-600/80 hover:bg-amber-500 text-white text-xs font-bold rounded-lg transition-all uppercase tracking-wider"
-              title="Skip AI and use the original raw photo directly in Step 2"
+              title="Download untouched raw image and forward straight to Step 2"
             >
               ⚡ Skip Sanitizer & Use Raw
             </button>
@@ -153,7 +150,6 @@
           </div>
         </div>
 
-        <!-- SUGGESTED GENERIC TITLE -->
         <div class="mt-5 pt-4 border-t border-slate-800 flex items-center gap-3">
           <label class="text-xs font-bold text-sky-400 uppercase tracking-wider whitespace-nowrap">Compliant Generic Title:</label>
           <input type="text" id="suggestedTitleInput" readonly placeholder="Generic title appears here automatically after processing..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-slate-200">
@@ -162,7 +158,7 @@
       </div>
     </section>
 
-    <!-- ==================== STEP 2: SILENT VARIANT LENS ==================== -->
+    <!-- ==================== STEP 2: VARIANT LENS ==================== -->
     <section id="step2Section" class="hidden space-y-6">
       <div class="card-dark p-5">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
@@ -172,7 +168,6 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
-            <!-- STANDALONE DIRECT UPLOAD FOR STEP 2 -->
             <input type="file" id="step2DirectUpload" accept="image/*" class="hidden">
             <button 
               type="button" 
@@ -204,17 +199,15 @@
               id="goToStep3Btn" 
               class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
             >
-              Proceed to Step 3: Deal Framer ➔
+              Proceed to Step 3: Creator Board ➔
             </button>
           </div>
         </div>
 
-        <!-- 4 FEATURED VARIANTS GRID -->
         <div id="featuredGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <!-- Populated dynamically via JS -->
         </div>
 
-        <!-- COLLAPSIBLE 15-VARIANT DRAWER -->
         <div class="mt-6 pt-4 border-t border-slate-800">
           <button type="button" id="toggle15DrawerBtn" class="text-xs font-bold text-sky-400 uppercase tracking-wider hover:underline flex items-center gap-1">
             <span>📂</span> <span id="drawerToggleText">Show Full 15-Variant Matrix</span>
@@ -226,15 +219,14 @@
       </div>
     </section>
 
-    <!-- ==================== STEP 3: ORGANIC DEAL FRAMER ==================== -->
+    <!-- ==================== STEP 3: AESTHETIC CREATOR BOARD ==================== -->
     <section id="step3Section" class="hidden space-y-6">
       
-      <!-- DATA PARSER & OCR BLACKLIST AUDIT -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Deal Details & Style Customization</h2>
-            <p class="text-xs text-slate-400">Paste raw text to auto-extract, or tune fields manually. No forced bulky titles!</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Aesthetic Creator Board</h2>
+            <p class="text-xs text-slate-400">Non-commercial, human-curated visual mockups matching your product. Zero AI feel.</p>
           </div>
           <button 
             type="button" 
@@ -245,98 +237,87 @@
           </button>
         </div>
 
-        <!-- OCR BLACKLIST ALERT -->
         <div id="ocrWarningBanner" class="hidden bg-rose-950/80 border border-rose-500 p-3 rounded-xl text-rose-300 text-xs flex items-center gap-2">
           <span>🚨</span> <strong>Facebook OCR Blacklist Alert:</strong> <span id="ocrWarningText"></span>
         </div>
 
-        <div class="flex gap-2">
-          <textarea 
-            id="rawDealPaste" 
-            placeholder="Paste Command Center raw deal output or deal text here..." 
-            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-20"
-          ></textarea>
-          <button 
-            type="button" 
-            id="extractBtn" 
-            class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider"
-          >
-            ⚡ Extract Info
-          </button>
-        </div>
+        <!-- TUNING INPUTS: CASUAL CREATOR VIBES -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Positive Affirmation</label>
+            <input type="text" id="mainNoteInput" value="Such a cozy find ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
+            <span class="text-[10px] text-slate-500 mt-1 block">e.g. 'Laundry room favorite', 'So cozy for fall'</span>
+          </div>
 
-        <!-- TUNING INPUTS (ORGANIC VARIETY) -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Now Price (Exact)</label>
-            <input type="text" id="nowPriceInput" value="$5.99" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag</label>
+            <input type="text" id="simpleValueInput" value="just $4.99 ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
+            <span class="text-[10px] text-slate-500 mt-1 block">e.g. 'all 3 for $5.99', '$3.49 complete'</span>
           </div>
+
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Was Price (Original)</label>
-            <input type="text" id="wasPriceInput" value="$10.12" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-400 mt-1">
-          </div>
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Bundle / Pack Tag</label>
-            <input type="text" id="bundleTagInput" value="50 Count" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
-          </div>
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Card 1 Drop Phrase</label>
-            <input type="text" id="dropPhraseInput" value="Dropped to $5.99!" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Color Palette & Surface</label>
+            <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
+              <option value="warm_oatmeal" selected>Warm Oatmeal & Cream</option>
+              <option value="sage_linen">Sage Green & Linen</option>
+              <option value="terracotta_autumn">Autumn Terracotta & Spice</option>
+              <option value="buttercream_slate">Buttercream & Soft Slate</option>
+            </select>
           </div>
         </div>
       </div>
 
-      <!-- 4 DIVERSE DEAL CREATIVES -->
+      <!-- 4 CREATOR CARDS -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
-            <p class="text-xs text-slate-400">Each rendered directly on its unique Variant Lens base with organic, non-uniform creator styles.</p>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Dynamic Aesthetic Styles</h3>
+            <p class="text-xs text-slate-400">Rendered with organic textures, drop shadows, and zero robotic flyer banners.</p>
           </div>
           <button 
             type="button" 
             id="downloadAllCardsBtn" 
             class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md uppercase tracking-wider flex items-center gap-1.5"
           >
-            <span>📥</span> Download All 4 Creatives
+            <span>📥</span> Download All 4 Cards
           </button>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <!-- Card 1 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400">Style 1: Price Drop & Doodle Ring</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400">Style 1: Polaroid Snap & Tape</span>
             <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
               <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-auto"></canvas>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas1', 'deal_style1_drop')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
+            <button onclick="downloadSingleCard('cardCanvas1', 'aesthetic_polaroid')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
           </div>
 
           <!-- Card 2 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Style 2: Checkout Slip & Highlighter</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Style 2: Soft Tonal Review</span>
             <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
               <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-auto"></canvas>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas2', 'deal_style2_receipt')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
+            <button onclick="downloadSingleCard('cardCanvas2', 'aesthetic_review')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
           </div>
 
           <!-- Card 3 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400">Style 3: Bundle Value Bubble</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400">Style 3: Scrapbook Journal</span>
             <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
               <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-auto"></canvas>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas3', 'deal_style3_bundle')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
+            <button onclick="downloadSingleCard('cardCanvas3', 'aesthetic_scrapbook')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
           </div>
 
           <!-- Card 4 -->
           <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Style 4: Minimalist Editorial Spotlight</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Style 4: Routine Flatlay</span>
             <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
               <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-auto"></canvas>
             </div>
-            <button onclick="downloadSingleCard('cardCanvas4', 'deal_style4_minimal')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
+            <button onclick="downloadSingleCard('cardCanvas4', 'aesthetic_flatlay')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
           </div>
         </div>
       </div>
@@ -346,7 +327,7 @@
 
   <script>
     // ==========================================
-    // GLOBAL STATE
+    // GLOBAL APP STATE
     // ==========================================
     let activeStep = 1;
     let rawLoadedImage = null;
@@ -365,7 +346,6 @@
     const outputCanvas = document.getElementById('outputCanvas');
     const oCtx = outputCanvas.getContext('2d');
 
-    // FACEBOOK OCR BANNED LIST
     const FB_BLACKLIST = [
       "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
@@ -373,7 +353,7 @@
     ];
 
     // ==========================================
-    // INITIALIZATION & API KEY STORAGE
+    // API KEY STORAGE
     // ==========================================
     const apiKeyInput = document.getElementById('apiKeyInput');
     const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
@@ -390,7 +370,7 @@
     });
 
     // ==========================================
-    // NAVIGATION HELPER (FIXES BLANK SCREEN BUG)
+    // NAVIGATION
     // ==========================================
     function navToStep(stepNum) {
       for (let s = 1; s <= 3; s++) {
@@ -414,7 +394,7 @@
     }
 
     // ==========================================
-    // STEP 1: SANITIZER LOGIC
+    // STEP 1: SANITIZER & AUTO-MASKER
     // ==========================================
     document.getElementById('rawImageInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -465,7 +445,6 @@
       });
     }
 
-    // Re-render when changing mask style dropdown
     document.getElementById('maskModeSelect').addEventListener('change', () => {
       renderOutputCanvas();
     });
@@ -496,7 +475,7 @@
       });
     }
 
-    // RESTORED HIGH-STRENGTH FROSTED DIFFUSION (FROM DEAL SANITIZER v1.2.58)
+    // High-Strength Frosted Diffusion (From Deal Sanitizer v1.2.58)
     function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
       const rw = Math.max(1, Math.round(w));
@@ -513,7 +492,6 @@
       off.height = srcH;
       const offCtx = off.getContext("2d");
 
-      // Aggressive downsampling to crush letterforms
       const isThinLine = rh < 45;
       const scale = isThinLine ? 0.025 : 0.04;
       const mini = document.createElement("canvas");
@@ -526,7 +504,6 @@
       offCtx.drawImage(mini, 0, 0, mini.width, mini.height, 0, 0, srcW, srcH);
       offCtx.imageSmoothingEnabled = true;
 
-      // Color underlay to eliminate dark ink bleed
       if (isThinLine) {
         const pCanvas = document.createElement("canvas");
         pCanvas.width = 1; pCanvas.height = 1;
@@ -536,7 +513,6 @@
         offCtx.fillRect(0, 0, srcW, srcH);
       }
 
-      // Strong Gaussian blur
       const baseBlur = Math.max(18, Math.round(24 * (outputCanvas.width / 1400)));
       const blurRadius = isThinLine ? Math.max(14, Math.round(rh * 0.6)) : baseBlur;
       const blurCanvas = document.createElement("canvas");
@@ -552,7 +528,6 @@
       const pCtx2 = patchCanvas.getContext("2d");
       pCtx2.drawImage(blurCanvas, x - srcX, y - srcY, rw, rh, 0, 0, rw, rh);
 
-      // Feathered Alpha Mask for organic packaging blend
       const maskCanvas = document.createElement("canvas");
       maskCanvas.width = rw;
       maskCanvas.height = rh;
@@ -576,7 +551,6 @@
       oCtx.restore();
     }
 
-    // Ambient Gradient Block
     function applyAmbientBlock(x, y, w, h) {
       const rw = Math.max(1, Math.round(w));
       const rh = Math.max(1, Math.round(h));
@@ -596,7 +570,6 @@
       oCtx.restore();
     }
 
-    // Mosaic Pixelation
     function applyPixelation(x, y, w, h) {
       const off = document.createElement("canvas");
       off.width = Math.max(1, Math.floor(w * 0.04));
@@ -609,7 +582,6 @@
       oCtx.restore();
     }
 
-    // Clean Dark Tape
     function applySolidTape(x, y, w, h) {
       oCtx.save();
       oCtx.fillStyle = "#0f172a";
@@ -617,7 +589,7 @@
       oCtx.restore();
     }
 
-    // Interactive Drag Patching
+    // Drag-to-Patch
     outputCanvas.addEventListener('mousedown', (e) => {
       if (!rawLoadedImage) return;
       isDrawingPatch = true;
@@ -671,11 +643,10 @@
       renderOutputCanvas();
     });
 
-    // Generic Title Sanitizer
     function cleanGenericTitle(raw) {
       if (!raw) return "";
       return raw
-        .replace(/\b(lysol|clorox|aussie|febreze|hempz|arm & hammer|oxiclean)\b/gi, "")
+        .replace(/\b(lysol|clorox|aussie|febreze|hempz|tree hut|spray 'n wash|spray n wash|arm & hammer|oxiclean)\b/gi, "")
         .replace(/\b(laundry\s+)?sanitizer\b/gi, "Fabric Refresher")
         .replace(/\bdisinfectant(\s+spray)?\b/gi, "Cleaning Spray")
         .replace(/\bantibacterial\b/gi, "Odor-Fighting")
@@ -684,7 +655,7 @@
         .trim();
     }
 
-    // MULTI-MODEL AUTO-FAILOVER CALLER (From Deal Sanitizer v1.2.58)
+    // MULTI-MODEL FALLBACK CALLER
     async function callGeminiWithFallback(key, payload) {
       const candidateModels = [
         "gemini-3.1-flash-lite",
@@ -719,7 +690,7 @@
       throw lastError || new Error("All candidate Gemini vision models failed or returned empty candidates.");
     }
 
-    // AI AUDIT EVENT
+    // AI AUDIT
     document.getElementById('aiAuditBtn').addEventListener('click', async () => {
       const key = apiKeyInput.value.trim();
       if (!key) return alert("Please enter your Gemini API Key in the top header!");
@@ -730,7 +701,7 @@
       btn.disabled = true;
 
       const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for:
-1. Brand logos, trademarks, emblems (Amazon smile, Lysol, Clorox, Hempz, brand text).
+1. Brand logos, trademarks, emblems (Amazon smile, Tree Hut, Spray 'N Wash, Hempz, Lysol, Clorox, brand text).
 2. Regulated medical/claim text: 'SANITIZER', 'DISINFECTANT', 'KILLS 99.9%', 'COVID-19', 'BACTERIA'.
 Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
 
@@ -775,7 +746,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       alert("Generic title copied!");
     });
 
-    // PROCEED TO STEP 2
     document.getElementById('goToStep2Btn').addEventListener('click', () => {
       if (!rawLoadedImage) return alert("Please upload a photo first!");
       sanitizedCanvasSnapshot = outputCanvas;
@@ -783,10 +753,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       navToStep(2);
     });
 
-    // SKIP SANITIZER: Downloads raw image & sends to Step 2
     document.getElementById('skipSanitizerBtn').addEventListener('click', () => {
       if (!rawLoadedImage) return alert("Please choose a photo first!");
-
       const link = document.createElement('a');
       link.download = `raw_photo_${Date.now()}.png`;
       link.href = rawLoadedImage.src;
@@ -802,9 +770,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // STEP 2: SILENT 15-VARIANT LENS
+    // STEP 2: SILENT VARIANT LENS
     // ==========================================
-    // Direct upload for Step 2 standalone
     document.getElementById('step2DirectUpload').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -937,19 +904,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     document.getElementById('goToStep3Btn').addEventListener('click', () => {
-      renderAll4DealCards();
+      renderAll4CreatorCards();
       navToStep(3);
     });
 
     // ==========================================
-    // STEP 3: ORGANIC DEAL FRAMER
+    // STEP 3: AESTHETIC CREATOR BOARD ENGINE
     // ==========================================
     function auditOcrSafety() {
       const textToScan = [
-        document.getElementById('nowPriceInput').value,
-        document.getElementById('wasPriceInput').value,
-        document.getElementById('bundleTagInput').value,
-        document.getElementById('dropPhraseInput').value
+        document.getElementById('mainNoteInput').value,
+        document.getElementById('simpleValueInput').value
       ].join(' ').toLowerCase();
 
       const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
@@ -962,209 +927,238 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
-    ['nowPriceInput', 'wasPriceInput', 'bundleTagInput', 'dropPhraseInput'].forEach(id => {
+    ['mainNoteInput', 'simpleValueInput', 'themePaletteSelect'].forEach(id => {
       document.getElementById(id).addEventListener('input', () => {
         auditOcrSafety();
-        renderAll4DealCards();
+        renderAll4CreatorCards();
       });
     });
 
-    // Raw Text Extractor
-    document.getElementById('extractBtn').addEventListener('click', () => {
-      const raw = document.getElementById('rawDealPaste').value;
-      if (!raw) return;
+    const PALETTES = {
+      warm_oatmeal: { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
+      sage_linen: { bg: "#E3E9DE", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
+      terracotta_autumn: { bg: "#EEDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
+      buttercream_slate: { bg: "#F8F5E9", polaroid: "#FFFFFF", accent: "#D1A153", text: "#2A2E33" }
+    };
 
-      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
-      if (saleMatch) {
-        document.getElementById('nowPriceInput').value = saleMatch[0].trim();
-        document.getElementById('dropPhraseInput').value = `Dropped to ${saleMatch[0].trim()}!`;
-      }
-
-      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
-      if (wasMatch) {
-        document.getElementById('wasPriceInput').value = "$" + wasMatch[1].replace(' ', '.').trim();
-      }
-
-      const packMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk))\b/i);
-      if (packMatch) {
-        document.getElementById('bundleTagInput').value = packMatch[0].toUpperCase();
-      }
-
-      auditOcrSafety();
-      renderAll4DealCards();
-    });
-
-    // Master Render: 4 Diverse Creatives
-    function renderAll4DealCards() {
+    function renderAll4CreatorCards() {
       if (chosen4Variants.length < 4) return;
 
-      const now = document.getElementById('nowPriceInput').value.trim();
-      const was = document.getElementById('wasPriceInput').value.trim();
-      const tag = document.getElementById('bundleTagInput').value.trim();
-      const dropPhrase = document.getElementById('dropPhraseInput').value.trim();
+      const note = document.getElementById('mainNoteInput').value.trim();
+      const val = document.getElementById('simpleValueInput').value.trim();
+      const themeKey = document.getElementById('themePaletteSelect').value;
+      const pal = PALETTES[themeKey] || PALETTES.warm_oatmeal;
 
-      renderCard1(chosen4Variants[0].canvas, now, was, dropPhrase);
-      renderCard2(chosen4Variants[1].canvas, now, was);
-      renderCard3(chosen4Variants[2].canvas, now, tag);
-      renderCard4(chosen4Variants[3].canvas, now);
+      renderCreator1(chosen4Variants[0].canvas, note, val, pal);
+      renderCreator2(chosen4Variants[1].canvas, note, val, pal);
+      renderCreator3(chosen4Variants[2].canvas, note, val, pal);
+      renderCreator4(chosen4Variants[3].canvas, note, val, pal);
     }
 
-    // STYLE 1: Price Drop & Doodle Ring
-    function renderCard1(srcCanvas, now, was, dropPhrase) {
+    // STYLE 1: Polaroid Snap & Washi Tape
+    function renderCreator1(srcCanvas, note, val, pal) {
       const c = document.getElementById('cardCanvas1');
       const ctx = c.getContext('2d');
-      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
 
-      // Strikethrough was price badge
-      if (was) {
+      // Tilted Polaroid Card
+      ctx.save();
+      ctx.translate(540, 500);
+      ctx.rotate(-0.035);
+
+      ctx.fillStyle = pal.polaroid;
+      ctx.shadowColor = "rgba(0,0,0,0.18)";
+      ctx.shadowBlur = 28;
+      ctx.shadowOffsetY = 14;
+      ctx.fillRect(-340, -360, 680, 800);
+      ctx.shadowColor = "transparent";
+
+      // Product cutout inside polaroid
+      ctx.drawImage(srcCanvas, -290, -310, 580, 580);
+
+      // Casual note text on polaroid bottom margin
+      ctx.fillStyle = pal.text;
+      ctx.font = "bold 34px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(note, 0, 360);
+
+      // Translucent Washi Tape on top
+      ctx.save();
+      ctx.translate(0, -370);
+      ctx.rotate(0.02);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+      ctx.fillRect(-120, -18, 240, 42);
+      ctx.restore();
+
+      ctx.restore();
+
+      // Hand-Drawn Style Price Sticker in Corner
+      if (val) {
         ctx.save();
-        ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+        ctx.translate(760, 930);
+        ctx.rotate(-0.04);
+        ctx.fillStyle = pal.polaroid;
+        ctx.shadowColor = "rgba(0,0,0,0.15)";
+        ctx.shadowBlur = 12;
         ctx.beginPath();
-        ctx.roundRect(40, 40, 240, 56, 12);
+        ctx.roundRect(-120, -32, 240, 64, 14);
         ctx.fill();
-        ctx.fillStyle = "#94a3b8";
-        ctx.font = "bold 24px sans-serif";
-        ctx.fillText(`WAS: ${was}`, 60, 78);
-        ctx.strokeStyle = "#ef4444";
-        ctx.lineWidth = 3;
+        ctx.fillStyle = pal.text;
+        ctx.font = "800 28px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(val, 0, 10);
+        ctx.restore();
+      }
+    }
+
+    // STYLE 2: Soft Tonal Review
+    function renderCreator2(srcCanvas, note, val, pal) {
+      const c = document.getElementById('cardCanvas2');
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Top Organic Heading
+      ctx.fillStyle = pal.text;
+      ctx.font = "900 44px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(note, 540, 140);
+
+      // Staged Card Inset with natural shadow
+      ctx.save();
+      ctx.fillStyle = pal.polaroid;
+      ctx.shadowColor = "rgba(0,0,0,0.14)";
+      ctx.shadowBlur = 32;
+      ctx.shadowOffsetY = 12;
+      ctx.beginPath();
+      ctx.roundRect(200, 200, 680, 680, 28);
+      ctx.fill();
+      ctx.shadowColor = "transparent";
+      ctx.drawImage(srcCanvas, 220, 220, 640, 640);
+      ctx.restore();
+
+      // Bottom Doodle Tag
+      if (val) {
+        ctx.save();
+        ctx.translate(540, 970);
+        ctx.fillStyle = pal.text;
+        ctx.font = "800 36px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(val, 0, 0);
+
+        // Subtle curved underline doodle
+        ctx.strokeStyle = pal.accent;
+        ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.moveTo(125, 70);
-        ctx.lineTo(260, 70);
+        ctx.moveTo(-100, 16);
+        ctx.quadraticCurveTo(0, 28, 100, 16);
         ctx.stroke();
         ctx.restore();
       }
-
-      // Bottom curved sticker
-      ctx.save();
-      ctx.translate(540, 940);
-      ctx.rotate(-0.02);
-      ctx.fillStyle = "#ffffff";
-      ctx.shadowColor = "rgba(0,0,0,0.25)";
-      ctx.shadowBlur = 18;
-      ctx.shadowOffsetY = 6;
-      ctx.beginPath();
-      ctx.roundRect(-280, -60, 560, 100, 24);
-      ctx.fill();
-      ctx.shadowColor = "transparent";
-
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "900 46px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(dropPhrase, 0, 8);
-
-      // Hand-drawn doodle loop around the price
-      ctx.strokeStyle = "#f59e0b";
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.ellipse(90, 0, 150, 42, -0.05, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.restore();
     }
 
-    // STYLE 2: Checkout Slip & Highlighter
-    function renderCard2(srcCanvas, now, was) {
-      const c = document.getElementById('cardCanvas2');
-      const ctx = c.getContext('2d');
-      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
-
-      const rx = 520, ry = 720, rw = 500, rh = 300;
-      ctx.save();
-      ctx.fillStyle = "#ffffff";
-      ctx.shadowColor = "rgba(0,0,0,0.3)";
-      ctx.shadowBlur = 24;
-      ctx.shadowOffsetY = 8;
-      ctx.beginPath();
-      ctx.roundRect(rx, ry, rw, rh, 18);
-      ctx.fill();
-      ctx.shadowColor = "transparent";
-
-      ctx.fillStyle = "#475569";
-      ctx.font = "bold 26px monospace";
-      ctx.fillText("Order Summary", rx + 30, ry + 50);
-
-      ctx.font = "500 24px monospace";
-      ctx.fillText(`Subtotal:`, rx + 30, ry + 110);
-      ctx.fillText(was || "$12.99", rx + 360, ry + 110);
-
-      ctx.fillStyle = "#16a34a";
-      ctx.fillText(`Savings:`, rx + 30, ry + 160);
-      ctx.fillText(`-Applied`, rx + 360, ry + 160);
-
-      // Translucent yellow highlighter bar
-      ctx.fillStyle = "rgba(253, 224, 71, 0.75)";
-      ctx.fillRect(rx + 20, ry + 215, rw - 40, 55);
-
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "900 32px monospace";
-      ctx.fillText(`Order Total:`, rx + 30, ry + 254);
-      ctx.fillText(now, rx + 330, ry + 254);
-      ctx.restore();
-    }
-
-    // STYLE 3: Bundle Value Bubble
-    function renderCard3(srcCanvas, now, tag) {
+    // STYLE 3: Scrapbook Journal Collection
+    function renderCreator3(srcCanvas, note, val, pal) {
       const c = document.getElementById('cardCanvas3');
       const ctx = c.getContext('2d');
-      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
 
-      if (tag) {
-        ctx.save();
-        ctx.fillStyle = "#f97316";
-        ctx.shadowColor = "rgba(0,0,0,0.25)";
-        ctx.shadowBlur = 14;
-        ctx.beginPath();
-        ctx.roundRect(60, 60, 220, 64, 16);
-        ctx.fill();
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "900 28px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(tag, 170, 104);
-        ctx.restore();
-      }
-
+      // Staged Scrapbook Mat
       ctx.save();
-      ctx.fillStyle = "#0f172a";
-      ctx.shadowColor = "rgba(0,0,0,0.3)";
-      ctx.shadowBlur = 20;
-      ctx.shadowOffsetY = 6;
+      ctx.translate(540, 480);
+      ctx.rotate(0.025);
+      ctx.fillStyle = pal.polaroid;
+      ctx.shadowColor = "rgba(0,0,0,0.16)";
+      ctx.shadowBlur = 24;
+      ctx.shadowOffsetY = 10;
+      ctx.fillRect(-330, -350, 660, 720);
+      ctx.shadowColor = "transparent";
+
+      ctx.drawImage(srcCanvas, -280, -300, 560, 560);
+      ctx.restore();
+
+      // Illustrated Sparkles / Star Doodles (Canvas vectors)
+      ctx.save();
+      ctx.strokeStyle = pal.text;
+      ctx.lineWidth = 3.5;
+      drawSparkle(ctx, 160, 180, 22);
+      drawSparkle(ctx, 920, 320, 18);
+      drawMiniHeart(ctx, 890, 640, 24);
+      ctx.restore();
+
+      // Bottom aesthetic paper slip
+      ctx.save();
+      ctx.translate(540, 940);
+      ctx.fillStyle = pal.polaroid;
+      ctx.shadowColor = "rgba(0,0,0,0.12)";
+      ctx.shadowBlur = 14;
       ctx.beginPath();
-      ctx.roundRect(140, 930, 800, 90, 20);
+      ctx.roundRect(-300, -45, 600, 90, 18);
       ctx.fill();
 
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "800 36px sans-serif";
+      ctx.fillStyle = pal.text;
+      ctx.font = "bold 30px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(`Just ${now} for all of these!`, 540, 988);
+      ctx.fillText(`${note} · ${val}`, 0, 10);
       ctx.restore();
     }
 
-    // STYLE 4: Minimalist Editorial Spotlight
-    function renderCard4(srcCanvas, now) {
+    function drawSparkle(ctx, cx, cy, size) {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - size);
+      ctx.lineTo(cx, cy + size);
+      ctx.moveTo(cx - size, cy);
+      ctx.lineTo(cx + size, cy);
+      ctx.stroke();
+    }
+
+    function drawMiniHeart(ctx, cx, cy, s) {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.bezierCurveTo(cx - s, cy - s, cx - s * 1.5, cy + s / 3, cx, cy + s);
+      ctx.bezierCurveTo(cx + s * 1.5, cy + s / 3, cx + s, cy - s, cx, cy);
+      ctx.stroke();
+    }
+
+    // STYLE 4: Routine Flatlay
+    function renderCreator4(srcCanvas, note, val, pal) {
       const c = document.getElementById('cardCanvas4');
       const ctx = c.getContext('2d');
-      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
 
+      // Hero cutout centered directly with soft diffused shadow
       ctx.save();
-      ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
-      ctx.shadowColor = "rgba(0,0,0,0.3)";
-      ctx.shadowBlur = 16;
+      ctx.shadowColor = "rgba(0,0,0,0.18)";
+      ctx.shadowBlur = 36;
+      ctx.shadowOffsetY = 24;
+      ctx.drawImage(srcCanvas, 160, 140, 760, 760);
+      ctx.restore();
+
+      // Quiet floating pill at bottom
+      ctx.save();
+      ctx.fillStyle = pal.polaroid;
+      ctx.shadowColor = "rgba(0,0,0,0.12)";
+      ctx.shadowBlur = 18;
       ctx.beginPath();
-      ctx.roundRect(320, 950, 440, 74, 9999);
+      ctx.roundRect(280, 940, 520, 74, 9999);
       ctx.fill();
 
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "bold 30px sans-serif";
+      ctx.fillStyle = pal.text;
+      ctx.font = "bold 26px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(`Today's pick · ${now}`, 540, 998);
+      ctx.fillText(`${note} · ${val}`, 540, 986);
 
-      ctx.fillStyle = "#64748b";
-      ctx.font = "bold 16px sans-serif";
+      ctx.fillStyle = "#94a3b8";
+      ctx.font = "bold 14px sans-serif";
       ctx.textAlign = "right";
       ctx.fillText("#ad", 1040, 1050);
       ctx.restore();
     }
 
-    // Generic Download Helpers
+    // Download Helpers
     function downloadCanvasData(dataUrl, filename) {
       const link = document.createElement('a');
       link.download = `${filename}_${Date.now()}.png`;
@@ -1180,7 +1174,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     document.getElementById('downloadAllCardsBtn').addEventListener('click', () => {
       ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => {
         setTimeout(() => {
-          downloadSingleCard(id, `deal_style_${i+1}`);
+          downloadSingleCard(id, `aesthetic_deal_${i+1}`);
         }, i * 250);
       });
     });
