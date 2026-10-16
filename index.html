@@ -390,18 +390,26 @@
     });
 
     // ==========================================
-    // NAVIGATION HELPER
+    // NAVIGATION HELPER (FIXES BLANK SCREEN BUG)
     // ==========================================
     function navToStep(stepNum) {
-      [1, 2, 3].forEach(s => {
-        document.getElementById(`step${s}Section`).classList.add('hidden');
-        document.getElementById(`stepTab${s}`).classList.remove('step-active');
-        document.getElementById(`stepTab${s}`).classList.add('step-inactive');
-      });
+      for (let s = 1; s <= 3; s++) {
+        const sec = document.getElementById(`step${s}Section`);
+        const tab = document.getElementById(`stepTab${s}`);
+        if (sec) sec.classList.add('hidden');
+        if (tab) {
+          tab.classList.remove('step-active');
+          tab.classList.add('step-inactive');
+        }
+      }
 
-      document.getElementById(`step${stepNumSection}` ? `step${stepNum}Section` : 'step1Section').classList.remove('hidden');
-      document.getElementById(`stepTab${stepNum}`).classList.remove('step-inactive');
-      document.getElementById(`stepTab${stepNum}`).classList.add('step-active');
+      const targetSec = document.getElementById(`step${stepNum}Section`);
+      const targetTab = document.getElementById(`stepTab${stepNum}`);
+      if (targetSec) targetSec.classList.remove('hidden');
+      if (targetTab) {
+        targetTab.classList.remove('step-inactive');
+        targetTab.classList.add('step-active');
+      }
       activeStep = stepNum;
     }
 
@@ -424,7 +432,6 @@
           detectedBoxes = [];
           manualBoxes = [];
 
-          // Fast payload scaling
           const maxDim = 1024;
           const scale = Math.min(1, maxDim / Math.max(rawLoadedImage.naturalWidth, rawLoadedImage.naturalHeight));
           const fCanvas = document.createElement('canvas');
@@ -489,26 +496,87 @@
       });
     }
 
-    // 1. Organic Frosted Diffusion
+    // RESTORED HIGH-STRENGTH FROSTED DIFFUSION (FROM DEAL SANITIZER v1.2.58)
     function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
       const rw = Math.max(1, Math.round(w));
       const rh = Math.max(1, Math.round(h));
 
+      const pad = Math.round(Math.min(rw, rh) * 0.35 + 16);
+      const srcX = Math.max(0, x - pad);
+      const srcY = Math.max(0, y - pad);
+      const srcW = Math.min(rawLoadedImage.naturalWidth - srcX, rw + pad * 2);
+      const srcH = Math.min(rawLoadedImage.naturalHeight - srcY, rh + pad * 2);
+
       const off = document.createElement("canvas");
-      off.width = Math.max(2, Math.floor(rw * 0.04));
-      off.height = Math.max(2, Math.floor(rh * 0.04));
+      off.width = srcW;
+      off.height = srcH;
       const offCtx = off.getContext("2d");
-      offCtx.drawImage(outputCanvas, x, y, rw, rh, 0, 0, off.width, off.height);
+
+      // Aggressive downsampling to crush letterforms
+      const isThinLine = rh < 45;
+      const scale = isThinLine ? 0.025 : 0.04;
+      const mini = document.createElement("canvas");
+      mini.width = Math.max(2, Math.floor(srcW * scale));
+      mini.height = Math.max(2, Math.floor(srcH * scale));
+      const miniCtx = mini.getContext("2d");
+      miniCtx.drawImage(rawLoadedImage, srcX, srcY, srcW, srcH, 0, 0, mini.width, mini.height);
+
+      offCtx.imageSmoothingEnabled = false;
+      offCtx.drawImage(mini, 0, 0, mini.width, mini.height, 0, 0, srcW, srcH);
+      offCtx.imageSmoothingEnabled = true;
+
+      // Color underlay to eliminate dark ink bleed
+      if (isThinLine) {
+        const pCanvas = document.createElement("canvas");
+        pCanvas.width = 1; pCanvas.height = 1;
+        pCanvas.getContext("2d").drawImage(rawLoadedImage, x + rw * 0.5, Math.max(0, y - 4), 1, 1, 0, 0, 1, 1);
+        const [r, g, b] = pCanvas.getContext("2d").getImageData(0, 0, 1, 1).data;
+        offCtx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.88)`;
+        offCtx.fillRect(0, 0, srcW, srcH);
+      }
+
+      // Strong Gaussian blur
+      const baseBlur = Math.max(18, Math.round(24 * (outputCanvas.width / 1400)));
+      const blurRadius = isThinLine ? Math.max(14, Math.round(rh * 0.6)) : baseBlur;
+      const blurCanvas = document.createElement("canvas");
+      blurCanvas.width = srcW;
+      blurCanvas.height = srcH;
+      const bCtx = blurCanvas.getContext("2d");
+      bCtx.filter = "blur(" + blurRadius + "px)";
+      bCtx.drawImage(off, 0, 0);
+
+      const patchCanvas = document.createElement("canvas");
+      patchCanvas.width = rw;
+      patchCanvas.height = rh;
+      const pCtx2 = patchCanvas.getContext("2d");
+      pCtx2.drawImage(blurCanvas, x - srcX, y - srcY, rw, rh, 0, 0, rw, rh);
+
+      // Feathered Alpha Mask for organic packaging blend
+      const maskCanvas = document.createElement("canvas");
+      maskCanvas.width = rw;
+      maskCanvas.height = rh;
+      const mCtx = maskCanvas.getContext("2d");
+      const feather = Math.max(2, Math.min(8, Math.round(Math.min(rw, rh) * 0.1)));
+      mCtx.fillStyle = "#ffffff";
+      mCtx.fillRect(feather, feather, Math.max(1, rw - feather * 2), Math.max(1, rh - feather * 2));
+
+      const softMask = document.createElement("canvas");
+      softMask.width = rw;
+      softMask.height = rh;
+      const sCtx = softMask.getContext("2d");
+      sCtx.filter = "blur(" + feather + "px)";
+      sCtx.drawImage(maskCanvas, 0, 0);
+
+      pCtx2.globalCompositeOperation = "destination-in";
+      pCtx2.drawImage(softMask, 0, 0);
 
       oCtx.save();
-      oCtx.imageSmoothingEnabled = true;
-      oCtx.filter = "blur(14px)";
-      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, rw, rh);
+      oCtx.drawImage(patchCanvas, x, y);
       oCtx.restore();
     }
 
-    // 2. Ambient Gradient Block
+    // Ambient Gradient Block
     function applyAmbientBlock(x, y, w, h) {
       const rw = Math.max(1, Math.round(w));
       const rh = Math.max(1, Math.round(h));
@@ -528,7 +596,7 @@
       oCtx.restore();
     }
 
-    // 3. Mosaic Pixelation
+    // Mosaic Pixelation
     function applyPixelation(x, y, w, h) {
       const off = document.createElement("canvas");
       off.width = Math.max(1, Math.floor(w * 0.04));
@@ -541,7 +609,7 @@
       oCtx.restore();
     }
 
-    // 4. Clean Dark Tape
+    // Clean Dark Tape
     function applySolidTape(x, y, w, h) {
       oCtx.save();
       oCtx.fillStyle = "#0f172a";
@@ -616,7 +684,7 @@
         .trim();
     }
 
-    // MULTI-MODEL AUTO-FAILOVER CALLER (From your Deal Sanitizer app)
+    // MULTI-MODEL AUTO-FAILOVER CALLER (From Deal Sanitizer v1.2.58)
     async function callGeminiWithFallback(key, payload) {
       const candidateModels = [
         "gemini-3.1-flash-lite",
@@ -707,7 +775,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       alert("Generic title copied!");
     });
 
-    // Send Step 1 to Step 2
+    // PROCEED TO STEP 2
     document.getElementById('goToStep2Btn').addEventListener('click', () => {
       if (!rawLoadedImage) return alert("Please upload a photo first!");
       sanitizedCanvasSnapshot = outputCanvas;
@@ -715,9 +783,15 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       navToStep(2);
     });
 
-    // Standalone Fallback: Skip Sanitizer
+    // SKIP SANITIZER: Downloads raw image & sends to Step 2
     document.getElementById('skipSanitizerBtn').addEventListener('click', () => {
       if (!rawLoadedImage) return alert("Please choose a photo first!");
+
+      const link = document.createElement('a');
+      link.download = `raw_photo_${Date.now()}.png`;
+      link.href = rawLoadedImage.src;
+      link.click();
+
       const rawC = document.createElement('canvas');
       rawC.width = rawLoadedImage.naturalWidth;
       rawC.height = rawLoadedImage.naturalHeight;
