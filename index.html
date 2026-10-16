@@ -1,1 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CB Media Pipeline Suite v3.0</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .card-dark { background-color: #151d30; border: 1px solid #1e293b; border-radius: 14px; }
+    .step-active { border-color: #38bdf8; background: linear-gradient(180deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%); }
+    .step-inactive { border-color: #1e293b; opacity: 0.6; }
+    canvas { max-width: 100%; height: auto; border-radius: 10px; background-color: #000; }
+  </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+  <div class="max-w-7xl mx-auto space-y-6">
 
+    <!-- TOP HEADER WITH API KEY BAR -->
+    <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v3.0</span>
+        </h1>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Standalone Packaging Sanitizer ➔ 15-Variant Lens ➔ Organic Deal Framer</p>
+      </div>
+
+      <div class="flex items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
+        <label class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 whitespace-nowrap">
+          <span>🔑</span> Gemini API:
+        </label>
+        <input 
+          type="password" 
+          id="apiKeyInput" 
+          placeholder="Paste AIzaSy... key" 
+          class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-48 sm:w-64 focus:outline-none focus:border-sky-500"
+        >
+        <span id="apiStatus" class="text-xs text-amber-400 font-medium">Ready</span>
+      </div>
+    </header>
+
+    <!-- STEP PROGRESSION BAR (DEDICATED FULL ROW) -->
+    <nav class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div id="stepTab1" onclick="navToStep(1)" class="card-dark p-4 border-2 step-active flex items-center gap-3.5 transition-all cursor-pointer">
+        <div class="w-8 h-8 rounded-full bg-sky-500 text-white font-bold flex items-center justify-center text-sm shadow-lg shadow-sky-500/20">1</div>
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 1: Sanitize Photo</h3>
+          <p class="text-xs text-slate-400">Mask logos, claims & packaging</p>
+        </div>
+      </div>
+
+      <div id="stepTab2" onclick="navToStep(2)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
+        <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">2</div>
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 2: Variant Lens</h3>
+          <p class="text-xs text-slate-400">15 silent variants ➔ Pick 4</p>
+        </div>
+      </div>
+
+      <div id="stepTab3" onclick="navToStep(3)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
+        <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Deal Framer</h3>
+          <p class="text-xs text-slate-400">4 organic creative styles</p>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ==================== STEP 1: SANITIZER & MASKER ==================== -->
+    <section id="step1Section" class="space-y-6">
+      <div class="card-dark p-5">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
+          <div>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Upload & Mask Packaging</h2>
+            <p class="text-xs text-slate-400">Upload a deal photo to detect logos and claims, or manually drag patches.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5">
+            <input type="file" id="rawImageInput" accept="image/*" class="hidden">
+            <button 
+              type="button" 
+              onclick="document.getElementById('rawImageInput').click()" 
+              class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
+            >
+              <span>📁</span> Choose Photo
+            </button>
+
+            <button 
+              type="button" 
+              id="aiAuditBtn" 
+              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
+            >
+              <span>✨</span> Process Image with AI
+            </button>
+
+            <button 
+              type="button" 
+              id="resetMasksBtn" 
+              class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all uppercase tracking-wider"
+            >
+              Reset
+            </button>
+
+            <!-- STANDALONE FALLBACK BUTTON -->
+            <button 
+              type="button" 
+              id="skipSanitizerBtn" 
+              class="px-3.5 py-2 bg-amber-600/80 hover:bg-amber-500 text-white text-xs font-bold rounded-lg transition-all uppercase tracking-wider"
+              title="Skip AI and use the original raw photo directly in Step 2"
+            >
+              ⚡ Skip Sanitizer & Use Raw
+            </button>
+
+            <button 
+              type="button" 
+              id="goToStep2Btn" 
+              class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider ml-auto"
+            >
+              Next: Send to Variant Lens ➔
+            </button>
+          </div>
+        </div>
+
+        <!-- SIDE-BY-SIDE CANVASES -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-400">
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span> Detected Packaging Targets (Audit)</span>
+              <span class="text-[10px] text-slate-500">Red dashed outline</span>
+            </div>
+            <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px]">
+              <canvas id="targetCanvas" class="w-full h-auto"></canvas>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-400">
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Masked Output Preview (Interactive)</span>
+              <span class="text-[10px] text-sky-400">Click & drag to manually patch</span>
+            </div>
+            <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px]">
+              <canvas id="outputCanvas" class="w-full h-auto cursor-crosshair"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUGGESTED GENERIC TITLE -->
+        <div class="mt-5 pt-4 border-t border-slate-800 flex items-center gap-3">
+          <label class="text-xs font-bold text-sky-400 uppercase tracking-wider whitespace-nowrap">Compliant Generic Title:</label>
+          <input type="text" id="suggestedTitleInput" readonly placeholder="Generic title appears here automatically after processing..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-slate-200">
+          <button id="copyTitleBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider whitespace-nowrap">Copy</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STEP 2: SILENT VARIANT LENS ==================== -->
+    <section id="step2Section" class="hidden space-y-6">
+      <div class="card-dark p-5">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
+          <div>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Variant Lens Engine (Anti-pHash Protection)</h2>
+            <p class="text-xs text-slate-400">15 mathematical angle/contrast variants calculated silently. Here are 4 random featured picks.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5">
+            <!-- STANDALONE DIRECT UPLOAD FOR STEP 2 -->
+            <input type="file" id="step2DirectUpload" accept="image/*" class="hidden">
+            <button 
+              type="button" 
+              onclick="document.getElementById('step2DirectUpload').click()" 
+              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider"
+              title="Upload an image directly into Step 2 without using Step 1"
+            >
+              <span>📁</span> Upload Directly Here
+            </button>
+
+            <button 
+              type="button" 
+              id="reshuffleVariantsBtn" 
+              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider"
+            >
+              <span>🔀</span> Re-Shuffle 4
+            </button>
+
+            <button 
+              type="button" 
+              id="downloadAllFeaturedBtn" 
+              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider"
+            >
+              <span>📥</span> Download All 4 Featured
+            </button>
+
+            <button 
+              type="button" 
+              id="goToStep3Btn" 
+              class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
+            >
+              Proceed to Step 3: Deal Framer ➔
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 FEATURED VARIANTS GRID -->
+        <div id="featuredGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- COLLAPSIBLE 15-VARIANT DRAWER -->
+        <div class="mt-6 pt-4 border-t border-slate-800">
+          <button type="button" id="toggle15DrawerBtn" class="text-xs font-bold text-sky-400 uppercase tracking-wider hover:underline flex items-center gap-1">
+            <span>📂</span> <span id="drawerToggleText">Show Full 15-Variant Matrix</span>
+          </button>
+          <div id="drawer15Matrix" class="hidden mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3">
+            <!-- Full 15 variants rendered here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STEP 3: ORGANIC DEAL FRAMER ==================== -->
+    <section id="step3Section" class="hidden space-y-6">
+      
+      <!-- DATA PARSER & OCR BLACKLIST AUDIT -->
+      <div class="card-dark p-5 space-y-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Deal Details & Style Customization</h2>
+            <p class="text-xs text-slate-400">Paste raw text to auto-extract, or tune fields manually. No forced bulky titles!</p>
+          </div>
+          <button 
+            type="button" 
+            onclick="navToStep(2)" 
+            class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider"
+          >
+            ⬅ Back to Step 2
+          </button>
+        </div>
+
+        <!-- OCR BLACKLIST ALERT -->
+        <div id="ocrWarningBanner" class="hidden bg-rose-950/80 border border-rose-500 p-3 rounded-xl text-rose-300 text-xs flex items-center gap-2">
+          <span>🚨</span> <strong>Facebook OCR Blacklist Alert:</strong> <span id="ocrWarningText"></span>
+        </div>
+
+        <div class="flex gap-2">
+          <textarea 
+            id="rawDealPaste" 
+            placeholder="Paste Command Center raw deal output or deal text here..." 
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-20"
+          ></textarea>
+          <button 
+            type="button" 
+            id="extractBtn" 
+            class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider"
+          >
+            ⚡ Extract Info
+          </button>
+        </div>
+
+        <!-- TUNING INPUTS (ORGANIC VARIETY) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Now Price (Exact)</label>
+            <input type="text" id="nowPriceInput" value="$5.99" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Was Price (Original)</label>
+            <input type="text" id="wasPriceInput" value="$10.12" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-400 mt-1">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Bundle / Pack Tag</label>
+            <input type="text" id="bundleTagInput" value="50 Count" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Card 1 Drop Phrase</label>
+            <input type="text" id="dropPhraseInput" value="Dropped to $5.99!" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 DIVERSE DEAL CREATIVES -->
+      <div class="card-dark p-5 space-y-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
+            <p class="text-xs text-slate-400">Each rendered directly on its unique Variant Lens base with organic, non-uniform creator styles.</p>
+          </div>
+          <button 
+            type="button" 
+            id="downloadAllCardsBtn" 
+            class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md uppercase tracking-wider flex items-center gap-1.5"
+          >
+            <span>📥</span> Download All 4 Creatives
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Card 1 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400">Style 1: Price Drop & Doodle Ring</span>
+            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
+              <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-auto"></canvas>
+            </div>
+            <button onclick="downloadSingleCard('cardCanvas1', 'deal_style1_drop')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Style 2: Checkout Slip & Highlighter</span>
+            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
+              <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-auto"></canvas>
+            </div>
+            <button onclick="downloadSingleCard('cardCanvas2', 'deal_style2_receipt')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400">Style 3: Bundle Value Bubble</span>
+            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
+              <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-auto"></canvas>
+            </div>
+            <button onclick="downloadSingleCard('cardCanvas3', 'deal_style3_bundle')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Style 4: Minimalist Editorial Spotlight</span>
+            <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
+              <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-auto"></canvas>
+            </div>
+            <button onclick="downloadSingleCard('cardCanvas4', 'deal_style4_minimal')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // ==========================================
+    // GLOBAL STATE
+    // ==========================================
+    let activeStep = 1;
+    let rawLoadedImage = null;
+    let base64ApiPayload = "";
+    let detectedBoxes = [];
+    let manualBoxes = [];
+    let isDrawingPatch = false;
+    let patchStartX = 0, patchStartY = 0;
+
+    let sanitizedCanvasSnapshot = null;
+    let all15Variants = [];
+    let chosen4Variants = [];
+
+    const targetCanvas = document.getElementById('targetCanvas');
+    const tCtx = targetCanvas.getContext('2d');
+    const outputCanvas = document.getElementById('outputCanvas');
+    const oCtx = outputCanvas.getContext('2d');
+
+    // FACEBOOK OCR BANNED LIST
+    const FB_BLACKLIST = [
+      "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
+      "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
+      "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link"
+    ];
+
+    // ==========================================
+    // INITIALIZATION & API KEY STORAGE
+    // ==========================================
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
+    if (savedKey) {
+      apiKeyInput.value = savedKey;
+      document.getElementById('apiStatus').innerText = "Saved";
+      document.getElementById('apiStatus').className = "text-xs text-emerald-400 font-medium";
+    }
+    apiKeyInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      localStorage.setItem('deal_gemini_key', val);
+      document.getElementById('apiStatus').innerText = val ? "Active" : "Ready";
+      document.getElementById('apiStatus').className = val ? "text-xs text-emerald-400 font-medium" : "text-xs text-amber-400 font-medium";
+    });
+
+    // ==========================================
+    // NAVIGATION HELPER
+    // ==========================================
+    function navToStep(stepNum) {
+      [1, 2, 3].forEach(s => {
+        document.getElementById(`step${s}Section`).classList.add('hidden');
+        document.getElementById(`stepTab${s}`).classList.remove('step-active');
+        document.getElementById(`stepTab${s}`).classList.add('step-inactive');
+      });
+
+      document.getElementById(`step${stepNumSection}` ? `step${stepNum}Section` : 'step1Section').classList.remove('hidden');
+      document.getElementById(`stepTab${stepNum}`).classList.remove('step-inactive');
+      document.getElementById(`stepTab${stepNum}`).classList.add('step-active');
+      activeStep = stepNum;
+    }
+
+    // ==========================================
+    // STEP 1: SANITIZER LOGIC
+    // ==========================================
+    document.getElementById('rawImageInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        rawLoadedImage = new Image();
+        rawLoadedImage.onload = function() {
+          targetCanvas.width = rawLoadedImage.naturalWidth;
+          targetCanvas.height = rawLoadedImage.naturalHeight;
+          outputCanvas.width = rawLoadedImage.naturalWidth;
+          outputCanvas.height = rawLoadedImage.naturalHeight;
+
+          detectedBoxes = [];
+          manualBoxes = [];
+
+          // Fast payload scaling
+          const maxDim = 1024;
+          const scale = Math.min(1, maxDim / Math.max(rawLoadedImage.naturalWidth, rawLoadedImage.naturalHeight));
+          const fCanvas = document.createElement('canvas');
+          fCanvas.width = Math.round(rawLoadedImage.naturalWidth * scale);
+          fCanvas.height = Math.round(rawLoadedImage.naturalHeight * scale);
+          fCanvas.getContext('2d').drawImage(rawLoadedImage, 0, 0, fCanvas.width, fCanvas.height);
+          base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
+
+          renderTargetCanvas();
+          renderOutputCanvas();
+        };
+        rawLoadedImage.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function renderTargetCanvas() {
+      if (!rawLoadedImage) return;
+      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+      tCtx.drawImage(rawLoadedImage, 0, 0);
+
+      tCtx.strokeStyle = "#ef4444";
+      tCtx.lineWidth = 5;
+      tCtx.setLineDash([8, 6]);
+      detectedBoxes.forEach(b => {
+        const x = (b[1] / 1000) * targetCanvas.width;
+        const y = (b[0] / 1000) * targetCanvas.height;
+        const w = ((b[3] - b[1]) / 1000) * targetCanvas.width;
+        const h = ((b[2] - b[0]) / 1000) * targetCanvas.height;
+        tCtx.strokeRect(x, y, w, h);
+      });
+    }
+
+    function renderOutputCanvas() {
+      if (!rawLoadedImage) return;
+      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+      oCtx.drawImage(rawLoadedImage, 0, 0);
+
+      const all = detectedBoxes.concat(manualBoxes);
+      all.forEach(b => {
+        const x = (b[1] / 1000) * outputCanvas.width;
+        const y = (b[0] / 1000) * outputCanvas.height;
+        const w = ((b[3] - b[1]) / 1000) * outputCanvas.width;
+        const h = ((b[2] - b[0]) / 1000) * outputCanvas.height;
+        applyFrostedMask(x, y, w, h);
+      });
+    }
+
+    function applyFrostedMask(x, y, w, h) {
+      if (w <= 0 || h <= 0) return;
+      const off = document.createElement('canvas');
+      off.width = Math.max(2, Math.floor(w * 0.04));
+      off.height = Math.max(2, Math.floor(h * 0.04));
+      const offCtx = off.getContext('2d');
+      offCtx.drawImage(outputCanvas, x, y, w, h, 0, 0, off.width, off.height);
+
+      oCtx.save();
+      oCtx.imageSmoothingEnabled = true;
+      oCtx.filter = "blur(12px)";
+      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, w, h);
+      oCtx.restore();
+    }
+
+    // Interactive Drag Patching
+    outputCanvas.addEventListener('mousedown', (e) => {
+      if (!rawLoadedImage) return;
+      isDrawingPatch = true;
+      const r = outputCanvas.getBoundingClientRect();
+      patchStartX = (e.clientX - r.left) * (outputCanvas.width / r.width);
+      patchStartY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+    });
+
+    outputCanvas.addEventListener('mousemove', (e) => {
+      if (!isDrawingPatch) return;
+      renderOutputCanvas();
+      const r = outputCanvas.getBoundingClientRect();
+      const curX = (e.clientX - r.left) * (outputCanvas.width / r.width);
+      const curY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+
+      oCtx.save();
+      oCtx.strokeStyle = "#38bdf8";
+      oCtx.lineWidth = 3;
+      oCtx.setLineDash([6, 6]);
+      oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
+      oCtx.restore();
+    });
+
+    outputCanvas.addEventListener('mouseup', (e) => {
+      if (!isDrawingPatch) return;
+      isDrawingPatch = false;
+      const r = outputCanvas.getBoundingClientRect();
+      const endX = (e.clientX - r.left) * (outputCanvas.width / r.width);
+      const endY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+
+      const x1 = Math.min(patchStartX, endX);
+      const y1 = Math.min(patchStartY, endY);
+      const x2 = Math.max(patchStartX, endX);
+      const y2 = Math.max(patchStartY, endY);
+
+      if (x2 - x1 > 8 && y2 - y1 > 8) {
+        manualBoxes.push([
+          Math.round((y1 / outputCanvas.height) * 1000),
+          Math.round((x1 / outputCanvas.width) * 1000),
+          Math.round((y2 / outputCanvas.height) * 1000),
+          Math.round((x2 / outputCanvas.width) * 1000)
+        ]);
+      }
+      renderOutputCanvas();
+    });
+
+    document.getElementById('resetMasksBtn').addEventListener('click', () => {
+      detectedBoxes = [];
+      manualBoxes = [];
+      renderTargetCanvas();
+      renderOutputCanvas();
+    });
+
+    // Sanitizer Title Cleaner
+    function cleanGenericTitle(raw) {
+      if (!raw) return "";
+      return raw
+        .replace(/\b(lysol|clorox|aussie|febreze|arm & hammer|oxiclean)\b/gi, "")
+        .replace(/\b(laundry\s+)?sanitizer\b/gi, "Fabric Refresher")
+        .replace(/\bdisinfectant(\s+spray)?\b/gi, "Cleaning Spray")
+        .replace(/\bantibacterial\b/gi, "Odor-Fighting")
+        .replace(/\bkills\s+99\.9%(?:\s+of\s+germs)?\b/gi, "Total Clean")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    // Gemini Packaging Detection API Call
+    document.getElementById('aiAuditBtn').addEventListener('click', async () => {
+      const key = apiKeyInput.value.trim();
+      if (!key) return alert("Please enter your Gemini API Key in the top header!");
+      if (!base64ApiPayload) return alert("Please select a photo first!");
+
+      const btn = document.getElementById('aiAuditBtn');
+      btn.innerText = "⏳ Auditing...";
+      btn.disabled = true;
+
+      const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for:
+1. Brand logos, trademarks, emblems (Amazon smile, Lysol, Clorox, brand text).
+2. Regulated medical/claim text: 'SANITIZER', 'DISINFECTANT', 'KILLS 99.9%', 'COVID-19', 'BACTERIA'.
+Do not mask generic category nouns or sizes. Return JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }],
+            generationConfig: { responseMimeType: "application/json" }
+          })
+        });
+
+        const data = await res.json();
+        const parsed = JSON.parse(data.candidates[0].content.parts[0].text);
+        detectedBoxes = parsed.boxes || [];
+        if (parsed.suggested_title) {
+          document.getElementById('suggestedTitleInput').value = cleanGenericTitle(parsed.suggested_title);
+        }
+        renderTargetCanvas();
+        renderOutputCanvas();
+      } catch (err) {
+        alert("Gemini audit error: " + err.message + "\nYou can still use manual drag patches or skip to Step 2!");
+      } finally {
+        btn.innerText = "✨ Process Image with AI";
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById('copyTitleBtn').addEventListener('click', () => {
+      const val = document.getElementById('suggestedTitleInput').value;
+      if (!val) return;
+      navigator.clipboard.writeText(val);
+      alert("Generic title copied!");
+    });
+
+    // Send Step 1 to Step 2
+    document.getElementById('goToStep2Btn').addEventListener('click', () => {
+      if (!rawLoadedImage) return alert("Please upload a photo first!");
+      sanitizedCanvasSnapshot = outputCanvas;
+      runVariantLensEngine(sanitizedCanvasSnapshot);
+      navToStep(2);
+    });
+
+    // Standalone Fallback: Skip Sanitizer
+    document.getElementById('skipSanitizerBtn').addEventListener('click', () => {
+      if (!rawLoadedImage) return alert("Please choose a photo first!");
+      const rawC = document.createElement('canvas');
+      rawC.width = rawLoadedImage.naturalWidth;
+      rawC.height = rawLoadedImage.naturalHeight;
+      rawC.getContext('2d').drawImage(rawLoadedImage, 0, 0);
+      sanitizedCanvasSnapshot = rawC;
+      runVariantLensEngine(sanitizedCanvasSnapshot);
+      navToStep(2);
+    });
+
+    // ==========================================
+    // STEP 2: SILENT 15-VARIANT LENS
+    // ==========================================
+    // Direct upload for Step 2 standalone
+    document.getElementById('step2DirectUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const directImg = new Image();
+        directImg.onload = function() {
+          const directCanvas = document.createElement('canvas');
+          directCanvas.width = directImg.naturalWidth;
+          directCanvas.height = directImg.naturalHeight;
+          directCanvas.getContext('2d').drawImage(directImg, 0, 0);
+          sanitizedCanvasSnapshot = directCanvas;
+          runVariantLensEngine(sanitizedCanvasSnapshot);
+        };
+        directImg.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function runVariantLensEngine(sourceCanvas) {
+      const w = sourceCanvas.width;
+      const h = sourceCanvas.height;
+      const whites = ['#ffffff', '#fdfdfd', '#fcfcfc', '#fefefe', '#fafafa', '#f8f8f8'];
+      const getWhite = () => whites[Math.floor(Math.random() * whites.length)];
+
+      all15Variants = [];
+      const configs = [
+        { rot: 1, zoom: 1.0, contrast: 1.05, sat: 1.02, name: "1° CW Crisp" },
+        { rot: -1, zoom: 1.04, bright: 1.04, name: "1° CCW Zoom" },
+        { rot: 2.5, zoom: 0.97, bright: 1.03, name: "2.5° CW Bright" },
+        { rot: -2.5, zoom: 0.97, contrast: 1.08, sat: 1.03, name: "2.5° CCW Contrast" },
+        { rot: 1, zoom: 0.98, contrast: 1.1, name: "1° CW Sharpen" },
+        { rot: 3, zoom: 0.95, contrast: 1.03, bright: 1.03, name: "3° CW Radiant" },
+        { rot: -3, zoom: 0.95, contrast: 1.05, sat: 1.05, name: "3° CCW Saturated" },
+        { rot: -1, zoom: 0.96, contrast: 1.07, name: "1° CCW Dynamic" },
+        { rot: 2, zoom: 0.93, bright: 1.04, name: "2° CW Backdrop" },
+        { rot: -2, zoom: 0.93, contrast: 1.09, name: "2° CCW Backdrop" },
+        { rot: 1, zoom: 1.05, bright: 1.04, name: "1° CW Bright High" },
+        { rot: -1, zoom: 1.07, contrast: 1.06, name: "1° CCW Contrast High" },
+        { rot: 1.5, zoom: 1.07, contrast: 1.05, sat: 1.05, name: "1.5° CW Zoom" },
+        { rot: 0, skew: 0.02, zoom: 0.96, contrast: 1.04, name: "Micro-Skew Warp" },
+        { rot: 0, zoom: 1.03, sat: 1.06, name: "Asymmetric Micro-Crop" }
+      ];
+
+      configs.forEach((cfg, idx) => {
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        const cx = c.getContext('2d');
+        cx.fillStyle = getWhite();
+        cx.fillRect(0, 0, w, h);
+
+        cx.save();
+        cx.translate(w / 2, h / 2);
+        if (cfg.skew) cx.transform(1, cfg.skew, -cfg.skew, 1, 0, 0);
+        if (cfg.rot) cx.rotate((cfg.rot * Math.PI) / 180);
+
+        let filter = "";
+        if (cfg.contrast) filter += `contrast(${cfg.contrast}) `;
+        if (cfg.bright) filter += `brightness(${cfg.bright}) `;
+        if (cfg.sat) filter += `saturate(${cfg.sat}) `;
+        if (filter) cx.filter = filter.trim();
+
+        const sw = w * (cfg.zoom || 1.0);
+        const sh = h * (cfg.zoom || 1.0);
+        cx.drawImage(sourceCanvas, -sw / 2, -sh / 2, sw, sh);
+        cx.restore();
+
+        all15Variants.push({ id: idx + 1, name: cfg.name, canvas: c });
+      });
+
+      pick4FeaturedVariants();
+      render15Drawer();
+    }
+
+    function pick4FeaturedVariants() {
+      const shuffled = [...all15Variants].sort(() => 0.5 - Math.random());
+      chosen4Variants = shuffled.slice(0, 4);
+
+      const grid = document.getElementById('featuredGrid');
+      grid.innerHTML = "";
+      chosen4Variants.forEach((v, i) => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 p-2.5 rounded-xl space-y-2";
+        card.innerHTML = `
+          <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
+            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Variant ${v.id}</p>
+            <button onclick="downloadCanvasData('${v.canvas.toDataURL()}', 'variant_${v.id}')" class="text-xs text-sky-400 hover:text-sky-300">⬇</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function render15Drawer() {
+      const container = document.getElementById('drawer15Matrix');
+      container.innerHTML = "";
+      all15Variants.forEach(v => {
+        const item = document.createElement('div');
+        item.className = "bg-slate-900 border border-slate-800 p-2 rounded-lg space-y-1 text-center";
+        item.innerHTML = `
+          <div class="aspect-square bg-slate-950 rounded overflow-hidden">
+            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
+          </div>
+          <p class="text-[9px] text-slate-400 truncate">${v.id}. ${v.name}</p>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    document.getElementById('reshuffleVariantsBtn').addEventListener('click', pick4FeaturedVariants);
+
+    document.getElementById('toggle15DrawerBtn').addEventListener('click', () => {
+      const d = document.getElementById('drawer15Matrix');
+      const isHidden = d.classList.contains('hidden');
+      d.classList.toggle('hidden');
+      document.getElementById('drawerToggleText').innerText = isHidden ? "Hide Full 15-Variant Matrix" : "Show Full 15-Variant Matrix";
+    });
+
+    document.getElementById('downloadAllFeaturedBtn').addEventListener('click', () => {
+      chosen4Variants.forEach((v, i) => {
+        setTimeout(() => {
+          downloadCanvasData(v.canvas.toDataURL(), `featured_variant_${v.id}`);
+        }, i * 250);
+      });
+    });
+
+    document.getElementById('goToStep3Btn').addEventListener('click', () => {
+      renderAll4DealCards();
+      navToStep(3);
+    });
+
+    // ==========================================
+    // STEP 3: ORGANIC DEAL FRAMER
+    // ==========================================
+    function auditOcrSafety() {
+      const textToScan = [
+        document.getElementById('nowPriceInput').value,
+        document.getElementById('wasPriceInput').value,
+        document.getElementById('bundleTagInput').value,
+        document.getElementById('dropPhraseInput').value
+      ].join(' ').toLowerCase();
+
+      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
+      const banner = document.getElementById('ocrWarningBanner');
+      if (hits.length > 0) {
+        document.getElementById('ocrWarningText').innerText = `Banned words detected: "${hits.join(', ')}". Replace them to prevent shadowbans!`;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    ['nowPriceInput', 'wasPriceInput', 'bundleTagInput', 'dropPhraseInput'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        auditOcrSafety();
+        renderAll4DealCards();
+      });
+    });
+
+    // Raw Text Extractor
+    document.getElementById('extractBtn').addEventListener('click', () => {
+      const raw = document.getElementById('rawDealPaste').value;
+      if (!raw) return;
+
+      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
+      if (saleMatch) {
+        document.getElementById('nowPriceInput').value = saleMatch[0].trim();
+        document.getElementById('dropPhraseInput').value = `Dropped to ${saleMatch[0].trim()}!`;
+      }
+
+      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
+      if (wasMatch) {
+        document.getElementById('wasPriceInput').value = "$" + wasMatch[1].replace(' ', '.').trim();
+      }
+
+      const packMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk))\b/i);
+      if (packMatch) {
+        document.getElementById('bundleTagInput').value = packMatch[0].toUpperCase();
+      }
+
+      auditOcrSafety();
+      renderAll4DealCards();
+    });
+
+    // Master Render: 4 Diverse Creatives
+    function renderAll4DealCards() {
+      if (chosen4Variants.length < 4) return;
+
+      const now = document.getElementById('nowPriceInput').value.trim();
+      const was = document.getElementById('wasPriceInput').value.trim();
+      const tag = document.getElementById('bundleTagInput').value.trim();
+      const dropPhrase = document.getElementById('dropPhraseInput').value.trim();
+
+      renderCard1(chosen4Variants[0].canvas, now, was, dropPhrase);
+      renderCard2(chosen4Variants[1].canvas, now, was);
+      renderCard3(chosen4Variants[2].canvas, now, tag);
+      renderCard4(chosen4Variants[3].canvas, now);
+    }
+
+    // STYLE 1: Price Drop & Doodle Ring
+    function renderCard1(srcCanvas, now, was, dropPhrase) {
+      const c = document.getElementById('cardCanvas1');
+      const ctx = c.getContext('2d');
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+
+      // Strikethrough was price badge
+      if (was) {
+        ctx.save();
+        ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+        ctx.beginPath();
+        ctx.roundRect(40, 40, 240, 56, 12);
+        ctx.fill();
+        ctx.fillStyle = "#94a3b8";
+        ctx.font = "bold 24px sans-serif";
+        ctx.fillText(`WAS: ${was}`, 60, 78);
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(125, 70);
+        ctx.lineTo(260, 70);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // Bottom curved sticker
+      ctx.save();
+      ctx.translate(540, 940);
+      ctx.rotate(-0.02);
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "rgba(0,0,0,0.25)";
+      ctx.shadowBlur = 18;
+      ctx.shadowOffsetY = 6;
+      ctx.beginPath();
+      ctx.roundRect(-280, -60, 560, 100, 24);
+      ctx.fill();
+      ctx.shadowColor = "transparent";
+
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "900 46px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(dropPhrase, 0, 8);
+
+      // Hand-drawn doodle loop around the price
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.ellipse(90, 0, 150, 42, -0.05, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // STYLE 2: Checkout Slip & Highlighter
+    function renderCard2(srcCanvas, now, was) {
+      const c = document.getElementById('cardCanvas2');
+      const ctx = c.getContext('2d');
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+
+      const rx = 520, ry = 720, rw = 500, rh = 300;
+      ctx.save();
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "rgba(0,0,0,0.3)";
+      ctx.shadowBlur = 24;
+      ctx.shadowOffsetY = 8;
+      ctx.beginPath();
+      ctx.roundRect(rx, ry, rw, rh, 18);
+      ctx.fill();
+      ctx.shadowColor = "transparent";
+
+      ctx.fillStyle = "#475569";
+      ctx.font = "bold 26px monospace";
+      ctx.fillText("Order Summary", rx + 30, ry + 50);
+
+      ctx.font = "500 24px monospace";
+      ctx.fillText(`Subtotal:`, rx + 30, ry + 110);
+      ctx.fillText(was || "$12.99", rx + 360, ry + 110);
+
+      ctx.fillStyle = "#16a34a";
+      ctx.fillText(`Savings:`, rx + 30, ry + 160);
+      ctx.fillText(`-Applied`, rx + 360, ry + 160);
+
+      // Translucent yellow highlighter bar
+      ctx.fillStyle = "rgba(253, 224, 71, 0.75)";
+      ctx.fillRect(rx + 20, ry + 215, rw - 40, 55);
+
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "900 32px monospace";
+      ctx.fillText(`Order Total:`, rx + 30, ry + 254);
+      ctx.fillText(now, rx + 330, ry + 254);
+      ctx.restore();
+    }
+
+    // STYLE 3: Bundle Value Bubble
+    function renderCard3(srcCanvas, now, tag) {
+      const c = document.getElementById('cardCanvas3');
+      const ctx = c.getContext('2d');
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+
+      if (tag) {
+        ctx.save();
+        ctx.fillStyle = "#f97316";
+        ctx.shadowColor = "rgba(0,0,0,0.25)";
+        ctx.shadowBlur = 14;
+        ctx.beginPath();
+        ctx.roundRect(60, 60, 220, 64, 16);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "900 28px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(tag, 170, 104);
+        ctx.restore();
+      }
+
+      ctx.save();
+      ctx.fillStyle = "#0f172a";
+      ctx.shadowColor = "rgba(0,0,0,0.3)";
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetY = 6;
+      ctx.beginPath();
+      ctx.roundRect(140, 930, 800, 90, 20);
+      ctx.fill();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "800 36px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(`Just ${now} for all of these!`, 540, 988);
+      ctx.restore();
+    }
+
+    // STYLE 4: Minimalist Editorial Spotlight
+    function renderCard4(srcCanvas, now) {
+      const c = document.getElementById('cardCanvas4');
+      const ctx = c.getContext('2d');
+      ctx.drawImage(srcCanvas, 0, 0, 1080, 1080);
+
+      ctx.save();
+      ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
+      ctx.shadowColor = "rgba(0,0,0,0.3)";
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.roundRect(320, 950, 440, 74, 9999);
+      ctx.fill();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 30px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(`Today's pick · ${now}`, 540, 998);
+
+      ctx.fillStyle = "#64748b";
+      ctx.font = "bold 16px sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("#ad", 1040, 1050);
+      ctx.restore();
+    }
+
+    // Generic Download Helpers
+    function downloadCanvasData(dataUrl, filename) {
+      const link = document.createElement('a');
+      link.download = `${filename}_${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+    }
+
+    function downloadSingleCard(canvasId, name) {
+      const c = document.getElementById(canvasId);
+      downloadCanvasData(c.toDataURL('image/png'), name);
+    }
+
+    document.getElementById('downloadAllCardsBtn').addEventListener('click', () => {
+      ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => {
+        setTimeout(() => {
+          downloadSingleCard(id, `deal_style_${i+1}`);
+        }, i * 250);
+      });
+    });
+  </script>
+</body>
+</html>
