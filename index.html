@@ -10,7 +10,7 @@
     .card-dark { background-color: #151d30; border: 1px solid #1e293b; border-radius: 14px; }
     .step-active { border-color: #38bdf8; background: linear-gradient(180deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%); }
     .step-inactive { border-color: #1e293b; opacity: 0.6; }
-    canvas { max-width: 100%; height: auto; border-radius: 10px; background-color: #000; }
+    canvas { width: 100% !important; max-width: 100% !important; height: auto !important; aspect-ratio: 1 / 1; display: block; border-radius: 10px; background-color: #000; }
   </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen">
@@ -380,109 +380,126 @@
           </button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block">Style: Polaroid Snap</span>
-            <div onclick="openZoomModal('cardCanvas1', 'Style 1: Polaroid Snap & Tape')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-              <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
-              <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+        <!-- CONSTRAINED 4-COLUMN CARD GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+          <!-- Card 1 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
+            <div>
+              <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block mb-2">Style: Polaroid Snap</span>
+              <div onclick="openZoomModal('cardCanvas1', 'Card 1 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+                <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
+                <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+                </div>
               </div>
             </div>
 
-            <!-- Individual Sliders for Card 1 -->
-            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
-              <div class="flex justify-between text-slate-400">
-                <span>Product Size:</span>
-                <span id="pScaleVal1" class="text-sky-400 font-mono">100%</span>
+            <div class="space-y-2 pt-2">
+              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between text-slate-400">
+                  <span>Product Size:</span>
+                  <span id="pScaleVal1" class="text-sky-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="pScale1" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
+                
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Scale:</span>
+                  <span id="bScaleVal1" class="text-sky-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="bScale1" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
               </div>
-              <input type="range" id="pScale1" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
-              
-              <div class="flex justify-between text-slate-400">
-                <span>Badge Scale:</span>
-                <span id="bScaleVal1" class="text-sky-400 font-mono">100%</span>
-              </div>
-              <input type="range" id="bScale1" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
+              <button onclick="downloadSingleCard('cardCanvas1', 'deal_card_1')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
             </div>
-
-            <button onclick="downloadSingleCard('cardCanvas1', 'aesthetic_polaroid')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
           </div>
 
-          <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Style: Top Kraft Tag</span>
-            <div onclick="openZoomModal('cardCanvas2', 'Style 2: Soft Tonal Review')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-              <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
-              <div class="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+          <!-- Card 2 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
+            <div>
+              <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block mb-2">Style: Top Kraft Tag</span>
+              <div onclick="openZoomModal('cardCanvas2', 'Card 2 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+                <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
+                <div class="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+                </div>
               </div>
             </div>
 
-            <!-- Individual Sliders for Card 2 -->
-            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
-              <div class="flex justify-between text-slate-400">
-                <span>Product Size:</span>
-                <span id="pScaleVal2" class="text-amber-400 font-mono">100%</span>
+            <div class="space-y-2 pt-2">
+              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between text-slate-400">
+                  <span>Product Size:</span>
+                  <span id="pScaleVal2" class="text-amber-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="pScale2" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
+                
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Scale:</span>
+                  <span id="bScaleVal2" class="text-amber-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="bScale2" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
               </div>
-              <input type="range" id="pScale2" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
-              
-              <div class="flex justify-between text-slate-400">
-                <span>Badge Scale:</span>
-                <span id="bScaleVal2" class="text-amber-400 font-mono">100%</span>
-              </div>
-              <input type="range" id="bScale2" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
+              <button onclick="downloadSingleCard('cardCanvas2', 'deal_card_2')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
             </div>
-
-            <button onclick="downloadSingleCard('cardCanvas2', 'aesthetic_review')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
           </div>
 
-          <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block">Style: Split Horizon</span>
-            <div onclick="openZoomModal('cardCanvas3', 'Style 3: Scrapbook Journal')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-              <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
-              <div class="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+          <!-- Card 3 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
+            <div>
+              <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block mb-2">Style: Split Horizon</span>
+              <div onclick="openZoomModal('cardCanvas3', 'Card 3 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+                <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
+                <div class="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+                </div>
               </div>
             </div>
 
-            <!-- Individual Sliders for Card 3 -->
-            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
-              <div class="flex justify-between text-slate-400">
-                <span>Product Size:</span>
-                <span id="pScaleVal3" class="text-rose-400 font-mono">100%</span>
+            <div class="space-y-2 pt-2">
+              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between text-slate-400">
+                  <span>Product Size:</span>
+                  <span id="pScaleVal3" class="text-rose-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="pScale3" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
+                
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Scale:</span>
+                  <span id="bScaleVal3" class="text-rose-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="bScale3" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
               </div>
-              <input type="range" id="pScale3" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
-              
-              <div class="flex justify-between text-slate-400">
-                <span>Badge Scale:</span>
-                <span id="bScaleVal3" class="text-rose-400 font-mono">100%</span>
-              </div>
-              <input type="range" id="bScale3" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
+              <button onclick="downloadSingleCard('cardCanvas3', 'deal_card_3')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
             </div>
-
-            <button onclick="downloadSingleCard('cardCanvas3', 'aesthetic_scrapbook')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
           </div>
 
-          <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">Style: Torn Notebook</span>
-            <div onclick="openZoomModal('cardCanvas4', 'Style 4: Routine Flatlay')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-              <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
-              <div class="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+          <!-- Card 4 -->
+          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
+            <div>
+              <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block mb-2">Style: Torn Notebook</span>
+              <div onclick="openZoomModal('cardCanvas4', 'Card 4 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
+                <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
+                <div class="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
+                </div>
               </div>
             </div>
 
-            <!-- Individual Sliders for Card 4 -->
-            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
-              <div class="flex justify-between text-slate-400">
-                <span>Product Size:</span>
-                <span id="pScaleVal4" class="text-emerald-400 font-mono">100%</span>
+            <div class="space-y-2 pt-2">
+              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between text-slate-400">
+                  <span>Product Size:</span>
+                  <span id="pScaleVal4" class="text-emerald-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="pScale4" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
+                
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Scale:</span>
+                  <span id="bScaleVal4" class="text-emerald-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="bScale4" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
               </div>
-              <input type="range" id="pScale4" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
-              
-              <div class="flex justify-between text-slate-400">
-                <span>Badge Scale:</span>
-                <span id="bScaleVal4" class="text-emerald-400 font-mono">100%</span>
-              </div>
-              <input type="range" id="bScale4" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
+              <button onclick="downloadSingleCard('cardCanvas4', 'deal_card_4')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
             </div>
-
-            <button onclick="downloadSingleCard('cardCanvas4', 'aesthetic_flatlay')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
           </div>
         </div>
       </div>
@@ -1286,20 +1303,30 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     };
 
     let activeCategory = "general";
+    // Curated high-converting layout styles (excludes the wide vertical spine from auto-roll)
+    const allStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook", "corner_flag", "flatlay"];
     let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
 
-    function shuffleNote() {
-      const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
-      const randomNote = pool[Math.floor(Math.random() * pool.length)];
-      document.getElementById('mainNoteInput').value = randomNote;
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
     function reRollCardStyles() {
-      const allStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook", "corner_flag", "vertical_spine", "flatlay", "minimal_pill"];
       const shuffled = [...allStyles].sort(() => 0.5 - Math.random());
       activeCardStyles = shuffled.slice(0, 4);
+
+      const labelNames = {
+        polaroid: "Style: Polaroid Snap",
+        kraft_tag: "Style: Top Kraft Tag",
+        split_horizon: "Style: Split Horizon",
+        notebook: "Style: Torn Notebook",
+        corner_flag: "Style: Top Corner Flag",
+        flatlay: "Style: Routine Flatlay"
+      };
+
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById(`cardLabel${i}`);
+        if (el) el.innerText = labelNames[activeCardStyles[i - 1]] || "Style: Custom";
+      }
+
+      renderAll4CreatorCards();
+    }
 
       const labelNames = {
         polaroid: "Style: Polaroid Snap",
