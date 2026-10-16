@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v4.0</title>
+  <title>CB Media Pipeline Suite v4.5</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -20,13 +20,12 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v4.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v4.5</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Aesthetic Creator Board</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Organic Creator Board</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
-        <!-- API KEY -->
         <div class="flex items-center gap-2">
           <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
             <span>🔑</span> Key:
@@ -35,23 +34,53 @@
             type="password" 
             id="apiKeyInput" 
             placeholder="AIzaSy... key" 
-            class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-36 sm:w-48 focus:outline-none focus:border-sky-500"
+            class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-32 sm:w-44 focus:outline-none focus:border-sky-500"
           >
         </div>
 
-        <!-- DYNAMIC MODEL DISCOVERY DROPDOWN -->
         <div class="flex items-center gap-2">
           <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
             <span>✨</span> Model:
           </label>
-          <select id="modelSelect" class="bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-lg text-sky-400 font-mono font-medium focus:outline-none focus:border-sky-500">
+          <select id="modelSelect" class="bg-slate-950 border border-slate-700 text-xs px-2 py-1.5 rounded-lg text-sky-400 font-mono font-medium focus:outline-none focus:border-sky-500">
             <option value="auto">⏳ Auto-Detecting...</option>
           </select>
         </div>
 
-        <span id="apiStatus" class="text-xs text-amber-400 font-medium">Ready</span>
+        <button 
+          type="button" 
+          onclick="toggleEmergencyDrawer()" 
+          class="px-2.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 border border-rose-600/50 text-rose-300 text-xs font-bold rounded-lg uppercase tracking-wider"
+          title="Manual Fallback Tools"
+        >
+          🚨 Fallback
+        </button>
       </div>
     </header>
+
+    <!-- EMERGENCY FALLBACK DRAWER -->
+    <div id="emergencyDrawer" class="hidden card-dark p-4 border border-rose-500/50 bg-rose-950/20 space-y-3">
+      <div class="flex justify-between items-center">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-rose-300 flex items-center gap-2">
+          <span>🚨</span> Emergency Outage Workaround Suite (Google API Congestion)
+        </h4>
+        <button onclick="toggleEmergencyDrawer()" class="text-xs text-slate-400 hover:text-white">✕ Close</button>
+      </div>
+      <p class="text-xs text-slate-300">
+        If Google API is undergoing maintenance or high traffic, switch to your independent standalone workstations:
+      </p>
+      <div class="flex flex-wrap gap-3 pt-1">
+        <a href="https://sher1-cb.github.io/deal-sanitizer/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">
+          🧼 Open Deal Sanitizer ↗
+        </a>
+        <a href="https://sher1-cb.github.io/Variant-Lens/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">
+          🔍 Open Variant Lens ↗
+        </a>
+        <a href="https://www.canva.com/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">
+          🎨 Open Canva Workspace ↗
+        </a>
+      </div>
+    </div>
 
     <!-- STEP PROGRESSION BAR -->
     <nav class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -75,7 +104,7 @@
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
           <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Creator Board</h3>
-          <p class="text-xs text-slate-400">4 organic dynamic styles</p>
+          <p class="text-xs text-slate-400">Custom scales & Run Deal cues</p>
         </div>
       </div>
     </nav>
@@ -172,7 +201,7 @@
       </div>
     </section>
 
-    <!-- ==================== STEP 2: SILENT VARIANT LENS ==================== -->
+    <!-- ==================== STEP 2: VARIANT LENS ==================== -->
     <section id="step2Section" class="hidden space-y-6">
       <div class="card-dark p-5">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
@@ -233,22 +262,55 @@
       </div>
     </section>
 
-    <!-- ==================== STEP 3: AESTHETIC CREATOR BOARD ==================== -->
+    <!-- ==================== STEP 3: CREATOR BOARD ==================== -->
     <section id="step3Section" class="hidden space-y-6">
       
       <div class="card-dark p-5 space-y-4">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Aesthetic Creator Board</h2>
-            <p class="text-xs text-slate-400">Non-commercial, organic visual mockups matching your product. Zero AI feel.</p>
+            <p class="text-xs text-slate-400">Non-commercial, organic visual mockups with individual card sliders & Run Deal cues.</p>
           </div>
-          <button 
-            type="button" 
-            onclick="navToStep(2)" 
-            class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider"
-          >
-            ⬅ Back to Step 2
-          </button>
+
+          <div class="flex items-center gap-2">
+            <!-- DEAL MODE SWITCH -->
+            <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-700">
+              <button 
+                type="button" 
+                id="modeRegularBtn" 
+                onclick="setDealMode('regular')" 
+                class="px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all"
+              >
+                ☕ Regular Deal
+              </button>
+              <button 
+                type="button" 
+                id="modeRunBtn" 
+                onclick="setDealMode('run')" 
+                class="px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1"
+              >
+                👀 Run Deal
+              </button>
+            </div>
+
+            <!-- PRIVACY FABRIC MACRO TOGGLE -->
+            <button 
+              type="button" 
+              id="privacyModeBtn" 
+              onclick="togglePrivacyMode()" 
+              class="px-3 py-1.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold rounded-xl hover:text-white flex items-center gap-1.5"
+            >
+              <span>🛡️</span> Privacy Mode: <span id="privacyStatus">OFF</span>
+            </button>
+
+            <button 
+              type="button" 
+              onclick="navToStep(2)" 
+              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-2"
+            >
+              ⬅ Step 2
+            </button>
+          </div>
         </div>
 
         <div id="ocrWarningBanner" class="hidden bg-rose-950/80 border border-rose-500 p-3 rounded-xl text-rose-300 text-xs flex items-center gap-2">
@@ -260,7 +322,7 @@
           <textarea 
             id="rawDealPaste" 
             placeholder="Paste Command Center raw deal output or deal text here..." 
-            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-20"
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-16"
           ></textarea>
           <button 
             type="button" 
@@ -271,23 +333,21 @@
           </button>
         </div>
 
-        <!-- TUNING INPUTS: ORGANIC CREATOR VIBES -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+        <!-- GLOBAL TEXT & PALETTE CONTROLS -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Positive Affirmation</label>
-            <input type="text" id="mainNoteInput" value="Daily shower & body favorite ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
-            <span class="text-[10px] text-slate-500 mt-1 block">e.g. 'Stocked up on daily hydration', 'Laundry room favorite'</span>
+            <input type="text" id="mainNoteInput" value="Daily shower & body favorite ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
             <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag</label>
-            <input type="text" id="simpleValueInput" value="$13.80 for all 3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
-            <span class="text-[10px] text-slate-500 mt-1 block">e.g. '3-pack · $13.80', 'just $4.99 ✨'</span>
+            <input type="text" id="simpleValueInput" value="$13.80 for all 3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
             <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Color Palette & Surface</label>
-            <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white mt-1 focus:border-sky-500">
+            <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
               <option value="warm_oatmeal" selected>Warm Oatmeal & Cream</option>
               <option value="sage_linen">Sage Green & Linen</option>
               <option value="terracotta_autumn">Autumn Terracotta & Spice</option>
@@ -297,11 +357,11 @@
         </div>
       </div>
 
-      <!-- 4 CREATOR CARDS WITH CLICK-TO-ZOOM -->
+      <!-- 4 CREATOR CARDS WITH INDIVIDUAL SLIDERS & CLICK-TO-ZOOM -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Dynamic Aesthetic Styles</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
             <p class="text-xs text-slate-400">💡 <strong>Click any card image</strong> to open the full-size zoom inspection modal!</p>
           </div>
           <button 
@@ -315,50 +375,114 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <!-- Card 1 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400">Style 1: Polaroid Snap & Tape</span>
+          <div class="card-dark p-3 border border-slate-800 space-y-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block">Style 1: Polaroid Snap & Tape</span>
             <div onclick="openZoomModal('cardCanvas1', 'Style 1: Polaroid Snap & Tape')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
               </div>
             </div>
+
+            <!-- Individual Sliders for Card 1 -->
+            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
+              <div class="flex justify-between text-slate-400">
+                <span>Product Size:</span>
+                <span id="pScaleVal1" class="text-sky-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="pScale1" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
+              
+              <div class="flex justify-between text-slate-400">
+                <span>Badge Scale:</span>
+                <span id="bScaleVal1" class="text-sky-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="bScale1" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
+            </div>
+
             <button onclick="downloadSingleCard('cardCanvas1', 'aesthetic_polaroid')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
           </div>
 
           <!-- Card 2 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Style 2: Soft Tonal Review</span>
+          <div class="card-dark p-3 border border-slate-800 space-y-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Style 2: Soft Tonal Review</span>
             <div onclick="openZoomModal('cardCanvas2', 'Style 2: Soft Tonal Review')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
               </div>
             </div>
+
+            <!-- Individual Sliders for Card 2 -->
+            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
+              <div class="flex justify-between text-slate-400">
+                <span>Product Size:</span>
+                <span id="pScaleVal2" class="text-amber-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="pScale2" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
+              
+              <div class="flex justify-between text-slate-400">
+                <span>Badge Scale:</span>
+                <span id="bScaleVal2" class="text-amber-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="bScale2" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
+            </div>
+
             <button onclick="downloadSingleCard('cardCanvas2', 'aesthetic_review')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
           </div>
 
           <!-- Card 3 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400">Style 3: Scrapbook Journal</span>
+          <div class="card-dark p-3 border border-slate-800 space-y-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block">Style 3: Scrapbook Journal</span>
             <div onclick="openZoomModal('cardCanvas3', 'Style 3: Scrapbook Journal')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
               </div>
             </div>
+
+            <!-- Individual Sliders for Card 3 -->
+            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
+              <div class="flex justify-between text-slate-400">
+                <span>Product Size:</span>
+                <span id="pScaleVal3" class="text-rose-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="pScale3" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
+              
+              <div class="flex justify-between text-slate-400">
+                <span>Badge Scale:</span>
+                <span id="bScaleVal3" class="text-rose-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="bScale3" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
+            </div>
+
             <button onclick="downloadSingleCard('cardCanvas3', 'aesthetic_scrapbook')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
           </div>
 
           <!-- Card 4 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Style 4: Routine Flatlay</span>
+          <div class="card-dark p-3 border border-slate-800 space-y-3">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">Style 4: Routine Flatlay</span>
             <div onclick="openZoomModal('cardCanvas4', 'Style 4: Routine Flatlay')" class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
               <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-auto pointer-events-none"></canvas>
               <div class="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Click to Zoom</span>
+                <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
               </div>
             </div>
+
+            <!-- Individual Sliders for Card 4 -->
+            <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80 space-y-2 text-[11px]">
+              <div class="flex justify-between text-slate-400">
+                <span>Product Size:</span>
+                <span id="pScaleVal4" class="text-emerald-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="pScale4" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
+              
+              <div class="flex justify-between text-slate-400">
+                <span>Badge Scale:</span>
+                <span id="bScaleVal4" class="text-emerald-400 font-mono">100%</span>
+              </div>
+              <input type="range" id="bScale4" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
+            </div>
+
             <button onclick="downloadSingleCard('cardCanvas4', 'aesthetic_flatlay')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
           </div>
         </div>
@@ -367,7 +491,7 @@
 
   </div>
 
-  <!-- ==================== ZOOM LIGHTBOX MODAL ==================== -->
+  <!-- ZOOM LIGHTBOX MODAL -->
   <div id="zoomModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-5 space-y-4 shadow-2xl relative">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -405,6 +529,18 @@
     let chosen4Variants = [];
     let activeModalCanvasId = null;
 
+    // STEP 3 TUNING MODES
+    let currentDealMode = 'regular'; // 'regular' or 'run'
+    let isPrivacyMode = false;       // Lookbook Fabric Focus Toggle
+
+    // Individual Per-Card Scales (1 to 4)
+    let cardScales = {
+      1: { product: 1.0, badge: 1.0 },
+      2: { product: 1.0, badge: 1.0 },
+      3: { product: 1.0, badge: 1.0 },
+      4: { product: 1.0, badge: 1.0 }
+    };
+
     const targetCanvas = document.getElementById('targetCanvas');
     const tCtx = targetCanvas.getContext('2d');
     const outputCanvas = document.getElementById('outputCanvas');
@@ -417,7 +553,7 @@
     ];
 
     // ==========================================
-    // API KEY & DYNAMIC MODEL DISCOVERY (N-1 MESH)
+    // API KEY & DYNAMIC MODEL MESH DISCOVERY
     // ==========================================
     const apiKeyInput = document.getElementById('apiKeyInput');
     const modelSelect = document.getElementById('modelSelect');
@@ -425,16 +561,12 @@
 
     if (savedKey) {
       apiKeyInput.value = savedKey;
-      document.getElementById('apiStatus').innerText = "Saved";
-      document.getElementById('apiStatus').className = "text-xs text-emerald-400 font-medium";
       autoDetectModels(savedKey);
     }
 
     apiKeyInput.addEventListener('input', (e) => {
       const val = e.target.value.trim();
       localStorage.setItem('deal_gemini_key', val);
-      document.getElementById('apiStatus').innerText = val ? "Active" : "Ready";
-      document.getElementById('apiStatus').className = val ? "text-xs text-emerald-400 font-medium" : "text-xs text-amber-400 font-medium";
       if (val) autoDetectModels(val);
     });
 
@@ -454,7 +586,6 @@
         const stableLite = textModels.filter(m => m.includes("lite"));
         const stableFlash = textModels.filter(m => m.includes("flash") && !m.includes("lite"));
 
-        // Store N-1 (2nd latest) and Latest in memory
         window.n1Lite = stableLite.length >= 2 ? stableLite[1] : (stableLite[0] || 'gemini-3.1-flash-lite');
         window.n1Flash = stableFlash.length >= 2 ? stableFlash[1] : (stableFlash[0] || 'gemini-2.5-flash');
         window.latestFlash = stableFlash[0] || 'gemini-flash-latest';
@@ -467,7 +598,6 @@
           modelSelect.appendChild(opt);
         });
 
-        // Respect saved manual choice if present, else default to N-1 Lite
         const savedManualChoice = localStorage.getItem('deal_gemini_model');
         if (savedManualChoice && modelSelect.querySelector(`option[value="${savedManualChoice}"]`)) {
           modelSelect.value = savedManualChoice;
@@ -482,6 +612,10 @@
     modelSelect.addEventListener('change', (e) => {
       localStorage.setItem('deal_gemini_model', e.target.value);
     });
+
+    function toggleEmergencyDrawer() {
+      document.getElementById('emergencyDrawer').classList.toggle('hidden');
+    }
 
     // ==========================================
     // STEP NAVIGATION
@@ -589,7 +723,6 @@
       });
     }
 
-    // High-Strength Frosted Diffusion (From Deal Sanitizer v1.2.58)
     function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
       const rw = Math.max(1, Math.round(w));
@@ -703,7 +836,6 @@
       oCtx.restore();
     }
 
-    // Drag-to-Patch
     outputCanvas.addEventListener('mousedown', (e) => {
       if (!rawLoadedImage) return;
       isDrawingPatch = true;
@@ -769,9 +901,7 @@
         .trim();
     }
 
-    // ==========================================
-    // MULTI-MODEL LEAPING MESH CALLER (WITH 7.5S TIMEOUT)
-    // ==========================================
+    // MULTI-MODEL LEAPING MESH (WITH 7.5S TIMEOUT)
     async function fetchWithTimeout(url, payload, timeoutMs) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeoutMs);
@@ -799,12 +929,10 @@
       const isManualChoice = selectedModel && selectedModel !== "auto" && selectedModel !== window.n1Lite;
 
       if (isManualChoice) {
-        // 100% Respect Manual Selection
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${encodeURIComponent(key)}`;
         return await fetchWithTimeout(url, payload, 10000);
       }
 
-      // Default Mesh: Try N-1 Lite (7.5s) -> N-1 Flash (6.0s) -> Latest Flash
       const modelQueue = [
         window.n1Lite || "gemini-3.1-flash-lite",
         window.n1Flash || "gemini-2.5-flash",
@@ -819,12 +947,12 @@
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
           const data = await fetchWithTimeout(url, payload, timeout);
           if (data.candidates && data.candidates[0]) {
-            modelSelect.value = model; // visually reflect active model
+            modelSelect.value = model;
             return data;
           }
         } catch (err) {
           lastError = err;
-          console.warn(`Model ${model} delayed/failed (${err.message}). Leaping to next model...`);
+          console.warn(`Model ${model} delayed/failed. Leaping to next model...`);
         }
       }
       throw lastError || new Error("All candidate vision models in mesh failed.");
@@ -1049,8 +1177,60 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // STEP 3: AESTHETIC CREATOR BOARD
+    // STEP 3: CREATOR BOARD & INDIVIDUAL TUNING
     // ==========================================
+    function setDealMode(mode) {
+      currentDealMode = mode;
+      const regBtn = document.getElementById('modeRegularBtn');
+      const runBtn = document.getElementById('modeRunBtn');
+
+      if (mode === 'run') {
+        runBtn.className = "px-3 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-md";
+        regBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all";
+        
+        // Auto-inject curiosity hooks
+        const curNote = document.getElementById('mainNoteInput').value;
+        if (!curNote.includes('👀')) {
+          document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
+        }
+      } else {
+        regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md";
+        runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1";
+        document.getElementById('mainNoteInput').value = "Daily shower & body favorite ✨";
+      }
+      renderAll4CreatorCards();
+    }
+
+    function togglePrivacyMode() {
+      isPrivacyMode = !isPrivacyMode;
+      const btn = document.getElementById('privacyModeBtn');
+      const status = document.getElementById('privacyStatus');
+
+      if (isPrivacyMode) {
+        btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
+        btn.classList.remove('bg-slate-800', 'border-slate-700', 'text-slate-300');
+        status.innerText = "ON (Macro Crop)";
+      } else {
+        btn.classList.remove('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
+        btn.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300');
+        status.innerText = "OFF";
+      }
+      renderAll4CreatorCards();
+    }
+
+    function updateCardSliders(cardNum) {
+      const pVal = document.getElementById(`pScale${cardNum}`).value;
+      const bVal = document.getElementById(`bScale${cardNum}`).value;
+
+      document.getElementById(`pScaleVal${cardNum}`).innerText = `${pVal}%`;
+      document.getElementById(`bScaleVal${cardNum}`).innerText = `${bVal}%`;
+
+      cardScales[cardNum].product = parseFloat(pVal) / 100.0;
+      cardScales[cardNum].badge = parseFloat(bVal) / 100.0;
+
+      renderAll4CreatorCards();
+    }
+
     function auditOcrSafety() {
       const textToScan = [
         document.getElementById('mainNoteInput').value,
@@ -1106,20 +1286,19 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const themeKey = document.getElementById('themePaletteSelect').value;
       const pal = PALETTES[themeKey] || PALETTES.warm_oatmeal;
 
-      renderCreator1(chosen4Variants[0].canvas, note, val, pal);
-      renderCreator2(chosen4Variants[1].canvas, note, val, pal);
-      renderCreator3(chosen4Variants[2].canvas, note, val, pal);
-      renderCreator4(chosen4Variants[3].canvas, note, val, pal);
+      renderCreator1(chosen4Variants[0].canvas, note, val, pal, cardScales[1]);
+      renderCreator2(chosen4Variants[1].canvas, note, val, pal, cardScales[2]);
+      renderCreator3(chosen4Variants[2].canvas, note, val, pal, cardScales[3]);
+      renderCreator4(chosen4Variants[3].canvas, note, val, pal, cardScales[4]);
     }
 
-    // STYLE 1: Polaroid Snap & Tape (Auto-measured)
-    function renderCreator1(srcCanvas, note, val, pal) {
+    // STYLE 1: Polaroid Snap & Washi Tape
+    function renderCreator1(srcCanvas, note, val, pal, scales) {
       const c = document.getElementById('cardCanvas1');
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Tilted Polaroid Card
       ctx.save();
       ctx.translate(540, 500);
       ctx.rotate(-0.035);
@@ -1131,7 +1310,20 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.fillRect(-340, -360, 680, 800);
       ctx.shadowColor = "transparent";
 
-      ctx.drawImage(srcCanvas, -290, -310, 580, 580);
+      // Draw Product with scale or Macro Privacy Crop
+      const pw = 580 * scales.product;
+      const ph = 580 * scales.product;
+      if (isPrivacyMode) {
+        // Macro Fabric Focus: zoom in tight onto center upper 50%
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(-290, -310, 580, 580);
+        ctx.clip();
+        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw * 1.5, ph * 1.5);
+        ctx.restore();
+      } else {
+        ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+      }
 
       ctx.fillStyle = pal.text;
       ctx.font = "bold 32px sans-serif";
@@ -1142,36 +1334,37 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.save();
       ctx.translate(0, -370);
       ctx.rotate(0.02);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+      ctx.fillStyle = currentDealMode === 'run' ? "rgba(251, 191, 36, 0.85)" : "rgba(255, 255, 255, 0.72)";
       ctx.fillRect(-120, -18, 240, 42);
       ctx.restore();
 
       ctx.restore();
 
-      // Hand-Drawn Auto-Fitting Price Sticker
+      // Price Tag Sticker with Badge Scale
       if (val) {
         ctx.save();
         ctx.font = "800 26px sans-serif";
-        const valW = Math.min(480, ctx.measureText(val).width + 60);
+        const valW = (ctx.measureText(val).width + 60) * scales.badge;
+        const valH = 64 * scales.badge;
 
         ctx.translate(1000 - (valW / 2), 940);
         ctx.rotate(-0.04);
-        ctx.fillStyle = pal.polaroid;
+        ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
         ctx.shadowColor = "rgba(0,0,0,0.15)";
         ctx.shadowBlur = 12;
         ctx.beginPath();
-        ctx.roundRect(-valW / 2, -32, valW, 64, 14);
+        ctx.roundRect(-valW / 2, -valH / 2, valW, valH, 14);
         ctx.fill();
 
-        ctx.fillStyle = pal.text;
+        ctx.fillStyle = "#0f172a";
         ctx.textAlign = "center";
-        ctx.fillText(val, 0, 10);
+        ctx.fillText(val, 0, 8 * scales.badge);
         ctx.restore();
       }
     }
 
     // STYLE 2: Soft Tonal Review Card
-    function renderCreator2(srcCanvas, note, val, pal) {
+    function renderCreator2(srcCanvas, note, val, pal, scales) {
       const c = document.getElementById('cardCanvas2');
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
@@ -1182,6 +1375,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.textAlign = "center";
       ctx.fillText(note, 540, 140);
 
+      // Staged Card Inset
       ctx.save();
       ctx.fillStyle = pal.polaroid;
       ctx.shadowColor = "rgba(0,0,0,0.14)";
@@ -1191,12 +1385,25 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.roundRect(200, 200, 680, 680, 28);
       ctx.fill();
       ctx.shadowColor = "transparent";
-      ctx.drawImage(srcCanvas, 220, 220, 640, 640);
+
+      const pw = 640 * scales.product;
+      const ph = 640 * scales.product;
+      if (isPrivacyMode) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(200, 200, 680, 680, 28);
+        ctx.clip();
+        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, 540 - (pw * 1.5) / 2, 540 - (ph * 1.5) / 2, pw * 1.5, ph * 1.5);
+        ctx.restore();
+      } else {
+        ctx.drawImage(srcCanvas, 540 - (pw / 2), 540 - (ph / 2), pw, ph);
+      }
       ctx.restore();
 
+      // Bottom Doodle Tag
       if (val) {
         ctx.save();
-        ctx.font = "800 36px sans-serif";
+        ctx.font = `${Math.round(36 * scales.badge)}px sans-serif`;
         const valW = ctx.measureText(val).width;
 
         ctx.translate(540, 970);
@@ -1204,8 +1411,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.textAlign = "center";
         ctx.fillText(val, 0, 0);
 
-        // Auto-sizing doodle underline
-        ctx.strokeStyle = pal.accent;
+        ctx.strokeStyle = currentDealMode === 'run' ? "#eab308" : pal.accent;
         ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(-(valW / 2) - 10, 16);
@@ -1216,7 +1422,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     }
 
     // STYLE 3: Scrapbook Journal Collection
-    function renderCreator3(srcCanvas, note, val, pal) {
+    function renderCreator3(srcCanvas, note, val, pal, scales) {
       const c = document.getElementById('cardCanvas3');
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
@@ -1231,35 +1437,48 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.shadowOffsetY = 10;
       ctx.fillRect(-330, -350, 660, 720);
       ctx.shadowColor = "transparent";
-      ctx.drawImage(srcCanvas, -280, -300, 560, 560);
+
+      const pw = 560 * scales.product;
+      const ph = 560 * scales.product;
+      if (isPrivacyMode) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(-330, -350, 660, 720);
+        ctx.clip();
+        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw * 0.75, -ph * 0.75, pw * 1.5, ph * 1.5);
+        ctx.restore();
+      } else {
+        ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+      }
       ctx.restore();
 
-      // Hand-drawn vector sparkles
+      // Hand-drawn vector sparkles & leaves
       ctx.save();
       ctx.strokeStyle = pal.text;
       ctx.lineWidth = 3.5;
-      drawSparkle(ctx, 160, 180, 22);
-      drawSparkle(ctx, 920, 320, 18);
-      drawMiniHeart(ctx, 890, 640, 24);
+      drawSparkle(ctx, 160, 180, 22 * scales.badge);
+      drawSparkle(ctx, 920, 320, 18 * scales.badge);
+      drawMiniHeart(ctx, 890, 640, 24 * scales.badge);
       ctx.restore();
 
       // Auto-sizing Paper Slip
       ctx.save();
-      ctx.font = "bold 28px sans-serif";
+      ctx.font = `bold ${Math.round(28 * scales.badge)}px sans-serif`;
       const fullText = `${note} · ${val}`;
       const stripW = Math.min(1000, ctx.measureText(fullText).width + 64);
+      const stripH = 90 * scales.badge;
 
       ctx.translate(540, 940);
-      ctx.fillStyle = pal.polaroid;
+      ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
       ctx.shadowColor = "rgba(0,0,0,0.12)";
       ctx.shadowBlur = 14;
       ctx.beginPath();
-      ctx.roundRect(-(stripW / 2), -45, stripW, 90, 18);
+      ctx.roundRect(-(stripW / 2), -stripH / 2, stripW, stripH, 18);
       ctx.fill();
 
-      ctx.fillStyle = pal.text;
+      ctx.fillStyle = "#0f172a";
       ctx.textAlign = "center";
-      ctx.fillText(fullText, 0, 10);
+      ctx.fillText(fullText, 0, 10 * scales.badge);
       ctx.restore();
     }
 
@@ -1281,34 +1500,48 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     }
 
     // STYLE 4: Routine Flatlay
-    function renderCreator4(srcCanvas, note, val, pal) {
+    function renderCreator4(srcCanvas, note, val, pal, scales) {
       const c = document.getElementById('cardCanvas4');
       const ctx = c.getContext('2d');
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
+      const pw = 760 * scales.product;
+      const ph = 760 * scales.product;
       ctx.save();
       ctx.shadowColor = "rgba(0,0,0,0.18)";
       ctx.shadowBlur = 36;
       ctx.shadowOffsetY = 24;
-      ctx.drawImage(srcCanvas, 160, 140, 760, 760);
+
+      if (isPrivacyMode) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(160, 140, 760, 760, 24);
+        ctx.clip();
+        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, 540 - (pw * 1.4) / 2, 520 - (ph * 1.4) / 2, pw * 1.4, ph * 1.4);
+        ctx.restore();
+      } else {
+        ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
+      }
       ctx.restore();
 
+      // Floating bottom pill
       ctx.save();
-      ctx.font = "bold 26px sans-serif";
+      ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
       const pillText = `${note} · ${val}`;
       const pillW = Math.min(960, ctx.measureText(pillText).width + 64);
+      const pillH = 74 * scales.badge;
 
-      ctx.fillStyle = pal.polaroid;
+      ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
       ctx.shadowColor = "rgba(0,0,0,0.12)";
       ctx.shadowBlur = 18;
       ctx.beginPath();
-      ctx.roundRect(540 - (pillW / 2), 940, pillW, 74, 9999);
+      ctx.roundRect(540 - (pillW / 2), 940, pillW, pillH, 9999);
       ctx.fill();
 
-      ctx.fillStyle = pal.text;
+      ctx.fillStyle = "#0f172a";
       ctx.textAlign = "center";
-      ctx.fillText(pillText, 540, 986);
+      ctx.fillText(pillText, 540, 940 + (pillH / 2) + (8 * scales.badge));
 
       ctx.fillStyle = "#94a3b8";
       ctx.font = "bold 14px sans-serif";
@@ -1318,7 +1551,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     }
 
     // ==========================================
-    // ZOOM LIGHTBOX MODAL LOGIC
+    // ZOOM LIGHTBOX MODAL
     // ==========================================
     function openZoomModal(canvasId, title) {
       const canvas = document.getElementById(canvasId);
@@ -1345,7 +1578,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // DOWNLOAD HELPERS (SCRUBS PROVENANCE & EXIF HEADERS)
+    // DOWNLOAD HELPERS (AUTOMATICALLY SCRUBS METADATA)
     // ==========================================
     function downloadCanvasData(dataUrl, filename) {
       const link = document.createElement('a');
