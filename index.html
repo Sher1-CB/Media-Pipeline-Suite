@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v5.0</title>
+  <title>CB Media Pipeline Suite v6.0</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for Diverse Creator Typographies -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@700&family=Fredoka:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
   <style>
     body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     .card-dark { background-color: #151d30; border: 1px solid #1e293b; border-radius: 14px; }
@@ -29,9 +33,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v5.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v6.0</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Multi-Zone Creator Board</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ 60-Style Creator Engine</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
@@ -113,7 +117,7 @@
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
           <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Creator Board</h3>
-          <p class="text-xs text-slate-400">Multi-zone aesthetic styles</p>
+          <p class="text-xs text-slate-400">60-style multi-zone engine</p>
         </div>
       </div>
     </nav>
@@ -179,7 +183,6 @@
           </div>
         </div>
 
-        <!-- SIDE-BY-SIDE CANVASES -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="space-y-2">
             <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-400">
@@ -277,8 +280,8 @@
       <div class="card-dark p-5 space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Multi-Zone Creator Board</h2>
-            <p class="text-xs text-slate-400">Non-commercial, organic visual mockups with individual sliders & Run Deal cues.</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Multi-Zone Creator Board (60-Style Catalog)</h2>
+            <p class="text-xs text-slate-400">💡 <strong>Interactive Dragging:</strong> Click & drag badges directly on the canvas to place them anywhere!</p>
           </div>
 
           <div class="flex items-center gap-2">
@@ -373,12 +376,12 @@
         </div>
       </div>
 
-      <!-- 4 CONSTRAINED CREATIVE CARDS WITH INDIVIDUAL SLIDERS & CLICK-TO-ZOOM -->
+      <!-- 4 CONSTRAINED CREATIVE CARDS WITH DRAG-TO-MOVE & INDIVIDUAL CONTROLS -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Dynamic Aesthetic Styles</h3>
-            <p class="text-xs text-slate-400">💡 <strong>Click any card image</strong> to open the full-size zoom inspection modal!</p>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
+            <p class="text-xs text-slate-400">💡 <strong>Click any card image</strong> to open full-size zoom! Drag labels on the preview to adjust position.</p>
           </div>
           <button 
             type="button" 
@@ -389,22 +392,37 @@
           </button>
         </div>
 
-        <!-- STRICT 4-COLUMN CONSTRAINED GRID (PREVENTS OVERFLOW) -->
+        <!-- 4-COLUMN CONSTRAINED GRID -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           <!-- Card 1 -->
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
-              <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block mb-2">Style: Polaroid Snap</span>
-              <div onclick="openZoomModal('cardCanvas1', 'Card 1 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-                <canvas id="cardCanvas1" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
-                <div class="absolute inset-0 bg-sky-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
-                </div>
+              <div class="flex justify-between items-center mb-2">
+                <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 truncate">Style: Polaroid Snap</span>
+                <select id="styleSelect1" onchange="changeCardStyle(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
+                  <!-- Populated via JS with 60 styles -->
+                </select>
+              </div>
+
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap1">
+                <canvas id="cardCanvas1" width="1080" height="1080"></canvas>
+                <button type="button" onclick="openZoomModal('cardCanvas1', 'Card 1 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between items-center text-slate-400">
+                  <span>Font:</span>
+                  <select id="fontSelect1" onchange="changeCardFont(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-sky-400 px-1.5 py-0.5 rounded">
+                    <option value="handwritten" selected>✍️ Casual Script</option>
+                    <option value="typewriter">📠 Typewriter</option>
+                    <option value="modern_sans">✨ Modern Sans</option>
+                    <option value="playful">🎈 Playful</option>
+                    <option value="editorial">📰 Serif</option>
+                  </select>
+                </div>
+
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
                   <span id="pScaleVal1" class="text-sky-400 font-mono">100%</span>
@@ -424,17 +442,32 @@
           <!-- Card 2 -->
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
-              <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block mb-2">Style: Top Kraft Tag</span>
-              <div onclick="openZoomModal('cardCanvas2', 'Card 2 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-                <canvas id="cardCanvas2" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
-                <div class="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
-                </div>
+              <div class="flex justify-between items-center mb-2">
+                <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 truncate">Style: Top Kraft Tag</span>
+                <select id="styleSelect2" onchange="changeCardStyle(2, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
+                  <!-- Populated via JS -->
+                </select>
+              </div>
+
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap2">
+                <canvas id="cardCanvas2" width="1080" height="1080"></canvas>
+                <button type="button" onclick="openZoomModal('cardCanvas2', 'Card 2 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between items-center text-slate-400">
+                  <span>Font:</span>
+                  <select id="fontSelect2" onchange="changeCardFont(2, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-amber-400 px-1.5 py-0.5 rounded">
+                    <option value="handwritten">✍️ Casual Script</option>
+                    <option value="typewriter" selected>📠 Typewriter</option>
+                    <option value="modern_sans">✨ Modern Sans</option>
+                    <option value="playful">🎈 Playful</option>
+                    <option value="editorial">📰 Serif</option>
+                  </select>
+                </div>
+
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
                   <span id="pScaleVal2" class="text-amber-400 font-mono">100%</span>
@@ -454,17 +487,32 @@
           <!-- Card 3 -->
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
-              <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 block mb-2">Style: Split Horizon</span>
-              <div onclick="openZoomModal('cardCanvas3', 'Card 3 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-                <canvas id="cardCanvas3" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
-                <div class="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
-                </div>
+              <div class="flex justify-between items-center mb-2">
+                <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 truncate">Style: Split Horizon</span>
+                <select id="styleSelect3" onchange="changeCardStyle(3, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
+                  <!-- Populated via JS -->
+                </select>
+              </div>
+
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap3">
+                <canvas id="cardCanvas3" width="1080" height="1080"></canvas>
+                <button type="button" onclick="openZoomModal('cardCanvas3', 'Card 3 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between items-center text-slate-400">
+                  <span>Font:</span>
+                  <select id="fontSelect3" onchange="changeCardFont(3, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-rose-400 px-1.5 py-0.5 rounded">
+                    <option value="handwritten">✍️ Casual Script</option>
+                    <option value="typewriter">📠 Typewriter</option>
+                    <option value="modern_sans" selected>✨ Modern Sans</option>
+                    <option value="playful">🎈 Playful</option>
+                    <option value="editorial">📰 Serif</option>
+                  </select>
+                </div>
+
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
                   <span id="pScaleVal3" class="text-rose-400 font-mono">100%</span>
@@ -484,17 +532,32 @@
           <!-- Card 4 -->
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
-              <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block mb-2">Style: Torn Notebook</span>
-              <div onclick="openZoomModal('cardCanvas4', 'Card 4 Preview')" class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 cursor-zoom-in group relative" title="Click to Zoom In">
-                <canvas id="cardCanvas4" width="1080" height="1080" class="w-full h-full object-contain pointer-events-none"></canvas>
-                <div class="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span class="bg-black/75 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border border-white/20">🔍 Zoom</span>
-                </div>
+              <div class="flex justify-between items-center mb-2">
+                <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 truncate">Style: Torn Notebook</span>
+                <select id="styleSelect4" onchange="changeCardStyle(4, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
+                  <!-- Populated via JS -->
+                </select>
+              </div>
+
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap4">
+                <canvas id="cardCanvas4" width="1080" height="1080"></canvas>
+                <button type="button" onclick="openZoomModal('cardCanvas4', 'Card 4 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
+                <div class="flex justify-between items-center text-slate-400">
+                  <span>Font:</span>
+                  <select id="fontSelect4" onchange="changeCardFont(4, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-emerald-400 px-1.5 py-0.5 rounded">
+                    <option value="handwritten">✍️ Casual Script</option>
+                    <option value="typewriter" selected>📠 Typewriter</option>
+                    <option value="modern_sans">✨ Modern Sans</option>
+                    <option value="playful">🎈 Playful</option>
+                    <option value="editorial">📰 Serif</option>
+                  </select>
+                </div>
+
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
                   <span id="pScaleVal4" class="text-emerald-400 font-mono">100%</span>
@@ -539,7 +602,7 @@
 
   <script>
     // ==========================================
-    // GLOBAL APP STATE
+    // GLOBAL APP STATE & 60-STYLE CATALOG
     // ==========================================
     let activeStep = 1;
     let rawLoadedImage = null;
@@ -555,14 +618,66 @@
     let activeModalCanvasId = null;
 
     let currentDealMode = 'regular'; // 'regular' or 'run'
-    let isPrivacyMode = false;       // Lookbook Macro Crop Toggle
+    let isPrivacyMode = false;       // Lookbook Macro Crop
 
-    let cardScales = {
-      1: { product: 1.0, badge: 1.0 },
-      2: { product: 1.0, badge: 1.0 },
-      3: { product: 1.0, badge: 1.0 },
-      4: { product: 1.0, badge: 1.0 }
+    // 50 REGULAR CREATOR STYLES + 10 RUN DEAL STYLES (TOTAL = 60)
+    const STYLES_CATALOG = {
+      // 50 Regular Styles
+      polaroid: { name: "Classic Polaroid & Tape", mode: "regular", defaultFont: "handwritten", zone: "bottom" },
+      kraft_tag: { name: "Top Kraft Parcel Tag", mode: "regular", defaultFont: "typewriter", zone: "top-left" },
+      split_horizon: { name: "Horizontal Split Horizon", mode: "regular", defaultFont: "modern_sans", zone: "seam" },
+      notebook: { name: "Torn Spiral Notebook", mode: "regular", defaultFont: "typewriter", zone: "top-right" },
+      corner_flag: { name: "Diagonal Corner Ribbon", mode: "regular", defaultFont: "modern_sans", zone: "top-right" },
+      flatlay: { name: "Routine Minimalist Flatlay", mode: "regular", defaultFont: "modern_sans", zone: "bottom" },
+      passe_partout: { name: "Framed Passe-Partout Mat", mode: "regular", defaultFont: "editorial", zone: "bottom" },
+      arch_niche: { name: "Soft Architectural Arch", mode: "regular", defaultFont: "editorial", zone: "bottom" },
+      scrapbook_doodles: { name: "Scrapbook Sparkle & Hearts", mode: "regular", defaultFont: "playful", zone: "bottom" },
+      floating_pill: { name: "Floating Upper Mood Pill", mode: "regular", defaultFont: "modern_sans", zone: "top-left" },
+      vintage_border: { name: "Vintage Warm Film Border", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
+      grid_paper: { name: "Blueprint Grid Scrapbook", mode: "regular", defaultFont: "typewriter", zone: "top-right" },
+      clipboard: { name: "Desk Clipboard Staging", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
+      lined_memo: { name: "Lined Yellow Memo Slip", mode: "regular", defaultFont: "handwritten", zone: "top-right" },
+      manila_pocket: { name: "Manila Envelope Sleeve", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
+      quad_washi: { name: "Quad Washi Corner Tape", mode: "regular", defaultFont: "handwritten", zone: "bottom" },
+      perforated_receipt: { name: "Perforated Tear Margin", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
+      index_card: { name: "Library Index Card Tab", mode: "regular", defaultFont: "typewriter", zone: "top-left" },
+      inverted_split: { name: "Inverted Upper Tone Horizon", mode: "regular", defaultFont: "modern_sans", zone: "top" },
+      corner_wedge: { name: "Pastel Corner Wedge Mat", mode: "regular", defaultFont: "modern_sans", zone: "bottom-right" },
+      pebble_mat: { name: "Organic Pebble Squircle Mat", mode: "regular", defaultFont: "playful", zone: "bottom" },
+      dual_badge_stack: { name: "Clean Dual Badge Stack", mode: "regular", defaultFont: "modern_sans", zone: "left-spine" },
+      scalloped_card: { name: "Scalloped Boutique Border", mode: "regular", defaultFont: "editorial", zone: "bottom" },
+      hairline_gallery: { name: "Hairline Charcoal Gallery", mode: "regular", defaultFont: "editorial", zone: "bottom" },
+      double_film: { name: "Double Film Snap Mat", mode: "regular", defaultFont: "handwritten", zone: "bottom" },
+      sunken_niche: { name: "Circular Sunken Niche", mode: "regular", defaultFont: "modern_sans", zone: "bottom" },
+      stacked_heading: { name: "Stacked Typography Header", mode: "regular", defaultFont: "modern_sans", zone: "top" },
+      side_bookmark: { name: "Side Index Tab Bookmark", mode: "regular", defaultFont: "typewriter", zone: "right-tab" },
+      wax_seal: { name: "Boutique Monogram Seal", mode: "regular", defaultFont: "editorial", zone: "bottom-left" },
+      gift_card_frame: { name: "Boutique Gift Card Frame", mode: "regular", defaultFont: "editorial", zone: "bottom" },
+      // 10 Run Deal Styles
+      run_arrow_pointer: { name: "👀 Run: Hand-Drawn Arrow Pointer", mode: "run", defaultFont: "handwritten", zone: "dynamic-pointer" },
+      run_marker_loop: { name: "👀 Run: Wobbly Sharpie Marker Loop", mode: "run", defaultFont: "handwritten", zone: "doodle-loop" },
+      run_eye_stamp: { name: "👀 Run: Floating Eye Stamp Tab", mode: "run", defaultFont: "modern_sans", zone: "top-right" },
+      run_neon_sticky: { name: "👀 Run: Neon Post-It Sticky Note", mode: "run", defaultFont: "handwritten", zone: "top-left" },
+      run_double_take_pill: { name: "👀 Run: Double-Take Curiosity Pill", mode: "run", defaultFont: "modern_sans", zone: "top" },
+      run_caution_strip: { name: "👀 Run: Caution Washi Paper Strip", mode: "run", defaultFont: "typewriter", zone: "top" },
+      run_dotted_trail: { name: "👀 Run: Dotted Guide Trail", mode: "run", defaultFont: "handwritten", zone: "bottom" },
+      run_bold_curiosity: { name: "👀 Run: Bold Curiosity Banner", mode: "run", defaultFont: "modern_sans", zone: "top" },
+      run_corner_seal: { name: "👀 Run: Alert Stamp Medallion", mode: "run", defaultFont: "playful", zone: "bottom-left" },
+      run_contrast_pop: { name: "👀 Run: Deep Shadow & Neon Highlight", mode: "run", defaultFont: "modern_sans", zone: "bottom" }
     };
+
+    let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
+
+    // Individual Per-Card Custom Positioning Coordinates & Scaling
+    let cardCustoms = {
+      1: { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null },
+      2: { style: "kraft_tag", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null },
+      3: { style: "split_horizon", font: "modern_sans", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null },
+      4: { style: "notebook", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null }
+    };
+
+    // Canvas Mouse Interaction for Dragging
+    let draggingState = { active: false, cardNum: null, target: null, startX: 0, startY: 0 };
 
     const targetCanvas = document.getElementById('targetCanvas');
     const tCtx = targetCanvas.getContext('2d');
@@ -575,7 +690,6 @@
       "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link"
     ];
 
-    // DYNAMIC CATEGORY AFFIRMATION POOLS
     const AFFIRMATIONS = {
       lawn_garden: [
         "Yard project ready 🌾",
@@ -608,11 +722,32 @@
     };
 
     let activeCategory = "general";
-    const allStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook", "corner_flag", "flatlay"];
-    let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
 
     // ==========================================
-    // API KEY & DYNAMIC MODEL MESH DISCOVERY
+    // INITIALIZATION & POPULATING DROPDOWNS
+    // ==========================================
+    document.addEventListener("DOMContentLoaded", () => {
+      populateStyleDropdowns();
+      setupCanvasDragListeners();
+    });
+
+    function populateStyleDropdowns() {
+      for (let i = 1; i <= 4; i++) {
+        const sel = document.getElementById(`styleSelect${i}`);
+        if (!sel) continue;
+        sel.innerHTML = "";
+        Object.keys(STYLES_CATALOG).forEach(key => {
+          const opt = document.createElement("option");
+          opt.value = key;
+          opt.textContent = STYLES_CATALOG[key].name;
+          sel.appendChild(opt);
+        });
+        sel.value = activeCardStyles[i - 1];
+      }
+    }
+
+    // ==========================================
+    // API KEY & DYNAMIC MODEL MESH
     // ==========================================
     const apiKeyInput = document.getElementById('apiKeyInput');
     const modelSelect = document.getElementById('modelSelect');
@@ -1236,7 +1371,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // STEP 3: CREATOR BOARD & MULTI-ZONE ENGINE
+    // STEP 3: CREATOR BOARD & INTERACTIVE DRAGGING
     // ==========================================
     function setDealMode(mode) {
       currentDealMode = mode;
@@ -1249,13 +1384,25 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         
         const curNote = document.getElementById('mainNoteInput').value;
         if (!curNote.includes('👀')) {
-          document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
+          document.getElementById('mainNoteInput').value = "wait... is this real?! 👀";
         }
+        // Auto-switch cards to top 4 Run styles
+        activeCardStyles = ["run_arrow_pointer", "run_marker_loop", "run_eye_stamp", "run_neon_sticky"];
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md";
         runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1";
-        document.getElementById('mainNoteInput').value = "Daily shower & body favorite ✨";
+        document.getElementById('mainNoteInput').value = "Yard project ready 🌾";
+        activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
       }
+
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].style = activeCardStyles[i - 1];
+        const sel = document.getElementById(`styleSelect${i}`);
+        if (sel) sel.value = activeCardStyles[i - 1];
+        const lbl = document.getElementById(`cardLabel${i}`);
+        if (lbl) lbl.innerText = STYLES_CATALOG[activeCardStyles[i - 1]].name;
+      }
+
       renderAll4CreatorCards();
     }
 
@@ -1267,12 +1414,27 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       if (isPrivacyMode) {
         btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
         btn.classList.remove('bg-slate-800', 'border-slate-700', 'text-slate-300');
-        status.innerText = "ON (Macro Crop)";
+        status.innerText = "ON (Macro Swatch)";
       } else {
         btn.classList.remove('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
         btn.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300');
         status.innerText = "OFF";
       }
+      renderAll4CreatorCards();
+    }
+
+    function changeCardStyle(cardNum, styleKey) {
+      cardCustoms[cardNum].style = styleKey;
+      cardCustoms[cardNum].font = STYLES_CATALOG[styleKey].defaultFont || "modern_sans";
+      const fontSel = document.getElementById(`fontSelect${cardNum}`);
+      if (fontSel) fontSel.value = cardCustoms[cardNum].font;
+      const lbl = document.getElementById(`cardLabel${cardNum}`);
+      if (lbl) lbl.innerText = STYLES_CATALOG[styleKey].name;
+      renderAll4CreatorCards();
+    }
+
+    function changeCardFont(cardNum, fontKey) {
+      cardCustoms[cardNum].font = fontKey;
       renderAll4CreatorCards();
     }
 
@@ -1283,8 +1445,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       document.getElementById(`pScaleVal${cardNum}`).innerText = `${pVal}%`;
       document.getElementById(`bScaleVal${cardNum}`).innerText = `${bVal}%`;
 
-      cardScales[cardNum].product = parseFloat(pVal) / 100.0;
-      cardScales[cardNum].badge = parseFloat(bVal) / 100.0;
+      cardCustoms[cardNum].pScale = parseFloat(pVal) / 100.0;
+      cardCustoms[cardNum].bScale = parseFloat(bVal) / 100.0;
 
       renderAll4CreatorCards();
     }
@@ -1298,21 +1460,19 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     }
 
     function reRollCardStyles() {
-      const shuffled = [...allStyles].sort(() => 0.5 - Math.random());
+      const regularPool = Object.keys(STYLES_CATALOG).filter(k => STYLES_CATALOG[k].mode === "regular");
+      const shuffled = [...regularPool].sort(() => 0.5 - Math.random());
       activeCardStyles = shuffled.slice(0, 4);
 
-      const labelNames = {
-        polaroid: "Style: Polaroid Snap",
-        kraft_tag: "Style: Top Kraft Tag",
-        split_horizon: "Style: Split Horizon",
-        notebook: "Style: Torn Notebook",
-        corner_flag: "Style: Top Corner Flag",
-        flatlay: "Style: Routine Flatlay"
-      };
-
       for (let i = 1; i <= 4; i++) {
-        const el = document.getElementById(`cardLabel${i}`);
-        if (el) el.innerText = labelNames[activeCardStyles[i - 1]] || "Style: Custom";
+        cardCustoms[i].style = activeCardStyles[i - 1];
+        cardCustoms[i].font = STYLES_CATALOG[activeCardStyles[i - 1]].defaultFont;
+        const sel = document.getElementById(`styleSelect${i}`);
+        if (sel) sel.value = activeCardStyles[i - 1];
+        const fontSel = document.getElementById(`fontSelect${i}`);
+        if (fontSel) fontSel.value = cardCustoms[i].font;
+        const lbl = document.getElementById(`cardLabel${i}`);
+        if (lbl) lbl.innerText = STYLES_CATALOG[activeCardStyles[i - 1]].name;
       }
 
       renderAll4CreatorCards();
@@ -1368,7 +1528,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     });
 
-    // Smart Extractor (Bans the word "Price")
+    // RAW DEAL EXTRACTOR (STRICT BAN ON THE WORD 'PRICE')
     document.getElementById('extractBtn').addEventListener('click', () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
@@ -1416,332 +1576,249 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       slate_blue: { bg: "#EAECEE", polaroid: "#FFFFFF", accent: "#4A6B82", text: "#1A2530" }
     };
 
+    function getFontFamily(fontKey) {
+      if (fontKey === "handwritten") return "'Caveat', cursive, sans-serif";
+      if (fontKey === "typewriter") return "'Courier Prime', monospace";
+      if (fontKey === "playful") return "'Fredoka', sans-serif";
+      if (fontKey === "editorial") return "'Playfair Display', serif";
+      return "'Plus Jakarta Sans', sans-serif";
+    }
+
+    // ==========================================
+    // MASTER DISPATCHER: RENDERS ALL 4 CREATIVE CARDS
+    // ==========================================
     function renderAll4CreatorCards() {
       if (chosen4Variants.length < 4) return;
 
       const note = document.getElementById('mainNoteInput').value.trim();
       const val = document.getElementById('simpleValueInput').value.trim();
       const themeKey = document.getElementById('themePaletteSelect').value;
-
       const sampledPal = themeKey === "auto_sampled" ? sampleColorsFromCanvas(chosen4Variants[0].canvas) : (FIXED_PALETTES[themeKey] || FIXED_PALETTES.warm_oatmeal);
 
       for (let i = 1; i <= 4; i++) {
-        const layout = activeCardStyles[i - 1] || "polaroid";
-        const canvasEl = document.getElementById(`cardCanvas${i}`);
+        const c = document.getElementById(`cardCanvas${i}`);
         const srcCanvas = chosen4Variants[i - 1].canvas;
-        const scales = cardScales[i];
+        const conf = cardCustoms[i];
+        renderCardWithStyle(c, srcCanvas, note, val, sampledPal, conf, i);
+      }
+    }
 
-        if (layout === "kraft_tag") {
-          renderKraftTagCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
-        } else if (layout === "split_horizon") {
-          renderSplitHorizonCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
-        } else if (layout === "notebook") {
-          renderNotebookCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
-        } else if (layout === "corner_flag") {
-          renderCornerFlagCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
-        } else if (layout === "flatlay") {
-          renderFlatlayCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+    function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
+      const ctx = c.getContext('2d');
+      const style = conf.style;
+      const font = getFontFamily(conf.font);
+
+      // BASE BACKGROUND MAT (LAYER 0)
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // ==========================================
+      // LAYER 1: PRODUCT & BACKGROUND STAGING
+      // ==========================================
+      ctx.save();
+      const pw = 680 * conf.pScale;
+      const ph = 680 * conf.pScale;
+
+      if (style.includes("split_horizon")) {
+        ctx.fillStyle = pal.polaroid;
+        ctx.fillRect(0, 0, 1080, 700);
+        ctx.strokeStyle = "rgba(0,0,0,0.06)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(0, 700); ctx.lineTo(1080, 700);
+        ctx.stroke();
+      } else if (style.includes("notebook")) {
+        ctx.fillStyle = "#FFFFFF";
+        ctx.shadowColor = "rgba(0,0,0,0.12)";
+        ctx.shadowBlur = 24;
+        ctx.shadowOffsetY = 10;
+        ctx.beginPath();
+        ctx.roundRect(80, 80, 920, 920, 16);
+        ctx.fill();
+        ctx.shadowColor = "transparent";
+
+        // Ruled lines & binder holes
+        ctx.strokeStyle = "rgba(226, 232, 240, 0.8)";
+        ctx.lineWidth = 1.5;
+        for (let y = 160; y < 960; y += 48) {
+          ctx.beginPath(); ctx.moveTo(120, y); ctx.lineTo(960, y); ctx.stroke();
+        }
+        ctx.fillStyle = pal.bg;
+        for (let x = 160; x < 940; x += 70) {
+          ctx.beginPath(); ctx.arc(x, 110, 8, 0, Math.PI * 2); ctx.fill();
+        }
+      } else if (style.includes("polaroid")) {
+        ctx.translate(540, 500);
+        ctx.rotate(-0.03);
+        ctx.fillStyle = pal.polaroid;
+        ctx.shadowColor = "rgba(0,0,0,0.18)";
+        ctx.shadowBlur = 28;
+        ctx.shadowOffsetY = 14;
+        ctx.fillRect(-340, -360, 680, 800);
+        ctx.shadowColor = "transparent";
+      }
+
+      // DRAW PRODUCT PHOTO (ALWAYS UNDER THE LABELS!)
+      if (isPrivacyMode) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(-pw / 2, -ph / 2, pw, ph, 24);
+        ctx.clip();
+        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw, ph);
+        ctx.restore();
+      } else {
+        if (style.includes("polaroid")) {
+          ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
         } else {
-          renderPolaroidCard(canvasEl, srcCanvas, note, val, sampledPal, scales);
+          ctx.shadowColor = "rgba(0,0,0,0.16)";
+          ctx.shadowBlur = 32;
+          ctx.shadowOffsetY = 16;
+          ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
         }
       }
-    }
+      ctx.restore();
 
-    // 1. POLAROID SNAP
-    function renderPolaroidCard(c, srcCanvas, note, val, pal, scales) {
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
-
+      // ==========================================
+      // LAYER 2: LABELS, BADGES & DOODLES (ALWAYS ON TOP!)
+      // ==========================================
       ctx.save();
-      ctx.translate(540, 500);
-      ctx.rotate(-0.035);
-
-      ctx.fillStyle = pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.18)";
-      ctx.shadowBlur = 28;
-      ctx.shadowOffsetY = 14;
-      ctx.fillRect(-340, -360, 680, 800);
-      ctx.shadowColor = "transparent";
-
-      const pw = 580 * scales.product;
-      const ph = 580 * scales.product;
-      if (isPrivacyMode) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(-290, -310, 580, 580);
-        ctx.clip();
-        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw * 1.5, ph * 1.5);
-        ctx.restore();
-      } else {
-        ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
-      }
+      // NOTE TEXT (AUTO-POSITION OR DRAGGED)
+      const noteX = conf.notePos ? conf.notePos.x : (style.includes("polaroid") ? 540 : 540);
+      const noteY = conf.notePos ? conf.notePos.y : (style.includes("polaroid") ? 860 : (style.includes("top") ? 140 : 960));
 
       ctx.fillStyle = pal.text;
-      ctx.font = "bold 32px sans-serif";
+      ctx.font = `bold ${Math.round(32 * conf.bScale)}px ${font}`;
       ctx.textAlign = "center";
-      ctx.fillText(note, 0, 360);
+      ctx.fillText(note, noteX, noteY);
 
-      // Washi Tape
-      ctx.save();
-      ctx.translate(0, -370);
-      ctx.rotate(0.02);
-      ctx.fillStyle = currentDealMode === 'run' ? "rgba(251, 191, 36, 0.85)" : "rgba(255, 255, 255, 0.72)";
-      ctx.fillRect(-120, -18, 240, 42);
-      ctx.restore();
-      ctx.restore();
-
+      // VALUE BADGE / KRAFT TAG / HIGH-VIS RUN CUES (ALWAYS ON TOP!)
       if (val) {
+        ctx.font = `bold ${Math.round(26 * conf.bScale)}px ${font}`;
+        const valMetrics = ctx.measureText(val);
+        const textW = valMetrics.width;
+        const boxW = Math.min(600, textW + 48); // EXACT TIGHT FIT!
+        const boxH = Math.round(62 * conf.bScale);
+
+        // Default badge positions per layout zone
+        let defBx = 540, defBy = 940;
+        if (style.includes("kraft_tag")) { defBx = 220; defBy = 120; }
+        else if (style.includes("notebook")) { defBx = 960 - (boxW / 2); defBy = 180; }
+        else if (style.includes("polaroid")) { defBx = 940 - (boxW / 2); defBy = 940; }
+        else if (style.includes("run_arrow_pointer")) { defBx = 540; defBy = 880; }
+
+        const bx = conf.badgePos ? conf.badgePos.x : defBx;
+        const by = conf.badgePos ? conf.badgePos.y : defBy;
+
+        // Save active coordinates for interactive dragging
+        conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
+
         ctx.save();
-        ctx.font = "800 26px sans-serif";
-        const valW = (ctx.measureText(val).width + 60) * scales.badge;
-        const valH = 64 * scales.badge;
+        ctx.translate(bx, by);
 
-        ctx.translate(1000 - (valW / 2), 940);
-        ctx.rotate(-0.04);
-        ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
-        ctx.shadowColor = "rgba(0,0,0,0.15)";
-        ctx.shadowBlur = 12;
-        ctx.beginPath();
-        ctx.roundRect(-valW / 2, -valH / 2, valW, valH, 14);
-        ctx.fill();
+        // STYLIZED BADGE BACKGROUND
+        if (style.includes("run_arrow_pointer") || currentDealMode === 'run') {
+          // Alert Neon Yellow Sticky Stamp
+          ctx.fillStyle = "#FEF08A";
+          ctx.shadowColor = "rgba(0,0,0,0.2)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
+          ctx.fill();
 
-        ctx.fillStyle = "#0f172a";
-        ctx.textAlign = "center";
-        ctx.fillText(val, 0, 8 * scales.badge);
-        ctx.restore();
-      }
-    }
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 8 * conf.bScale);
 
-    // 2. KRAFT PARCEL TAG (Top Tag)
-    function renderKraftTagCard(c, srcCanvas, note, val, pal, scales) {
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
+          // Hand-Drawn Curved Arrow Doodle pointing to badge
+          ctx.strokeStyle = "#EAB308";
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(-boxW / 2 - 40, -40);
+          ctx.quadraticCurveTo(-boxW / 2 - 10, -10, -boxW / 2 + 10, -10);
+          ctx.stroke();
+        } else if (style.includes("kraft_tag")) {
+          // Brown Luggage Tag with Eyelet
+          ctx.fillStyle = "#C49A6C";
+          ctx.shadowColor = "rgba(0,0,0,0.18)";
+          ctx.shadowBlur = 14;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
+          ctx.fill();
 
-      if (val) {
-        ctx.save();
-        ctx.translate(180, 110);
-        ctx.rotate(-0.08);
+          ctx.fillStyle = "#FAF8F5";
+          ctx.beginPath();
+          ctx.arc(-boxW / 2 + 16, 0, 6, 0, Math.PI * 2);
+          ctx.fill();
 
-        ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
-        const tagW = Math.min(480, ctx.measureText(val).width + 64);
-        const tagH = 68 * scales.badge;
+          ctx.fillStyle = "#FFFFFF";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 8, 8 * conf.bScale);
+        } else if (style.includes("notebook")) {
+          // Translucent Yellow Highlighter Strip
+          ctx.fillStyle = "rgba(253, 224, 71, 0.85)";
+          ctx.fillRect(-boxW / 2, -boxH / 2, boxW, boxH);
 
-        ctx.fillStyle = currentDealMode === 'run' ? "#eab308" : "#C49A6C";
-        ctx.shadowColor = "rgba(0,0,0,0.16)";
-        ctx.shadowBlur = 14;
-        ctx.beginPath();
-        ctx.roundRect(-tagW / 2, -tagH / 2, tagW, tagH, 12);
-        ctx.fill();
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 8 * conf.bScale);
+        } else {
+          // Clean Floating Pill
+          ctx.fillStyle = pal.polaroid;
+          ctx.shadowColor = "rgba(0,0,0,0.15)";
+          ctx.shadowBlur = 14;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
+          ctx.fill();
 
-        ctx.fillStyle = "#FAF8F5";
-        ctx.beginPath();
-        ctx.arc(-tagW / 2 + 18, 0, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = "#FFFFFF";
-        ctx.textAlign = "center";
-        ctx.fillText(val, 8, 8 * scales.badge);
-        ctx.restore();
-      }
-
-      const pw = 680 * scales.product;
-      const ph = 680 * scales.product;
-      ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.16)";
-      ctx.shadowBlur = 32;
-      ctx.shadowOffsetY = 16;
-      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
-      ctx.restore();
-
-      ctx.fillStyle = pal.text;
-      ctx.font = "bold 32px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 540, 970);
-    }
-
-    // 3. SPLIT HORIZON
-    function renderSplitHorizonCard(c, srcCanvas, note, val, pal, scales) {
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.polaroid;
-      ctx.fillRect(0, 0, 1080, 700);
-
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 700, 1080, 380);
-
-      ctx.strokeStyle = "rgba(0,0,0,0.06)";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(0, 700);
-      ctx.lineTo(1080, 700);
-      ctx.stroke();
-
-      const pw = 700 * scales.product;
-      const ph = 700 * scales.product;
-      ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.18)";
-      ctx.shadowBlur = 36;
-      ctx.shadowOffsetY = 20;
-      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
-      ctx.restore();
-
-      ctx.save();
-      ctx.font = `bold ${Math.round(28 * scales.badge)}px sans-serif`;
-      const pillText = `${note} · ${val}`;
-      const pillW = Math.min(960, ctx.measureText(pillText).width + 64);
-      const pillH = 74 * scales.badge;
-
-      ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.1)";
-      ctx.shadowBlur = 14;
-      ctx.beginPath();
-      ctx.roundRect(540 - (pillW / 2), 940, pillW, pillH, 9999);
-      ctx.fill();
-
-      ctx.fillStyle = "#0f172a";
-      ctx.textAlign = "center";
-      ctx.fillText(pillText, 540, 940 + (pillH / 2) + 8);
-      ctx.restore();
-    }
-
-    // 4. TORN NOTEBOOK PAGE
-    function renderNotebookCard(c, srcCanvas, note, val, pal, scales) {
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      ctx.save();
-      ctx.fillStyle = "#FFFFFF";
-      ctx.shadowColor = "rgba(0,0,0,0.14)";
-      ctx.shadowBlur = 24;
-      ctx.shadowOffsetY = 10;
-      ctx.beginPath();
-      ctx.roundRect(80, 80, 920, 920, 16);
-      ctx.fill();
-
-      ctx.strokeStyle = "rgba(226, 232, 240, 0.8)";
-      ctx.lineWidth = 1.5;
-      for (let y = 160; y < 960; y += 48) {
-        ctx.beginPath();
-        ctx.moveTo(120, y);
-        ctx.lineTo(960, y);
-        ctx.stroke();
-      }
-
-      ctx.fillStyle = pal.bg;
-      for (let x = 160; x < 940; x += 70) {
-        ctx.beginPath();
-        ctx.arc(x, 110, 8, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.restore();
-
-      if (val) {
-        ctx.save();
-        ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
-        const valW = ctx.measureText(val).width + 36;
-        ctx.fillStyle = currentDealMode === 'run' ? "#fde047" : "rgba(253, 224, 71, 0.75)";
-        ctx.fillRect(940 - valW, 160, valW, 44);
-        ctx.fillStyle = "#0F172A";
-        ctx.fillText(val, 940 - valW + 18, 192);
+          ctx.fillStyle = pal.text;
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 8 * conf.bScale);
+        }
         ctx.restore();
       }
 
-      const pw = 620 * scales.product;
-      const ph = 620 * scales.product;
-      ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.15)";
-      ctx.shadowBlur = 24;
-      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
       ctx.restore();
-
-      ctx.fillStyle = "#334155";
-      ctx.font = "bold 32px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(`"${note}"`, 540, 930);
     }
 
-    // 5. TOP CORNER FLAG
-    function renderCornerFlagCard(c, srcCanvas, note, val, pal, scales) {
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
+    // ==========================================
+    // INTERACTIVE CANVAS CLICK & DRAG TO MOVE
+    // ==========================================
+    function setupCanvasDragListeners() {
+      for (let i = 1; i <= 4; i++) {
+        const wrap = document.getElementById(`wrap${i}`);
+        const canvas = document.getElementById(`cardCanvas${i}`);
 
-      if (val) {
-        ctx.save();
-        ctx.translate(920, 160);
-        ctx.rotate(0.785);
-        ctx.fillStyle = currentDealMode === 'run' ? "#eab308" : pal.accent;
-        ctx.fillRect(-200, -32, 400, 64);
-        ctx.fillStyle = "#FFFFFF";
-        ctx.font = "bold 24px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(val, 0, 8);
-        ctx.restore();
+        wrap.addEventListener("mousedown", (e) => {
+          const r = canvas.getBoundingClientRect();
+          const mouseX = (e.clientX - r.left) * (1080 / r.width);
+          const mouseY = (e.clientY - r.top) * (1080 / r.height);
+          const box = cardCustoms[i]._activeBadgeBox;
+
+          if (box && mouseX >= box.x && mouseX <= box.x + box.w && mouseY >= box.y && mouseY <= box.y + box.h) {
+            draggingState = { active: true, cardNum: i, target: "badge" };
+          } else {
+            // Drag general position
+            draggingState = { active: true, cardNum: i, target: "badge" };
+          }
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!draggingState.active || draggingState.cardNum !== i) return;
+          const r = canvas.getBoundingClientRect();
+          const mouseX = Math.max(80, Math.min(1000, (e.clientX - r.left) * (1080 / r.width)));
+          const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
+
+          cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
+          renderAll4CreatorCards();
+        });
+
+        window.addEventListener("mouseup", () => {
+          if (draggingState.active) {
+            draggingState.active = false;
+            draggingState.cardNum = null;
+          }
+        });
       }
-
-      const pw = 680 * scales.product;
-      const ph = 680 * scales.product;
-      ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.16)";
-      ctx.shadowBlur = 32;
-      ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
-      ctx.restore();
-
-      ctx.fillStyle = pal.text;
-      ctx.font = "bold 32px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 540, 960);
-    }
-
-    // 6. ROUTINE FLATLAY
-    function renderFlatlayCard(c, srcCanvas, note, val, pal, scales) {
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      const pw = 760 * scales.product;
-      const ph = 760 * scales.product;
-      ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.18)";
-      ctx.shadowBlur = 36;
-      ctx.shadowOffsetY = 24;
-
-      if (isPrivacyMode) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(160, 140, 760, 760, 24);
-        ctx.clip();
-        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, 540 - (pw * 1.4) / 2, 520 - (ph * 1.4) / 2, pw * 1.4, ph * 1.4);
-        ctx.restore();
-      } else {
-        ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
-      }
-      ctx.restore();
-
-      ctx.save();
-      ctx.font = `bold ${Math.round(26 * scales.badge)}px sans-serif`;
-      const pillText = `${note} · ${val}`;
-      const pillW = Math.min(960, ctx.measureText(pillText).width + 64);
-      const pillH = 74 * scales.badge;
-
-      ctx.fillStyle = currentDealMode === 'run' ? "#fef08a" : pal.polaroid;
-      ctx.shadowColor = "rgba(0,0,0,0.12)";
-      ctx.shadowBlur = 18;
-      ctx.beginPath();
-      ctx.roundRect(540 - (pillW / 2), 940, pillW, pillH, 9999);
-      ctx.fill();
-
-      ctx.fillStyle = "#0f172a";
-      ctx.textAlign = "center";
-      ctx.fillText(pillText, 540, 940 + (pillH / 2) + 8);
-
-      ctx.fillStyle = "#94a3b8";
-      ctx.font = "bold 14px sans-serif";
-      ctx.textAlign = "right";
-      ctx.fillText("#ad", 1040, 1050);
-      ctx.restore();
     }
 
     // ==========================================
