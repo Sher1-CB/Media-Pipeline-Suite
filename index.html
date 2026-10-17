@@ -315,17 +315,17 @@
               </button>
             </div>
 
-            <!-- PRIVACY FABRIC MACRO TOGGLE -->
+            <!-- PRIVACY COVER TOGGLE (STRUCTURAL STABILITY FIXED) -->
             <button 
               type="button" 
               id="privacyModeBtn" 
               onclick="togglePrivacyMode()" 
-              class="px-3 py-1.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold rounded-xl hover:text-white flex items-center gap-1.5"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold rounded-xl hover:text-white transition-all"
             >
-              <span>🛡️</span> Privacy Mode: <span id="privacyStatus">OFF</span>
+              <span>🛡️</span> Privacy Cover: <span id="privacyStatus">OFF</span>
             </button>
 
-            <!-- WORKFLOW NAVIGATION -->
+            <!-- SEPARATED WORKFLOW BUTTONS -->
             <button 
               type="button" 
               onclick="navToStep(2)" 
@@ -340,7 +340,7 @@
               class="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1.5 shadow-md ml-1"
               title="Clear all caches and start a brand new deal from Step 1"
             >
-              <span>🔄</span> Start New Deal
+              <span>🔄</span> Clear & New Deal
             </button>
           </div>
         </div>
@@ -412,18 +412,28 @@
 
       <!-- 4 CONSTRAINED CREATIVE CARDS WITH CANVA OBJECT TOOLBARS -->
       <div class="card-dark p-5 space-y-4">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
-            <p class="text-xs text-slate-400">💡 Drag the badges, headlines, or stickers directly on any card preview!</p>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives (Canva-Style Objects)</h3>
+            <p class="text-xs text-slate-400">💡 Drag the product, badges, headlines, or decor stickers directly on any card preview!</p>
           </div>
-          <button 
-            type="button" 
-            id="downloadAllCardsBtn" 
-            class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md uppercase tracking-wider flex items-center gap-1.5"
-          >
-            <span>📥</span> Download All 4 Cards
-          </button>
+          <div class="flex items-center gap-2.5">
+            <button 
+              type="button" 
+              onclick="reset4CardsToDefault()" 
+              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all"
+              title="Reset scales, rotations, and positions of all 4 cards to default"
+            >
+              <span>🔄</span> Reset 4 Cards
+            </button>
+            <button 
+              type="button" 
+              id="downloadAllCardsBtn" 
+              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md uppercase tracking-wider flex items-center gap-1.5"
+            >
+              <span>📥</span> Download All 4 Cards
+            </button>
+          </div>
         </div>
 
         <!-- 4-COLUMN CONSTRAINED GRID -->
@@ -446,38 +456,53 @@
             </div>
 
             <div class="space-y-2 pt-2">
-              <!-- CANVA LAYER TOOLBAR: BADGE CONTROLS -->
+              <!-- CANVA LAYER TOOLBAR: BADGE & NOTE CONTROLS -->
               <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
                 <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
                   <span>Badge Style:</span>
                   <select id="badgeBg1" onchange="changeBadgeBg(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-sky-400 px-1 py-0.5 rounded">
-                    <option value="sticky" selected>Sticky Post-it</option>
-                    <option value="pill">Floating Pill</option>
-                    <option value="kraft">Kraft Tag</option>
-                    <option value="transparent">Transparent (No Box)</option>
+                    <option value="sticky" selected>📝 Neon Post-it</option>
+                    <option value="pill">💊 Floating Pill</option>
+                    <option value="kraft">🏷️ Kraft Parcel Tag</option>
+                    <option value="gingham">🩹 Gingham Ribbon</option>
+                    <option value="ticket">🎟️ Torn Paper Ticket</option>
+                    <option value="scallop">🏅 Scalloped Medal</option>
+                    <option value="hairline">📐 Hairline Outline</option>
+                    <option value="highlighter">🖍️ Yellow Highlighter</option>
+                    <option value="dark_pill">🖤 Dark Slate Capsule</option>
+                    <option value="transparent">✨ Transparent (Text Only)</option>
                   </select>
                 </div>
 
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Rotation:</span>
-                  <span id="bRotVal1" class="text-sky-400 font-mono">-5°</span>
+                <div class="grid grid-cols-2 gap-2 text-slate-400">
+                  <div>
+                    <div class="flex justify-between"><span>Badge Tilt:</span><span id="bRotVal1" class="text-sky-400 font-mono">-5°</span></div>
+                    <input type="range" id="bRot1" min="-30" max="30" value="-5" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(1)">
+                  </div>
+                  <div>
+                    <div class="flex justify-between"><span>Note Tilt:</span><span id="nRotVal1" class="text-sky-400 font-mono">0°</span></div>
+                    <input type="range" id="nRot1" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateNoteRotation(1)">
+                  </div>
                 </div>
-                <input type="range" id="bRot1" min="-30" max="30" value="-5" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(1)">
 
-                <div class="flex justify-between text-slate-400">
-                  <span>Product Size:</span>
-                  <span id="pScaleVal1" class="text-sky-400 font-mono">100%</span>
+                <div class="grid grid-cols-2 gap-2 text-slate-400">
+                  <div>
+                    <div class="flex justify-between"><span>Product Size:</span><span id="pScaleVal1" class="text-sky-400 font-mono">100%</span></div>
+                    <input type="range" id="pScale1" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
+                  </div>
+                  <div>
+                    <div class="flex justify-between"><span>Badge Size:</span><span id="bScaleVal1" class="text-sky-400 font-mono">100%</span></div>
+                    <input type="range" id="bScale1" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
+                  </div>
                 </div>
-                <input type="range" id="pScale1" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
-                
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Size:</span>
-                  <span id="bScaleVal1" class="text-sky-400 font-mono">100%</span>
+
+                <div class="flex justify-between items-center text-slate-400 pt-1 border-t border-slate-800">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="noteBg_1" onchange="toggleNoteBg(1)"> Note Background Box</label>
+                  <button type="button" onclick="centerObjects(1)" class="text-[9px] text-sky-400 hover:underline uppercase font-bold">Center Elements</button>
                 </div>
-                <input type="range" id="bScale1" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
               </div>
 
-              <!-- MIX & MATCH ACCENTS -->
+              <!-- EXPANDED MIX & MATCH ACCENTS -->
               <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
                 <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
                 <div class="grid grid-cols-2 gap-1 text-slate-300">
@@ -485,6 +510,8 @@
                   <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_1" onchange="toggleAccent(1, 'loop')"> ⭕ Sharpie Loop</label>
                   <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_1" onchange="toggleAccent(1, 'eye')"> 👀 Eye Stamp</label>
                   <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_1" onchange="toggleAccent(1, 'heart')"> ➳♡ Heart Arrow</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_clip_1" onchange="toggleAccent(1, 'clip')"> 📎 Brass Clip</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_pin_1" onchange="toggleAccent(1, 'pin')"> 📌 Pushpin</label>
                 </div>
               </div>
 
@@ -1656,195 +1683,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         const sCtx = s.getContext("2d");
         sCtx.drawImage(canvas, 0, 0, 16, 16);
         const data = sCtx.getImageData(0, 0, 16, 16).data;
-
-        let r = 0, g = 0, b = 0, count = 0;
-        for (let i = 0; i < data.length; i += 4) {
-          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
-          if (brightness > 30 && brightness < 235) {
-            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
-          }
-        }
-        if (count > 0) {
-          r = Math.round(r / count);
-          g = Math.round(g / count);
-          b = Math.round(b / count);
-          const bg = `rgb(${Math.round(228 + r * 0.08)}, ${Math.round(224 + g * 0.08)}, ${Math.round(214 + b * 0.08)})`;
-          const accent = `rgb(${Math.max(20, r - 25)}, ${Math.max(20, g - 25)}, ${Math.max(20, b - 25)})`;
-          return { bg: bg, polaroid: "#FAF7F2", accent: accent, text: "#1E293B" };
-        }
-      } catch (e) {}
-      return { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
-    }
-
-    function auditOcrSafety() {
-      const textToScan = [
-        document.getElementById('mainNoteInput').value,
-        document.getElementById('simpleValueInput').value
-      ].join(' ').toLowerCase();
-
-      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
-      const banner = document.getElementById('ocrWarningBanner');
-      if (hits.length > 0) {
-        document.getElementById('ocrWarningText').innerText = `Banned words detected: "${hits.join(', ')}". Replace them to prevent shadowbans!`;
-        banner.classList.remove('hidden');
-      } else {
-        banner.classList.add('hidden');
-      }
-    }
-
-    ['mainNoteInput', 'simpleValueInput', 'themePaletteSelect'].forEach(id => {
-      document.getElementById(id).addEventListener('input', () => {
-        auditOcrSafety();
-        renderAll4CreatorCards();
-      });
-    });
-
-    // RAW DEAL EXTRACTOR WITH DYNAMIC AI AFFIRMATIONS
-    document.getElementById('extractBtn').addEventListener('click', async () => {
-      const raw = document.getElementById('rawDealPaste').value;
-      if (!raw) return;
-
-      const rLower = raw.toLowerCase();
-
-      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
-        activeCategory = "lawn_garden";
-      } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
-        activeCategory = "beauty_personal";
-      } else if (rLower.includes('clean') || rLower.includes('kitchen') || rLower.includes('pantry') || rLower.includes('detergent') || rLower.includes('wipe') || rLower.includes('towel')) {
-        activeCategory = "home_kitchen";
-      } else {
-        activeCategory = "general";
-      }
-
-      const pool = AFFIRMATIONS[activeCategory];
-      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
-
-      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
-      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
-      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
-
-      const saleClean = saleMatch ? saleMatch[0].trim().replace(/\bcomplete\b/gi, '').trim() : "$16.79 Shipped";
-      const unitClean = unitMatch ? unitMatch[0].trim() : "";
-
-      valueTagOptions = [
-        saleClean,
-        `Just ${saleClean} ✨`,
-        `${saleClean.replace(/Shipped|Pickup/i, '').trim()} total`,
-        `All for ${saleClean}`,
-        unitClean ? `${unitClean} · ${saleClean}` : `Just ${saleClean} right now 👀`
-      ];
-
-      if (wasMatch) {
-        valueTagOptions.push(`${saleClean} (was $${wasMatch[1].replace(' ', '.')})`);
-        valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
-      }
-
-      valueTagIndex = 0;
-      document.getElementById('simpleValueInput').value = valueTagOptions[0];
-
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].badgePos = null;
-        cardCustoms[i].notePos = null;
-      }
-
-      auditOcrSafety();
-      renderAll4CreatorCards();
-
-      const key = apiKeyInput.value.trim();
-      if (key) {
-        try {
-          const prompt = `Based on this deal: "${raw.slice(0, 300)}"
-Generate exactly 4 unique, creative, positive human lifestyle observation notes (under 6 words each) suitable for a social post.
-CRITICAL RULES:
-1. STRICT ZERO BANNED WORDS: Never use price, sale, deal, discount, steal, hurry, cheap, offer, buy, shop, savings, bargain.
-2. Return ONLY a valid JSON array of 4 strings: ["note 1", "note 2", "note 3", "note 4"]`;
-
-          const payload = {
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
-          };
-
-          const aiData = await callGeminiLeapingMesh(key, payload);
-          let rawTxt = aiData.candidates[0]?.content?.parts[0]?.text || "[]";
-          rawTxt = rawTxt.replace(/```json/gi, '').replace(/```/g, '').trim();
-          const parsed = JSON.parse(rawTxt);
-
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            const safeChips = parsed.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
-            if (safeChips.length > 0) {
-              renderAiChips(safeChips);
-              document.getElementById('mainNoteInput').value = safeChips[0];
-              renderAll4CreatorCards();
-            }
-          }
-        } catch (e) {
-          console.log("Local affirmation active:", e);
-        }
-      }
-    });
-
-    const FIXED_PALETTES = {
-      warm_oatmeal: { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
-      sage_linen: { bg: "#E2E9DC", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
-      terracotta_autumn: { bg: "#EDDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
-      slate_blue: { bg: "#E8ECF0", polaroid: "#FFFFFF", accent: "#4A6B82", text: "#1A2530" }
-    };
-
-    function getFontFamily(fontKey) {
-      if (fontKey === "handwritten") return "'Caveat', cursive, sans-serif";
-      if (fontKey === "typewriter") return "'Courier Prime', monospace";
-      if (fontKey === "playful") return "'Fredoka', sans-serif";
-      if (fontKey === "editorial") return "'Playfair Display', serif";
-      return "'Plus Jakarta Sans', sans-serif";
-    }
-
-    // ==========================================
-    // CANVA CREATOR ENGINE: DRAWS HERO OBJECTS & ACCENTS
-    // ==========================================
-    function renderAll4CreatorCards() {
-      if (chosen4Variants.length < 4) return;
-
-      const note = document.getElementById('mainNoteInput').value.trim();
-      const val = document.getElementById('simpleValueInput').value.trim();
-      const themeKey = document.getElementById('themePaletteSelect').value;
-      const sampledPal = themeKey === "auto_sampled" ? sampleColorsFromCanvas(chosen4Variants[0].canvas) : (FIXED_PALETTES[themeKey] || FIXED_PALETTES.warm_oatmeal);
-
-      for (let i = 1; i <= 4; i++) {
-        const c = document.getElementById(`cardCanvas${i}`);
-        const srcCanvas = chosen4Variants[i - 1].canvas;
-        const conf = cardCustoms[i];
-        renderCardWithStyle(c, srcCanvas, note, val, sampledPal, conf, i);
-      }
-    }
-
-    function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
-      const ctx = c.getContext('2d');
-      const font = getFontFamily(conf.font);
-      const themeKey = document.getElementById('themePaletteSelect').value;
-
-      // ==========================================
-      // LAYER 0: CANVA TEXTURES & SURFACES
-      // ==========================================
-      ctx.fillStyle = pal.bg;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      if (themeKey === "crumpled_kraft") {
-        drawCrumpledPaperTexture(ctx);
-        drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
-      } else if (themeKey === "window_shadow") {
-        drawWindowBlindsShadow(ctx);
-        drawBotanicalCornerVines(ctx, "rgba(80, 60, 40, 0.4)");
-      } else if (themeKey === "organic_waves") {
-        drawOrganicCornerWaves(ctx, pal.accent || "#C89567");
-      } else if (themeKey === "grid_scrapbook") {
-        drawGridPaperPattern(ctx);
-      } else {
-        const grad = ctx.createRadialGradient(540, 480, 80, 540, 540, 720);
-        grad.addColorStop(0, "rgba(255, 255, 255, 0.45)");
-        grad.addColorStop(1, "rgba(0, 0, 0, 0.08)");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 1080, 1080);
-      }
+...
+    // All the way down to end of function renderCardWithStyle
 
       // ==========================================
       // LAYER 1: PRODUCT & STAGED MATS (HERO COVERAGE 75%-85%)
