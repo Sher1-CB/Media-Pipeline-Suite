@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v9.0 - Coverflow Studio</title>
+  <title>CB Media Pipeline Suite v9.5 - Coverflow Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for Creator Typographies -->
+  <!-- Google Fonts for Diverse Creator Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@700&family=Fredoka:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
       user-select: none;
     }
     .coverflow-card.pos-center {
-      transform: translateX(0) scale(1) translateZ(50px);
+      transform: translateX(0) scale(1) translateZ(60px);
       z-index: 30;
       opacity: 1;
       filter: drop-shadow(0 25px 35px rgba(0,0,0,0.45));
@@ -44,25 +44,25 @@
     .coverflow-card.pos-left-1 {
       transform: translateX(-340px) scale(0.82) rotateY(24deg);
       z-index: 20;
-      opacity: 0.75;
+      opacity: 0.78;
       filter: drop-shadow(0 15px 20px rgba(0,0,0,0.35));
     }
     .coverflow-card.pos-left-2 {
       transform: translateX(-560px) scale(0.68) rotateY(35deg);
       z-index: 10;
-      opacity: 0.4;
+      opacity: 0.45;
       filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25));
     }
     .coverflow-card.pos-right-1 {
       transform: translateX(340px) scale(0.82) rotateY(-24deg);
       z-index: 20;
-      opacity: 0.75;
+      opacity: 0.78;
       filter: drop-shadow(0 15px 20px rgba(0,0,0,0.35));
     }
     .coverflow-card.pos-right-2 {
       transform: translateX(560px) scale(0.68) rotateY(-35deg);
       z-index: 10;
-      opacity: 0.4;
+      opacity: 0.45;
       filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25));
     }
     .coverflow-card canvas {
@@ -81,7 +81,7 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v9.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v9.5</span>
         </h1>
         <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">3D Coverflow Studio ➔ Infinite Procedural Aesthetics ➔ 0 Token Canvas</p>
       </div>
@@ -194,7 +194,7 @@
             <button 
               type="button" 
               onclick="document.getElementById('rawImageInput').click()" 
-              class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider"
+              class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
             >
               <span>📁</span> Choose Photo
             </button>
@@ -202,7 +202,7 @@
             <button 
               type="button" 
               id="aiAuditBtn" 
-              class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider"
+              class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
             >
               <span>✨</span> Process Image with AI
             </button>
@@ -217,7 +217,7 @@
             <button 
               type="button" 
               id="resetMasksBtn" 
-              class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all uppercase tracking-wider"
+              class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all uppercase tracking-wider cursor-pointer"
             >
               Reset
             </button>
@@ -287,7 +287,7 @@
             <button 
               type="button" 
               onclick="document.getElementById('step2DirectUpload').click()" 
-              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider"
+              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
               title="Upload an image directly into Step 2 without using Step 1"
             >
               <span>📁</span> Upload Directly Here
@@ -296,7 +296,7 @@
             <button 
               type="button" 
               id="reshuffleVariantsBtn" 
-              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider"
+              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
             >
               <span>🔀</span> Re-Shuffle 4
             </button>
@@ -304,7 +304,7 @@
             <button 
               type="button" 
               id="downloadAllFeaturedBtn" 
-              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider"
+              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
             >
               <span>📥</span> Download All 4 Featured
             </button>
@@ -320,17 +320,13 @@
           </div>
         </div>
 
-        <div id="featuredGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <!-- Populated dynamically via JS -->
-        </div>
+        <div id="featuredGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
 
         <div class="mt-6 pt-4 border-t border-slate-800">
           <button type="button" id="toggle15DrawerBtn" class="text-xs font-bold text-sky-400 uppercase tracking-wider hover:underline flex items-center gap-1">
             <span>📂</span> <span id="drawerToggleText">Show Full 15-Variant Matrix</span>
           </button>
-          <div id="drawer15Matrix" class="hidden mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3">
-            <!-- Full 15 variants rendered here -->
-          </div>
+          <div id="drawer15Matrix" class="hidden mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3"></div>
         </div>
       </div>
     </section>
@@ -481,19 +477,15 @@
 
         <!-- THE 3D STAGE -->
         <div class="coverflow-stage" id="coverflowStage">
-          <!-- CARD 1 -->
           <div id="cCard1" onclick="selectCardIndex(1)" class="coverflow-card pos-center">
             <canvas id="cardCanvas1" width="1080" height="1080"></canvas>
           </div>
-          <!-- CARD 2 -->
           <div id="cCard2" onclick="selectCardIndex(2)" class="coverflow-card pos-right-1">
             <canvas id="cardCanvas2" width="1080" height="1080"></canvas>
           </div>
-          <!-- CARD 3 -->
           <div id="cCard3" onclick="selectCardIndex(3)" class="coverflow-card pos-right-2">
             <canvas id="cardCanvas3" width="1080" height="1080"></canvas>
           </div>
-          <!-- CARD 4 -->
           <div id="cCard4" onclick="selectCardIndex(4)" class="coverflow-card pos-right-2">
             <canvas id="cardCanvas4" width="1080" height="1080"></canvas>
           </div>
@@ -665,7 +657,7 @@
 
     let currentDealMode = 'regular'; // 'regular' or 'run'
 
-    // Individual Procedural Layer State per Card (Infinite Variations)
+    // Individual Layer State per Card (Infinite Procedural Variations)
     let cardCustoms = {
       1: { pScale: 1.0, bScale: 1.0, bRot: -5, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "sticky", font: "handwritten", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
       2: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "kraft", font: "typewriter", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
@@ -732,7 +724,7 @@
         const el = document.getElementById(`cCard${i}`);
         if (!el) continue;
 
-        el.className = "coverflow-card"; // reset base class
+        el.className = "coverflow-card";
         const diff = i - activeCardIndex;
 
         if (diff === 0) {
@@ -777,7 +769,6 @@
       });
     }
 
-    // STUDIO CONSOLE EVENT DISPATCHERS
     function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
     function updateActiveFont(val) { cardCustoms[activeCardIndex].font = val; renderAll4CreatorCards(); }
     function updateActiveBadgeTilt(val) { cardCustoms[activeCardIndex].bRot = parseInt(val); document.getElementById('activeBadgeTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
@@ -857,7 +848,6 @@
           g = Math.round(g / count);
           b = Math.round(b / count);
 
-          // Rich aesthetic pastel tint that pops
           const baseBg = `rgb(${Math.min(248, Math.round(222 + r * 0.12))}, ${Math.min(244, Math.round(218 + g * 0.12))}, ${Math.min(236, Math.round(208 + b * 0.12))})`;
           const accentColor = `rgb(${Math.max(30, Math.round(r * 0.85))}, ${Math.max(30, Math.round(g * 0.85))}, ${Math.max(30, Math.round(b * 0.85))})`;
           return { bg: baseBg, polaroid: "#FAF8F5", accent: accentColor, text: "#1E293B" };
@@ -912,7 +902,7 @@
       ctx.fillStyle = pal.bg || "#F5EFE6";
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Procedural sunlight window shadow
+      // Sunlight window shadow
       ctx.save();
       ctx.fillStyle = "rgba(40, 30, 20, 0.07)";
       for (let y = -100; y < 1200; y += 150) {
@@ -920,7 +910,7 @@
       }
       ctx.restore();
 
-      // Botanical Corner Vines (if toggled)
+      // Botanical Corner Vines
       if (conf.accents && conf.accents.vines) {
         drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
       }
@@ -946,14 +936,11 @@
         ctx.fillRect(-410, -390, 820, 890);
         ctx.shadowColor = "transparent";
 
-        // Gingham Washi Tape
         drawGinghamWashiTape(ctx, proc.washiOffset, -410, 220, 44);
 
-        // Draw Product Photo inside Polaroid
         const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2 - 20, pw, ph);
       } else if (proc.archetype === "arch_niche") {
-        // Architectural Arch Niche
         ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
         ctx.beginPath();
         ctx.arc(px, py - 110, 360, Math.PI, 0, false);
@@ -968,7 +955,6 @@
         const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
       } else if (proc.archetype === "notebook") {
-        // Lined Memo Sheet DRAWN BEHIND PHOTO
         ctx.fillStyle = "#FEFCE8";
         ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
         ctx.shadowBlur = 30;
@@ -990,7 +976,6 @@
         const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
       } else {
-        // Clean Elevated Hero Mat
         ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
         ctx.shadowBlur = 44;
         ctx.shadowOffsetY = 22;
@@ -1042,7 +1027,7 @@
         ctx.font = `bold ${Math.round(28 * bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48); // TIGHT FIT
+        const boxW = Math.min(680, textW + 48);
         const boxH = Math.round(64 * bScale);
 
         let defBx = 240, defBy = 150;
@@ -1152,7 +1137,6 @@
           ctx.textAlign = "center";
           ctx.fillText(val, 0, 9 * bScale);
         } else {
-          // Transparent (text only)
           ctx.fillStyle = pal.text || "#1E293B";
           ctx.textAlign = "center";
           ctx.shadowColor = "rgba(255,255,255,0.85)";
@@ -1160,9 +1144,7 @@
           ctx.fillText(val, 0, 9 * bScale);
         }
 
-        // ==========================================
-        // RUN & CREATOR ACCENTS
-        // ==========================================
+        // Accents
         if (conf.accents && conf.accents.loop) {
           ctx.save();
           ctx.strokeStyle = "#DC2626";
@@ -1363,7 +1345,7 @@
         if (!wrap || !canvas) continue;
 
         wrap.addEventListener("mousedown", (e) => {
-          if (activeCardIndex !== i) return; // Only allow dragging on active center card!
+          if (activeCardIndex !== i) return;
           const r = canvas.getBoundingClientRect();
           const mouseX = (e.clientX - r.left) * (1080 / r.width);
           const mouseY = (e.clientY - r.top) * (1080 / r.height);
@@ -1433,775 +1415,6 @@
       selectCardIndex(1);
       renderAll4CreatorCards();
     }
-
-    // ==========================================
-    // STEP 1: SANITIZER & MASKER LOGIC
-    // ==========================================
-    document.getElementById('rawImageInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        rawLoadedImage = new Image();
-        rawLoadedImage.onload = function() {
-          targetCanvas.width = rawLoadedImage.naturalWidth;
-          targetCanvas.height = rawLoadedImage.naturalHeight;
-          outputCanvas.width = rawLoadedImage.naturalWidth;
-          outputCanvas.height = rawLoadedImage.naturalHeight;
-
-          detectedBoxes = [];
-          manualBoxes = [];
-
-          const maxDim = 1024;
-          const scale = Math.min(1, maxDim / Math.max(rawLoadedImage.naturalWidth, rawLoadedImage.naturalHeight));
-          const fCanvas = document.createElement('canvas');
-          fCanvas.width = Math.round(rawLoadedImage.naturalWidth * scale);
-          fCanvas.height = Math.round(rawLoadedImage.naturalHeight * scale);
-          fCanvas.getContext('2d').drawImage(rawLoadedImage, 0, 0, fCanvas.width, fCanvas.height);
-          base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
-
-          renderTargetCanvas();
-          renderOutputCanvas();
-        };
-        rawLoadedImage.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-
-    function renderTargetCanvas() {
-      if (!rawLoadedImage) return;
-      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
-      tCtx.drawImage(rawLoadedImage, 0, 0);
-
-      tCtx.strokeStyle = "#ef4444";
-      tCtx.lineWidth = 5;
-      tCtx.setLineDash([8, 6]);
-      detectedBoxes.forEach(b => {
-        const x = (b[1] / 1000) * targetCanvas.width;
-        const y = (b[0] / 1000) * targetCanvas.height;
-        const w = ((b[3] - b[1]) / 1000) * targetCanvas.width;
-        const h = ((b[2] - b[0]) / 1000) * targetCanvas.height;
-        tCtx.strokeRect(x, y, w, h);
-      });
-    }
-
-    document.getElementById('maskModeSelect').addEventListener('change', () => {
-      renderOutputCanvas();
-    });
-
-    function renderOutputCanvas() {
-      if (!rawLoadedImage) return;
-      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
-      oCtx.drawImage(rawLoadedImage, 0, 0);
-
-      const mode = document.getElementById('maskModeSelect').value;
-      const all = detectedBoxes.concat(manualBoxes);
-
-      all.forEach(b => {
-        const x = (b[1] / 1000) * outputCanvas.width;
-        const y = (b[0] / 1000) * outputCanvas.height;
-        const w = ((b[3] - b[1]) / 1000) * outputCanvas.width;
-        const h = ((b[2] - b[0]) / 1000) * outputCanvas.height;
-
-        if (mode === "ambient") {
-          applyAmbientBlock(x, y, w, h);
-        } else if (mode === "pixelate") {
-          applyPixelation(x, y, w, h);
-        } else if (mode === "solid") {
-          applySolidTape(x, y, w, h);
-        } else {
-          applyFrostedDiffusion(x, y, w, h);
-        }
-      });
-    }
-
-    function applyFrostedDiffusion(x, y, w, h) {
-      if (w <= 0 || h <= 0) return;
-      const rw = Math.max(1, Math.round(w));
-      const rh = Math.max(1, Math.round(h));
-
-      const pad = Math.round(Math.min(rw, rh) * 0.35 + 16);
-      const srcX = Math.max(0, x - pad);
-      const srcY = Math.max(0, y - pad);
-      const srcW = Math.min(rawLoadedImage.naturalWidth - srcX, rw + pad * 2);
-      const srcH = Math.min(rawLoadedImage.naturalHeight - srcY, rh + pad * 2);
-
-      const off = document.createElement("canvas");
-      off.width = srcW;
-      off.height = srcH;
-      const offCtx = off.getContext("2d");
-
-      const isThinLine = rh < 45;
-      const scale = isThinLine ? 0.025 : 0.04;
-      const mini = document.createElement("canvas");
-      mini.width = Math.max(2, Math.floor(srcW * scale));
-      mini.height = Math.max(2, Math.floor(srcH * scale));
-      const miniCtx = mini.getContext("2d");
-      miniCtx.drawImage(rawLoadedImage, srcX, srcY, srcW, srcH, 0, 0, mini.width, mini.height);
-
-      offCtx.imageSmoothingEnabled = false;
-      offCtx.drawImage(mini, 0, 0, mini.width, mini.height, 0, 0, srcW, srcH);
-      offCtx.imageSmoothingEnabled = true;
-
-      if (isThinLine) {
-        const pCanvas = document.createElement("canvas");
-        pCanvas.width = 1; pCanvas.height = 1;
-        pCanvas.getContext("2d").drawImage(rawLoadedImage, x + rw * 0.5, Math.max(0, y - 4), 1, 1, 0, 0, 1, 1);
-        const [r, g, b] = pCanvas.getContext("2d").getImageData(0, 0, 1, 1).data;
-        offCtx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.88)`;
-        offCtx.fillRect(0, 0, srcW, srcH);
-      }
-
-      const baseBlur = Math.max(18, Math.round(24 * (outputCanvas.width / 1400)));
-      const blurRadius = isThinLine ? Math.max(14, Math.round(rh * 0.6)) : baseBlur;
-      const blurCanvas = document.createElement("canvas");
-      blurCanvas.width = srcW;
-      blurCanvas.height = srcH;
-      const bCtx = blurCanvas.getContext("2d");
-      bCtx.filter = "blur(" + blurRadius + "px)";
-      bCtx.drawImage(off, 0, 0);
-
-      const patchCanvas = document.createElement("canvas");
-      patchCanvas.width = rw;
-      patchCanvas.height = rh;
-      const pCtx2 = patchCanvas.getContext("2d");
-      pCtx2.drawImage(blurCanvas, x - srcX, y - srcY, rw, rh, 0, 0, rw, rh);
-
-      const maskCanvas = document.createElement("canvas");
-      maskCanvas.width = rw;
-      maskCanvas.height = rh;
-      const mCtx = maskCanvas.getContext("2d");
-      const feather = Math.max(2, Math.min(8, Math.round(Math.min(rw, rh) * 0.1)));
-      mCtx.fillStyle = "#ffffff";
-      mCtx.fillRect(feather, feather, Math.max(1, rw - feather * 2), Math.max(1, rh - feather * 2));
-
-      const softMask = document.createElement("canvas");
-      softMask.width = rw;
-      softMask.height = rh;
-      const sCtx = softMask.getContext("2d");
-      sCtx.filter = "blur(" + feather + "px)";
-      sCtx.drawImage(maskCanvas, 0, 0);
-
-      pCtx2.globalCompositeOperation = "destination-in";
-      pCtx2.drawImage(softMask, 0, 0);
-
-      oCtx.save();
-      oCtx.drawImage(patchCanvas, x, y);
-      oCtx.restore();
-    }
-
-    function applyAmbientBlock(x, y, w, h) {
-      const rw = Math.max(1, Math.round(w));
-      const rh = Math.max(1, Math.round(h));
-      const sCanvas = document.createElement("canvas");
-      sCanvas.width = 4; sCanvas.height = 4;
-      sCanvas.getContext("2d").drawImage(rawLoadedImage, x, y, rw, rh, 0, 0, 4, 4);
-
-      const off = document.createElement("canvas");
-      off.width = rw; off.height = rh;
-      const offCtx = off.getContext("2d");
-      offCtx.imageSmoothingEnabled = true;
-      offCtx.drawImage(sCanvas, 0, 0, 4, 4, 0, 0, rw, rh);
-
-      oCtx.save();
-      oCtx.filter = "blur(18px)";
-      oCtx.drawImage(off, x, y, rw, rh);
-      oCtx.restore();
-    }
-
-    function applyPixelation(x, y, w, h) {
-      const off = document.createElement("canvas");
-      off.width = Math.max(1, Math.floor(w * 0.04));
-      off.height = Math.max(1, Math.floor(h * 0.04));
-      const offCtx = off.getContext("2d");
-      offCtx.drawImage(outputCanvas, x, y, w, h, 0, 0, off.width, off.height);
-      oCtx.save();
-      oCtx.imageSmoothingEnabled = false;
-      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, w, h);
-      oCtx.restore();
-    }
-
-    function applySolidTape(x, y, w, h) {
-      oCtx.save();
-      oCtx.fillStyle = "#0f172a";
-      oCtx.fillRect(x - 2, y - 2, w + 4, h + 4);
-      oCtx.restore();
-    }
-
-    outputCanvas.addEventListener('mousedown', (e) => {
-      if (!rawLoadedImage) return;
-      isDrawingPatch = true;
-      const r = outputCanvas.getBoundingClientRect();
-      patchStartX = (e.clientX - r.left) * (outputCanvas.width / r.width);
-      patchStartY = (e.clientY - r.top) * (outputCanvas.height / r.height);
-    });
-
-    outputCanvas.addEventListener('mousemove', (e) => {
-      if (!isDrawingPatch) return;
-      renderOutputCanvas();
-      const r = outputCanvas.getBoundingClientRect();
-      const curX = (e.clientX - r.left) * (outputCanvas.width / r.width);
-      const curY = (e.clientY - r.top) * (outputCanvas.height / r.height);
-
-      oCtx.save();
-      oCtx.strokeStyle = "#38bdf8";
-      oCtx.lineWidth = 3;
-      oCtx.setLineDash([6, 6]);
-      oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
-      oCtx.restore();
-    });
-
-    outputCanvas.addEventListener('mouseup', (e) => {
-      if (!isDrawingPatch) return;
-      isDrawingPatch = false;
-      const r = outputCanvas.getBoundingClientRect();
-      const endX = (e.clientX - r.left) * (outputCanvas.width / r.width);
-      const endY = (e.clientY - r.top) * (outputCanvas.height / r.height);
-
-      const x1 = Math.min(patchStartX, endX);
-      const y1 = Math.min(patchStartY, endY);
-      const x2 = Math.max(patchStartX, endX);
-      const y2 = Math.max(patchStartY, endY);
-
-      if (x2 - x1 > 8 && y2 - y1 > 8) {
-        manualBoxes.push([
-          Math.round((y1 / outputCanvas.height) * 1000),
-          Math.round((x1 / outputCanvas.width) * 1000),
-          Math.round((y2 / outputCanvas.height) * 1000),
-          Math.round((x2 / outputCanvas.width) * 1000)
-        ]);
-      }
-      renderOutputCanvas();
-    });
-
-    document.getElementById('resetMasksBtn').addEventListener('click', () => {
-      detectedBoxes = [];
-      manualBoxes = [];
-      renderTargetCanvas();
-      renderOutputCanvas();
-    });
-
-    function cleanGenericTitle(raw) {
-      if (!raw) return "";
-      return raw
-        .replace(/\b(lysol|clorox|aussie|febreze|hempz|tree hut|spray 'n wash|spray n wash|arm & hammer|oxiclean)\b/gi, "")
-        .replace(/\b(laundry\s+)?sanitizer\b/gi, "Fabric Refresher")
-        .replace(/\bdisinfectant(\s+spray)?\b/gi, "Cleaning Spray")
-        .replace(/\bantibacterial\b/gi, "Odor-Fighting")
-        .replace(/\bkills\s+99\.9%(?:\s+of\s+germs)?\b/gi, "Total Clean")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
-
-    // MULTI-MODEL LEAPING MESH (WITH 7.5S TIMEOUT)
-    async function fetchWithTimeout(url, payload, timeoutMs) {
-      const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), timeoutMs);
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          signal: controller.signal
-        });
-        clearTimeout(id);
-        const data = await response.json();
-        if (!response.ok || data.error) throw new Error((data.error && data.error.message) || `HTTP ${response.status}`);
-        return data;
-      } catch (err) {
-        clearTimeout(id);
-        throw err;
-      }
-    }
-
-    async function callGeminiLeapingMesh(key, payload) {
-      const selectedModel = modelSelect.value;
-      const isManualChoice = selectedModel && selectedModel !== "auto" && selectedModel !== window.n1Lite;
-
-      if (isManualChoice) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${encodeURIComponent(key)}`;
-        return await fetchWithTimeout(url, payload, 10000);
-      }
-
-      const modelQueue = [
-        window.n1Lite || "gemini-3.1-flash-lite",
-        window.n1Flash || "gemini-2.5-flash",
-        window.latestFlash || "gemini-flash-latest"
-      ].filter((v, i, a) => v && a.indexOf(v) === i);
-
-      let lastError = null;
-      for (let i = 0; i < modelQueue.length; i++) {
-        const model = modelQueue[i];
-        const timeout = i === 0 ? 7500 : 6000;
-        try {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
-          const data = await fetchWithTimeout(url, payload, timeout);
-          if (data.candidates && data.candidates[0]) {
-            modelSelect.value = model;
-            return data;
-          }
-        } catch (err) {
-          lastError = err;
-          console.warn(`Model ${model} delayed/failed. Leaping to next model...`);
-        }
-      }
-      throw lastError || new Error("All candidate vision models in mesh failed.");
-    }
-
-    // AI AUDIT EVENT
-    document.getElementById('aiAuditBtn').addEventListener('click', async () => {
-      const key = apiKeyInput.value.trim();
-      if (!key) return alert("Please enter your Gemini API Key in the top header!");
-      if (!base64ApiPayload) return alert("Please select a photo first!");
-
-      const btn = document.getElementById('aiAuditBtn');
-      btn.innerText = "⏳ Auditing Packaging...";
-      btn.disabled = true;
-
-      const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for:
-1. Brand logos, trademarks, emblems (Amazon smile, Tree Hut, Spray 'N Wash, Hempz, Lysol, Clorox, watermark badges, brand text).
-2. Regulated medical/claim text: 'SANITIZER', 'DISINFECTANT', 'KILLS 99.9%', 'COVID-19', 'BACTERIA'.
-Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
-
-      try {
-        const payload = {
-          contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }],
-          generationConfig: { temperature: 0.0, responseMimeType: "application/json" }
-        };
-
-        const data = await callGeminiLeapingMesh(key, payload);
-        let rawText = data.candidates[0]?.content?.parts[0]?.text || "{}";
-        rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-
-        const parsed = JSON.parse(rawText);
-        detectedBoxes = Array.isArray(parsed) ? parsed : (parsed.boxes || []);
-
-        if (parsed.suggested_title) {
-          document.getElementById('suggestedTitleInput').value = cleanGenericTitle(parsed.suggested_title);
-        }
-        renderTargetCanvas();
-        renderOutputCanvas();
-      } catch (err) {
-        alert("Packaging audit error: " + err.message + "\nYou can still use manual drag patches or skip to Step 2!");
-      } finally {
-        btn.innerText = "✨ Process Image with AI";
-        btn.disabled = false;
-      }
-    });
-
-    document.getElementById('copyTitleBtn').addEventListener('click', () => {
-      const val = document.getElementById('suggestedTitleInput').value;
-      if (!val) return;
-      navigator.clipboard.writeText(val);
-      alert("Generic title copied!");
-    });
-
-    // BULLETPROOF STEP 1 -> STEP 2 TRANSITIONS (CRASH-PROOF & FAST)
-    function proceedToStep2() {
-      if (!rawLoadedImage) {
-        return alert("Please choose or upload a product photo first!");
-      }
-      sanitizedCanvasSnapshot = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : rawLoadedImage;
-      try {
-        runVariantLensEngine(sanitizedCanvasSnapshot);
-      } catch (err) {
-        console.warn("Variant generation warning:", err);
-      }
-      navToStep(2);
-    }
-
-    function skipSanitizer() {
-      if (!rawLoadedImage) {
-        return alert("Please choose or upload a product photo first!");
-      }
-      try {
-        const link = document.createElement('a');
-        link.download = `raw_photo_${Date.now()}.png`;
-        link.href = rawLoadedImage.src;
-        link.click();
-      } catch (e) {}
-
-      const rawC = document.createElement('canvas');
-      rawC.width = rawLoadedImage.naturalWidth || 800;
-      rawC.height = rawLoadedImage.naturalHeight || 800;
-      rawC.getContext('2d').drawImage(rawLoadedImage, 0, 0);
-      sanitizedCanvasSnapshot = rawC;
-
-      try {
-        runVariantLensEngine(sanitizedCanvasSnapshot);
-      } catch (err) {
-        console.warn("Variant generation warning:", err);
-      }
-      navToStep(2);
-    }
-
-    // ==========================================
-    // STEP 2: SILENT VARIANT LENS (MEMORY-CAPPED FOR SPEED)
-    // ==========================================
-    document.getElementById('step2DirectUpload').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const directImg = new Image();
-        directImg.onload = function() {
-          const directCanvas = document.createElement('canvas');
-          directCanvas.width = directImg.naturalWidth;
-          directCanvas.height = directImg.naturalHeight;
-          directCanvas.getContext('2d').drawImage(directImg, 0, 0);
-          sanitizedCanvasSnapshot = directCanvas;
-          runVariantLensEngine(sanitizedCanvasSnapshot);
-        };
-        directImg.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-
-    function runVariantLensEngine(sourceCanvas) {
-      const src = sourceCanvas || outputCanvas || rawLoadedImage;
-      if (!src) return;
-
-      const rawW = src.width || src.naturalWidth || 800;
-      const rawH = src.height || src.naturalHeight || 800;
-
-      // Cap at 1080px so 15 phone-camera canvases don't freeze the browser
-      const maxDim = 1080;
-      const scale = Math.min(1, maxDim / Math.max(rawW, rawH));
-      const w = Math.round(rawW * scale);
-      const h = Math.round(rawH * scale);
-
-      const whites = ['#ffffff', '#fdfdfd', '#fcfcfc', '#fefefe', '#fafafa', '#f8f8f8'];
-      const getWhite = () => whites[Math.floor(Math.random() * whites.length)];
-
-      all15Variants = [];
-      const configs = [
-        { rot: 1, zoom: 1.0, contrast: 1.05, sat: 1.02, name: "1° CW Crisp" },
-        { rot: -1, zoom: 1.04, bright: 1.04, name: "1° CCW Zoom" },
-        { rot: 2.5, zoom: 0.97, bright: 1.03, name: "2.5° CW Bright" },
-        { rot: -2.5, zoom: 0.97, contrast: 1.08, sat: 1.03, name: "2.5° CCW Contrast" },
-        { rot: 1, zoom: 0.98, contrast: 1.1, name: "1° CW Sharpen" },
-        { rot: 3, zoom: 0.95, contrast: 1.03, bright: 1.03, name: "3° CW Radiant" },
-        { rot: -3, zoom: 0.95, contrast: 1.05, sat: 1.05, name: "3° CCW Saturated" },
-        { rot: -1, zoom: 0.96, contrast: 1.07, name: "1° CCW Dynamic" },
-        { rot: 2, zoom: 0.93, bright: 1.04, name: "2° CW Backdrop" },
-        { rot: -2, zoom: 0.93, contrast: 1.09, name: "2° CCW Backdrop" },
-        { rot: 1, zoom: 1.05, bright: 1.04, name: "1° CW Bright High" },
-        { rot: -1, zoom: 1.07, contrast: 1.06, name: "1° CCW Contrast High" },
-        { rot: 1.5, zoom: 1.07, contrast: 1.05, sat: 1.05, name: "1.5° CW Zoom" },
-        { rot: 0, skew: 0.02, zoom: 0.96, contrast: 1.04, name: "Micro-Skew Warp" },
-        { rot: 0, zoom: 1.03, sat: 1.06, name: "Asymmetric Micro-Crop" }
-      ];
-
-      configs.forEach((cfg, idx) => {
-        const c = document.createElement('canvas');
-        c.width = w;
-        c.height = h;
-        const cx = c.getContext('2d');
-        cx.fillStyle = getWhite();
-        cx.fillRect(0, 0, w, h);
-
-        cx.save();
-        cx.translate(w / 2, h / 2);
-        if (cfg.skew) cx.transform(1, cfg.skew, -cfg.skew, 1, 0, 0);
-        if (cfg.rot) cx.rotate((cfg.rot * Math.PI) / 180);
-
-        let filter = "";
-        if (cfg.contrast) filter += `contrast(${cfg.contrast}) `;
-        if (cfg.bright) filter += `brightness(${cfg.bright}) `;
-        if (cfg.sat) filter += `saturate(${cfg.sat}) `;
-        if (filter) cx.filter = filter.trim();
-
-        const sw = w * (cfg.zoom || 1.0);
-        const sh = h * (cfg.zoom || 1.0);
-        cx.drawImage(src, -sw / 2, -sh / 2, sw, sh);
-        cx.restore();
-
-        all15Variants.push({ id: idx + 1, name: cfg.name, canvas: c });
-      });
-
-      try {
-        pick4FeaturedVariants();
-        render15Drawer();
-      } catch (e) {
-        console.warn("Thumbnail render notice:", e);
-      }
-    }
-
-    function pick4FeaturedVariants() {
-      const shuffled = [...all15Variants].sort(() => 0.5 - Math.random());
-      chosen4Variants = shuffled.slice(0, 4);
-
-      const grid = document.getElementById('featuredGrid');
-      grid.innerHTML = "";
-      chosen4Variants.forEach((v, i) => {
-        const card = document.createElement('div');
-        card.className = "bg-slate-900 border border-slate-800 p-2.5 rounded-xl space-y-2";
-        card.innerHTML = `
-          <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
-            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
-          </div>
-          <div class="flex justify-between items-center px-1">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Variant ${v.id}</p>
-            <button onclick="downloadCanvasData('${v.canvas.toDataURL()}', 'variant_${v.id}')" class="text-xs text-sky-400 hover:text-sky-300">⬇</button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function render15Drawer() {
-      const container = document.getElementById('drawer15Matrix');
-      container.innerHTML = "";
-      all15Variants.forEach(v => {
-        const item = document.createElement('div');
-        item.className = "bg-slate-900 border border-slate-800 p-2 rounded-lg space-y-1 text-center";
-        item.innerHTML = `
-          <div class="aspect-square bg-slate-950 rounded overflow-hidden">
-            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
-          </div>
-          <p class="text-[9px] text-slate-400 truncate">${v.id}. ${v.name}</p>
-        `;
-        container.appendChild(item);
-      });
-    }
-
-    document.getElementById('reshuffleVariantsBtn').addEventListener('click', pick4FeaturedVariants);
-
-    document.getElementById('toggle15DrawerBtn').addEventListener('click', () => {
-      const d = document.getElementById('drawer15Matrix');
-      const isHidden = d.classList.contains('hidden');
-      d.classList.toggle('hidden');
-      document.getElementById('drawerToggleText').innerText = isHidden ? "Hide Full 15-Variant Matrix" : "Show Full 15-Variant Matrix";
-    });
-
-    document.getElementById('downloadAllFeaturedBtn').addEventListener('click', () => {
-      chosen4Variants.forEach((v, i) => {
-        setTimeout(() => {
-          downloadCanvasData(v.canvas.toDataURL(), `featured_variant_${v.id}`);
-        }, i * 250);
-      });
-    });
-
-    // ==========================================
-    // EXTRACTOR & MASTER RESET FUNCTIONS
-    // ==========================================
-    function masterResetDeal() {
-      if (!confirm("Start brand new deal? All current edits will be cleared.")) return;
-
-      rawLoadedImage = null;
-      base64ApiPayload = "";
-      detectedBoxes = [];
-      manualBoxes = [];
-      sanitizedCanvasSnapshot = null;
-      all15Variants = [];
-      chosen4Variants = [];
-
-      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
-      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
-
-      document.getElementById('rawDealPaste').value = "";
-      document.getElementById('suggestedTitleInput').value = "";
-      document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
-      document.getElementById('simpleValueInput').value = "$16.79 Shipped";
-      document.getElementById('aiChipsWrapper').classList.add('hidden');
-
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].pScale = 1.0;
-        cardCustoms[i].bScale = 1.0;
-        cardCustoms[i].bRot = i === 1 ? -5 : 0;
-        cardCustoms[i].nRot = 0;
-        cardCustoms[i].nScale = 1.0;
-        cardCustoms[i].hasNoteBg = false;
-        cardCustoms[i].productPos = null;
-        cardCustoms[i].badgePos = null;
-        cardCustoms[i].notePos = null;
-        cardCustoms[i].accents = { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true };
-      }
-
-      navToStep(1);
-    }
-
-    function setDealMode(mode) {
-      currentDealMode = mode;
-      const regBtn = document.getElementById('modeRegularBtn');
-      const runBtn = document.getElementById('modeRunBtn');
-
-      if (mode === 'run') {
-        runBtn.className = "px-3 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-md";
-        regBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all";
-        
-        const curNote = document.getElementById('mainNoteInput').value;
-        if (!curNote.includes('👀')) {
-          document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
-        }
-
-        for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents.arrow = true;
-          cardCustoms[i].accents.loop = true;
-          cardCustoms[i].accents.eye = true;
-        }
-      } else {
-        regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md";
-        runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1";
-        document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
-
-        for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents.arrow = false;
-          cardCustoms[i].accents.loop = false;
-          cardCustoms[i].accents.eye = false;
-        }
-      }
-
-      syncConsoleControls();
-      renderAll4CreatorCards();
-    }
-
-    function shuffleNote() {
-      const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
-      const randomNote = pool[Math.floor(Math.random() * pool.length)];
-      document.getElementById('mainNoteInput').value = randomNote;
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
-    function shuffleValueTag() {
-      if (!valueTagOptions || valueTagOptions.length === 0) return;
-      valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
-      document.getElementById('simpleValueInput').value = valueTagOptions[valueTagIndex];
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
-    function applyAiNote(text) {
-      document.getElementById('mainNoteInput').value = text;
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
-    function renderAiChips(chips) {
-      const container = document.getElementById('aiChipsContainer');
-      const wrapper = document.getElementById('aiChipsWrapper');
-      if (!chips || chips.length === 0) {
-        wrapper.classList.add('hidden');
-        return;
-      }
-      container.innerHTML = "";
-      chips.forEach(note => {
-        const btn = document.createElement('button');
-        btn.type = "button";
-        btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium";
-        btn.innerText = note;
-        btn.onclick = () => applyAiNote(note);
-        container.appendChild(btn);
-      });
-      wrapper.classList.remove('hidden');
-    }
-
-    function auditOcrSafety() {
-      const textToScan = [
-        document.getElementById('mainNoteInput').value,
-        document.getElementById('simpleValueInput').value
-      ].join(' ').toLowerCase();
-
-      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
-      const banner = document.getElementById('ocrWarningBanner');
-      if (hits.length > 0) {
-        document.getElementById('ocrWarningText').innerText = `Banned words detected: "${hits.join(', ')}". Replace them to prevent shadowbans!`;
-        banner.classList.remove('hidden');
-      } else {
-        banner.classList.add('hidden');
-      }
-    }
-
-    ['mainNoteInput', 'simpleValueInput'].forEach(id => {
-      document.getElementById(id).addEventListener('input', () => {
-        auditOcrSafety();
-        renderAll4CreatorCards();
-      });
-    });
-
-    // RAW DEAL EXTRACTOR (ZERO BANNED WORDS)
-    document.getElementById('extractBtn').addEventListener('click', async () => {
-      const raw = document.getElementById('rawDealPaste').value;
-      if (!raw) return;
-
-      const rLower = raw.toLowerCase();
-
-      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
-        activeCategory = "lawn_garden";
-      } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
-        activeCategory = "beauty_personal";
-      } else if (rLower.includes('clean') || rLower.includes('kitchen') || rLower.includes('pantry') || rLower.includes('detergent') || rLower.includes('wipe') || rLower.includes('towel')) {
-        activeCategory = "home_kitchen";
-      } else {
-        activeCategory = "general";
-      }
-
-      const pool = AFFIRMATIONS[activeCategory];
-      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
-
-      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
-      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
-      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
-
-      const saleClean = saleMatch ? saleMatch[0].trim().replace(/\bcomplete\b/gi, '').trim() : "$16.79 Shipped";
-      const unitClean = unitMatch ? unitMatch[0].trim() : "";
-
-      valueTagOptions = [
-        saleClean,
-        `Just ${saleClean} ✨`,
-        `${saleClean.replace(/Shipped|Pickup/i, '').trim()} total`,
-        `All for ${saleClean}`
-      ];
-
-      if (unitClean) valueTagOptions.unshift(`${unitClean} · ${saleClean}`);
-      if (wasMatch) valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
-
-      valueTagIndex = 0;
-      document.getElementById('simpleValueInput').value = valueTagOptions[0];
-
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].badgePos = null;
-        cardCustoms[i].notePos = null;
-      }
-
-      auditOcrSafety();
-      renderAll4CreatorCards();
-
-      const key = apiKeyInput.value.trim();
-      if (key) {
-        try {
-          const prompt = `Based on this deal: "${raw.slice(0, 300)}"
-Generate exactly 4 unique, creative, positive human observation notes (under 6 words each) suitable for social media.
-CRITICAL RULES:
-1. STRICT ZERO BANNED WORDS: Never use price, sale, deal, discount, steal, hurry, cheap, offer, buy, shop, savings, bargain.
-2. Return ONLY a valid JSON array of 4 strings: ["note 1", "note 2", "note 3", "note 4"]`;
-
-          const payload = {
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
-          };
-
-          const aiData = await callGeminiLeapingMesh(key, payload);
-          let rawTxt = aiData.candidates[0]?.content?.parts[0]?.text || "[]";
-          rawTxt = rawTxt.replace(/```json/gi, '').replace(/```/g, '').trim();
-          const parsed = JSON.parse(rawTxt);
-
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            const safeChips = parsed.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
-            if (safeChips.length > 0) {
-              renderAiChips(safeChips);
-              document.getElementById('mainNoteInput').value = safeChips[0];
-              renderAll4CreatorCards();
-            }
-          }
-        } catch (e) {
-          console.log("Local affirmation fallback active:", e);
-        }
-      }
-    });
 
     // ==========================================
     // DOWNLOAD HELPERS (SCRUBS PROVENANCE METADATA)
