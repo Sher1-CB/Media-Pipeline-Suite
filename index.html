@@ -225,7 +225,8 @@
             <button 
               type="button" 
               id="skipSanitizerBtn" 
-              class="px-3.5 py-2 bg-amber-600/80 hover:bg-amber-500 text-white text-xs font-bold rounded-lg transition-all uppercase tracking-wider"
+              onclick="skipSanitizer()" 
+              class="px-3.5 py-2 bg-amber-600/80 hover:bg-amber-500 text-white text-xs font-bold rounded-lg transition-all uppercase tracking-wider cursor-pointer"
               title="Download untouched raw image and forward straight to Step 2"
             >
               ⚡ Skip Sanitizer & Use Raw
@@ -234,7 +235,8 @@
             <button 
               type="button" 
               id="goToStep2Btn" 
-              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider ml-auto"
+              onclick="proceedToStep2()" 
+              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider ml-auto cursor-pointer"
             >
               Next: Send to Variant Lens ➔
             </button>
@@ -1795,31 +1797,47 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       alert("Generic title copied!");
     });
 
-    document.getElementById('goToStep2Btn').addEventListener('click', () => {
-      if (!rawLoadedImage) return alert("Please upload a photo first!");
-      sanitizedCanvasSnapshot = outputCanvas;
-      runVariantLensEngine(sanitizedCanvasSnapshot);
+    // BULLETPROOF STEP 1 -> STEP 2 TRANSITIONS (CRASH-PROOF & FAST)
+    function proceedToStep2() {
+      if (!rawLoadedImage) {
+        return alert("Please choose or upload a product photo first!");
+      }
+      sanitizedCanvasSnapshot = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : rawLoadedImage;
+      try {
+        runVariantLensEngine(sanitizedCanvasSnapshot);
+      } catch (err) {
+        console.warn("Variant generation warning:", err);
+      }
       navToStep(2);
-    });
+    }
 
-    document.getElementById('skipSanitizerBtn').addEventListener('click', () => {
-      if (!rawLoadedImage) return alert("Please choose a photo first!");
-      const link = document.createElement('a');
-      link.download = `raw_photo_${Date.now()}.png`;
-      link.href = rawLoadedImage.src;
-      link.click();
+    function skipSanitizer() {
+      if (!rawLoadedImage) {
+        return alert("Please choose or upload a product photo first!");
+      }
+      try {
+        const link = document.createElement('a');
+        link.download = `raw_photo_${Date.now()}.png`;
+        link.href = rawLoadedImage.src;
+        link.click();
+      } catch (e) {}
 
       const rawC = document.createElement('canvas');
-      rawC.width = rawLoadedImage.naturalWidth;
-      rawC.height = rawLoadedImage.naturalHeight;
+      rawC.width = rawLoadedImage.naturalWidth || 800;
+      rawC.height = rawLoadedImage.naturalHeight || 800;
       rawC.getContext('2d').drawImage(rawLoadedImage, 0, 0);
       sanitizedCanvasSnapshot = rawC;
-      runVariantLensEngine(sanitizedCanvasSnapshot);
+
+      try {
+        runVariantLensEngine(sanitizedCanvasSnapshot);
+      } catch (err) {
+        console.warn("Variant generation warning:", err);
+      }
       navToStep(2);
-    });
+    }
 
     // ==========================================
-    // STEP 2: SILENT VARIANT LENS
+    // STEP 2: SILENT VARIANT LENS (MEMORY-CAPPED FOR SPEED)
     // ==========================================
     document.getElementById('step2DirectUpload').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -1842,8 +1860,18 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     function runVariantLensEngine(sourceCanvas) {
-      const w = sourceCanvas.width;
-      const h = sourceCanvas.height;
+      const src = sourceCanvas || outputCanvas || rawLoadedImage;
+      if (!src) return;
+
+      const rawW = src.width || src.naturalWidth || 800;
+      const rawH = src.height || src.naturalHeight || 800;
+
+      // Cap at 1080px so 15 phone-camera canvases don't freeze the browser
+      const maxDim = 1080;
+      const scale = Math.min(1, maxDim / Math.max(rawW, rawH));
+      const w = Math.round(rawW * scale);
+      const h = Math.round(rawH * scale);
+
       const whites = ['#ffffff', '#fdfdfd', '#fcfcfc', '#fefefe', '#fafafa', '#f8f8f8'];
       const getWhite = () => whites[Math.floor(Math.random() * whites.length)];
 
@@ -1887,14 +1915,18 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
         const sw = w * (cfg.zoom || 1.0);
         const sh = h * (cfg.zoom || 1.0);
-        cx.drawImage(sourceCanvas, -sw / 2, -sh / 2, sw, sh);
+        cx.drawImage(src, -sw / 2, -sh / 2, sw, sh);
         cx.restore();
 
         all15Variants.push({ id: idx + 1, name: cfg.name, canvas: c });
       });
 
-      pick4FeaturedVariants();
-      render15Drawer();
+      try {
+        pick4FeaturedVariants();
+        render15Drawer();
+      } catch (e) {
+        console.warn("Thumbnail render notice:", e);
+      }
     }
 
     function pick4FeaturedVariants() {
