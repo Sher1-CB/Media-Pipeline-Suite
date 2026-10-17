@@ -262,7 +262,8 @@
             <button 
               type="button" 
               id="goToStep3Btn" 
-              class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
+              onclick="proceedToStep3()" 
+              class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider cursor-pointer"
             >
               Proceed to Step 3: Canva Studio ➔
             </button>
@@ -2237,15 +2238,30 @@ CRITICAL RULES:
       }
     }
 
-    // RESTORE STEP 2 -> STEP 3 TRANSITION BUTTON
-    const goToStep3Btn = document.getElementById('goToStep3Btn');
-    if (goToStep3Btn) {
-      goToStep3Btn.addEventListener('click', () => {
-        renderAll4CreatorCards();
-        navToStep(3);
-      });
-    }
+   // BULLETPROOF STEP 2 -> STEP 3 TRANSITION HANDLER
+    function proceedToStep3() {
+      // Ensure we have 4 valid variant canvases to prevent silent aborts
+      if (!chosen4Variants || chosen4Variants.length < 4) {
+        const fallbackSource = sanitizedCanvasSnapshot || outputCanvas || targetCanvas;
+        if (fallbackSource && fallbackSource.width > 0) {
+          chosen4Variants = [
+            { id: 1, name: "Base", canvas: fallbackSource },
+            { id: 2, name: "Base", canvas: fallbackSource },
+            { id: 3, name: "Base", canvas: fallbackSource },
+            { id: 4, name: "Base", canvas: fallbackSource }
+          ];
+        } else {
+          return alert("Please upload or choose a product image first!");
+        }
+      }
 
+      navToStep(3);
+      try {
+        renderAll4CreatorCards();
+      } catch (err) {
+        console.error("Card rendering notice:", err);
+      }
+    }
     // ==========================================
     // ZOOM LIGHTBOX MODAL
     // ==========================================
