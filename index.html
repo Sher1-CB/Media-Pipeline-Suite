@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v6.0</title>
+  <title>CB Media Pipeline Suite v7.0</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for Diverse Creator Typographies -->
+  <!-- Google Fonts for Creator Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@700&family=Fredoka:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    .card-dark { background-color: #151d30; border: 1px solid #1e293b; border-radius: 14px; }
-    .step-active { border-color: #38bdf8; background: linear-gradient(180deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%); }
-    .step-inactive { border-color: #1e293b; opacity: 0.6; }
+    body { background-color: #0f172a; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .card-dark { background-color: #1e293b; border: 1px solid #334155; border-radius: 14px; }
+    .step-active { border-color: #38bdf8; background: linear-gradient(180deg, rgba(56, 189, 248, 0.16) 0%, rgba(30, 41, 59, 0.8) 100%); }
+    .step-inactive { border-color: #334155; opacity: 0.65; }
     canvas { 
       width: 100% !important; 
       max-width: 100% !important; 
@@ -30,15 +30,25 @@
   <div class="max-w-7xl mx-auto space-y-6">
 
     <!-- TOP HEADER -->
-    <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4">
+    <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v6.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v7.0</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ 60-Style Creator Engine</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Mix & Match Creator Studio</p>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/60 w-full sm:w-auto">
+      <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
+        <!-- MASTER RESET BUTTON -->
+        <button 
+          type="button" 
+          onclick="masterResetDeal()" 
+          class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-all active:scale-95"
+          title="Clear all images, text, and reset to Step 1"
+        >
+          <span>🗑️</span> New Deal
+        </button>
+
         <div class="flex items-center gap-2">
           <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
             <span>🔑</span> Key:
@@ -63,7 +73,7 @@
         <button 
           type="button" 
           onclick="toggleEmergencyDrawer()" 
-          class="px-2.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 border border-rose-600/50 text-rose-300 text-xs font-bold rounded-lg uppercase tracking-wider"
+          class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider"
           title="Manual Fallback Tools"
         >
           🚨 Fallback
@@ -75,12 +85,12 @@
     <div id="emergencyDrawer" class="hidden card-dark p-4 border border-rose-500/50 bg-rose-950/20 space-y-3">
       <div class="flex justify-between items-center">
         <h4 class="text-xs font-bold uppercase tracking-wider text-rose-300 flex items-center gap-2">
-          <span>🚨</span> Emergency Outage Workaround Suite (Google API Congestion)
+          <span>🚨</span> Emergency Outage Suite (Google API Congestion)
         </h4>
         <button onclick="toggleEmergencyDrawer()" class="text-xs text-slate-400 hover:text-white">✕ Close</button>
       </div>
       <p class="text-xs text-slate-300">
-        If Google API is undergoing maintenance or high traffic, switch to your independent standalone workstations:
+        If Google API is undergoing maintenance or traffic spikes, switch to your independent standalone workstations:
       </p>
       <div class="flex flex-wrap gap-3 pt-1">
         <a href="https://sher1-cb.github.io/deal-sanitizer/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">
@@ -117,7 +127,7 @@
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
           <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Creator Board</h3>
-          <p class="text-xs text-slate-400">60-style multi-zone engine</p>
+          <p class="text-xs text-slate-400">Mix & match layers & Run Deal cues</p>
         </div>
       </div>
     </nav>
@@ -280,8 +290,8 @@
       <div class="card-dark p-5 space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Multi-Zone Creator Board (60-Style Catalog)</h2>
-            <p class="text-xs text-slate-400">💡 <strong>Interactive Dragging:</strong> Click & drag badges directly on the canvas to place them anywhere!</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Multi-Zone Creator Board & Mix-and-Match Layers</h2>
+            <p class="text-xs text-slate-400">💡 <strong>Interactive Dragging:</strong> Click and drag badges directly on any card preview to place them freely!</p>
           </div>
 
           <div class="flex items-center gap-2">
@@ -357,7 +367,7 @@
 
           <div>
             <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag (Zero Banned Words)</label>
-            <input type="text" id="simpleValueInput" value="$13.81 complete" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="simpleValueInput" value="$16.79 Shipped" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
@@ -376,12 +386,12 @@
         </div>
       </div>
 
-      <!-- 4 CONSTRAINED CREATIVE CARDS WITH DRAG-TO-MOVE & INDIVIDUAL CONTROLS -->
+      <!-- 4 CREATIVE CARDS WITH MIX-AND-MATCH CONTROLS -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
-            <p class="text-xs text-slate-400">💡 <strong>Click any card image</strong> to open full-size zoom! Drag labels on the preview to adjust position.</p>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Dynamic Aesthetic Styles</h3>
+            <p class="text-xs text-slate-400">💡 Drag badges freely on the canvas. Mix and match accent layers under each card below.</p>
           </div>
           <button 
             type="button" 
@@ -400,17 +410,29 @@
               <div class="flex justify-between items-center mb-2">
                 <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 truncate">Style: Polaroid Snap</span>
                 <select id="styleSelect1" onchange="changeCardStyle(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
-                  <!-- Populated via JS with 60 styles -->
+                  <!-- Populated via JS -->
                 </select>
               </div>
 
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap1">
-                <canvas id="cardCanvas1" width="1080" height="1080"></canvas>
-                <button type="button" onclick="openZoomModal('cardCanvas1', 'Card 1 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap1">
+                <canvas id="cardCanvas1" width="1080" height="1080" class="cursor-move"></canvas>
+                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas1', 'Card 1 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
+              <!-- MIX & MATCH ACCENT TOGGLES -->
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_1" onchange="toggleAccent(1, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_1" onchange="toggleAccent(1, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_1" onchange="toggleAccent(1, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_1" onchange="toggleAccent(1, 'sticky')"> 📝 Neon Post-it</label>
+                </div>
+              </div>
+
+              <!-- SLIDERS & FONT -->
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
                 <div class="flex justify-between items-center text-slate-400">
                   <span>Font:</span>
@@ -449,13 +471,23 @@
                 </select>
               </div>
 
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap2">
-                <canvas id="cardCanvas2" width="1080" height="1080"></canvas>
-                <button type="button" onclick="openZoomModal('cardCanvas2', 'Card 2 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap2">
+                <canvas id="cardCanvas2" width="1080" height="1080" class="cursor-move"></canvas>
+                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas2', 'Card 2 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_2" onchange="toggleAccent(2, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_2" onchange="toggleAccent(2, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_2" onchange="toggleAccent(2, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_2" onchange="toggleAccent(2, 'sticky')"> 📝 Neon Post-it</label>
+                </div>
+              </div>
+
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
                 <div class="flex justify-between items-center text-slate-400">
                   <span>Font:</span>
@@ -494,13 +526,23 @@
                 </select>
               </div>
 
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap3">
-                <canvas id="cardCanvas3" width="1080" height="1080"></canvas>
-                <button type="button" onclick="openZoomModal('cardCanvas3', 'Card 3 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap3">
+                <canvas id="cardCanvas3" width="1080" height="1080" class="cursor-move"></canvas>
+                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas3', 'Card 3 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_3" onchange="toggleAccent(3, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_3" onchange="toggleAccent(3, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_3" onchange="toggleAccent(3, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_3" onchange="toggleAccent(3, 'sticky')"> 📝 Neon Post-it</label>
+                </div>
+              </div>
+
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
                 <div class="flex justify-between items-center text-slate-400">
                   <span>Font:</span>
@@ -539,13 +581,23 @@
                 </select>
               </div>
 
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative cursor-move select-none" id="wrap4">
-                <canvas id="cardCanvas4" width="1080" height="1080"></canvas>
-                <button type="button" onclick="openZoomModal('cardCanvas4', 'Card 4 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
+              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap4">
+                <canvas id="cardCanvas4" width="1080" height="1080" class="cursor-move"></canvas>
+                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas4', 'Card 4 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
               </div>
             </div>
 
             <div class="space-y-2 pt-2">
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_4" onchange="toggleAccent(4, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_4" onchange="toggleAccent(4, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_4" onchange="toggleAccent(4, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_4" onchange="toggleAccent(4, 'sticky')"> 📝 Neon Post-it</label>
+                </div>
+              </div>
+
               <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
                 <div class="flex justify-between items-center text-slate-400">
                   <span>Font:</span>
@@ -620,64 +672,61 @@
     let currentDealMode = 'regular'; // 'regular' or 'run'
     let isPrivacyMode = false;       // Lookbook Macro Crop
 
-    // 50 REGULAR CREATOR STYLES + 10 RUN DEAL STYLES (TOTAL = 60)
     const STYLES_CATALOG = {
-      // 50 Regular Styles
-      polaroid: { name: "Classic Polaroid & Tape", mode: "regular", defaultFont: "handwritten", zone: "bottom" },
-      kraft_tag: { name: "Top Kraft Parcel Tag", mode: "regular", defaultFont: "typewriter", zone: "top-left" },
-      split_horizon: { name: "Horizontal Split Horizon", mode: "regular", defaultFont: "modern_sans", zone: "seam" },
-      notebook: { name: "Torn Spiral Notebook", mode: "regular", defaultFont: "typewriter", zone: "top-right" },
-      corner_flag: { name: "Diagonal Corner Ribbon", mode: "regular", defaultFont: "modern_sans", zone: "top-right" },
-      flatlay: { name: "Routine Minimalist Flatlay", mode: "regular", defaultFont: "modern_sans", zone: "bottom" },
-      passe_partout: { name: "Framed Passe-Partout Mat", mode: "regular", defaultFont: "editorial", zone: "bottom" },
-      arch_niche: { name: "Soft Architectural Arch", mode: "regular", defaultFont: "editorial", zone: "bottom" },
-      scrapbook_doodles: { name: "Scrapbook Sparkle & Hearts", mode: "regular", defaultFont: "playful", zone: "bottom" },
-      floating_pill: { name: "Floating Upper Mood Pill", mode: "regular", defaultFont: "modern_sans", zone: "top-left" },
-      vintage_border: { name: "Vintage Warm Film Border", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
-      grid_paper: { name: "Blueprint Grid Scrapbook", mode: "regular", defaultFont: "typewriter", zone: "top-right" },
-      clipboard: { name: "Desk Clipboard Staging", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
-      lined_memo: { name: "Lined Yellow Memo Slip", mode: "regular", defaultFont: "handwritten", zone: "top-right" },
-      manila_pocket: { name: "Manila Envelope Sleeve", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
-      quad_washi: { name: "Quad Washi Corner Tape", mode: "regular", defaultFont: "handwritten", zone: "bottom" },
-      perforated_receipt: { name: "Perforated Tear Margin", mode: "regular", defaultFont: "typewriter", zone: "bottom" },
-      index_card: { name: "Library Index Card Tab", mode: "regular", defaultFont: "typewriter", zone: "top-left" },
-      inverted_split: { name: "Inverted Upper Tone Horizon", mode: "regular", defaultFont: "modern_sans", zone: "top" },
-      corner_wedge: { name: "Pastel Corner Wedge Mat", mode: "regular", defaultFont: "modern_sans", zone: "bottom-right" },
-      pebble_mat: { name: "Organic Pebble Squircle Mat", mode: "regular", defaultFont: "playful", zone: "bottom" },
-      dual_badge_stack: { name: "Clean Dual Badge Stack", mode: "regular", defaultFont: "modern_sans", zone: "left-spine" },
-      scalloped_card: { name: "Scalloped Boutique Border", mode: "regular", defaultFont: "editorial", zone: "bottom" },
-      hairline_gallery: { name: "Hairline Charcoal Gallery", mode: "regular", defaultFont: "editorial", zone: "bottom" },
-      double_film: { name: "Double Film Snap Mat", mode: "regular", defaultFont: "handwritten", zone: "bottom" },
-      sunken_niche: { name: "Circular Sunken Niche", mode: "regular", defaultFont: "modern_sans", zone: "bottom" },
-      stacked_heading: { name: "Stacked Typography Header", mode: "regular", defaultFont: "modern_sans", zone: "top" },
-      side_bookmark: { name: "Side Index Tab Bookmark", mode: "regular", defaultFont: "typewriter", zone: "right-tab" },
-      wax_seal: { name: "Boutique Monogram Seal", mode: "regular", defaultFont: "editorial", zone: "bottom-left" },
-      gift_card_frame: { name: "Boutique Gift Card Frame", mode: "regular", defaultFont: "editorial", zone: "bottom" },
-      // 10 Run Deal Styles
-      run_arrow_pointer: { name: "👀 Run: Hand-Drawn Arrow Pointer", mode: "run", defaultFont: "handwritten", zone: "dynamic-pointer" },
-      run_marker_loop: { name: "👀 Run: Wobbly Sharpie Marker Loop", mode: "run", defaultFont: "handwritten", zone: "doodle-loop" },
-      run_eye_stamp: { name: "👀 Run: Floating Eye Stamp Tab", mode: "run", defaultFont: "modern_sans", zone: "top-right" },
-      run_neon_sticky: { name: "👀 Run: Neon Post-It Sticky Note", mode: "run", defaultFont: "handwritten", zone: "top-left" },
-      run_double_take_pill: { name: "👀 Run: Double-Take Curiosity Pill", mode: "run", defaultFont: "modern_sans", zone: "top" },
-      run_caution_strip: { name: "👀 Run: Caution Washi Paper Strip", mode: "run", defaultFont: "typewriter", zone: "top" },
-      run_dotted_trail: { name: "👀 Run: Dotted Guide Trail", mode: "run", defaultFont: "handwritten", zone: "bottom" },
-      run_bold_curiosity: { name: "👀 Run: Bold Curiosity Banner", mode: "run", defaultFont: "modern_sans", zone: "top" },
-      run_corner_seal: { name: "👀 Run: Alert Stamp Medallion", mode: "run", defaultFont: "playful", zone: "bottom-left" },
-      run_contrast_pop: { name: "👀 Run: Deep Shadow & Neon Highlight", mode: "run", defaultFont: "modern_sans", zone: "bottom" }
+      polaroid: { name: "Classic Polaroid & Tape", mode: "regular", defaultFont: "handwritten" },
+      kraft_tag: { name: "Top Kraft Parcel Tag", mode: "regular", defaultFont: "typewriter" },
+      split_horizon: { name: "Horizontal Split Horizon", mode: "regular", defaultFont: "modern_sans" },
+      notebook: { name: "Torn Spiral Notebook", mode: "regular", defaultFont: "typewriter" },
+      corner_flag: { name: "Diagonal Corner Ribbon", mode: "regular", defaultFont: "modern_sans" },
+      flatlay: { name: "Routine Minimalist Flatlay", mode: "regular", defaultFont: "modern_sans" },
+      passe_partout: { name: "Framed Passe-Partout Mat", mode: "regular", defaultFont: "editorial" },
+      arch_niche: { name: "Soft Architectural Arch", mode: "regular", defaultFont: "editorial" },
+      scrapbook_doodles: { name: "Scrapbook Sparkle & Hearts", mode: "regular", defaultFont: "playful" },
+      floating_pill: { name: "Floating Upper Mood Pill", mode: "regular", defaultFont: "modern_sans" },
+      vintage_border: { name: "Vintage Warm Film Border", mode: "regular", defaultFont: "typewriter" },
+      grid_paper: { name: "Blueprint Grid Scrapbook", mode: "regular", defaultFont: "typewriter" },
+      clipboard: { name: "Desk Clipboard Staging", mode: "regular", defaultFont: "typewriter" },
+      lined_memo: { name: "Lined Yellow Memo Slip", mode: "regular", defaultFont: "handwritten" },
+      manila_pocket: { name: "Manila Envelope Sleeve", mode: "regular", defaultFont: "typewriter" },
+      quad_washi: { name: "Quad Washi Corner Tape", mode: "regular", defaultFont: "handwritten" },
+      perforated_receipt: { name: "Perforated Tear Margin", mode: "regular", defaultFont: "typewriter" },
+      index_card: { name: "Library Index Card Tab", mode: "regular", defaultFont: "typewriter" },
+      inverted_split: { name: "Inverted Upper Tone Horizon", mode: "regular", defaultFont: "modern_sans" },
+      corner_wedge: { name: "Pastel Corner Wedge Mat", mode: "regular", defaultFont: "modern_sans" },
+      pebble_mat: { name: "Organic Pebble Squircle Mat", mode: "regular", defaultFont: "playful" },
+      dual_badge_stack: { name: "Clean Dual Badge Stack", mode: "regular", defaultFont: "modern_sans" },
+      scalloped_card: { name: "Scalloped Boutique Border", mode: "regular", defaultFont: "editorial" },
+      hairline_gallery: { name: "Hairline Charcoal Gallery", mode: "regular", defaultFont: "editorial" },
+      double_film: { name: "Double Film Snap Mat", mode: "regular", defaultFont: "handwritten" },
+      sunken_niche: { name: "Circular Sunken Niche", mode: "regular", defaultFont: "modern_sans" },
+      stacked_heading: { name: "Stacked Typography Header", mode: "regular", defaultFont: "modern_sans" },
+      side_bookmark: { name: "Side Index Tab Bookmark", mode: "regular", defaultFont: "typewriter" },
+      wax_seal: { name: "Boutique Monogram Seal", mode: "regular", defaultFont: "editorial" },
+      gift_card_frame: { name: "Boutique Gift Card Frame", mode: "regular", defaultFont: "editorial" },
+      // Run Deal Variants
+      run_arrow_pointer: { name: "👀 Run: Hand-Drawn Arrow Pointer", mode: "run", defaultFont: "handwritten" },
+      run_marker_loop: { name: "👀 Run: Wobbly Sharpie Marker Loop", mode: "run", defaultFont: "handwritten" },
+      run_eye_stamp: { name: "👀 Run: Floating Eye Stamp Tab", mode: "run", defaultFont: "modern_sans" },
+      run_neon_sticky: { name: "👀 Run: Neon Post-It Sticky Note", mode: "run", defaultFont: "handwritten" },
+      run_double_take_pill: { name: "👀 Run: Double-Take Curiosity Pill", mode: "run", defaultFont: "modern_sans" },
+      run_caution_strip: { name: "👀 Run: Caution Washi Paper Strip", mode: "run", defaultFont: "typewriter" },
+      run_dotted_trail: { name: "👀 Run: Dotted Guide Trail", mode: "run", defaultFont: "handwritten" },
+      run_bold_curiosity: { name: "👀 Run: Bold Curiosity Banner", mode: "run", defaultFont: "modern_sans" },
+      run_corner_seal: { name: "👀 Run: Alert Stamp Medallion", mode: "run", defaultFont: "playful" },
+      run_contrast_pop: { name: "👀 Run: Deep Shadow & Neon Highlight", mode: "run", defaultFont: "modern_sans" }
     };
 
     let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
 
-    // Individual Per-Card Custom Positioning Coordinates & Scaling
+    // Per-card properties & interactive accent toggles
     let cardCustoms = {
-      1: { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null },
-      2: { style: "kraft_tag", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null },
-      3: { style: "split_horizon", font: "modern_sans", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null },
-      4: { style: "notebook", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null }
+      1: { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
+      2: { style: "kraft_tag", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
+      3: { style: "split_horizon", font: "modern_sans", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
+      4: { style: "notebook", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } }
     };
 
-    // Canvas Mouse Interaction for Dragging
-    let draggingState = { active: false, cardNum: null, target: null, startX: 0, startY: 0 };
+    let draggingState = { active: false, cardNum: null, startX: 0, startY: 0 };
 
     const targetCanvas = document.getElementById('targetCanvas');
     const tCtx = targetCanvas.getContext('2d');
@@ -724,7 +773,7 @@
     let activeCategory = "general";
 
     // ==========================================
-    // INITIALIZATION & POPULATING DROPDOWNS
+    // INITIALIZATION & EVENT LISTENERS
     // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
       populateStyleDropdowns();
@@ -744,6 +793,55 @@
         });
         sel.value = activeCardStyles[i - 1];
       }
+    }
+
+    // ==========================================
+    // MASTER RESET FUNCTION (STARTS FRESH)
+    // ==========================================
+    function masterResetDeal() {
+      if (!confirm("Are you sure you want to start a brand new deal? All current edits will be cleared.")) return;
+
+      rawLoadedImage = null;
+      base64ApiPayload = "";
+      detectedBoxes = [];
+      manualBoxes = [];
+      sanitizedCanvasSnapshot = null;
+      all15Variants = [];
+      chosen4Variants = [];
+      activeModalCanvasId = null;
+
+      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+
+      document.getElementById('rawDealPaste').value = "";
+      document.getElementById('suggestedTitleInput').value = "";
+      document.getElementById('mainNoteInput').value = "Yard project ready 🌾";
+      document.getElementById('simpleValueInput').value = "$16.79 Shipped";
+
+      // Reset individual scales & drag offsets
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].pScale = 1.0;
+        cardCustoms[i].bScale = 1.0;
+        cardCustoms[i].badgePos = null;
+        cardCustoms[i].notePos = null;
+        cardCustoms[i].accents = { arrow: false, loop: false, eye: false, sticky: false };
+
+        const pSlider = document.getElementById(`pScale${i}`);
+        const bSlider = document.getElementById(`bScale${i}`);
+        if (pSlider) pSlider.value = 100;
+        if (bSlider) bSlider.value = 100;
+        const pVal = document.getElementById(`pScaleVal${i}`);
+        const bVal = document.getElementById(`bScaleVal${i}`);
+        if (pVal) pVal.innerText = "100%";
+        if (bVal) bVal.innerText = "100%";
+
+        ['arrow', 'loop', 'eye', 'sticky'].forEach(acc => {
+          const cb = document.getElementById(`acc_${acc}_${i}`);
+          if (cb) cb.checked = false;
+        });
+      }
+
+      navToStep(1);
     }
 
     // ==========================================
@@ -1371,7 +1469,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // STEP 3: CREATOR BOARD & INTERACTIVE DRAGGING
+    // STEP 3: CREATOR BOARD & INTERACTIVE MIX & MATCH
     // ==========================================
     function setDealMode(mode) {
       currentDealMode = mode;
@@ -1384,23 +1482,36 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         
         const curNote = document.getElementById('mainNoteInput').value;
         if (!curNote.includes('👀')) {
-          document.getElementById('mainNoteInput').value = "wait... is this real?! 👀";
+          document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
         }
-        // Auto-switch cards to top 4 Run styles
-        activeCardStyles = ["run_arrow_pointer", "run_marker_loop", "run_eye_stamp", "run_neon_sticky"];
+
+        // Enable Run Accents by default across all 4 cards
+        for (let i = 1; i <= 4; i++) {
+          cardCustoms[i].accents.arrow = true;
+          cardCustoms[i].accents.loop = true;
+          cardCustoms[i].accents.eye = true;
+          const aCb = document.getElementById(`acc_arrow_${i}`);
+          const lCb = document.getElementById(`acc_loop_${i}`);
+          const eCb = document.getElementById(`acc_eye_${i}`);
+          if (aCb) aCb.checked = true;
+          if (lCb) lCb.checked = true;
+          if (eCb) eCb.checked = true;
+        }
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md";
         runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1";
         document.getElementById('mainNoteInput').value = "Yard project ready 🌾";
-        activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
-      }
 
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].style = activeCardStyles[i - 1];
-        const sel = document.getElementById(`styleSelect${i}`);
-        if (sel) sel.value = activeCardStyles[i - 1];
-        const lbl = document.getElementById(`cardLabel${i}`);
-        if (lbl) lbl.innerText = STYLES_CATALOG[activeCardStyles[i - 1]].name;
+        for (let i = 1; i <= 4; i++) {
+          cardCustoms[i].accents.arrow = false;
+          cardCustoms[i].accents.loop = false;
+          cardCustoms[i].accents.eye = false;
+          cardCustoms[i].accents.sticky = false;
+          ['arrow', 'loop', 'eye', 'sticky'].forEach(acc => {
+            const cb = document.getElementById(`acc_${acc}_${i}`);
+            if (cb) cb.checked = false;
+          });
+        }
       }
 
       renderAll4CreatorCards();
@@ -1420,6 +1531,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         btn.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300');
         status.innerText = "OFF";
       }
+      renderAll4CreatorCards();
+    }
+
+    function toggleAccent(cardNum, accentKey) {
+      const cb = document.getElementById(`acc_${accentKey}_${cardNum}`);
+      if (!cb) return;
+      cardCustoms[cardNum].accents[accentKey] = cb.checked;
       renderAll4CreatorCards();
     }
 
@@ -1478,6 +1596,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
+    // ENRICHED COLOR SAMPLER (WARMER, INVITING PASTELS)
     function sampleColorsFromCanvas(canvas) {
       try {
         const s = document.createElement("canvas");
@@ -1489,7 +1608,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         let r = 0, g = 0, b = 0, count = 0;
         for (let i = 0; i < data.length; i += 4) {
           const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
-          if (brightness > 35 && brightness < 235) {
+          if (brightness > 30 && brightness < 235) {
             r += data[i]; g += data[i+1]; b += data[i+2]; count++;
           }
         }
@@ -1497,12 +1616,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           r = Math.round(r / count);
           g = Math.round(g / count);
           b = Math.round(b / count);
-          const bg = `rgb(${Math.round(238 + r * 0.06)}, ${Math.round(238 + g * 0.06)}, ${Math.round(238 + b * 0.06)})`;
-          const accent = `rgb(${Math.max(30, r - 20)}, ${Math.max(30, g - 20)}, ${Math.max(30, b - 20)})`;
-          return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B" };
+          // Rich, warm tint instead of washed-out grey
+          const bg = `rgb(${Math.round(230 + r * 0.08)}, ${Math.round(226 + g * 0.08)}, ${Math.round(218 + b * 0.08)})`;
+          const accent = `rgb(${Math.max(20, r - 25)}, ${Math.max(20, g - 25)}, ${Math.max(20, b - 25)})`;
+          return { bg: bg, polaroid: "#FAF7F2", accent: accent, text: "#1E293B" };
         }
       } catch (e) {}
-      return { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
+      return { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
     }
 
     function auditOcrSafety() {
@@ -1528,7 +1648,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     });
 
-    // RAW DEAL EXTRACTOR (STRICT BAN ON THE WORD 'PRICE')
+    // RAW DEAL EXTRACTOR (ZERO BANNED WORDS, PURGED "COMPLETE")
     document.getElementById('extractBtn').addEventListener('click', () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
@@ -1558,22 +1678,30 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       } else if (saleMatch && wasMatch) {
         extractedVal = `${saleMatch[0].trim()} (was $${wasMatch[1].replace(' ', '.')})`;
       } else if (saleMatch) {
-        extractedVal = `${saleMatch[0].trim()} complete`;
+        extractedVal = `${saleMatch[0].trim()}`;
       } else {
         extractedVal = "Under $15 ✨";
       }
 
+      // Purge any robotic phrases
+      extractedVal = extractedVal.replace(/\bcomplete\b/gi, '').trim();
       document.getElementById('simpleValueInput').value = extractedVal;
+
+      // Auto-reset custom drag coordinates for fresh layout
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].badgePos = null;
+        cardCustoms[i].notePos = null;
+      }
 
       auditOcrSafety();
       renderAll4CreatorCards();
     });
 
     const FIXED_PALETTES = {
-      warm_oatmeal: { bg: "#F4EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
-      sage_linen: { bg: "#E3E9DE", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
-      terracotta_autumn: { bg: "#EEDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
-      slate_blue: { bg: "#EAECEE", polaroid: "#FFFFFF", accent: "#4A6B82", text: "#1A2530" }
+      warm_oatmeal: { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
+      sage_linen: { bg: "#E2E9DC", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
+      terracotta_autumn: { bg: "#EDDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
+      slate_blue: { bg: "#E8ECF0", polaroid: "#FFFFFF", accent: "#4A6B82", text: "#1A2530" }
     };
 
     function getFontFamily(fontKey) {
@@ -1612,12 +1740,20 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
+      // Soft ambient light gradient
+      const grad = ctx.createRadialGradient(540, 480, 100, 540, 540, 680);
+      grad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+      grad.addColorStop(1, "rgba(0, 0, 0, 0.06)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1080, 1080);
+
       // ==========================================
-      // LAYER 1: PRODUCT & BACKGROUND STAGING
+      // LAYER 1: PRODUCT & BACKGROUND STAGING (DRAWN FIRST!)
       // ==========================================
       ctx.save();
-      const pw = 680 * conf.pScale;
-      const ph = 680 * conf.pScale;
+      // HERO SCALE: Generous 72% - 82% coverage
+      const pw = 760 * conf.pScale;
+      const ph = 760 * conf.pScale;
 
       if (style.includes("split_horizon")) {
         ctx.fillStyle = pal.polaroid;
@@ -1648,17 +1784,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.beginPath(); ctx.arc(x, 110, 8, 0, Math.PI * 2); ctx.fill();
         }
       } else if (style.includes("polaroid")) {
-        ctx.translate(540, 500);
+        ctx.translate(540, 480);
         ctx.rotate(-0.03);
         ctx.fillStyle = pal.polaroid;
         ctx.shadowColor = "rgba(0,0,0,0.18)";
-        ctx.shadowBlur = 28;
-        ctx.shadowOffsetY = 14;
-        ctx.fillRect(-340, -360, 680, 800);
+        ctx.shadowBlur = 30;
+        ctx.shadowOffsetY = 16;
+        ctx.fillRect(-380, -380, 760, 860);
         ctx.shadowColor = "transparent";
       }
 
-      // DRAW PRODUCT PHOTO (ALWAYS UNDER THE LABELS!)
+      // PRODUCT DRAW WITH AMBIENT GROUND SHADOW
       if (isPrivacyMode) {
         ctx.save();
         ctx.beginPath();
@@ -1668,59 +1804,64 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.restore();
       } else {
         if (style.includes("polaroid")) {
+          // Realistic product drop shadow
+          ctx.shadowColor = "rgba(0,0,0,0.12)";
+          ctx.shadowBlur = 20;
+          ctx.shadowOffsetY = 12;
           ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
         } else {
+          // Centered hero staging
           ctx.shadowColor = "rgba(0,0,0,0.16)";
-          ctx.shadowBlur = 32;
-          ctx.shadowOffsetY = 16;
-          ctx.drawImage(srcCanvas, 540 - (pw / 2), 520 - (ph / 2), pw, ph);
+          ctx.shadowBlur = 36;
+          ctx.shadowOffsetY = 20;
+          ctx.drawImage(srcCanvas, 540 - (pw / 2), 500 - (ph / 2), pw, ph);
         }
       }
       ctx.restore();
 
       // ==========================================
-      // LAYER 2: LABELS, BADGES & DOODLES (ALWAYS ON TOP!)
+      // LAYER 2: LABELS, BADGES & RUN ACCENTS (ALWAYS ON TOP!)
       // ==========================================
       ctx.save();
-      // NOTE TEXT (AUTO-POSITION OR DRAGGED)
-      const noteX = conf.notePos ? conf.notePos.x : (style.includes("polaroid") ? 540 : 540);
-      const noteY = conf.notePos ? conf.notePos.y : (style.includes("polaroid") ? 860 : (style.includes("top") ? 140 : 960));
+
+      // NOTE TEXT (DRAGGED OR AUTO-PLACED)
+      const noteX = conf.notePos ? conf.notePos.x : 540;
+      const noteY = conf.notePos ? conf.notePos.y : (style.includes("polaroid") ? 910 : (style.includes("kraft_tag") ? 960 : 950));
 
       ctx.fillStyle = pal.text;
       ctx.font = `bold ${Math.round(32 * conf.bScale)}px ${font}`;
       ctx.textAlign = "center";
       ctx.fillText(note, noteX, noteY);
 
-      // VALUE BADGE / KRAFT TAG / HIGH-VIS RUN CUES (ALWAYS ON TOP!)
+      // PRICE / VALUE BADGE (DRAGGED OR AUTO-PLACED)
       if (val) {
         ctx.font = `bold ${Math.round(26 * conf.bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(600, textW + 48); // EXACT TIGHT FIT!
+        const boxW = Math.min(640, textW + 48); // EXACT TIGHT FIT!
         const boxH = Math.round(62 * conf.bScale);
 
-        // Default badge positions per layout zone
         let defBx = 540, defBy = 940;
         if (style.includes("kraft_tag")) { defBx = 220; defBy = 120; }
-        else if (style.includes("notebook")) { defBx = 960 - (boxW / 2); defBy = 180; }
-        else if (style.includes("polaroid")) { defBx = 940 - (boxW / 2); defBy = 940; }
-        else if (style.includes("run_arrow_pointer")) { defBx = 540; defBy = 880; }
+        else if (style.includes("notebook")) { defBx = 960 - (boxW / 2); defBy = 170; }
+        else if (style.includes("polaroid")) { defBx = 960 - (boxW / 2); defBy = 930; }
 
         const bx = conf.badgePos ? conf.badgePos.x : defBx;
         const by = conf.badgePos ? conf.badgePos.y : defBy;
 
-        // Save active coordinates for interactive dragging
+        // Bounding box for drag listeners
         conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
 
         ctx.save();
         ctx.translate(bx, by);
 
-        // STYLIZED BADGE BACKGROUND
-        if (style.includes("run_arrow_pointer") || currentDealMode === 'run') {
-          // Alert Neon Yellow Sticky Stamp
+        // BADGE BACKGROUND
+        if (conf.accents.sticky || currentDealMode === 'run') {
+          // High-Visibility Neon Post-It Sticky Note
           ctx.fillStyle = "#FEF08A";
-          ctx.shadowColor = "rgba(0,0,0,0.2)";
-          ctx.shadowBlur = 16;
+          ctx.shadowColor = "rgba(0,0,0,0.22)";
+          ctx.shadowBlur = 18;
+          ctx.shadowOffsetY = 6;
           ctx.beginPath();
           ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
           ctx.fill();
@@ -1728,16 +1869,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.fillStyle = "#0F172A";
           ctx.textAlign = "center";
           ctx.fillText(val, 0, 8 * conf.bScale);
-
-          // Hand-Drawn Curved Arrow Doodle pointing to badge
-          ctx.strokeStyle = "#EAB308";
-          ctx.lineWidth = 5;
-          ctx.beginPath();
-          ctx.moveTo(-boxW / 2 - 40, -40);
-          ctx.quadraticCurveTo(-boxW / 2 - 10, -10, -boxW / 2 + 10, -10);
-          ctx.stroke();
         } else if (style.includes("kraft_tag")) {
-          // Brown Luggage Tag with Eyelet
+          // Brown Luggage Tag
           ctx.fillStyle = "#C49A6C";
           ctx.shadowColor = "rgba(0,0,0,0.18)";
           ctx.shadowBlur = 14;
@@ -1754,7 +1887,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.textAlign = "center";
           ctx.fillText(val, 8, 8 * conf.bScale);
         } else if (style.includes("notebook")) {
-          // Translucent Yellow Highlighter Strip
+          // Yellow Highlighter Strip
           ctx.fillStyle = "rgba(253, 224, 71, 0.85)";
           ctx.fillRect(-boxW / 2, -boxH / 2, boxW, boxH);
 
@@ -1762,10 +1895,10 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.textAlign = "center";
           ctx.fillText(val, 0, 8 * conf.bScale);
         } else {
-          // Clean Floating Pill
+          // Clean Floating Rounded Pill
           ctx.fillStyle = pal.polaroid;
-          ctx.shadowColor = "rgba(0,0,0,0.15)";
-          ctx.shadowBlur = 14;
+          ctx.shadowColor = "rgba(0,0,0,0.16)";
+          ctx.shadowBlur = 16;
           ctx.beginPath();
           ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
           ctx.fill();
@@ -1774,10 +1907,62 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.textAlign = "center";
           ctx.fillText(val, 0, 8 * conf.bScale);
         }
+
+        // ==========================================
+        // MIX & MATCH RUN ACCENTS (RED ARROWS, SHARPIE LOOP, EYE STAMP)
+        // ==========================================
+        // 1. Hand-Drawn Red Sharpie Marker Loop
+        if (conf.accents.loop || currentDealMode === 'run') {
+          ctx.strokeStyle = "#DC2626";
+          ctx.lineWidth = 4.5;
+          ctx.beginPath();
+          ctx.ellipse(0, 2, (boxW / 2) + 12, (boxH / 2) + 8, -0.04, 0, Math.PI * 2);
+          ctx.stroke();
+          // Double loose pass
+          ctx.beginPath();
+          ctx.ellipse(2, 4, (boxW / 2) + 14, (boxH / 2) + 10, 0.03, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // 2. Triple Red Marker Arrows pointing to badge
+        if (conf.accents.arrow || currentDealMode === 'run') {
+          ctx.fillStyle = "#DC2626";
+          ctx.strokeStyle = "#DC2626";
+          ctx.lineWidth = 4;
+          drawMarkerArrow(ctx, -boxW / 2 - 35, -45, -boxW / 2 + 5, -boxH / 2 + 5);
+          drawMarkerArrow(ctx, -boxW / 2 - 15, -60, -boxW / 2 + 15, -boxH / 2);
+          drawMarkerArrow(ctx, -boxW / 2 + 10, -65, -boxW / 2 + 25, -boxH / 2 - 5);
+        }
+
+        // 3. Floating Eye Stamp (👀)
+        if (conf.accents.eye || currentDealMode === 'run') {
+          ctx.save();
+          ctx.font = `${Math.round(36 * conf.bScale)}px sans-serif`;
+          ctx.fillText("👀", (boxW / 2) + 10, -boxH / 2 + 10);
+          ctx.restore();
+        }
+
         ctx.restore();
       }
 
       ctx.restore();
+    }
+
+    function drawMarkerArrow(ctx, fromx, fromy, tox, toy) {
+      const headlen = 14;
+      const dx = tox - fromx;
+      const dy = toy - fromy;
+      const angle = Math.atan2(dy, dx);
+      ctx.beginPath();
+      ctx.moveTo(fromx, fromy);
+      ctx.lineTo(tox, toy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(tox, toy);
+      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
     }
 
     // ==========================================
@@ -1789,17 +1974,12 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         const canvas = document.getElementById(`cardCanvas${i}`);
 
         wrap.addEventListener("mousedown", (e) => {
+          if (e.target.tagName === 'BUTTON') return; // Don't trigger drag on Zoom button!
           const r = canvas.getBoundingClientRect();
           const mouseX = (e.clientX - r.left) * (1080 / r.width);
           const mouseY = (e.clientY - r.top) * (1080 / r.height);
-          const box = cardCustoms[i]._activeBadgeBox;
 
-          if (box && mouseX >= box.x && mouseX <= box.x + box.w && mouseY >= box.y && mouseY <= box.y + box.h) {
-            draggingState = { active: true, cardNum: i, target: "badge" };
-          } else {
-            // Drag general position
-            draggingState = { active: true, cardNum: i, target: "badge" };
-          }
+          draggingState = { active: true, cardNum: i, startX: mouseX, startY: mouseY };
         });
 
         window.addEventListener("mousemove", (e) => {
@@ -1849,7 +2029,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // DOWNLOAD HELPERS (AUTOMATICALLY SCRUBS METADATA)
+    // DOWNLOAD HELPERS (SCRUBS PROVENANCE & EXIF HEADERS)
     // ==========================================
     function downloadCanvasData(dataUrl, filename) {
       const link = document.createElement('a');
