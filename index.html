@@ -327,8 +327,16 @@
 
             <button 
               type="button" 
+              onclick="masterResetDeal()" 
+              class="px-3 py-1.5 bg-rose-600/80 hover:bg-rose-600 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1 ml-2"
+              title="Clear all caches and upload a new photo from Step 1"
+            >
+              <span>📁</span> Upload New Photo
+            </button>
+            <button 
+              type="button" 
               onclick="navToStep(2)" 
-              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-2"
+              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-1"
             >
               ⬅ Step 2
             </button>
@@ -355,18 +363,21 @@
           </button>
         </div>
 
-        <!-- GLOBAL CONTROLS WITH SHUFFLERS -->
+        <!-- GLOBAL CONTROLS WITH SHUFFLERS & VALUE CYCLER -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Affirmation</label>
               <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase">🎲 Shuffle Note</button>
             </div>
-            <input type="text" id="mainNoteInput" value="Yard project ready 🌾" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="mainNoteInput" value="Daily routine staple ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag (Zero Banned Words)</label>
+            <div class="flex justify-between items-center">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag (Zero Banned Words)</label>
+              <button type="button" onclick="shuffleValueTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase">🎲 Shuffle Tag</button>
+            </div>
             <input type="text" id="simpleValueInput" value="$16.79 Shipped" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
@@ -1471,6 +1482,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     // ==========================================
     // STEP 3: CREATOR BOARD & INTERACTIVE MIX & MATCH
     // ==========================================
+    let valueTagOptions = ["$16.79 Shipped", "Just $16.79 ✨", "$16.79 total", "Under $17 ✨"];
+    let valueTagIndex = 0;
+
+    function shuffleValueTag() {
+      if (!valueTagOptions || valueTagOptions.length === 0) return;
+      valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
+      document.getElementById('simpleValueInput').value = valueTagOptions[valueTagIndex];
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
     function setDealMode(mode) {
       currentDealMode = mode;
       const regBtn = document.getElementById('modeRegularBtn');
@@ -1485,28 +1507,25 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
         }
 
-        // Enable Run Accents by default across all 4 cards
+        // Set Run accents as initial defaults in UI, but keep them manually toggleable
         for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents.arrow = true;
-          cardCustoms[i].accents.loop = true;
-          cardCustoms[i].accents.eye = true;
-          const aCb = document.getElementById(`acc_arrow_${i}`);
-          const lCb = document.getElementById(`acc_loop_${i}`);
-          const eCb = document.getElementById(`acc_eye_${i}`);
-          if (aCb) aCb.checked = true;
-          if (lCb) lCb.checked = true;
-          if (eCb) eCb.checked = true;
+          cardCustoms[i].accents = { arrow: true, loop: true, eye: true, sticky: true };
+          const a = document.getElementById(`acc_arrow_${i}`);
+          const l = document.getElementById(`acc_loop_${i}`);
+          const e = document.getElementById(`acc_eye_${i}`);
+          const s = document.getElementById(`acc_sticky_${i}`);
+          if (a) a.checked = true;
+          if (l) l.checked = true;
+          if (e) e.checked = true;
+          if (s) s.checked = true;
         }
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md";
         runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1";
-        document.getElementById('mainNoteInput').value = "Yard project ready 🌾";
+        document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
 
         for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents.arrow = false;
-          cardCustoms[i].accents.loop = false;
-          cardCustoms[i].accents.eye = false;
-          cardCustoms[i].accents.sticky = false;
+          cardCustoms[i].accents = { arrow: false, loop: false, eye: false, sticky: false };
           ['arrow', 'loop', 'eye', 'sticky'].forEach(acc => {
             const cb = document.getElementById(`acc_${acc}_${i}`);
             if (cb) cb.checked = false;
@@ -1514,6 +1533,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         }
       }
 
+      renderAll4CreatorCards();
+    }
+
+    function toggleAccent(cardNum, accentKey) {
+      const cb = document.getElementById(`acc_${accentKey}_${cardNum}`);
+      if (!cb) return;
+      cardCustoms[cardNum].accents[accentKey] = cb.checked;
       renderAll4CreatorCards();
     }
 
@@ -1525,19 +1551,12 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       if (isPrivacyMode) {
         btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
         btn.classList.remove('bg-slate-800', 'border-slate-700', 'text-slate-300');
-        status.innerText = "ON (Macro Swatch)";
+        status.innerText = "ON (Macro Crop)";
       } else {
         btn.classList.remove('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
         btn.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300');
         status.innerText = "OFF";
       }
-      renderAll4CreatorCards();
-    }
-
-    function toggleAccent(cardNum, accentKey) {
-      const cb = document.getElementById(`acc_${accentKey}_${cardNum}`);
-      if (!cb) return;
-      cardCustoms[cardNum].accents[accentKey] = cb.checked;
       renderAll4CreatorCards();
     }
 
@@ -1685,7 +1704,15 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       // Purge any robotic phrases
       extractedVal = extractedVal.replace(/\bcomplete\b/gi, '').trim();
-      document.getElementById('simpleValueInput').value = extractedVal;
+      // Build dynamic 4-choice value tag pool
+      valueTagOptions = [
+        extractedVal,
+        `Just ${saleMatch ? saleMatch[0].trim() : '$16.79'} ✨`,
+        `${saleMatch ? saleMatch[0].trim() : '$16.79'} total`,
+        `Under $${saleMatch ? Math.ceil(parseFloat(saleMatch[0].replace('$', ''))) : '20'} ✨`
+      ];
+      valueTagIndex = 0;
+      document.getElementById('simpleValueInput').value = valueTagOptions[0];
 
       // Auto-reset custom drag coordinates for fresh layout
       for (let i = 1; i <= 4; i++) {
@@ -1909,36 +1936,39 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         }
 
         // ==========================================
-        // MIX & MATCH RUN ACCENTS (RED ARROWS, SHARPIE LOOP, EYE STAMP)
+        // MIX & MATCH ACCENTS (CONTROLLED DIRECTLY BY CHECKBOXES!)
         // ==========================================
         // 1. Hand-Drawn Red Sharpie Marker Loop
-        if (conf.accents.loop || currentDealMode === 'run') {
+        if (conf.accents.loop) {
+          ctx.save();
           ctx.strokeStyle = "#DC2626";
           ctx.lineWidth = 4.5;
           ctx.beginPath();
-          ctx.ellipse(0, 2, (boxW / 2) + 12, (boxH / 2) + 8, -0.04, 0, Math.PI * 2);
+          ctx.ellipse(0, 2, (boxW / 2) + 14, (boxH / 2) + 9, -0.04, 0, Math.PI * 2);
           ctx.stroke();
-          // Double loose pass
           ctx.beginPath();
-          ctx.ellipse(2, 4, (boxW / 2) + 14, (boxH / 2) + 10, 0.03, 0, Math.PI * 2);
+          ctx.ellipse(2, 4, (boxW / 2) + 16, (boxH / 2) + 11, 0.03, 0, Math.PI * 2);
           ctx.stroke();
+          ctx.restore();
         }
 
-        // 2. Triple Red Marker Arrows pointing to badge
-        if (conf.accents.arrow || currentDealMode === 'run') {
+        // 2. Triple Red Marker Arrows pointing directly down to badge
+        if (conf.accents.arrow) {
+          ctx.save();
           ctx.fillStyle = "#DC2626";
           ctx.strokeStyle = "#DC2626";
           ctx.lineWidth = 4;
-          drawMarkerArrow(ctx, -boxW / 2 - 35, -45, -boxW / 2 + 5, -boxH / 2 + 5);
-          drawMarkerArrow(ctx, -boxW / 2 - 15, -60, -boxW / 2 + 15, -boxH / 2);
-          drawMarkerArrow(ctx, -boxW / 2 + 10, -65, -boxW / 2 + 25, -boxH / 2 - 5);
+          drawMarkerArrow(ctx, -boxW / 2 - 25, -55, -boxW / 2 + 8, -boxH / 2);
+          drawMarkerArrow(ctx, -boxW / 2 - 5, -70, -boxW / 2 + 20, -boxH / 2 - 4);
+          drawMarkerArrow(ctx, -boxW / 2 + 20, -75, -boxW / 2 + 35, -boxH / 2 - 8);
+          ctx.restore();
         }
 
         // 3. Floating Eye Stamp (👀)
-        if (conf.accents.eye || currentDealMode === 'run') {
+        if (conf.accents.eye) {
           ctx.save();
-          ctx.font = `${Math.round(36 * conf.bScale)}px sans-serif`;
-          ctx.fillText("👀", (boxW / 2) + 10, -boxH / 2 + 10);
+          ctx.font = `${Math.round(42 * conf.bScale)}px sans-serif`;
+          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
           ctx.restore();
         }
 
