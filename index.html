@@ -294,7 +294,7 @@
             <p class="text-xs text-slate-400">💡 <strong>Interactive Dragging:</strong> Click and drag badges directly on any card preview to place them freely!</p>
           </div>
 
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
             <!-- DEAL MODE SWITCH -->
             <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-700">
               <button 
@@ -325,20 +325,22 @@
               <span>🛡️</span> Privacy Mode: <span id="privacyStatus">OFF</span>
             </button>
 
-            <button 
-              type="button" 
-              onclick="masterResetDeal()" 
-              class="px-3 py-1.5 bg-rose-600/80 hover:bg-rose-600 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1 ml-2"
-              title="Clear all caches and upload a new photo from Step 1"
-            >
-              <span>📁</span> Upload New Photo
-            </button>
+            <!-- CLEAR SEPARATION OF WORKFLOW BUTTONS -->
             <button 
               type="button" 
               onclick="navToStep(2)" 
-              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-1"
+              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-1"
             >
-              ⬅ Step 2
+              ⬅ Back to Step 2
+            </button>
+
+            <button 
+              type="button" 
+              onclick="masterResetDeal()" 
+              class="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1.5 shadow-md ml-1"
+              title="Clear all caches and start a brand new deal from Step 1"
+            >
+              <span>🔄</span> Start New Deal
             </button>
           </div>
         </div>
@@ -363,14 +365,25 @@
           </button>
         </div>
 
-        <!-- GLOBAL CONTROLS WITH SHUFFLERS & VALUE CYCLER -->
+        <!-- AI SUGGESTED NOTES CHIPS CONTAINER -->
+        <div id="aiChipsWrapper" class="hidden space-y-1.5 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-slate-400 px-1">
+            <span class="flex items-center gap-1.5 text-sky-400"><span>💡</span> Click an AI note to apply:</span>
+            <span id="aiChipsStatus" class="text-slate-500">4 Tailored Options</span>
+          </div>
+          <div id="aiChipsContainer" class="flex flex-wrap gap-2">
+            <!-- Dynamic Chips Populated via JS -->
+          </div>
+        </div>
+
+        <!-- GLOBAL CONTROLS WITH SHUFFLERS -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Affirmation</label>
               <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase">🎲 Shuffle Note</button>
             </div>
-            <input type="text" id="mainNoteInput" value="Daily routine staple ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="mainNoteInput" value="Yard project ready 🌾" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
@@ -1667,13 +1680,51 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     });
 
-    // RAW DEAL EXTRACTOR (ZERO BANNED WORDS, PURGED "COMPLETE")
-    document.getElementById('extractBtn').addEventListener('click', () => {
+    // DYNAMIC VALUE TAG ROTATION (NO "PRICE" OR "UNDER $17" ALLOWED)
+    let valueTagOptions = ["$16.79 Shipped", "Just $16.79 ✨", "$16.79 total"];
+    let valueTagIndex = 0;
+
+    function shuffleValueTag() {
+      if (!valueTagOptions || valueTagOptions.length === 0) return;
+      valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
+      document.getElementById('simpleValueInput').value = valueTagOptions[valueTagIndex];
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function applyAiNote(text) {
+      document.getElementById('mainNoteInput').value = text;
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function renderAiChips(chips) {
+      const container = document.getElementById('aiChipsContainer');
+      const wrapper = document.getElementById('aiChipsWrapper');
+      if (!chips || chips.length === 0) {
+        wrapper.classList.add('hidden');
+        return;
+      }
+      container.innerHTML = "";
+      chips.forEach(note => {
+        const btn = document.createElement('button');
+        btn.type = "button";
+        btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium";
+        btn.innerText = note;
+        btn.onclick = () => applyAiNote(note);
+        container.appendChild(btn);
+      });
+      wrapper.classList.remove('hidden');
+    }
+
+    // RAW DEAL EXTRACTOR WITH DYNAMIC AI AFFIRMATIONS
+    document.getElementById('extractBtn').addEventListener('click', async () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
 
       const rLower = raw.toLowerCase();
 
+      // Fallback local categories
       if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
         activeCategory = "lawn_garden";
       } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
@@ -1685,32 +1736,31 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
 
       const pool = AFFIRMATIONS[activeCategory];
-      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+      let initialNote = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('mainNoteInput').value = initialNote;
 
+      // Extract Clean Price and Unit Metrics
       const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
       const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
       const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
 
-      let extractedVal = "";
-      if (saleMatch && unitMatch) {
-        extractedVal = `${unitMatch[0]} · ${saleMatch[0].trim()}`;
-      } else if (saleMatch && wasMatch) {
-        extractedVal = `${saleMatch[0].trim()} (was $${wasMatch[1].replace(' ', '.')})`;
-      } else if (saleMatch) {
-        extractedVal = `${saleMatch[0].trim()}`;
-      } else {
-        extractedVal = "Under $15 ✨";
+      const saleClean = saleMatch ? saleMatch[0].trim().replace(/\bcomplete\b/gi, '').trim() : "$16.79 Shipped";
+      const unitClean = unitMatch ? unitMatch[0].trim() : "";
+
+      // Build 7 Natural Value Options (purged "Under $17", strictly banned word 'Price')
+      valueTagOptions = [
+        saleClean,
+        `Just ${saleClean} ✨`,
+        `${saleClean.replace(/Shipped|Pickup/i, '').trim()} total`,
+        `All for ${saleClean}`,
+        unitClean ? `${unitClean} · ${saleClean}` : `Just ${saleClean} right now 👀`
+      ];
+
+      if (wasMatch) {
+        valueTagOptions.push(`${saleClean} (was $${wasMatch[1].replace(' ', '.')})`);
+        valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
       }
 
-      // Purge any robotic phrases
-      extractedVal = extractedVal.replace(/\bcomplete\b/gi, '').trim();
-      // Build dynamic 4-choice value tag pool
-      valueTagOptions = [
-        extractedVal,
-        `Just ${saleMatch ? saleMatch[0].trim() : '$16.79'} ✨`,
-        `${saleMatch ? saleMatch[0].trim() : '$16.79'} total`,
-        `Under $${saleMatch ? Math.ceil(parseFloat(saleMatch[0].replace('$', ''))) : '20'} ✨`
-      ];
       valueTagIndex = 0;
       document.getElementById('simpleValueInput').value = valueTagOptions[0];
 
@@ -1722,6 +1772,40 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       auditOcrSafety();
       renderAll4CreatorCards();
+
+      // OPTIONAL LIVE AI GENERATOR (Runs fast in background)
+      const key = apiKeyInput.value.trim();
+      if (key) {
+        try {
+          const prompt = `Based on this deal: "${raw.slice(0, 300)}"
+Generate exactly 4 unique, creative, positive human lifestyle observation notes (under 6 words each) suitable for a social post.
+CRITICAL RULES:
+1. STRICT ZERO BANNED WORDS: Never use price, sale, deal, discount, steal, hurry, cheap, offer, buy, shop, savings, bargain.
+2. Return ONLY a valid JSON array of 4 strings: ["note 1", "note 2", "note 3", "note 4"]`;
+
+          const payload = {
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
+          };
+
+          const aiData = await callGeminiLeapingMesh(key, payload);
+          let rawTxt = aiData.candidates[0]?.content?.parts[0]?.text || "[]";
+          rawTxt = rawTxt.replace(/```json/gi, '').replace(/```/g, '').trim();
+          const parsed = JSON.parse(rawTxt);
+
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            // Scrub any banned words
+            const safeChips = parsed.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
+            if (safeChips.length > 0) {
+              renderAiChips(safeChips);
+              document.getElementById('mainNoteInput').value = safeChips[0];
+              renderAll4CreatorCards();
+            }
+          }
+        } catch (e) {
+          console.log("Local category affirmation active (AI note pass skipped):", e);
+        }
+      }
     });
 
     const FIXED_PALETTES = {
