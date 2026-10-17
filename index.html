@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v7.5</title>
+  <title>CB Media Pipeline Suite v8.0 - Canva Studio Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for Creator Typographies -->
+  <!-- Google Fonts for Diverse Creator Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@700&family=Fredoka:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
@@ -33,9 +33,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v7.5</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v8.0</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Mix & Match Creator Studio</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Canva-Style Layer Studio</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
@@ -126,8 +126,8 @@
       <div id="stepTab3" onclick="navToStep(3)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
-          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Creator Board</h3>
-          <p class="text-xs text-slate-400">Mix & match layers & Run Deal cues</p>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Canva Creator Studio</h3>
+          <p class="text-xs text-slate-400">Interactive objects, layers & rotation</p>
         </div>
       </div>
     </nav>
@@ -264,7 +264,7 @@
               id="goToStep3Btn" 
               class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider"
             >
-              Proceed to Step 3: Creator Board ➔
+              Proceed to Step 3: Canva Studio ➔
             </button>
           </div>
         </div>
@@ -284,14 +284,14 @@
       </div>
     </section>
 
-    <!-- ==================== STEP 3: CREATOR BOARD ==================== -->
+    <!-- ==================== STEP 3: CANVA CREATOR STUDIO ==================== -->
     <section id="step3Section" class="hidden space-y-6">
       
       <div class="card-dark p-5 space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Multi-Zone Creator Board & Mix-and-Match Layers</h2>
-            <p class="text-xs text-slate-400">💡 <strong>Interactive Dragging:</strong> Click and drag badges directly on any card preview to place them freely!</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Canva-Style Creative Layer Studio</h2>
+            <p class="text-xs text-slate-400">💡 <strong>Interactive Objects:</strong> Click & drag badges, text, and stickers anywhere directly on the canvas!</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
@@ -325,7 +325,7 @@
               <span>🛡️</span> Privacy Mode: <span id="privacyStatus">OFF</span>
             </button>
 
-            <!-- CLEAR SEPARATION OF WORKFLOW BUTTONS -->
+            <!-- WORKFLOW NAVIGATION -->
             <button 
               type="button" 
               onclick="navToStep(2)" 
@@ -383,7 +383,7 @@
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Affirmation</label>
               <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase">🎲 Shuffle Note</button>
             </div>
-            <input type="text" id="mainNoteInput" value="Yard project ready 🌾" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="mainNoteInput" value="Daily routine staple ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
@@ -396,26 +396,26 @@
 
           <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Canva Aesthetic Texture & Frame</label>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Aesthetic Surface & Canvas Mood</label>
               <button type="button" onclick="reRollCardStyles()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase">🔀 Re-Roll Styles</button>
             </div>
             <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
-              <option value="crumpled_kraft" selected>📜 Crumpled Kraft & Vines (Canva Best)</option>
-              <option value="organic_waves">🌊 Organic Pastel Waves & Blob</option>
-              <option value="window_shadow">🪴 Window Sunbeam & Palm Shadow</option>
-              <option value="grid_scrapbook">📐 Grid Washi Tape & Pushpin</option>
+              <option value="crumpled_kraft" selected>📜 Crumpled Kraft Parchment & Vines</option>
+              <option value="window_shadow">🪴 Sunlit Studio & Palm Window Shadow</option>
+              <option value="organic_waves">🌊 Organic Terracotta Waves & Arch Niche</option>
+              <option value="grid_scrapbook">📐 Lined Notebook Memo & Brass Paperclip</option>
               <option value="auto_sampled">🎨 Auto-Sample Packaging Colors</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- 4 CONSTRAINED CREATIVE CARDS WITH MIX-AND-MATCH CONTROLS -->
+      <!-- 4 CONSTRAINED CREATIVE CARDS WITH CANVA OBJECT TOOLBARS -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Dynamic Aesthetic Styles</h3>
-            <p class="text-xs text-slate-400">💡 Drag badges freely on the canvas. Mix and match accent layers under each card below.</p>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives</h3>
+            <p class="text-xs text-slate-400">💡 Drag the badges, headlines, or stickers directly on any card preview!</p>
           </div>
           <button 
             type="button" 
@@ -428,11 +428,12 @@
 
         <!-- 4-COLUMN CONSTRAINED GRID -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+          
           <!-- Card 1 -->
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
               <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 truncate">Style: Polaroid Snap</span>
+                <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 truncate">Card 1: Polaroid Snap</span>
                 <select id="styleSelect1" onchange="changeCardStyle(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
                   <!-- Populated via JS -->
                 </select>
@@ -445,29 +446,23 @@
             </div>
 
             <div class="space-y-2 pt-2">
-              <!-- MIX & MATCH ACCENT TOGGLES -->
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_1" onchange="toggleAccent(1, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_1" onchange="toggleAccent(1, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_1" onchange="toggleAccent(1, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_1" onchange="toggleAccent(1, 'sticky')"> 📝 Neon Post-it</label>
-                </div>
-              </div>
-
-              <!-- SLIDERS & FONT -->
-              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
-                <div class="flex justify-between items-center text-slate-400">
-                  <span>Font:</span>
-                  <select id="fontSelect1" onchange="changeCardFont(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-sky-400 px-1.5 py-0.5 rounded">
-                    <option value="handwritten" selected>✍️ Casual Script</option>
-                    <option value="typewriter">📠 Typewriter</option>
-                    <option value="modern_sans">✨ Modern Sans</option>
-                    <option value="playful">🎈 Playful</option>
-                    <option value="editorial">📰 Serif</option>
+              <!-- CANVA LAYER TOOLBAR: BADGE CONTROLS -->
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
+                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
+                  <span>Badge Style:</span>
+                  <select id="badgeBg1" onchange="changeBadgeBg(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-sky-400 px-1 py-0.5 rounded">
+                    <option value="sticky" selected>Sticky Post-it</option>
+                    <option value="pill">Floating Pill</option>
+                    <option value="kraft">Kraft Tag</option>
+                    <option value="transparent">Transparent (No Box)</option>
                   </select>
                 </div>
+
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Rotation:</span>
+                  <span id="bRotVal1" class="text-sky-400 font-mono">-5°</span>
+                </div>
+                <input type="range" id="bRot1" min="-30" max="30" value="-5" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(1)">
 
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
@@ -476,12 +471,24 @@
                 <input type="range" id="pScale1" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
                 
                 <div class="flex justify-between text-slate-400">
-                  <span>Badge Scale:</span>
+                  <span>Badge Size:</span>
                   <span id="bScaleVal1" class="text-sky-400 font-mono">100%</span>
                 </div>
                 <input type="range" id="bScale1" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
               </div>
-              <button onclick="downloadSingleCard('cardCanvas1', 'deal_card_1')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 1</button>
+
+              <!-- MIX & MATCH ACCENTS -->
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_1" onchange="toggleAccent(1, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_1" onchange="toggleAccent(1, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_1" onchange="toggleAccent(1, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_1" onchange="toggleAccent(1, 'heart')"> ➳♡ Heart Arrow</label>
+                </div>
+              </div>
+
+              <button onclick="downloadSingleCard('cardCanvas1', 'deal_card_1')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 1</button>
             </div>
           </div>
 
@@ -489,7 +496,7 @@
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
               <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 truncate">Style: Top Kraft Tag</span>
+                <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 truncate">Card 2: Kraft Tag</span>
                 <select id="styleSelect2" onchange="changeCardStyle(2, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
                   <!-- Populated via JS -->
                 </select>
@@ -502,27 +509,22 @@
             </div>
 
             <div class="space-y-2 pt-2">
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_2" onchange="toggleAccent(2, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_2" onchange="toggleAccent(2, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_2" onchange="toggleAccent(2, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_2" onchange="toggleAccent(2, 'sticky')"> 📝 Neon Post-it</label>
-                </div>
-              </div>
-
-              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
-                <div class="flex justify-between items-center text-slate-400">
-                  <span>Font:</span>
-                  <select id="fontSelect2" onchange="changeCardFont(2, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-amber-400 px-1.5 py-0.5 rounded">
-                    <option value="handwritten">✍️ Casual Script</option>
-                    <option value="typewriter" selected>📠 Typewriter</option>
-                    <option value="modern_sans">✨ Modern Sans</option>
-                    <option value="playful">🎈 Playful</option>
-                    <option value="editorial">📰 Serif</option>
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
+                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
+                  <span>Badge Style:</span>
+                  <select id="badgeBg2" onchange="changeBadgeBg(2, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-amber-400 px-1 py-0.5 rounded">
+                    <option value="kraft" selected>Kraft Tag</option>
+                    <option value="sticky">Sticky Post-it</option>
+                    <option value="pill">Floating Pill</option>
+                    <option value="transparent">Transparent (No Box)</option>
                   </select>
                 </div>
+
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Rotation:</span>
+                  <span id="bRotVal2" class="text-amber-400 font-mono">0°</span>
+                </div>
+                <input type="range" id="bRot2" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(2)">
 
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
@@ -531,12 +533,23 @@
                 <input type="range" id="pScale2" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
                 
                 <div class="flex justify-between text-slate-400">
-                  <span>Badge Scale:</span>
+                  <span>Badge Size:</span>
                   <span id="bScaleVal2" class="text-amber-400 font-mono">100%</span>
                 </div>
                 <input type="range" id="bScale2" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
               </div>
-              <button onclick="downloadSingleCard('cardCanvas2', 'deal_card_2')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 2</button>
+
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_2" onchange="toggleAccent(2, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_2" onchange="toggleAccent(2, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_2" onchange="toggleAccent(2, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_2" onchange="toggleAccent(2, 'heart')"> ➳♡ Heart Arrow</label>
+                </div>
+              </div>
+
+              <button onclick="downloadSingleCard('cardCanvas2', 'deal_card_2')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 2</button>
             </div>
           </div>
 
@@ -544,7 +557,7 @@
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
               <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 truncate">Style: Split Horizon</span>
+                <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 truncate">Card 3: Sunlit Arch</span>
                 <select id="styleSelect3" onchange="changeCardStyle(3, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
                   <!-- Populated via JS -->
                 </select>
@@ -557,27 +570,22 @@
             </div>
 
             <div class="space-y-2 pt-2">
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_3" onchange="toggleAccent(3, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_3" onchange="toggleAccent(3, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_3" onchange="toggleAccent(3, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_3" onchange="toggleAccent(3, 'sticky')"> 📝 Neon Post-it</label>
-                </div>
-              </div>
-
-              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
-                <div class="flex justify-between items-center text-slate-400">
-                  <span>Font:</span>
-                  <select id="fontSelect3" onchange="changeCardFont(3, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-rose-400 px-1.5 py-0.5 rounded">
-                    <option value="handwritten">✍️ Casual Script</option>
-                    <option value="typewriter">📠 Typewriter</option>
-                    <option value="modern_sans" selected>✨ Modern Sans</option>
-                    <option value="playful">🎈 Playful</option>
-                    <option value="editorial">📰 Serif</option>
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
+                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
+                  <span>Badge Style:</span>
+                  <select id="badgeBg3" onchange="changeBadgeBg(3, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-rose-400 px-1 py-0.5 rounded">
+                    <option value="pill" selected>Floating Pill</option>
+                    <option value="sticky">Sticky Post-it</option>
+                    <option value="kraft">Kraft Tag</option>
+                    <option value="transparent">Transparent (No Box)</option>
                   </select>
                 </div>
+
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Rotation:</span>
+                  <span id="bRotVal3" class="text-rose-400 font-mono">0°</span>
+                </div>
+                <input type="range" id="bRot3" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(3)">
 
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
@@ -586,12 +594,23 @@
                 <input type="range" id="pScale3" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
                 
                 <div class="flex justify-between text-slate-400">
-                  <span>Badge Scale:</span>
+                  <span>Badge Size:</span>
                   <span id="bScaleVal3" class="text-rose-400 font-mono">100%</span>
                 </div>
                 <input type="range" id="bScale3" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
               </div>
-              <button onclick="downloadSingleCard('cardCanvas3', 'deal_card_3')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 3</button>
+
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_3" onchange="toggleAccent(3, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_3" onchange="toggleAccent(3, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_3" onchange="toggleAccent(3, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_3" onchange="toggleAccent(3, 'heart')"> ➳♡ Heart Arrow</label>
+                </div>
+              </div>
+
+              <button onclick="downloadSingleCard('cardCanvas3', 'deal_card_3')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 3</button>
             </div>
           </div>
 
@@ -599,7 +618,7 @@
           <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
             <div>
               <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 truncate">Style: Torn Notebook</span>
+                <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 truncate">Card 4: Notebook Memo</span>
                 <select id="styleSelect4" onchange="changeCardStyle(4, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
                   <!-- Populated via JS -->
                 </select>
@@ -612,27 +631,22 @@
             </div>
 
             <div class="space-y-2 pt-2">
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1.5 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400">Layer Accents (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_4" onchange="toggleAccent(4, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_4" onchange="toggleAccent(4, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_4" onchange="toggleAccent(4, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_sticky_4" onchange="toggleAccent(4, 'sticky')"> 📝 Neon Post-it</label>
-                </div>
-              </div>
-
-              <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 text-[11px]">
-                <div class="flex justify-between items-center text-slate-400">
-                  <span>Font:</span>
-                  <select id="fontSelect4" onchange="changeCardFont(4, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-emerald-400 px-1.5 py-0.5 rounded">
-                    <option value="handwritten">✍️ Casual Script</option>
-                    <option value="typewriter" selected>📠 Typewriter</option>
-                    <option value="modern_sans">✨ Modern Sans</option>
-                    <option value="playful">🎈 Playful</option>
-                    <option value="editorial">📰 Serif</option>
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
+                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
+                  <span>Badge Style:</span>
+                  <select id="badgeBg4" onchange="changeBadgeBg(4, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-emerald-400 px-1 py-0.5 rounded">
+                    <option value="sticky">Sticky Post-it</option>
+                    <option value="pill">Floating Pill</option>
+                    <option value="kraft">Kraft Tag</option>
+                    <option value="transparent" selected>Transparent (No Box)</option>
                   </select>
                 </div>
+
+                <div class="flex justify-between text-slate-400">
+                  <span>Badge Rotation:</span>
+                  <span id="bRotVal4" class="text-emerald-400 font-mono">0°</span>
+                </div>
+                <input type="range" id="bRot4" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(4)">
 
                 <div class="flex justify-between text-slate-400">
                   <span>Product Size:</span>
@@ -641,14 +655,26 @@
                 <input type="range" id="pScale4" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
                 
                 <div class="flex justify-between text-slate-400">
-                  <span>Badge Scale:</span>
+                  <span>Badge Size:</span>
                   <span id="bScaleVal4" class="text-emerald-400 font-mono">100%</span>
                 </div>
                 <input type="range" id="bScale4" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
               </div>
-              <button onclick="downloadSingleCard('cardCanvas4', 'deal_card_4')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Style 4</button>
+
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
+                <div class="grid grid-cols-2 gap-1 text-slate-300">
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_4" onchange="toggleAccent(4, 'arrow')"> 🎯 Red Arrows</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_4" onchange="toggleAccent(4, 'loop')"> ⭕ Sharpie Loop</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_4" onchange="toggleAccent(4, 'eye')"> 👀 Eye Stamp</label>
+                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_4" onchange="toggleAccent(4, 'heart')"> ➳♡ Heart Arrow</label>
+                </div>
+              </div>
+
+              <button onclick="downloadSingleCard('cardCanvas4', 'deal_card_4')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 4</button>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -678,7 +704,7 @@
 
   <script>
     // ==========================================
-    // GLOBAL APP STATE & 60-STYLE CATALOG
+    // GLOBAL APP STATE & CANVA-STYLE OBJECT MODEL
     // ==========================================
     let activeStep = 1;
     let rawLoadedImage = null;
@@ -694,59 +720,30 @@
     let activeModalCanvasId = null;
 
     let currentDealMode = 'regular'; // 'regular' or 'run'
-    let isPrivacyMode = false;       // Lookbook Macro Crop
+    let isPrivacyMode = false;       // Lookbook Macro Swatch Toggle
 
     const STYLES_CATALOG = {
-      polaroid: { name: "Classic Polaroid & Tape", mode: "regular", defaultFont: "handwritten" },
+      polaroid: { name: "Classic Polaroid & Washi", mode: "regular", defaultFont: "handwritten" },
       kraft_tag: { name: "Top Kraft Parcel Tag", mode: "regular", defaultFont: "typewriter" },
-      split_horizon: { name: "Horizontal Split Horizon", mode: "regular", defaultFont: "modern_sans" },
-      notebook: { name: "Torn Spiral Notebook", mode: "regular", defaultFont: "typewriter" },
-      corner_flag: { name: "Diagonal Corner Ribbon", mode: "regular", defaultFont: "modern_sans" },
-      flatlay: { name: "Routine Minimalist Flatlay", mode: "regular", defaultFont: "modern_sans" },
-      passe_partout: { name: "Framed Passe-Partout Mat", mode: "regular", defaultFont: "editorial" },
-      arch_niche: { name: "Soft Architectural Arch", mode: "regular", defaultFont: "editorial" },
-      scrapbook_doodles: { name: "Scrapbook Sparkle & Hearts", mode: "regular", defaultFont: "playful" },
-      floating_pill: { name: "Floating Upper Mood Pill", mode: "regular", defaultFont: "modern_sans" },
-      vintage_border: { name: "Vintage Warm Film Border", mode: "regular", defaultFont: "typewriter" },
-      grid_paper: { name: "Blueprint Grid Scrapbook", mode: "regular", defaultFont: "typewriter" },
-      clipboard: { name: "Desk Clipboard Staging", mode: "regular", defaultFont: "typewriter" },
-      lined_memo: { name: "Lined Yellow Memo Slip", mode: "regular", defaultFont: "handwritten" },
-      manila_pocket: { name: "Manila Envelope Sleeve", mode: "regular", defaultFont: "typewriter" },
-      quad_washi: { name: "Quad Washi Corner Tape", mode: "regular", defaultFont: "handwritten" },
-      perforated_receipt: { name: "Perforated Tear Margin", mode: "regular", defaultFont: "typewriter" },
-      index_card: { name: "Library Index Card Tab", mode: "regular", defaultFont: "typewriter" },
-      inverted_split: { name: "Inverted Upper Tone Horizon", mode: "regular", defaultFont: "modern_sans" },
-      corner_wedge: { name: "Pastel Corner Wedge Mat", mode: "regular", defaultFont: "modern_sans" },
-      pebble_mat: { name: "Organic Pebble Squircle Mat", mode: "regular", defaultFont: "playful" },
-      dual_badge_stack: { name: "Clean Dual Badge Stack", mode: "regular", defaultFont: "modern_sans" },
-      scalloped_card: { name: "Scalloped Boutique Border", mode: "regular", defaultFont: "editorial" },
-      hairline_gallery: { name: "Hairline Charcoal Gallery", mode: "regular", defaultFont: "editorial" },
-      double_film: { name: "Double Film Snap Mat", mode: "regular", defaultFont: "handwritten" },
-      sunken_niche: { name: "Circular Sunken Niche", mode: "regular", defaultFont: "modern_sans" },
-      stacked_heading: { name: "Stacked Typography Header", mode: "regular", defaultFont: "modern_sans" },
-      side_bookmark: { name: "Side Index Tab Bookmark", mode: "regular", defaultFont: "typewriter" },
-      wax_seal: { name: "Boutique Monogram Seal", mode: "regular", defaultFont: "editorial" },
-      gift_card_frame: { name: "Boutique Gift Card Frame", mode: "regular", defaultFont: "editorial" },
-      // Run Deal Variants
-      run_arrow_pointer: { name: "👀 Run: Hand-Drawn Arrow Pointer", mode: "run", defaultFont: "handwritten" },
-      run_marker_loop: { name: "👀 Run: Wobbly Sharpie Marker Loop", mode: "run", defaultFont: "handwritten" },
-      run_eye_stamp: { name: "👀 Run: Floating Eye Stamp Tab", mode: "run", defaultFont: "modern_sans" },
-      run_neon_sticky: { name: "👀 Run: Neon Post-It Sticky Note", mode: "run", defaultFont: "handwritten" },
-      run_double_take_pill: { name: "👀 Run: Double-Take Curiosity Pill", mode: "run", defaultFont: "modern_sans" },
-      run_caution_strip: { name: "👀 Run: Caution Washi Paper Strip", mode: "run", defaultFont: "typewriter" },
-      run_dotted_trail: { name: "👀 Run: Dotted Guide Trail", mode: "run", defaultFont: "handwritten" },
-      run_bold_curiosity: { name: "👀 Run: Bold Curiosity Banner", mode: "run", defaultFont: "modern_sans" },
-      run_corner_seal: { name: "👀 Run: Alert Stamp Medallion", mode: "run", defaultFont: "playful" },
-      run_contrast_pop: { name: "👀 Run: Deep Shadow & Neon Highlight", mode: "run", defaultFont: "modern_sans" }
+      arch_niche: { name: "Architectural Arch Niche", mode: "regular", defaultFont: "editorial" },
+      notebook: { name: "Lined Legal Notebook Memo", mode: "regular", defaultFont: "typewriter" },
+      split_horizon: { name: "Split Horizon Earth Mat", mode: "regular", defaultFont: "modern_sans" },
+      flatlay: { name: "Modern Travertine Flatlay", mode: "regular", defaultFont: "modern_sans" },
+      // Run Deal Modes
+      run_arrow_pointer: { name: "👀 Run: Red Marker Arrow Cluster", mode: "run", defaultFont: "handwritten" },
+      run_marker_loop: { name: "👀 Run: Double Sharpie Oval Loop", mode: "run", defaultFont: "handwritten" },
+      run_eye_stamp: { name: "👀 Run: Peeking Eye Badge Tab", mode: "run", defaultFont: "modern_sans" },
+      run_neon_sticky: { name: "👀 Run: Neon Post-It Sticky Note", mode: "run", defaultFont: "handwritten" }
     };
 
-    let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
+    let activeCardStyles = ["polaroid", "kraft_tag", "arch_niche", "notebook"];
 
+    // Individual Layer Object Attributes per Card
     let cardCustoms = {
-      1: { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
-      2: { style: "kraft_tag", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
-      3: { style: "split_horizon", font: "modern_sans", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
-      4: { style: "notebook", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } }
+      1: { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, bRot: -5, badgeBg: "sticky", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } },
+      2: { style: "kraft_tag", font: "typewriter", pScale: 1.0, bScale: 1.0, bRot: 0, badgeBg: "kraft", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } },
+      3: { style: "arch_niche", font: "editorial", pScale: 1.0, bScale: 1.0, bRot: 0, badgeBg: "pill", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } },
+      4: { style: "notebook", font: "typewriter", pScale: 1.0, bScale: 1.0, bRot: 0, badgeBg: "transparent", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } }
     };
 
     let draggingState = { active: false, cardNum: null, startX: 0, startY: 0 };
@@ -767,15 +764,15 @@
         "Yard project ready 🌾",
         "Fall lawn prep sorted 🍂",
         "Weekend outdoor project ✨",
-        "Ready for the season ahead 🌱",
-        "Grass is going to look so green!"
+        "Ready for greener grass 🌱",
+        "Soil prep done for the season"
       ],
       home_kitchen: [
         "Kitchen routine staple ✨",
         "Pantry backup done ✅",
         "Stocked up for months",
         "Morning routine lifesaver ☕",
-        "Keeping this tucked away"
+        "Dinner prep just got simpler"
       ],
       beauty_personal: [
         "Daily shower & body favorite ✨",
@@ -838,27 +835,26 @@
 
       document.getElementById('rawDealPaste').value = "";
       document.getElementById('suggestedTitleInput').value = "";
-      document.getElementById('mainNoteInput').value = "Yard project ready 🌾";
+      document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
       document.getElementById('simpleValueInput').value = "$16.79 Shipped";
       document.getElementById('aiChipsWrapper').classList.add('hidden');
 
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].pScale = 1.0;
         cardCustoms[i].bScale = 1.0;
+        cardCustoms[i].bRot = 0;
         cardCustoms[i].badgePos = null;
         cardCustoms[i].notePos = null;
-        cardCustoms[i].accents = { arrow: false, loop: false, eye: false, sticky: false };
+        cardCustoms[i].accents = { arrow: false, loop: false, eye: false, heart: false };
 
         const pSlider = document.getElementById(`pScale${i}`);
         const bSlider = document.getElementById(`bScale${i}`);
+        const rSlider = document.getElementById(`bRot${i}`);
         if (pSlider) pSlider.value = 100;
         if (bSlider) bSlider.value = 100;
-        const pVal = document.getElementById(`pScaleVal${i}`);
-        const bVal = document.getElementById(`bScaleVal${i}`);
-        if (pVal) pVal.innerText = "100%";
-        if (bVal) bVal.innerText = "100%";
+        if (rSlider) rSlider.value = 0;
 
-        ['arrow', 'loop', 'eye', 'sticky'].forEach(acc => {
+        ['arrow', 'loop', 'eye', 'heart'].forEach(acc => {
           const cb = document.getElementById(`acc_${acc}_${i}`);
           if (cb) cb.checked = false;
         });
@@ -1492,7 +1488,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     });
 
     // ==========================================
-    // STEP 3: CREATOR BOARD & INTERACTIVE MIX & MATCH
+    // STEP 3: CANVA CREATOR STUDIO CONTROLS
     // ==========================================
     function setDealMode(mode) {
       currentDealMode = mode;
@@ -1505,20 +1501,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         
         const curNote = document.getElementById('mainNoteInput').value;
         if (!curNote.includes('👀')) {
-          document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
+          document.getElementById('mainNoteInput').value = "wait... is this real?! 👀";
         }
 
-        // Set Run accents as initial defaults in UI
         for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents = { arrow: true, loop: true, eye: true, sticky: true };
+          cardCustoms[i].accents = { arrow: true, loop: true, eye: true, heart: false };
           const a = document.getElementById(`acc_arrow_${i}`);
           const l = document.getElementById(`acc_loop_${i}`);
           const e = document.getElementById(`acc_eye_${i}`);
-          const s = document.getElementById(`acc_sticky_${i}`);
           if (a) a.checked = true;
           if (l) l.checked = true;
           if (e) e.checked = true;
-          if (s) s.checked = true;
         }
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md";
@@ -1526,8 +1519,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
 
         for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents = { arrow: false, loop: false, eye: false, sticky: false };
-          ['arrow', 'loop', 'eye', 'sticky'].forEach(acc => {
+          cardCustoms[i].accents = { arrow: false, loop: false, eye: false, heart: false };
+          ['arrow', 'loop', 'eye', 'heart'].forEach(acc => {
             const cb = document.getElementById(`acc_${acc}_${i}`);
             if (cb) cb.checked = false;
           });
@@ -1571,8 +1564,15 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
-    function changeCardFont(cardNum, fontKey) {
-      cardCustoms[cardNum].font = fontKey;
+    function changeBadgeBg(cardNum, bgKey) {
+      cardCustoms[cardNum].badgeBg = bgKey;
+      renderAll4CreatorCards();
+    }
+
+    function updateBadgeRotation(cardNum) {
+      const rVal = document.getElementById(`bRot${cardNum}`).value;
+      document.getElementById(`bRotVal${cardNum}`).innerText = `${rVal}°`;
+      cardCustoms[cardNum].bRot = parseInt(rVal);
       renderAll4CreatorCards();
     }
 
@@ -1668,7 +1668,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           r = Math.round(r / count);
           g = Math.round(g / count);
           b = Math.round(b / count);
-          const bg = `rgb(${Math.round(230 + r * 0.08)}, ${Math.round(226 + g * 0.08)}, ${Math.round(218 + b * 0.08)})`;
+          const bg = `rgb(${Math.round(228 + r * 0.08)}, ${Math.round(224 + g * 0.08)}, ${Math.round(214 + b * 0.08)})`;
           const accent = `rgb(${Math.max(20, r - 25)}, ${Math.max(20, g - 25)}, ${Math.max(20, b - 25)})`;
           return { bg: bg, polaroid: "#FAF7F2", accent: accent, text: "#1E293B" };
         }
@@ -1699,7 +1699,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     });
 
-    // RAW DEAL EXTRACTOR (WITH AI AFFIRMATIONS)
+    // RAW DEAL EXTRACTOR WITH DYNAMIC AI AFFIRMATIONS
     document.getElementById('extractBtn').addEventListener('click', async () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
@@ -1778,7 +1778,7 @@ CRITICAL RULES:
             }
           }
         } catch (e) {
-          console.log("Local category affirmation active (AI note pass skipped):", e);
+          console.log("Local affirmation active:", e);
         }
       }
     });
@@ -1799,7 +1799,7 @@ CRITICAL RULES:
     }
 
     // ==========================================
-    // CANVA AESTHETIC RENDERING ENGINE
+    // CANVA CREATOR ENGINE: DRAWS HERO OBJECTS & ACCENTS
     // ==========================================
     function renderAll4CreatorCards() {
       if (chosen4Variants.length < 4) return;
@@ -1823,18 +1823,19 @@ CRITICAL RULES:
       const themeKey = document.getElementById('themePaletteSelect').value;
 
       // ==========================================
-      // LAYER 0: CANVA TEXTURES & AESTHETIC BACKGROUNDS
+      // LAYER 0: CANVA TEXTURES & SURFACES
       // ==========================================
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
       if (themeKey === "crumpled_kraft") {
-        drawCrumpledPaperTexture(ctx, pal.bg);
+        drawCrumpledPaperTexture(ctx);
         drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
-      } else if (themeKey === "organic_waves") {
-        drawOrganicCornerWaves(ctx, pal.accent || "#C89567");
       } else if (themeKey === "window_shadow") {
         drawWindowBlindsShadow(ctx);
+        drawBotanicalCornerVines(ctx, "rgba(80, 60, 40, 0.4)");
+      } else if (themeKey === "organic_waves") {
+        drawOrganicCornerWaves(ctx, pal.accent || "#C89567");
       } else if (themeKey === "grid_scrapbook") {
         drawGridPaperPattern(ctx);
       } else {
@@ -1846,23 +1847,24 @@ CRITICAL RULES:
       }
 
       // ==========================================
-      // LAYER 1: PRODUCT & STAGED MATS (DRAWN FIRST!)
+      // LAYER 1: PRODUCT & STAGED MATS (HERO COVERAGE 75%-85%)
       // ==========================================
       ctx.save();
-      const pw = 740 * conf.pScale;
-      const ph = 740 * conf.pScale;
+      const pw = 800 * conf.pScale;
+      const ph = 800 * conf.pScale;
 
-      if (conf.style.includes("polaroid") || themeKey === "crumpled_kraft") {
-        ctx.translate(540, 490);
+      if (conf.style.includes("polaroid")) {
+        // Tilted Polaroid Mat
+        ctx.translate(540, 480);
         ctx.rotate(-0.025);
         ctx.fillStyle = "#FAF8F5";
         ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
         ctx.shadowBlur = 36;
         ctx.shadowOffsetY = 18;
-        ctx.fillRect(-380, -370, 760, 840);
+        ctx.fillRect(-420, -400, 840, 920);
         ctx.shadowColor = "transparent";
 
-        drawGinghamWashiTape(ctx, 0, -370, 220, 44);
+        drawGinghamWashiTape(ctx, 0, -400, 240, 48);
 
         if (isPrivacyMode) {
           ctx.save();
@@ -1874,46 +1876,72 @@ CRITICAL RULES:
         } else {
           ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
         }
-      } else {
-        ctx.save();
-        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
-        ctx.shadowBlur = 42;
-        ctx.shadowOffsetY = 22;
+      } else if (conf.style.includes("arch_niche")) {
+        // Architectural Arch Niche
+        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+        ctx.beginPath();
+        ctx.arc(540, 380, 360, Math.PI, 0, false);
+        ctx.lineTo(900, 960);
+        ctx.lineTo(180, 960);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+        ctx.shadowBlur = 40;
+        ctx.shadowOffsetY = 20;
+        ctx.drawImage(srcCanvas, 540 - (pw / 2), 480 - (ph / 2), pw, ph);
+      } else if (conf.style.includes("notebook")) {
+        // Lined Memo Sheet
+        ctx.fillStyle = "#FEFCE8";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
+        ctx.shadowBlur = 30;
+        ctx.shadowOffsetY = 14;
+        ctx.fillRect(100, 100, 880, 880);
+        ctx.shadowColor = "transparent";
+
+        ctx.strokeStyle = "rgba(234, 179, 8, 0.3)";
+        ctx.lineWidth = 1.5;
+        for (let y = 180; y < 940; y += 44) {
+          ctx.beginPath(); ctx.moveTo(140, y); ctx.lineTo(940, y); ctx.stroke();
+        }
+
+        drawPushPin(ctx, 540, 100);
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
+        ctx.shadowBlur = 32;
+        ctx.shadowOffsetY = 16;
         ctx.drawImage(srcCanvas, 540 - (pw / 2), 490 - (ph / 2), pw, ph);
-        ctx.restore();
+      } else {
+        // High-end elevated studio staging
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+        ctx.shadowBlur = 46;
+        ctx.shadowOffsetY = 24;
+        ctx.drawImage(srcCanvas, 540 - (pw / 2), 480 - (ph / 2), pw, ph);
       }
       ctx.restore();
 
       // ==========================================
-      // LAYER 2: DECORATIVE CANVA HARDWARE & ACCENTS
-      // ==========================================
-      if (themeKey === "grid_scrapbook") {
-        drawPushPin(ctx, 540, 100);
-      } else if (themeKey === "crumpled_kraft") {
-        drawPaperAirplaneTrail(ctx, 160, 140);
-      }
-
-      // ==========================================
-      // LAYER 3: LABELS, BADGES & RUN ACCENTS (ALWAYS ON TOP!)
+      // LAYER 2: LABELS & BADGES (ALWAYS DRAWN ON TOP!)
       // ==========================================
       ctx.save();
 
+      // AFFIRMATION NOTE
       const noteX = conf.notePos ? conf.notePos.x : 540;
-      const noteY = conf.notePos ? conf.notePos.y : 940;
-
+      const noteY = conf.notePos ? conf.notePos.y : 950;
       ctx.fillStyle = pal.text;
-      ctx.font = `bold ${Math.round(32 * conf.bScale)}px ${font}`;
+      ctx.font = `bold ${Math.round(34 * conf.bScale)}px ${font}`;
       ctx.textAlign = "center";
       ctx.fillText(note, noteX, noteY);
 
+      // VALUE BADGE WITH INDEPENDENT ROTATION & BG TOGGLE
       if (val) {
-        ctx.font = `bold ${Math.round(26 * conf.bScale)}px ${font}`;
+        ctx.font = `bold ${Math.round(28 * conf.bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(640, textW + 48);
-        const boxH = Math.round(62 * conf.bScale);
+        const boxW = Math.min(680, textW + 48); // TIGHT AUTO-FIT!
+        const boxH = Math.round(64 * conf.bScale);
 
-        let defBx = 220, defBy = 140;
+        let defBx = 240, defBy = 150;
         if (conf.style.includes("bottom")) { defBx = 540; defBy = 930; }
 
         const bx = conf.badgePos ? conf.badgePos.x : defBx;
@@ -1923,10 +1951,12 @@ CRITICAL RULES:
 
         ctx.save();
         ctx.translate(bx, by);
+        ctx.rotate((conf.bRot * Math.PI) / 180);
 
-        if (conf.accents.sticky) {
+        // BADGE BACKGROUND STYLES
+        if (conf.badgeBg === "sticky") {
           ctx.fillStyle = "#FEF08A";
-          ctx.shadowColor = "rgba(0,0,0,0.24)";
+          ctx.shadowColor = "rgba(0,0,0,0.22)";
           ctx.shadowBlur = 18;
           ctx.shadowOffsetY = 6;
           ctx.beginPath();
@@ -1935,23 +1965,45 @@ CRITICAL RULES:
 
           ctx.fillStyle = "#0F172A";
           ctx.textAlign = "center";
-          ctx.fillText(val, 0, 8 * conf.bScale);
-        } else {
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        } else if (conf.badgeBg === "kraft") {
+          ctx.fillStyle = "#C49A6C";
+          ctx.shadowColor = "rgba(0,0,0,0.2)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
+          ctx.fill();
+
+          ctx.fillStyle = "#FAF8F5";
+          ctx.beginPath();
+          ctx.arc(-boxW / 2 + 18, 0, 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = "#FFFFFF";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 8, 9 * conf.bScale);
+        } else if (conf.badgeBg === "pill") {
           ctx.fillStyle = "#FAF8F5";
           ctx.shadowColor = "rgba(0,0,0,0.18)";
           ctx.shadowBlur = 16;
-          ctx.shadowOffsetY = 4;
           ctx.beginPath();
           ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
           ctx.fill();
 
           ctx.fillStyle = pal.text;
           ctx.textAlign = "center";
-          ctx.fillText(val, 0, 8 * conf.bScale);
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        } else {
+          // Transparent: Text only floating on canvas
+          ctx.fillStyle = pal.text;
+          ctx.textAlign = "center";
+          ctx.shadowColor = "rgba(255,255,255,0.8)";
+          ctx.shadowBlur = 8;
+          ctx.fillText(val, 0, 9 * conf.bScale);
         }
 
         // ==========================================
-        // RUN ACCENTS (STRICTLY WIRED TO CHECKBOXES!)
+        // MIX & MATCH RUN ACCENTS
         // ==========================================
         if (conf.accents.loop) {
           ctx.save();
@@ -1979,9 +2031,13 @@ CRITICAL RULES:
 
         if (conf.accents.eye) {
           ctx.save();
-          ctx.font = `${Math.round(40 * conf.bScale)}px sans-serif`;
-          ctx.fillText("👀", (boxW / 2) + 12, -boxH / 2 + 10);
+          ctx.font = `${Math.round(42 * conf.bScale)}px sans-serif`;
+          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
           ctx.restore();
+        }
+
+        if (conf.accents.heart) {
+          drawHeartArrow(ctx, (boxW / 2) + 20, -boxH / 2 - 10);
         }
 
         ctx.restore();
@@ -2007,12 +2063,30 @@ CRITICAL RULES:
       ctx.fill();
     }
 
-    // PROCEDURAL CANVA DECORATORS
-    function drawCrumpledPaperTexture(ctx, color) {
+    function drawHeartArrow(ctx, x, y) {
       ctx.save();
-      ctx.strokeStyle = "rgba(60, 40, 20, 0.06)";
-      ctx.lineWidth = 2;
-      for (let i = 0; i < 8; i++) {
+      ctx.translate(x, y);
+      ctx.strokeStyle = "#DC2626";
+      ctx.fillStyle = "#DC2626";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(-30, 10);
+      ctx.quadraticCurveTo(0, -10, 20, -5);
+      ctx.stroke();
+      // Mini heart
+      ctx.beginPath();
+      ctx.arc(24, -8, 6, 0, Math.PI * 2);
+      ctx.arc(32, -8, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // PROCEDURAL CANVA DECORATORS
+    function drawCrumpledPaperTexture(ctx) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(80, 50, 20, 0.08)";
+      ctx.lineWidth = 2.5;
+      for (let i = 0; i < 10; i++) {
         ctx.beginPath();
         ctx.moveTo(Math.random() * 1080, Math.random() * 1080);
         ctx.lineTo(Math.random() * 1080, Math.random() * 1080);
@@ -2025,27 +2099,27 @@ CRITICAL RULES:
       ctx.save();
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 3;
 
       ctx.beginPath();
-      ctx.moveTo(960, 40);
-      ctx.quadraticCurveTo(1040, 80, 1040, 180);
+      ctx.moveTo(940, 40);
+      ctx.quadraticCurveTo(1040, 80, 1040, 200);
       ctx.stroke();
 
-      const leaves = [[990, 65, -0.5], [1025, 110, 0.4], [1038, 150, -0.2]];
+      const leaves = [[970, 65, -0.5], [1020, 110, 0.4], [1038, 160, -0.2]];
       leaves.forEach(([lx, ly, rot]) => {
         ctx.save();
         ctx.translate(lx, ly);
         ctx.rotate(rot);
         ctx.beginPath();
-        ctx.ellipse(0, 0, 12, 6, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, 14, 7, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       });
 
       ctx.beginPath();
-      ctx.moveTo(120, 1040);
-      ctx.quadraticCurveTo(40, 1000, 40, 900);
+      ctx.moveTo(140, 1040);
+      ctx.quadraticCurveTo(40, 1000, 40, 880);
       ctx.stroke();
 
       ctx.restore();
@@ -2056,15 +2130,15 @@ CRITICAL RULES:
       ctx.translate(cx, cy);
       ctx.rotate(0.015);
 
-      ctx.fillStyle = "rgba(235, 222, 204, 0.82)";
+      ctx.fillStyle = "rgba(235, 222, 204, 0.85)";
       ctx.fillRect(-w / 2, -h / 2, w, h);
 
-      ctx.strokeStyle = "rgba(180, 150, 120, 0.35)";
-      ctx.lineWidth = 2;
-      for (let x = -w / 2 + 12; x < w / 2; x += 14) {
+      ctx.strokeStyle = "rgba(180, 150, 120, 0.4)";
+      ctx.lineWidth = 2.5;
+      for (let x = -w / 2 + 12; x < w / 2; x += 16) {
         ctx.beginPath(); ctx.moveTo(x, -h / 2); ctx.lineTo(x, h / 2); ctx.stroke();
       }
-      for (let y = -h / 2 + 8; y < h / 2; y += 12) {
+      for (let y = -h / 2 + 8; y < h / 2; y += 14) {
         ctx.beginPath(); ctx.moveTo(-w / 2, y); ctx.lineTo(w / 2, y); ctx.stroke();
       }
       ctx.restore();
@@ -2073,18 +2147,18 @@ CRITICAL RULES:
     function drawOrganicCornerWaves(ctx, accentColor) {
       ctx.save();
       ctx.fillStyle = accentColor;
-      ctx.globalAlpha = 0.35;
+      ctx.globalAlpha = 0.4;
 
       ctx.beginPath();
-      ctx.moveTo(700, 0);
-      ctx.bezierCurveTo(780, 160, 920, 180, 1080, 120);
+      ctx.moveTo(680, 0);
+      ctx.bezierCurveTo(760, 180, 900, 200, 1080, 140);
       ctx.lineTo(1080, 0);
       ctx.closePath();
       ctx.fill();
 
       ctx.beginPath();
-      ctx.moveTo(0, 780);
-      ctx.bezierCurveTo(180, 840, 240, 980, 160, 1080);
+      ctx.moveTo(0, 760);
+      ctx.bezierCurveTo(200, 820, 260, 960, 180, 1080);
       ctx.lineTo(0, 1080);
       ctx.closePath();
       ctx.fill();
@@ -2094,13 +2168,13 @@ CRITICAL RULES:
 
     function drawWindowBlindsShadow(ctx) {
       ctx.save();
-      ctx.fillStyle = "rgba(40, 30, 20, 0.08)";
-      for (let y = -100; y < 1200; y += 140) {
+      ctx.fillStyle = "rgba(40, 30, 20, 0.09)";
+      for (let y = -100; y < 1200; y += 150) {
         ctx.beginPath();
         ctx.moveTo(0, y);
-        ctx.lineTo(1080, y + 240);
-        ctx.lineTo(1080, y + 310);
-        ctx.lineTo(0, y + 70);
+        ctx.lineTo(1080, y + 260);
+        ctx.lineTo(1080, y + 340);
+        ctx.lineTo(0, y + 80);
         ctx.closePath();
         ctx.fill();
       }
@@ -2109,13 +2183,13 @@ CRITICAL RULES:
 
     function drawGridPaperPattern(ctx) {
       ctx.save();
-      ctx.strokeStyle = "rgba(100, 120, 150, 0.12)";
+      ctx.strokeStyle = "rgba(100, 120, 150, 0.15)";
       ctx.lineWidth = 1;
-      for (let x = 0; x < 1080; x += 36) {
+      for (let x = 0; x < 1080; x += 40) {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
       }
-      for (let y = 0; y < 1080; y += 36) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(0, 1080); ctx.stroke();
+      for (let y = 0; y < 1080; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080); ctx.stroke();
       }
       ctx.restore();
     }
@@ -2124,46 +2198,21 @@ CRITICAL RULES:
       ctx.save();
       ctx.translate(x, y);
       ctx.fillStyle = "#A88B7B";
-      ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-      ctx.shadowBlur = 10;
+      ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
+      ctx.shadowBlur = 12;
       ctx.shadowOffsetY = 6;
 
       ctx.beginPath();
-      ctx.arc(0, -12, 14, 0, Math.PI * 2);
+      ctx.arc(0, -12, 16, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.beginPath();
-      ctx.moveTo(-8, -4);
-      ctx.lineTo(8, -4);
-      ctx.lineTo(2, 16);
-      ctx.lineTo(-2, 16);
+      ctx.moveTo(-9, -4);
+      ctx.lineTo(9, -4);
+      ctx.lineTo(3, 18);
+      ctx.lineTo(-3, 18);
       ctx.closePath();
       ctx.fill();
-      ctx.restore();
-    }
-
-    function drawPaperAirplaneTrail(ctx, x, y) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.strokeStyle = "rgba(100, 100, 100, 0.4)";
-      ctx.lineWidth = 2;
-      ctx.setLineDash([6, 6]);
-
-      ctx.beginPath();
-      ctx.arc(-40, 20, 30, 0, Math.PI * 1.5);
-      ctx.stroke();
-
-      ctx.setLineDash([]);
-      ctx.fillStyle = "#FFFFFF";
-      ctx.strokeStyle = "#94A3B8";
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(32, -10);
-      ctx.lineTo(14, 22);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
       ctx.restore();
     }
 
@@ -2248,7 +2297,7 @@ CRITICAL RULES:
     document.getElementById('downloadAllCardsBtn').addEventListener('click', () => {
       ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => {
         setTimeout(() => {
-          downloadSingleCard(id, `aesthetic_deal_${i+1}`);
+          downloadSingleCard(id, `deal_creator_card_${i+1}`);
         }, i * 250);
       });
     });
