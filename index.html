@@ -3,26 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v8.0 - Canva Studio Edition</title>
+  <title>CB Media Pipeline Suite v9.0 - Coverflow Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for Diverse Creator Typographies -->
+  <!-- Google Fonts for Creator Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@700&family=Fredoka:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #0f172a; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #0f172a; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; overflow-x: hidden; }
     .card-dark { background-color: #1e293b; border: 1px solid #334155; border-radius: 14px; }
     .step-active { border-color: #38bdf8; background: linear-gradient(180deg, rgba(56, 189, 248, 0.16) 0%, rgba(30, 41, 59, 0.8) 100%); }
     .step-inactive { border-color: #334155; opacity: 0.65; }
-    canvas { 
-      width: 100% !important; 
-      max-width: 100% !important; 
-      height: auto !important; 
-      aspect-ratio: 1 / 1; 
-      display: block; 
-      border-radius: 10px; 
-      background-color: #000; 
-      box-sizing: border-box;
+    
+    /* 3D Coverflow Viewport */
+    .coverflow-stage {
+      perspective: 1200px;
+      position: relative;
+      width: 100%;
+      height: 620px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+    .coverflow-card {
+      position: absolute;
+      width: 540px;
+      height: 540px;
+      transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      user-select: none;
+    }
+    .coverflow-card.pos-center {
+      transform: translateX(0) scale(1) translateZ(50px);
+      z-index: 30;
+      opacity: 1;
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.45));
+      cursor: default;
+    }
+    .coverflow-card.pos-left-1 {
+      transform: translateX(-340px) scale(0.82) rotateY(24deg);
+      z-index: 20;
+      opacity: 0.75;
+      filter: drop-shadow(0 15px 20px rgba(0,0,0,0.35));
+    }
+    .coverflow-card.pos-left-2 {
+      transform: translateX(-560px) scale(0.68) rotateY(35deg);
+      z-index: 10;
+      opacity: 0.4;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25));
+    }
+    .coverflow-card.pos-right-1 {
+      transform: translateX(340px) scale(0.82) rotateY(-24deg);
+      z-index: 20;
+      opacity: 0.75;
+      filter: drop-shadow(0 15px 20px rgba(0,0,0,0.35));
+    }
+    .coverflow-card.pos-right-2 {
+      transform: translateX(560px) scale(0.68) rotateY(-35deg);
+      z-index: 10;
+      opacity: 0.4;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25));
+    }
+    .coverflow-card canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+      border-radius: 14px;
+      background-color: #000;
     }
   </style>
 </head>
@@ -33,9 +81,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v8.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v9.0</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Canva-Style Layer Studio</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">3D Coverflow Studio ➔ Infinite Procedural Aesthetics ➔ 0 Token Canvas</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
@@ -126,8 +174,8 @@
       <div id="stepTab3" onclick="navToStep(3)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
-          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Canva Creator Studio</h3>
-          <p class="text-xs text-slate-400">Interactive objects, layers & rotation</p>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Coverflow Studio</h3>
+          <p class="text-xs text-slate-400">3D carousel & procedural layers</p>
         </div>
       </div>
     </nav>
@@ -265,7 +313,7 @@
               onclick="proceedToStep3()" 
               class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider cursor-pointer"
             >
-              Proceed to Step 3: Canva Studio ➔
+              Proceed to Step 3: Coverflow Studio ➔
             </button>
           </div>
         </div>
@@ -285,14 +333,15 @@
       </div>
     </section>
 
-    <!-- ==================== STEP 3: CANVA CREATOR STUDIO ==================== -->
+    <!-- ==================== STEP 3: 3D COVERFLOW CREATOR STUDIO ==================== -->
     <section id="step3Section" class="hidden space-y-6">
       
+      <!-- TOP COMMAND BAR -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Canva-Style Creative Layer Studio</h2>
-            <p class="text-xs text-slate-400">💡 <strong>Interactive Objects:</strong> Click & drag badges, text, and stickers anywhere directly on the canvas!</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: 3D Coverflow Creator Studio</h2>
+            <p class="text-xs text-slate-400">💡 <strong>Interactive 3D Carousel:</strong> Click peeking side cards or use arrows to switch active card! Drag elements freely on canvas.</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
@@ -316,17 +365,6 @@
               </button>
             </div>
 
-            <!-- PRIVACY COVER TOGGLE (STRUCTURAL STABILITY FIXED) -->
-            <button 
-              type="button" 
-              id="privacyModeBtn" 
-              onclick="togglePrivacyMode()" 
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold rounded-xl hover:text-white transition-all"
-            >
-              <span>🛡️</span> Privacy Cover: <span id="privacyStatus">OFF</span>
-            </button>
-
-            <!-- SEPARATED WORKFLOW BUTTONS -->
             <button 
               type="button" 
               onclick="navToStep(2)" 
@@ -372,13 +410,11 @@
             <span class="flex items-center gap-1.5 text-sky-400"><span>💡</span> Click an AI note to apply:</span>
             <span id="aiChipsStatus" class="text-slate-500">4 Tailored Options</span>
           </div>
-          <div id="aiChipsContainer" class="flex flex-wrap gap-2">
-            <!-- Dynamic Chips Populated via JS -->
-          </div>
+          <div id="aiChipsContainer" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <!-- GLOBAL CONTROLS WITH SHUFFLERS -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+        <!-- GLOBAL TEXT CONTROLS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Affirmation</label>
@@ -394,347 +430,226 @@
             </div>
             <input type="text" id="simpleValueInput" value="$16.79 Shipped" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
-
-          <div>
-            <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Aesthetic Surface & Canvas Mood</label>
-              <button type="button" onclick="reRollCardStyles()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase">🔀 Re-Roll Styles</button>
-            </div>
-            <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
-              <option value="crumpled_kraft" selected>📜 Crumpled Kraft Parchment & Vines</option>
-              <option value="window_shadow">🪴 Sunlit Studio & Palm Window Shadow</option>
-              <option value="organic_waves">🌊 Organic Terracotta Waves & Arch Niche</option>
-              <option value="grid_scrapbook">📐 Lined Notebook Memo & Brass Paperclip</option>
-              <option value="auto_sampled">🎨 Auto-Sample Packaging Colors</option>
-            </select>
-          </div>
         </div>
       </div>
 
-      <!-- 4 CONSTRAINED CREATIVE CARDS WITH CANVA OBJECT TOOLBARS -->
-      <div class="card-dark p-5 space-y-4">
-        <div class="flex flex-wrap justify-between items-center gap-3">
-          <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">4 Diverse Feed Creatives (Canva-Style Objects)</h3>
-            <p class="text-xs text-slate-400">💡 Drag the product, badges, headlines, or decor stickers directly on any card preview!</p>
-          </div>
-          <div class="flex items-center gap-2.5">
+      <!-- 3D COVERFLOW CAROUSEL VIEWPORT -->
+      <div class="card-dark p-6 relative overflow-hidden flex flex-col items-center">
+        
+        <!-- CAROUSEL TOP BAR -->
+        <div class="w-full flex justify-between items-center mb-4 z-40">
+          <div class="flex items-center gap-3">
+            <span id="activeCardIndicator" class="px-3 py-1 bg-sky-500/20 text-sky-400 border border-sky-500/40 rounded-full text-xs font-bold uppercase tracking-wider">
+              Active Focus: Card 1 of 4
+            </span>
             <button 
               type="button" 
-              onclick="reset4CardsToDefault()" 
-              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all"
-              title="Reset scales, rotations, and positions of all 4 cards to default"
+              onclick="reRollProceduralDeck()" 
+              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all"
+              title="Procedurally recalculate colors, curves, and textures (0 Tokens!)"
             >
-              <span>🔄</span> Reset 4 Cards
+              <span>🎲</span> Re-Generate Design Deck
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              onclick="resetActiveCard()" 
+              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider"
+            >
+              🔄 Reset Card
+            </button>
+            <button 
+              type="button" 
+              onclick="downloadActiveCard()" 
+              class="px-3.5 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1"
+            >
+              <span>📥</span> Download Card
             </button>
             <button 
               type="button" 
               id="downloadAllCardsBtn" 
-              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md uppercase tracking-wider flex items-center gap-1.5"
+              class="px-4 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1.5"
             >
               <span>📥</span> Download All 4 Cards
             </button>
           </div>
         </div>
 
-        <!-- 4-COLUMN CONSTRAINED GRID -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-          
-          <!-- Card 1 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
-            <div>
-              <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 truncate">Card 1: Polaroid Snap</span>
-                <select id="styleSelect1" onchange="changeCardStyle(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
-                  <!-- Populated via JS -->
-                </select>
-              </div>
+        <!-- THE 3D STAGE -->
+        <div class="coverflow-stage" id="coverflowStage">
+          <!-- CARD 1 -->
+          <div id="cCard1" onclick="selectCardIndex(1)" class="coverflow-card pos-center">
+            <canvas id="cardCanvas1" width="1080" height="1080"></canvas>
+          </div>
+          <!-- CARD 2 -->
+          <div id="cCard2" onclick="selectCardIndex(2)" class="coverflow-card pos-right-1">
+            <canvas id="cardCanvas2" width="1080" height="1080"></canvas>
+          </div>
+          <!-- CARD 3 -->
+          <div id="cCard3" onclick="selectCardIndex(3)" class="coverflow-card pos-right-2">
+            <canvas id="cardCanvas3" width="1080" height="1080"></canvas>
+          </div>
+          <!-- CARD 4 -->
+          <div id="cCard4" onclick="selectCardIndex(4)" class="coverflow-card pos-right-2">
+            <canvas id="cardCanvas4" width="1080" height="1080"></canvas>
+          </div>
 
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap1">
-                <canvas id="cardCanvas1" width="1080" height="1080" class="cursor-move"></canvas>
-                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas1', 'Card 1 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
+          <!-- FLOATING NAVIGATION ARROWS -->
+          <button 
+            type="button" 
+            onclick="prevCard()" 
+            class="absolute left-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all"
+          >
+            ‹
+          </button>
+          <button 
+            type="button" 
+            onclick="nextCard()" 
+            class="absolute right-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all"
+          >
+            ›
+          </button>
+        </div>
+
+      </div>
+
+      <!-- CONSOLIDATED STUDIO CONTROL CONSOLE (FOR ACTIVE CARD) -->
+      <div class="card-dark p-5 space-y-4 shadow-xl">
+        <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2">
+            <span>🎨</span> Focused Studio Controls (<span id="consoleCardName">Card 1</span>)
+          </h3>
+          <span class="text-[11px] text-slate-400">All adjustments apply live to active card in center stage</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <!-- BADGE STYLE & ROTATION -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2.5">
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
+              <span>🏷️ Badge Style:</span>
+            </div>
+            <select id="activeBadgeStyle" onchange="updateActiveBadgeStyle(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-sky-400 p-2 rounded-lg focus:outline-none">
+              <option value="sticky">📝 Neon Post-it</option>
+              <option value="pill">💊 Floating Ivory Pill</option>
+              <option value="kraft">🏷️ Kraft Parcel Tag</option>
+              <option value="ticket">🎟️ Torn Paper Ticket</option>
+              <option value="scallop">🏅 Scalloped Medal</option>
+              <option value="gingham">🩹 Gingham Ribbon</option>
+              <option value="hairline">📐 Hairline Outline</option>
+              <option value="highlighter">🖍️ Yellow Highlighter</option>
+              <option value="dark_pill">🖤 Dark Slate Capsule</option>
+              <option value="transparent">✨ Transparent (Text Only)</option>
+            </select>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-[11px] text-slate-400">
+                <span>Badge Tilt:</span>
+                <span id="activeBadgeTiltVal" class="text-sky-400 font-mono">-5°</span>
               </div>
+              <input type="range" id="activeBadgeTilt" min="-45" max="45" value="-5" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveBadgeTilt(this.value)">
             </div>
 
-            <div class="space-y-2 pt-2">
-              <!-- CANVA LAYER TOOLBAR: BADGE & NOTE CONTROLS -->
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
-                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
-                  <span>Badge Style:</span>
-                  <select id="badgeBg1" onchange="changeBadgeBg(1, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-sky-400 px-1 py-0.5 rounded">
-                    <option value="sticky" selected>📝 Neon Post-it</option>
-                    <option value="pill">💊 Floating Pill</option>
-                    <option value="kraft">🏷️ Kraft Parcel Tag</option>
-                    <option value="gingham">🩹 Gingham Ribbon</option>
-                    <option value="ticket">🎟️ Torn Paper Ticket</option>
-                    <option value="scallop">🏅 Scalloped Medal</option>
-                    <option value="hairline">📐 Hairline Outline</option>
-                    <option value="highlighter">🖍️ Yellow Highlighter</option>
-                    <option value="dark_pill">🖤 Dark Slate Capsule</option>
-                    <option value="transparent">✨ Transparent (Text Only)</option>
-                  </select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2 text-slate-400">
-                  <div>
-                    <div class="flex justify-between"><span>Badge Tilt:</span><span id="bRotVal1" class="text-sky-400 font-mono">-5°</span></div>
-                    <input type="range" id="bRot1" min="-30" max="30" value="-5" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(1)">
-                  </div>
-                  <div>
-                    <div class="flex justify-between"><span>Note Tilt:</span><span id="nRotVal1" class="text-sky-400 font-mono">0°</span></div>
-                    <input type="range" id="nRot1" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateNoteRotation(1)">
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2 text-slate-400">
-                  <div>
-                    <div class="flex justify-between"><span>Product Size:</span><span id="pScaleVal1" class="text-sky-400 font-mono">100%</span></div>
-                    <input type="range" id="pScale1" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
-                  </div>
-                  <div>
-                    <div class="flex justify-between"><span>Badge Size:</span><span id="bScaleVal1" class="text-sky-400 font-mono">100%</span></div>
-                    <input type="range" id="bScale1" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(1)">
-                  </div>
-                </div>
-
-                <div class="flex justify-between items-center text-slate-400 pt-1 border-t border-slate-800">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="noteBg_1" onchange="toggleNoteBg(1)"> Note Background Box</label>
-                  <button type="button" onclick="centerObjects(1)" class="text-[9px] text-sky-400 hover:underline uppercase font-bold">Center Elements</button>
-                </div>
+            <div class="space-y-1">
+              <div class="flex justify-between text-[11px] text-slate-400">
+                <span>Badge Size:</span>
+                <span id="activeBadgeSizeVal" class="text-sky-400 font-mono">100%</span>
               </div>
-
-              <!-- EXPANDED MIX & MATCH ACCENTS -->
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_1" onchange="toggleAccent(1, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_1" onchange="toggleAccent(1, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_1" onchange="toggleAccent(1, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_1" onchange="toggleAccent(1, 'heart')"> ➳♡ Heart Arrow</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_clip_1" onchange="toggleAccent(1, 'clip')"> 📎 Brass Clip</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_pin_1" onchange="toggleAccent(1, 'pin')"> 📌 Pushpin</label>
-                </div>
-              </div>
-
-              <button onclick="downloadSingleCard('cardCanvas1', 'deal_card_1')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 1</button>
+              <input type="range" id="activeBadgeSize" min="70" max="160" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveBadgeSize(this.value)">
             </div>
           </div>
 
-          <!-- Card 2 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
-            <div>
-              <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel2" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 truncate">Card 2: Kraft Tag</span>
-                <select id="styleSelect2" onchange="changeCardStyle(2, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
-                  <!-- Populated via JS -->
-                </select>
-              </div>
+          <!-- HEADLINE NOTE CONTROLS -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2.5">
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
+              <span>✍️ Headline Note:</span>
+            </div>
+            <select id="activeFontSelect" onchange="updateActiveFont(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-2 rounded-lg focus:outline-none">
+              <option value="handwritten">✍️ Casual Script (Caveat)</option>
+              <option value="typewriter">📠 Typewriter (Courier)</option>
+              <option value="modern_sans">✨ Modern Sans (Plus Jakarta)</option>
+              <option value="playful">🎈 Playful (Fredoka)</option>
+              <option value="editorial">📰 Editorial Serif (Playfair)</option>
+            </select>
 
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap2">
-                <canvas id="cardCanvas2" width="1080" height="1080" class="cursor-move"></canvas>
-                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas2', 'Card 2 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
+            <div class="space-y-1">
+              <div class="flex justify-between text-[11px] text-slate-400">
+                <span>Note Tilt:</span>
+                <span id="activeNoteTiltVal" class="text-amber-400 font-mono">0°</span>
               </div>
+              <input type="range" id="activeNoteTilt" min="-35" max="35" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteTilt(this.value)">
             </div>
 
-            <div class="space-y-2 pt-2">
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
-                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
-                  <span>Badge Style:</span>
-                  <select id="badgeBg2" onchange="changeBadgeBg(2, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-amber-400 px-1 py-0.5 rounded">
-                    <option value="kraft" selected>Kraft Tag</option>
-                    <option value="sticky">Sticky Post-it</option>
-                    <option value="pill">Floating Pill</option>
-                    <option value="transparent">Transparent (No Box)</option>
-                  </select>
-                </div>
-
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Rotation:</span>
-                  <span id="bRotVal2" class="text-amber-400 font-mono">0°</span>
-                </div>
-                <input type="range" id="bRot2" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(2)">
-
-                <div class="flex justify-between text-slate-400">
-                  <span>Product Size:</span>
-                  <span id="pScaleVal2" class="text-amber-400 font-mono">100%</span>
-                </div>
-                <input type="range" id="pScale2" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
-                
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Size:</span>
-                  <span id="bScaleVal2" class="text-amber-400 font-mono">100%</span>
-                </div>
-                <input type="range" id="bScale2" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(2)">
+            <div class="space-y-1">
+              <div class="flex justify-between text-[11px] text-slate-400">
+                <span>Note Size:</span>
+                <span id="activeNoteSizeVal" class="text-amber-400 font-mono">100%</span>
               </div>
-
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_2" onchange="toggleAccent(2, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_2" onchange="toggleAccent(2, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_2" onchange="toggleAccent(2, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_2" onchange="toggleAccent(2, 'heart')"> ➳♡ Heart Arrow</label>
-                </div>
-              </div>
-
-              <button onclick="downloadSingleCard('cardCanvas2', 'deal_card_2')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 2</button>
+              <input type="range" id="activeNoteSize" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteSize(this.value)">
             </div>
+
+            <label class="flex items-center gap-1.5 text-[11px] text-slate-300 pt-1 cursor-pointer">
+              <input type="checkbox" id="activeNoteBgBox" onchange="updateActiveNoteBg(this.checked)">
+              <span>Add Note Background Fill Box</span>
+            </label>
           </div>
 
-          <!-- Card 3 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
-            <div>
-              <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel3" class="text-[10px] font-bold uppercase tracking-wider text-rose-400 truncate">Card 3: Sunlit Arch</span>
-                <select id="styleSelect3" onchange="changeCardStyle(3, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
-                  <!-- Populated via JS -->
-                </select>
-              </div>
-
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap3">
-                <canvas id="cardCanvas3" width="1080" height="1080" class="cursor-move"></canvas>
-                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas3', 'Card 3 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
-              </div>
+          <!-- PRODUCT SIZING & COMPOSITION -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2.5">
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
+              <span>📦 Product Staging:</span>
             </div>
 
-            <div class="space-y-2 pt-2">
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
-                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
-                  <span>Badge Style:</span>
-                  <select id="badgeBg3" onchange="changeBadgeBg(3, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-rose-400 px-1 py-0.5 rounded">
-                    <option value="pill" selected>Floating Pill</option>
-                    <option value="sticky">Sticky Post-it</option>
-                    <option value="kraft">Kraft Tag</option>
-                    <option value="transparent">Transparent (No Box)</option>
-                  </select>
-                </div>
-
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Rotation:</span>
-                  <span id="bRotVal3" class="text-rose-400 font-mono">0°</span>
-                </div>
-                <input type="range" id="bRot3" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(3)">
-
-                <div class="flex justify-between text-slate-400">
-                  <span>Product Size:</span>
-                  <span id="pScaleVal3" class="text-rose-400 font-mono">100%</span>
-                </div>
-                <input type="range" id="pScale3" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
-                
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Size:</span>
-                  <span id="bScaleVal3" class="text-rose-400 font-mono">100%</span>
-                </div>
-                <input type="range" id="bScale3" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(3)">
+            <div class="space-y-1">
+              <div class="flex justify-between text-[11px] text-slate-400">
+                <span>Product Hero Size:</span>
+                <span id="activeProductSizeVal" class="text-emerald-400 font-mono">100%</span>
               </div>
-
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_3" onchange="toggleAccent(3, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_3" onchange="toggleAccent(3, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_3" onchange="toggleAccent(3, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_3" onchange="toggleAccent(3, 'heart')"> ➳♡ Heart Arrow</label>
-                </div>
-              </div>
-
-              <button onclick="downloadSingleCard('cardCanvas3', 'deal_card_3')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 3</button>
+              <input type="range" id="activeProductSize" min="60" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveProductSize(this.value)">
             </div>
+
+            <div class="pt-2">
+              <button 
+                type="button" 
+                onclick="centerActiveElements()" 
+                class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider"
+              >
+                🎯 Re-Center Elements
+              </button>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-tight">Drag product photo, badges, and notes directly on the active canvas to reposition.</p>
           </div>
 
-          <!-- Card 4 -->
-          <div class="card-dark p-3 border border-slate-800 space-y-3 flex flex-col justify-between overflow-hidden">
-            <div>
-              <div class="flex justify-between items-center mb-2">
-                <span id="cardLabel4" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 truncate">Card 4: Notebook Memo</span>
-                <select id="styleSelect4" onchange="changeCardStyle(4, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-slate-300 px-1 py-0.5 rounded focus:outline-none">
-                  <!-- Populated via JS -->
-                </select>
-              </div>
-
-              <div class="w-full aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800 relative select-none" id="wrap4">
-                <canvas id="cardCanvas4" width="1080" height="1080" class="cursor-move"></canvas>
-                <button type="button" onclick="event.stopPropagation(); openZoomModal('cardCanvas4', 'Card 4 Preview')" class="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-[10px] px-2 py-0.5 rounded-full border border-white/20">🔍 Zoom</button>
-              </div>
+          <!-- MIX & MATCH CANVA DECORATORS -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
+              <span>✨ Mix & Match Layers:</span>
             </div>
-
-            <div class="space-y-2 pt-2">
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-2 text-[10px]">
-                <div class="flex justify-between items-center text-slate-400 font-bold uppercase tracking-wider">
-                  <span>Badge Style:</span>
-                  <select id="badgeBg4" onchange="changeBadgeBg(4, this.value)" class="bg-slate-950 border border-slate-700 text-[10px] text-emerald-400 px-1 py-0.5 rounded">
-                    <option value="sticky">Sticky Post-it</option>
-                    <option value="pill">Floating Pill</option>
-                    <option value="kraft">Kraft Tag</option>
-                    <option value="transparent" selected>Transparent (No Box)</option>
-                  </select>
-                </div>
-
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Rotation:</span>
-                  <span id="bRotVal4" class="text-emerald-400 font-mono">0°</span>
-                </div>
-                <input type="range" id="bRot4" min="-30" max="30" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateBadgeRotation(4)">
-
-                <div class="flex justify-between text-slate-400">
-                  <span>Product Size:</span>
-                  <span id="pScaleVal4" class="text-emerald-400 font-mono">100%</span>
-                </div>
-                <input type="range" id="pScale4" min="60" max="140" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
-                
-                <div class="flex justify-between text-slate-400">
-                  <span>Badge Size:</span>
-                  <span id="bScaleVal4" class="text-emerald-400 font-mono">100%</span>
-                </div>
-                <input type="range" id="bScale4" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateCardSliders(4)">
-              </div>
-
-              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800/80 space-y-1 text-[10px]">
-                <div class="font-bold uppercase tracking-wider text-slate-400 mb-1">Decorators (Mix & Match):</div>
-                <div class="grid grid-cols-2 gap-1 text-slate-300">
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_arrow_4" onchange="toggleAccent(4, 'arrow')"> 🎯 Red Arrows</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_loop_4" onchange="toggleAccent(4, 'loop')"> ⭕ Sharpie Loop</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_eye_4" onchange="toggleAccent(4, 'eye')"> 👀 Eye Stamp</label>
-                  <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="acc_heart_4" onchange="toggleAccent(4, 'heart')"> ➳♡ Heart Arrow</label>
-                </div>
-              </div>
-
-              <button onclick="downloadSingleCard('cardCanvas4', 'deal_card_4')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-200">Download Card 4</button>
+            <div class="grid grid-cols-2 gap-1.5 text-[11px] text-slate-300">
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_arrow" onchange="toggleActiveDecorator('arrow')"> 🎯 Red Arrows</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_loop" onchange="toggleActiveDecorator('loop')"> ⭕ Sharpie Loop</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_dbl" onchange="toggleActiveDecorator('dbl')"> ═ Red Lines</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_eye" onchange="toggleActiveDecorator('eye')"> 👀 Eye Stamp</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_heart" onchange="toggleActiveDecorator('heart')"> ➳♡ Heart Arrow</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_clip" onchange="toggleActiveDecorator('clip')"> 📎 Brass Clip</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_pin" onchange="toggleActiveDecorator('pin')"> 📌 Pushpin</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_vines" onchange="toggleActiveDecorator('vines')"> 🌿 Corner Vines</label>
             </div>
           </div>
-
         </div>
       </div>
+
     </section>
 
   </div>
 
-  <!-- ZOOM LIGHTBOX MODAL -->
-  <div id="zoomModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-5 space-y-4 shadow-2xl relative">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <h3 id="modalTitle" class="text-sm font-bold uppercase tracking-wider text-sky-400">Card Preview</h3>
-        <button onclick="closeZoomModal()" class="text-slate-400 hover:text-white text-lg font-bold p-1">✕</button>
-      </div>
-
-      <div class="aspect-square bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
-        <img id="modalImg" class="w-full h-full object-contain">
-      </div>
-
-      <div class="flex justify-end gap-3 pt-2">
-        <button onclick="closeZoomModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 rounded-lg uppercase tracking-wider">Close</button>
-        <button id="modalDownloadBtn" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md">
-          <span>📥</span> Download This Card
-        </button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // ==========================================
-    // GLOBAL APP STATE & CANVA-STYLE OBJECT MODEL
+    // GLOBAL APP STATE & 3D COVERFLOW OBJECT MODEL
     // ==========================================
     let activeStep = 1;
+    let activeCardIndex = 1; // 1 to 4
     let rawLoadedImage = null;
     let base64ApiPayload = "";
     let detectedBoxes = [];
@@ -745,36 +660,18 @@
     let sanitizedCanvasSnapshot = null;
     let all15Variants = [];
     let chosen4Variants = [];
-    let activeModalCanvasId = null;
 
     let currentDealMode = 'regular'; // 'regular' or 'run'
-    let isPrivacyMode = false;       // Lookbook Macro Swatch Toggle
 
-    const STYLES_CATALOG = {
-      polaroid: { name: "Classic Polaroid & Washi", mode: "regular", defaultFont: "handwritten" },
-      kraft_tag: { name: "Top Kraft Parcel Tag", mode: "regular", defaultFont: "typewriter" },
-      arch_niche: { name: "Architectural Arch Niche", mode: "regular", defaultFont: "editorial" },
-      notebook: { name: "Lined Legal Notebook Memo", mode: "regular", defaultFont: "typewriter" },
-      split_horizon: { name: "Split Horizon Earth Mat", mode: "regular", defaultFont: "modern_sans" },
-      flatlay: { name: "Modern Travertine Flatlay", mode: "regular", defaultFont: "modern_sans" },
-      // Run Deal Modes
-      run_arrow_pointer: { name: "👀 Run: Red Marker Arrow Cluster", mode: "run", defaultFont: "handwritten" },
-      run_marker_loop: { name: "👀 Run: Double Sharpie Oval Loop", mode: "run", defaultFont: "handwritten" },
-      run_eye_stamp: { name: "👀 Run: Peeking Eye Badge Tab", mode: "run", defaultFont: "modern_sans" },
-      run_neon_sticky: { name: "👀 Run: Neon Post-It Sticky Note", mode: "run", defaultFont: "handwritten" }
-    };
-
-    let activeCardStyles = ["polaroid", "kraft_tag", "arch_niche", "notebook"];
-
-    // Individual Layer Object Attributes per Card
+    // Individual Procedural Layer State per Card (Infinite Variations)
     let cardCustoms = {
-      1: { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, bRot: -5, badgeBg: "sticky", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } },
-      2: { style: "kraft_tag", font: "typewriter", pScale: 1.0, bScale: 1.0, bRot: 0, badgeBg: "kraft", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } },
-      3: { style: "arch_niche", font: "editorial", pScale: 1.0, bScale: 1.0, bRot: 0, badgeBg: "pill", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } },
-      4: { style: "notebook", font: "typewriter", pScale: 1.0, bScale: 1.0, bRot: 0, badgeBg: "transparent", badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, heart: false } }
+      1: { pScale: 1.0, bScale: 1.0, bRot: -5, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "sticky", font: "handwritten", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
+      2: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "kraft", font: "typewriter", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
+      3: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "pill", font: "editorial", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
+      4: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "ticket", font: "modern_sans", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null }
     };
 
-    let draggingState = { active: false, cardNum: null, startX: 0, startY: 0 };
+    let draggingState = { active: false, cardNum: null, target: null, startX: 0, startY: 0 };
 
     const targetCanvas = document.getElementById('targetCanvas');
     const tCtx = targetCanvas.getContext('2d');
@@ -788,196 +685,751 @@
     ];
 
     const AFFIRMATIONS = {
-      lawn_garden: [
-        "Yard project ready 🌾",
-        "Fall lawn prep sorted 🍂",
-        "Weekend outdoor project ✨",
-        "Ready for greener grass 🌱",
-        "Soil prep done for the season"
-      ],
-      home_kitchen: [
-        "Kitchen routine staple ✨",
-        "Pantry backup done ✅",
-        "Stocked up for months",
-        "Morning routine lifesaver ☕",
-        "Dinner prep just got simpler"
-      ],
-      beauty_personal: [
-        "Daily shower & body favorite ✨",
-        "Self-care evening pick 🧴",
-        "Such a lovely scent 🌸",
-        "Daily routine reset",
-        "Sweetest little staple"
-      ],
-      general: [
-        "Such a great find ✨",
-        "Always handy to keep nearby",
-        "Daily routine staple",
-        "Everyday home favorite",
-        "So glad to have this on hand"
-      ]
+      lawn_garden: ["Yard project ready 🌾", "Fall lawn prep sorted 🍂", "Weekend outdoor project ✨", "Ready for greener grass 🌱"],
+      home_kitchen: ["Kitchen routine staple ✨", "Pantry backup done ✅", "Stocked up for months", "Dinner prep made simple"],
+      beauty_personal: ["Daily shower & body favorite ✨", "Self-care evening pick 🧴", "Such a lovely scent 🌸", "Daily routine reset"],
+      general: ["Such a great find ✨", "Always handy to keep nearby", "Daily routine staple", "Everyday home favorite"]
     };
 
     let activeCategory = "general";
-    let valueTagOptions = ["$16.79 Shipped", "Just $16.79 ✨", "$16.79 total"];
+    let valueTagOptions = ["$16.79 Shipped", "Just $16.79 ✨", "$16.79 total", "All for $16.79"];
     let valueTagIndex = 0;
 
     // ==========================================
-    // INITIALIZATION & EVENT LISTENERS
+    // INITIALIZATION & DRAGGING SETUP
     // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
-      populateStyleDropdowns();
       setupCanvasDragListeners();
+      generateProceduralDeck();
     });
 
-    function populateStyleDropdowns() {
+    // ==========================================
+    // 3D COVERFLOW CAROUSEL POSITIONING
+    // ==========================================
+    function selectCardIndex(idx) {
+      activeCardIndex = idx;
+      updateCoverflowPositions();
+      syncConsoleControls();
+    }
+
+    function prevCard() {
+      activeCardIndex = activeCardIndex > 1 ? activeCardIndex - 1 : 4;
+      selectCardIndex(activeCardIndex);
+    }
+
+    function nextCard() {
+      activeCardIndex = activeCardIndex < 4 ? activeCardIndex + 1 : 1;
+      selectCardIndex(activeCardIndex);
+    }
+
+    function updateCoverflowPositions() {
+      document.getElementById('activeCardIndicator').innerText = `Active Focus: Card ${activeCardIndex} of 4`;
+      document.getElementById('consoleCardName').innerText = `Card ${activeCardIndex}`;
+
       for (let i = 1; i <= 4; i++) {
-        const sel = document.getElementById(`styleSelect${i}`);
-        if (!sel) continue;
-        sel.innerHTML = "";
-        Object.keys(STYLES_CATALOG).forEach(key => {
-          const opt = document.createElement("option");
-          opt.value = key;
-          opt.textContent = STYLES_CATALOG[key].name;
-          sel.appendChild(opt);
-        });
-        sel.value = activeCardStyles[i - 1];
+        const el = document.getElementById(`cCard${i}`);
+        if (!el) continue;
+
+        el.className = "coverflow-card"; // reset base class
+        const diff = i - activeCardIndex;
+
+        if (diff === 0) {
+          el.classList.add("pos-center");
+        } else if (diff === -1 || diff === 3) {
+          el.classList.add("pos-left-1");
+        } else if (diff < -1) {
+          el.classList.add("pos-left-2");
+        } else if (diff === 1 || diff === -3) {
+          el.classList.add("pos-right-1");
+        } else {
+          el.classList.add("pos-right-2");
+        }
       }
     }
 
-    // MASTER RESET FUNCTION
-    function masterResetDeal() {
-      if (!confirm("Are you sure you want to start a brand new deal? All current edits will be cleared.")) return;
+    function syncConsoleControls() {
+      const conf = cardCustoms[activeCardIndex];
+      document.getElementById('activeBadgeStyle').value = conf.badgeBg || "sticky";
+      document.getElementById('activeFontSelect').value = conf.font || "handwritten";
 
-      rawLoadedImage = null;
-      base64ApiPayload = "";
-      detectedBoxes = [];
-      manualBoxes = [];
-      sanitizedCanvasSnapshot = null;
-      all15Variants = [];
-      chosen4Variants = [];
-      activeModalCanvasId = null;
+      document.getElementById('activeBadgeTilt').value = conf.bRot || 0;
+      document.getElementById('activeBadgeTiltVal').innerText = `${conf.bRot || 0}°`;
 
-      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
-      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+      document.getElementById('activeBadgeSize').value = Math.round((conf.bScale || 1.0) * 100);
+      document.getElementById('activeBadgeSizeVal').innerText = `${Math.round((conf.bScale || 1.0) * 100)}%`;
 
-      document.getElementById('rawDealPaste').value = "";
-      document.getElementById('suggestedTitleInput').value = "";
-      document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
-      document.getElementById('simpleValueInput').value = "$16.79 Shipped";
-      document.getElementById('aiChipsWrapper').classList.add('hidden');
+      document.getElementById('activeNoteTilt').value = conf.nRot || 0;
+      document.getElementById('activeNoteTiltVal').innerText = `${conf.nRot || 0}°`;
 
+      document.getElementById('activeNoteSize').value = Math.round((conf.nScale || 1.0) * 100);
+      document.getElementById('activeNoteSizeVal').innerText = `${Math.round((conf.nScale || 1.0) * 100)}%`;
+
+      document.getElementById('activeProductSize').value = Math.round((conf.pScale || 1.0) * 100);
+      document.getElementById('activeProductSizeVal').innerText = `${Math.round((conf.pScale || 1.0) * 100)}%`;
+
+      document.getElementById('activeNoteBgBox').checked = !!conf.hasNoteBg;
+
+      ['arrow', 'loop', 'dbl', 'eye', 'heart', 'clip', 'pin', 'vines'].forEach(acc => {
+        const cb = document.getElementById(`dec_${acc}`);
+        if (cb) cb.checked = !!(conf.accents && conf.accents[acc]);
+      });
+    }
+
+    // STUDIO CONSOLE EVENT DISPATCHERS
+    function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
+    function updateActiveFont(val) { cardCustoms[activeCardIndex].font = val; renderAll4CreatorCards(); }
+    function updateActiveBadgeTilt(val) { cardCustoms[activeCardIndex].bRot = parseInt(val); document.getElementById('activeBadgeTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
+    function updateActiveBadgeSize(val) { cardCustoms[activeCardIndex].bScale = parseFloat(val) / 100.0; document.getElementById('activeBadgeSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
+    function updateActiveNoteTilt(val) { cardCustoms[activeCardIndex].nRot = parseInt(val); document.getElementById('activeNoteTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
+    function updateActiveNoteSize(val) { cardCustoms[activeCardIndex].nScale = parseFloat(val) / 100.0; document.getElementById('activeNoteSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
+    function updateActiveProductSize(val) { cardCustoms[activeCardIndex].pScale = parseFloat(val) / 100.0; document.getElementById('activeProductSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
+    function updateActiveNoteBg(checked) { cardCustoms[activeCardIndex].hasNoteBg = checked; renderAll4CreatorCards(); }
+    function toggleActiveDecorator(acc) {
+      const cb = document.getElementById(`dec_${acc}`);
+      if (!cardCustoms[activeCardIndex].accents) cardCustoms[activeCardIndex].accents = {};
+      cardCustoms[activeCardIndex].accents[acc] = cb.checked;
+      renderAll4CreatorCards();
+    }
+    function centerActiveElements() {
+      cardCustoms[activeCardIndex].productPos = null;
+      cardCustoms[activeCardIndex].badgePos = null;
+      cardCustoms[activeCardIndex].notePos = null;
+      renderAll4CreatorCards();
+    }
+    function resetActiveCard() {
+      cardCustoms[activeCardIndex].pScale = 1.0;
+      cardCustoms[activeCardIndex].bScale = 1.0;
+      cardCustoms[activeCardIndex].bRot = 0;
+      cardCustoms[activeCardIndex].nRot = 0;
+      cardCustoms[activeCardIndex].nScale = 1.0;
+      cardCustoms[activeCardIndex].hasNoteBg = false;
+      cardCustoms[activeCardIndex].productPos = null;
+      cardCustoms[activeCardIndex].badgePos = null;
+      cardCustoms[activeCardIndex].notePos = null;
+      syncConsoleControls();
+      renderAll4CreatorCards();
+    }
+
+    // ==========================================
+    // PROCEDURAL GENERATION ENGINE (0 TOKENS)
+    // ==========================================
+    function generateProceduralDeck() {
+      const archetypes = ["polaroid", "arch_niche", "notebook", "hero_mat"];
       for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].pScale = 1.0;
-        cardCustoms[i].bScale = 1.0;
-        cardCustoms[i].bRot = 0;
-        cardCustoms[i].badgePos = null;
-        cardCustoms[i].notePos = null;
-        cardCustoms[i].accents = { arrow: false, loop: false, eye: false, heart: false };
-
-        const pSlider = document.getElementById(`pScale${i}`);
-        const bSlider = document.getElementById(`bScale${i}`);
-        const rSlider = document.getElementById(`bRot${i}`);
-        if (pSlider) pSlider.value = 100;
-        if (bSlider) bSlider.value = 100;
-        if (rSlider) rSlider.value = 0;
-
-        ['arrow', 'loop', 'eye', 'heart'].forEach(acc => {
-          const cb = document.getElementById(`acc_${acc}_${i}`);
-          if (cb) cb.checked = false;
-        });
+        cardCustoms[i].procedural = {
+          archetype: archetypes[i - 1],
+          seedRotation: (Math.random() * 5 - 2.5),
+          waveHeight: 120 + Math.random() * 80,
+          lightAngle: 30 + Math.random() * 30,
+          washiOffset: Math.random() * 20 - 10
+        };
       }
-
-      navToStep(1);
     }
 
-    // ==========================================
-    // API KEY & DYNAMIC MODEL MESH
-    // ==========================================
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const modelSelect = document.getElementById('modelSelect');
-    const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
-
-    if (savedKey) {
-      apiKeyInput.value = savedKey;
-      autoDetectModels(savedKey);
+    function reRollProceduralDeck() {
+      generateProceduralDeck();
+      renderAll4CreatorCards();
     }
 
-    apiKeyInput.addEventListener('input', (e) => {
-      const val = e.target.value.trim();
-      localStorage.setItem('deal_gemini_key', val);
-      if (val) autoDetectModels(val);
-    });
-
-    async function autoDetectModels(key) {
-      if (!key) return;
+    // DUAL-TIER PACKAGING COLOR EXTRACTION (RGB -> HSL)
+    function sampleColorsFromCanvas(canvas) {
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
-        const data = await res.json();
-        if (!data.models || !Array.isArray(data.models)) return;
+        const s = document.createElement("canvas");
+        s.width = 24; s.height = 24;
+        const sCtx = s.getContext("2d");
+        sCtx.drawImage(canvas, 0, 0, 24, 24);
+        const data = sCtx.getImageData(0, 0, 24, 24).data;
 
-        const textModels = data.models
-          .filter(m => (m.supportedGenerationMethods || []).includes("generateContent") && m.name.includes("gemini"))
-          .map(m => m.name.replace("models/", ""))
-          .filter(n => (n.includes("flash") || n.includes("lite")) && !n.includes("preview"));
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          if (brightness > 30 && brightness < 225) {
+            const sat = Math.max(data[i], data[i+1], data[i+2]) - Math.min(data[i], data[i+1], data[i+2]);
+            if (sat > 15) {
+              r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+            }
+          }
+        }
+        if (count > 0) {
+          r = Math.round(r / count);
+          g = Math.round(g / count);
+          b = Math.round(b / count);
 
-        textModels.sort((a, b) => b.localeCompare(a));
-        const stableLite = textModels.filter(m => m.includes("lite"));
-        const stableFlash = textModels.filter(m => m.includes("flash") && !m.includes("lite"));
+          // Rich aesthetic pastel tint that pops
+          const baseBg = `rgb(${Math.min(248, Math.round(222 + r * 0.12))}, ${Math.min(244, Math.round(218 + g * 0.12))}, ${Math.min(236, Math.round(208 + b * 0.12))})`;
+          const accentColor = `rgb(${Math.max(30, Math.round(r * 0.85))}, ${Math.max(30, Math.round(g * 0.85))}, ${Math.max(30, Math.round(b * 0.85))})`;
+          return { bg: baseBg, polaroid: "#FAF8F5", accent: accentColor, text: "#1E293B" };
+        }
+      } catch (e) {}
+      return { bg: "#F5EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
+    }
 
-        window.n1Lite = stableLite.length >= 2 ? stableLite[1] : (stableLite[0] || 'gemini-3.1-flash-lite');
-        window.n1Flash = stableFlash.length >= 2 ? stableFlash[1] : (stableFlash[0] || 'gemini-2.5-flash');
-        window.latestFlash = stableFlash[0] || 'gemini-flash-latest';
+    // ==========================================
+    // CANVA RENDERING ENGINE (FULL OBJECT FIDELITY)
+    // ==========================================
+    function renderAll4CreatorCards() {
+      const fallbackImg = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : (rawLoadedImage || targetCanvas);
+      if (!chosen4Variants || chosen4Variants.length < 4) {
+        chosen4Variants = [
+          { id: 1, canvas: fallbackImg },
+          { id: 2, canvas: fallbackImg },
+          { id: 3, canvas: fallbackImg },
+          { id: 4, canvas: fallbackImg }
+        ];
+      }
 
-        modelSelect.innerHTML = "";
-        textModels.forEach(m => {
-          const opt = document.createElement("option");
-          opt.value = m;
-          opt.textContent = m + (m === window.n1Lite ? " (Default N-1)" : "");
-          modelSelect.appendChild(opt);
+      const note = (document.getElementById('mainNoteInput')?.value || "Daily routine staple ✨").trim();
+      const val = (document.getElementById('simpleValueInput')?.value || "$16.79 Shipped").trim();
+
+      const sampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
+
+      for (let i = 1; i <= 4; i++) {
+        const c = document.getElementById(`cardCanvas${i}`);
+        if (!c) continue;
+
+        let src = chosen4Variants[i - 1]?.canvas;
+        if (!src || !src.width || src.width === 0) src = fallbackImg;
+
+        const conf = cardCustoms[i];
+        try {
+          renderCardWithStyle(c, src, note, val, sampledPal, conf, i);
+        } catch (err) {
+          console.error(`Error rendering card ${i}:`, err);
+        }
+      }
+    }
+
+    function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
+      const ctx = c.getContext('2d');
+      const font = getFontFamily(conf.font);
+      const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, waveHeight: 140, lightAngle: 45, washiOffset: 0 };
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+      // 1. BASE BACKGROUND & PROCEDURAL TEXTURES
+      ctx.fillStyle = pal.bg || "#F5EFE6";
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Procedural sunlight window shadow
+      ctx.save();
+      ctx.fillStyle = "rgba(40, 30, 20, 0.07)";
+      for (let y = -100; y < 1200; y += 150) {
+        ctx.fillRect(0, y, 1080, 75);
+      }
+      ctx.restore();
+
+      // Botanical Corner Vines (if toggled)
+      if (conf.accents && conf.accents.vines) {
+        drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
+      }
+
+      // 2. PRODUCT HERO STAGING (MOVABLE & HERO SCALE 75%-85%)
+      const pScale = conf.pScale || 1.0;
+      const pw = Math.round(780 * pScale);
+      const ph = Math.round(780 * pScale);
+
+      const px = conf.productPos ? conf.productPos.x : 540;
+      const py = conf.productPos ? conf.productPos.y : 490;
+
+      conf._activeProductBox = { x: px - pw / 2, y: py - ph / 2, w: pw, h: ph };
+
+      ctx.save();
+      if (proc.archetype === "polaroid") {
+        ctx.translate(px, py);
+        ctx.rotate((proc.seedRotation * Math.PI) / 180);
+        ctx.fillStyle = "#FAF8F5";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+        ctx.shadowBlur = 36;
+        ctx.shadowOffsetY = 18;
+        ctx.fillRect(-410, -390, 820, 890);
+        ctx.shadowColor = "transparent";
+
+        // Gingham Washi Tape
+        drawGinghamWashiTape(ctx, proc.washiOffset, -410, 220, 44);
+
+        // Draw Product Photo inside Polaroid
+        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2 - 20, pw, ph);
+      } else if (proc.archetype === "arch_niche") {
+        // Architectural Arch Niche
+        ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
+        ctx.beginPath();
+        ctx.arc(px, py - 110, 360, Math.PI, 0, false);
+        ctx.lineTo(px + 360, py + 460);
+        ctx.lineTo(px - 360, py + 460);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+        ctx.shadowBlur = 42;
+        ctx.shadowOffsetY = 20;
+        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+      } else if (proc.archetype === "notebook") {
+        // Lined Memo Sheet DRAWN BEHIND PHOTO
+        ctx.fillStyle = "#FEFCE8";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
+        ctx.shadowBlur = 30;
+        ctx.shadowOffsetY = 14;
+        ctx.fillRect(px - 420, py - 380, 840, 840);
+        ctx.shadowColor = "transparent";
+
+        ctx.strokeStyle = "rgba(234, 179, 8, 0.35)";
+        ctx.lineWidth = 1.5;
+        for (let y = py - 300; y < py + 420; y += 44) {
+          ctx.beginPath(); ctx.moveTo(px - 380, y); ctx.lineTo(px + 380, y); ctx.stroke();
+        }
+
+        drawPushPin(ctx, px, py - 380);
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+        ctx.shadowBlur = 36;
+        ctx.shadowOffsetY = 18;
+        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+      } else {
+        // Clean Elevated Hero Mat
+        ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
+        ctx.shadowBlur = 44;
+        ctx.shadowOffsetY = 22;
+        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+      }
+      ctx.restore();
+
+      // 3. HARDWARE & CLIPS
+      if (conf.accents && conf.accents.clip) drawBrassPaperclip(ctx, px - 280, py - 360);
+      if (conf.accents && conf.accents.pin) drawPushPin(ctx, px + 280, py - 370);
+
+      // 4. NOTE / AFFIRMATION (ROTATABLE, MOVABLE & BG TOGGLE)
+      ctx.save();
+      const nx = conf.notePos ? conf.notePos.x : 540;
+      const ny = conf.notePos ? conf.notePos.y : 950;
+      const nScale = conf.nScale || 1.0;
+
+      ctx.font = `bold ${Math.round(34 * nScale)}px ${font}`;
+      const noteMetrics = ctx.measureText(note);
+      const nw = noteMetrics.width + 48;
+      const nh = 62;
+      conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
+
+      ctx.save();
+      ctx.translate(nx, ny);
+      ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
+
+      if (conf.hasNoteBg) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
+        ctx.shadowColor = "rgba(0,0,0,0.14)";
+        ctx.shadowBlur = 14;
+        ctx.beginPath();
+        ctx.roundRect(-nw / 2, -nh / 2, nw, nh, 14);
+        ctx.fill();
+        ctx.shadowColor = "transparent";
+      }
+
+      ctx.fillStyle = pal.text || "#1E293B";
+      ctx.textAlign = "center";
+      ctx.fillText(note, 0, 10);
+      ctx.restore();
+      ctx.restore();
+
+      // 5. VALUE BADGE (10+ STYLES, ROTATABLE & MOVABLE)
+      if (val) {
+        ctx.save();
+        const bScale = conf.bScale || 1.0;
+        ctx.font = `bold ${Math.round(28 * bScale)}px ${font}`;
+        const valMetrics = ctx.measureText(val);
+        const textW = valMetrics.width;
+        const boxW = Math.min(680, textW + 48); // TIGHT FIT
+        const boxH = Math.round(64 * bScale);
+
+        let defBx = 240, defBy = 150;
+        const bx = conf.badgePos ? conf.badgePos.x : defBx;
+        const by = conf.badgePos ? conf.badgePos.y : defBy;
+        conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
+
+        ctx.save();
+        ctx.translate(bx, by);
+        ctx.rotate(((conf.bRot || 0) * Math.PI) / 180);
+
+        const bStyle = conf.badgeBg || "sticky";
+
+        if (bStyle === "sticky") {
+          ctx.fillStyle = "#FEF08A";
+          ctx.shadowColor = "rgba(0,0,0,0.24)";
+          ctx.shadowBlur = 18;
+          ctx.shadowOffsetY = 6;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
+          ctx.fill();
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else if (bStyle === "kraft") {
+          ctx.fillStyle = "#C49A6C";
+          ctx.shadowColor = "rgba(0,0,0,0.2)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
+          ctx.fill();
+          ctx.fillStyle = "#FAF8F5";
+          ctx.beginPath();
+          ctx.arc(-boxW / 2 + 18, 0, 6, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = "#FFFFFF";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 8, 9 * bScale);
+        } else if (bStyle === "pill") {
+          ctx.fillStyle = "#FAF8F5";
+          ctx.shadowColor = "rgba(0,0,0,0.18)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
+          ctx.fill();
+          ctx.fillStyle = pal.text || "#1E293B";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else if (bStyle === "ticket") {
+          ctx.fillStyle = "#FFFFFF";
+          ctx.shadowColor = "rgba(0,0,0,0.16)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 10);
+          ctx.fill();
+          ctx.fillStyle = pal.bg;
+          ctx.beginPath(); ctx.arc(-boxW / 2, 0, 8, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(boxW / 2, 0, 8, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else if (bStyle === "scallop") {
+          ctx.fillStyle = "#FEF9C3";
+          ctx.strokeStyle = "#CA8A04";
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 16);
+          ctx.fill();
+          ctx.stroke();
+          ctx.fillStyle = "#713F12";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else if (bStyle === "gingham") {
+          ctx.fillStyle = "rgba(254, 240, 138, 0.9)";
+          ctx.shadowColor = "rgba(0,0,0,0.18)";
+          ctx.shadowBlur = 14;
+          ctx.fillRect(-boxW / 2, -boxH / 2, boxW, boxH);
+          ctx.strokeStyle = "rgba(202, 138, 4, 0.35)";
+          ctx.lineWidth = 2;
+          for (let x = -boxW / 2 + 10; x < boxW / 2; x += 14) {
+            ctx.beginPath(); ctx.moveTo(x, -boxH / 2); ctx.lineTo(x, boxH / 2); ctx.stroke();
+          }
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else if (bStyle === "hairline") {
+          ctx.strokeStyle = pal.text || "#1E293B";
+          ctx.lineWidth = 2.5;
+          ctx.strokeRect(-boxW / 2, -boxH / 2, boxW, boxH);
+          ctx.fillStyle = pal.text || "#1E293B";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else if (bStyle === "highlighter") {
+          ctx.fillStyle = "rgba(253, 224, 71, 0.88)";
+          ctx.fillRect(-boxW / 2, -boxH / 2 + 10, boxW, boxH - 14);
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else if (bStyle === "dark_pill") {
+          ctx.fillStyle = "#0F172A";
+          ctx.shadowColor = "rgba(0,0,0,0.25)";
+          ctx.shadowBlur = 18;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
+          ctx.fill();
+          ctx.fillStyle = "#FFFFFF";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * bScale);
+        } else {
+          // Transparent (text only)
+          ctx.fillStyle = pal.text || "#1E293B";
+          ctx.textAlign = "center";
+          ctx.shadowColor = "rgba(255,255,255,0.85)";
+          ctx.shadowBlur = 8;
+          ctx.fillText(val, 0, 9 * bScale);
+        }
+
+        // ==========================================
+        // RUN & CREATOR ACCENTS
+        // ==========================================
+        if (conf.accents && conf.accents.loop) {
+          ctx.save();
+          ctx.strokeStyle = "#DC2626";
+          ctx.lineWidth = 4.5;
+          ctx.beginPath();
+          ctx.ellipse(0, 2, (boxW / 2) + 14, (boxH / 2) + 9, -0.04, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.ellipse(2, 4, (boxW / 2) + 16, (boxH / 2) + 11, 0.03, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        if (conf.accents && conf.accents.arrow) {
+          ctx.save();
+          ctx.fillStyle = "#DC2626";
+          ctx.strokeStyle = "#DC2626";
+          ctx.lineWidth = 4;
+          drawMarkerArrow(ctx, -boxW / 2 - 25, -55, -boxW / 2 + 8, -boxH / 2);
+          drawMarkerArrow(ctx, -boxW / 2 - 5, -70, -boxW / 2 + 20, -boxH / 2 - 4);
+          drawMarkerArrow(ctx, -boxW / 2 + 20, -75, -boxW / 2 + 35, -boxH / 2 - 8);
+          ctx.restore();
+        }
+
+        if (conf.accents && conf.accents.dbl) {
+          ctx.save();
+          ctx.strokeStyle = "#DC2626";
+          ctx.lineWidth = 3.5;
+          ctx.beginPath();
+          ctx.moveTo(-boxW / 2 - 10, boxH / 2 + 8);
+          ctx.lineTo(boxW / 2 + 10, boxH / 2 + 8);
+          ctx.moveTo(-boxW / 2 - 6, boxH / 2 + 16);
+          ctx.lineTo(boxW / 2 + 6, boxH / 2 + 16);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        if (conf.accents && conf.accents.eye) {
+          ctx.save();
+          ctx.font = `${Math.round(42 * bScale)}px sans-serif`;
+          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
+          ctx.restore();
+        }
+
+        if (conf.accents && conf.accents.heart) {
+          drawHeartArrow(ctx, (boxW / 2) + 20, -boxH / 2 - 10);
+        }
+
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+
+    function drawMarkerArrow(ctx, fromx, fromy, tox, toy) {
+      const headlen = 14;
+      const dx = tox - fromx;
+      const dy = toy - fromy;
+      const angle = Math.atan2(dy, dx);
+      ctx.save();
+      ctx.fillStyle = "#DC2626";
+      ctx.strokeStyle = "#DC2626";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(fromx, fromy);
+      ctx.lineTo(tox, toy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(tox, toy);
+      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawHeartArrow(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.strokeStyle = "#DC2626";
+      ctx.fillStyle = "#DC2626";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(-30, 10);
+      ctx.quadraticCurveTo(0, -10, 20, -5);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(24, -8, 6, 0, Math.PI * 2);
+      ctx.arc(32, -8, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawBotanicalCornerVines(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 3;
+
+      ctx.beginPath();
+      ctx.moveTo(940, 40);
+      ctx.quadraticCurveTo(1040, 80, 1040, 200);
+      ctx.stroke();
+
+      const leaves = [[970, 65, -0.5], [1020, 110, 0.4], [1038, 160, -0.2]];
+      leaves.forEach(([lx, ly, rot]) => {
+        ctx.save();
+        ctx.translate(lx, ly);
+        ctx.rotate(rot);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 14, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      ctx.beginPath();
+      ctx.moveTo(140, 1040);
+      ctx.quadraticCurveTo(40, 1000, 40, 880);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawGinghamWashiTape(ctx, cx, cy, w, h) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(0.015);
+
+      ctx.fillStyle = "rgba(235, 222, 204, 0.85)";
+      ctx.fillRect(-w / 2, -h / 2, w, h);
+
+      ctx.strokeStyle = "rgba(180, 150, 120, 0.4)";
+      ctx.lineWidth = 2.5;
+      for (let x = -w / 2 + 12; x < w / 2; x += 16) {
+        ctx.beginPath(); ctx.moveTo(x, -h / 2); ctx.lineTo(x, h / 2); ctx.stroke();
+      }
+      for (let y = -h / 2 + 8; y < h / 2; y += 14) {
+        ctx.beginPath(); ctx.moveTo(-w / 2, y); ctx.lineTo(w / 2, y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawBrassPaperclip(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(-0.15);
+      ctx.strokeStyle = "#B4845C";
+      ctx.lineWidth = 4.5;
+      ctx.shadowColor = "rgba(0,0,0,0.25)";
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.moveTo(0, 45);
+      ctx.lineTo(0, -25);
+      ctx.arc(10, -25, 10, Math.PI, 0, false);
+      ctx.lineTo(20, 35);
+      ctx.arc(10, 35, 10, 0, Math.PI, false);
+      ctx.lineTo(0, 15);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawPushPin(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.fillStyle = "#A88B7B";
+      ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 6;
+
+      ctx.beginPath();
+      ctx.arc(0, -12, 16, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(-9, -4);
+      ctx.lineTo(9, -4);
+      ctx.lineTo(3, 18);
+      ctx.lineTo(-3, 18);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function getFontFamily(fontKey) {
+      if (fontKey === "handwritten") return "'Caveat', cursive, sans-serif";
+      if (fontKey === "typewriter") return "'Courier Prime', monospace";
+      if (fontKey === "playful") return "'Fredoka', sans-serif";
+      if (fontKey === "editorial") return "'Playfair Display', serif";
+      return "'Plus Jakarta Sans', sans-serif";
+    }
+
+    // ==========================================
+    // MULTI-OBJECT CANVAS DRAGGING LISTENERS
+    // ==========================================
+    function setupCanvasDragListeners() {
+      for (let i = 1; i <= 4; i++) {
+        const wrap = document.getElementById(`cCard${i}`);
+        const canvas = document.getElementById(`cardCanvas${i}`);
+        if (!wrap || !canvas) continue;
+
+        wrap.addEventListener("mousedown", (e) => {
+          if (activeCardIndex !== i) return; // Only allow dragging on active center card!
+          const r = canvas.getBoundingClientRect();
+          const mouseX = (e.clientX - r.left) * (1080 / r.width);
+          const mouseY = (e.clientY - r.top) * (1080 / r.height);
+
+          const c = cardCustoms[i];
+          let hitTarget = null;
+
+          if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) {
+            hitTarget = "badge";
+          } else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) {
+            hitTarget = "note";
+          } else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) {
+            hitTarget = "product";
+          } else {
+            hitTarget = "badge";
+          }
+
+          draggingState = { active: true, cardNum: i, target: hitTarget, startX: mouseX, startY: mouseY };
         });
 
-        const savedManualChoice = localStorage.getItem('deal_gemini_model');
-        if (savedManualChoice && modelSelect.querySelector(`option[value="${savedManualChoice}"]`)) {
-          modelSelect.value = savedManualChoice;
-        } else if (modelSelect.querySelector(`option[value="${window.n1Lite}"]`)) {
-          modelSelect.value = window.n1Lite;
-        }
-      } catch (err) {
-        console.warn("Model discovery error:", err);
+        window.addEventListener("mousemove", (e) => {
+          if (!draggingState.active || draggingState.cardNum !== i) return;
+          const r = canvas.getBoundingClientRect();
+          const mouseX = Math.max(60, Math.min(1020, (e.clientX - r.left) * (1080 / r.width)));
+          const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
+
+          if (draggingState.target === "badge") {
+            cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
+          } else if (draggingState.target === "note") {
+            cardCustoms[i].notePos = { x: mouseX, y: mouseY };
+          } else if (draggingState.target === "product") {
+            cardCustoms[i].productPos = { x: mouseX, y: mouseY };
+          }
+          renderAll4CreatorCards();
+        });
+
+        window.addEventListener("mouseup", () => {
+          if (draggingState.active) {
+            draggingState.active = false;
+            draggingState.cardNum = null;
+            draggingState.target = null;
+          }
+        });
       }
     }
 
-    modelSelect.addEventListener('change', (e) => {
-      localStorage.setItem('deal_gemini_model', e.target.value);
-    });
-
-    function toggleEmergencyDrawer() {
-      document.getElementById('emergencyDrawer').classList.toggle('hidden');
-    }
-
     // ==========================================
-    // STEP NAVIGATION
+    // STEP 2 -> STEP 3 TRANSITION
     // ==========================================
-    function navToStep(stepNum) {
-      for (let s = 1; s <= 3; s++) {
-        const sec = document.getElementById(`step${s}Section`);
-        const tab = document.getElementById(`stepTab${s}`);
-        if (sec) sec.classList.add('hidden');
-        if (tab) {
-          tab.classList.remove('step-active');
-          tab.classList.add('step-inactive');
+    function proceedToStep3() {
+      if (!chosen4Variants || chosen4Variants.length < 4) {
+        const fallbackSource = sanitizedCanvasSnapshot || outputCanvas || targetCanvas;
+        if (fallbackSource && fallbackSource.width > 0) {
+          chosen4Variants = [
+            { id: 1, canvas: fallbackSource },
+            { id: 2, canvas: fallbackSource },
+            { id: 3, canvas: fallbackSource },
+            { id: 4, canvas: fallbackSource }
+          ];
+        } else {
+          return alert("Please upload or choose a product image first!");
         }
       }
 
-      const targetSec = document.getElementById(`step${stepNum}Section`);
-      const targetTab = document.getElementById(`stepTab${stepNum}`);
-      if (targetSec) targetSec.classList.remove('hidden');
-      if (targetTab) {
-        targetTab.classList.remove('step-inactive');
-        targetTab.classList.add('step-active');
-      }
-      activeStep = stepNum;
+      navToStep(3);
+      generateProceduralDeck();
+      selectCardIndex(1);
+      renderAll4CreatorCards();
     }
 
     // ==========================================
@@ -1253,9 +1705,7 @@
         });
         clearTimeout(id);
         const data = await response.json();
-        if (!response.ok || data.error) {
-          throw new Error((data.error && data.error.message) || `HTTP ${response.status}`);
-        }
+        if (!response.ok || data.error) throw new Error((data.error && data.error.message) || `HTTP ${response.status}`);
         return data;
       } catch (err) {
         clearTimeout(id);
@@ -1314,16 +1764,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       try {
         const payload = {
-          contents: [{
-            parts: [
-              { text: promptText },
-              { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }
-            ]
-          }],
-          generationConfig: {
-            temperature: 0.0,
-            responseMimeType: "application/json"
-          }
+          contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }],
+          generationConfig: { temperature: 0.0, responseMimeType: "application/json" }
         };
 
         const data = await callGeminiLeapingMesh(key, payload);
@@ -1510,14 +1952,45 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     });
 
-    document.getElementById('goToStep3Btn').addEventListener('click', () => {
-      renderAll4CreatorCards();
-      navToStep(3);
-    });
+    // ==========================================
+    // EXTRACTOR & MASTER RESET FUNCTIONS
+    // ==========================================
+    function masterResetDeal() {
+      if (!confirm("Start brand new deal? All current edits will be cleared.")) return;
 
-    // ==========================================
-    // STEP 3: CANVA CREATOR STUDIO CONTROLS
-    // ==========================================
+      rawLoadedImage = null;
+      base64ApiPayload = "";
+      detectedBoxes = [];
+      manualBoxes = [];
+      sanitizedCanvasSnapshot = null;
+      all15Variants = [];
+      chosen4Variants = [];
+
+      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+
+      document.getElementById('rawDealPaste').value = "";
+      document.getElementById('suggestedTitleInput').value = "";
+      document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
+      document.getElementById('simpleValueInput').value = "$16.79 Shipped";
+      document.getElementById('aiChipsWrapper').classList.add('hidden');
+
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].pScale = 1.0;
+        cardCustoms[i].bScale = 1.0;
+        cardCustoms[i].bRot = i === 1 ? -5 : 0;
+        cardCustoms[i].nRot = 0;
+        cardCustoms[i].nScale = 1.0;
+        cardCustoms[i].hasNoteBg = false;
+        cardCustoms[i].productPos = null;
+        cardCustoms[i].badgePos = null;
+        cardCustoms[i].notePos = null;
+        cardCustoms[i].accents = { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true };
+      }
+
+      navToStep(1);
+    }
+
     function setDealMode(mode) {
       currentDealMode = mode;
       const regBtn = document.getElementById('modeRegularBtn');
@@ -1529,17 +2002,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         
         const curNote = document.getElementById('mainNoteInput').value;
         if (!curNote.includes('👀')) {
-          document.getElementById('mainNoteInput').value = "wait... is this real?! 👀";
+          document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
         }
 
         for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents = { arrow: true, loop: true, eye: true, heart: false };
-          const a = document.getElementById(`acc_arrow_${i}`);
-          const l = document.getElementById(`acc_loop_${i}`);
-          const e = document.getElementById(`acc_eye_${i}`);
-          if (a) a.checked = true;
-          if (l) l.checked = true;
-          if (e) e.checked = true;
+          cardCustoms[i].accents.arrow = true;
+          cardCustoms[i].accents.loop = true;
+          cardCustoms[i].accents.eye = true;
         }
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md";
@@ -1547,73 +2016,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
 
         for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents = { arrow: false, loop: false, eye: false, heart: false };
-          ['arrow', 'loop', 'eye', 'heart'].forEach(acc => {
-            const cb = document.getElementById(`acc_${acc}_${i}`);
-            if (cb) cb.checked = false;
-          });
+          cardCustoms[i].accents.arrow = false;
+          cardCustoms[i].accents.loop = false;
+          cardCustoms[i].accents.eye = false;
         }
       }
 
-      renderAll4CreatorCards();
-    }
-
-    function togglePrivacyMode() {
-      isPrivacyMode = !isPrivacyMode;
-      const btn = document.getElementById('privacyModeBtn');
-      const status = document.getElementById('privacyStatus');
-
-      if (isPrivacyMode) {
-        btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
-        btn.classList.remove('bg-slate-800', 'border-slate-700', 'text-slate-300');
-        status.innerText = "ON (Macro Swatch)";
-      } else {
-        btn.classList.remove('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
-        btn.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300');
-        status.innerText = "OFF";
-      }
-      renderAll4CreatorCards();
-    }
-
-    function toggleAccent(cardNum, accentKey) {
-      const cb = document.getElementById(`acc_${accentKey}_${cardNum}`);
-      if (!cb) return;
-      cardCustoms[cardNum].accents[accentKey] = cb.checked;
-      renderAll4CreatorCards();
-    }
-
-    function changeCardStyle(cardNum, styleKey) {
-      cardCustoms[cardNum].style = styleKey;
-      cardCustoms[cardNum].font = STYLES_CATALOG[styleKey].defaultFont || "modern_sans";
-      const fontSel = document.getElementById(`fontSelect${cardNum}`);
-      if (fontSel) fontSel.value = cardCustoms[cardNum].font;
-      const lbl = document.getElementById(`cardLabel${cardNum}`);
-      if (lbl) lbl.innerText = STYLES_CATALOG[styleKey].name;
-      renderAll4CreatorCards();
-    }
-
-    function changeBadgeBg(cardNum, bgKey) {
-      cardCustoms[cardNum].badgeBg = bgKey;
-      renderAll4CreatorCards();
-    }
-
-    function updateBadgeRotation(cardNum) {
-      const rVal = document.getElementById(`bRot${cardNum}`).value;
-      document.getElementById(`bRotVal${cardNum}`).innerText = `${rVal}°`;
-      cardCustoms[cardNum].bRot = parseInt(rVal);
-      renderAll4CreatorCards();
-    }
-
-    function updateCardSliders(cardNum) {
-      const pVal = document.getElementById(`pScale${cardNum}`).value;
-      const bVal = document.getElementById(`bScale${cardNum}`).value;
-
-      document.getElementById(`pScaleVal${cardNum}`).innerText = `${pVal}%`;
-      document.getElementById(`bScaleVal${cardNum}`).innerText = `${bVal}%`;
-
-      cardCustoms[cardNum].pScale = parseFloat(pVal) / 100.0;
-      cardCustoms[cardNum].bScale = parseFloat(bVal) / 100.0;
-
+      syncConsoleControls();
       renderAll4CreatorCards();
     }
 
@@ -1658,108 +2067,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       wrapper.classList.remove('hidden');
     }
 
-    function reRollCardStyles() {
-      const regularPool = Object.keys(STYLES_CATALOG).filter(k => STYLES_CATALOG[k].mode === "regular");
-      const shuffled = [...regularPool].sort(() => 0.5 - Math.random());
-      activeCardStyles = shuffled.slice(0, 4);
-
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].style = activeCardStyles[i - 1];
-        cardCustoms[i].font = STYLES_CATALOG[activeCardStyles[i - 1]].defaultFont;
-        const sel = document.getElementById(`styleSelect${i}`);
-        if (sel) sel.value = activeCardStyles[i - 1];
-        const fontSel = document.getElementById(`fontSelect${i}`);
-        if (fontSel) fontSel.value = cardCustoms[i].font;
-        const lbl = document.getElementById(`cardLabel${i}`);
-        if (lbl) lbl.innerText = STYLES_CATALOG[activeCardStyles[i - 1]].name;
-      }
-
-      renderAll4CreatorCards();
-    }
-
-    // DUAL-TIER PACKAGING COLOR & CONTRAST HARMONIZER
-    function sampleColorsFromCanvas(canvas) {
-      try {
-        const s = document.createElement("canvas");
-        s.width = 24; s.height = 24;
-        const sCtx = s.getContext("2d");
-        sCtx.drawImage(canvas, 0, 0, 24, 24);
-        const data = sCtx.getImageData(0, 0, 24, 24).data;
-
-        let r = 0, g = 0, b = 0, count = 0;
-        for (let i = 0; i < data.length; i += 4) {
-          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
-          if (brightness > 35 && brightness < 225) {
-            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
-          }
-        }
-        if (count > 0) {
-          r = Math.round(r / count);
-          g = Math.round(g / count);
-          b = Math.round(b / count);
-          const baseBg = `rgb(${Math.min(248, Math.round(226 + r * 0.08))}, ${Math.min(244, Math.round(222 + g * 0.08))}, ${Math.min(236, Math.round(212 + b * 0.08))})`;
-          const accentColor = `rgb(${Math.max(25, Math.round(r * 0.8))}, ${Math.max(25, Math.round(g * 0.8))}, ${Math.max(25, Math.round(g * 0.8))})`;
-          return { bg: baseBg, polaroid: "#FAF7F2", accent: accentColor, text: "#1E293B" };
-        }
-      } catch (e) {}
-      return { bg: "#F5EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
-    }
-
-    // 1-CLICK RESET TO DEFAULT FOR ALL 4 CARDS
-    function reset4CardsToDefault() {
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].pScale = 1.0;
-        cardCustoms[i].bScale = 1.0;
-        cardCustoms[i].bRot = i === 1 ? -5 : 0;
-        cardCustoms[i].nRot = 0;
-        cardCustoms[i].hasNoteBg = false;
-        cardCustoms[i].productPos = null;
-        cardCustoms[i].badgePos = null;
-        cardCustoms[i].notePos = null;
-
-        const p = document.getElementById(`pScale${i}`);
-        const b = document.getElementById(`bScale${i}`);
-        const r = document.getElementById(`bRot${i}`);
-        const nr = document.getElementById(`nRot${i}`);
-        if (p) p.value = 100;
-        if (b) b.value = 100;
-        if (r) r.value = i === 1 ? -5 : 0;
-        if (nr) nr.value = 0;
-
-        const pv = document.getElementById(`pScaleVal${i}`);
-        const bv = document.getElementById(`bScaleVal${i}`);
-        const rv = document.getElementById(`bRotVal${i}`);
-        const nrv = document.getElementById(`nRotVal${i}`);
-        if (pv) pv.innerText = "100%";
-        if (bv) bv.innerText = "100%";
-        if (rv) rv.innerText = i === 1 ? "-5°" : "0°";
-        if (nrv) nrv.innerText = "0°";
-      }
-      renderAll4CreatorCards();
-    }
-
-    function updateNoteRotation(cardNum) {
-      const el = document.getElementById(`nRot${cardNum}`);
-      if (!el) return;
-      cardCustoms[cardNum].nRot = parseInt(el.value);
-      document.getElementById(`nRotVal${cardNum}`).innerText = `${el.value}°`;
-      renderAll4CreatorCards();
-    }
-
-    function toggleNoteBg(cardNum) {
-      const cb = document.getElementById(`noteBg_${cardNum}`);
-      if (!cb) return;
-      cardCustoms[cardNum].hasNoteBg = cb.checked;
-      renderAll4CreatorCards();
-    }
-
-    function centerObjects(cardNum) {
-      cardCustoms[cardNum].productPos = null;
-      cardCustoms[cardNum].badgePos = null;
-      cardCustoms[cardNum].notePos = null;
-      renderAll4CreatorCards();
-    }
-
     function auditOcrSafety() {
       const textToScan = [
         document.getElementById('mainNoteInput').value,
@@ -1776,14 +2083,14 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
-    ['mainNoteInput', 'simpleValueInput', 'themePaletteSelect'].forEach(id => {
+    ['mainNoteInput', 'simpleValueInput'].forEach(id => {
       document.getElementById(id).addEventListener('input', () => {
         auditOcrSafety();
         renderAll4CreatorCards();
       });
     });
 
-    // RAW DEAL EXTRACTOR WITH DYNAMIC AI AFFIRMATIONS
+    // RAW DEAL EXTRACTOR (ZERO BANNED WORDS)
     document.getElementById('extractBtn').addEventListener('click', async () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
@@ -1814,14 +2121,11 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         saleClean,
         `Just ${saleClean} ✨`,
         `${saleClean.replace(/Shipped|Pickup/i, '').trim()} total`,
-        `All for ${saleClean}`,
-        unitClean ? `${unitClean} · ${saleClean}` : `Just ${saleClean} right now 👀`
+        `All for ${saleClean}`
       ];
 
-      if (wasMatch) {
-        valueTagOptions.push(`${saleClean} (was $${wasMatch[1].replace(' ', '.')})`);
-        valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
-      }
+      if (unitClean) valueTagOptions.unshift(`${unitClean} · ${saleClean}`);
+      if (wasMatch) valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
 
       valueTagIndex = 0;
       document.getElementById('simpleValueInput').value = valueTagOptions[0];
@@ -1838,7 +2142,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       if (key) {
         try {
           const prompt = `Based on this deal: "${raw.slice(0, 300)}"
-Generate exactly 4 unique, creative, positive human lifestyle observation notes (under 6 words each) suitable for a social post.
+Generate exactly 4 unique, creative, positive human observation notes (under 6 words each) suitable for social media.
 CRITICAL RULES:
 1. STRICT ZERO BANNED WORDS: Never use price, sale, deal, discount, steal, hurry, cheap, offer, buy, shop, savings, bargain.
 2. Return ONLY a valid JSON array of 4 strings: ["note 1", "note 2", "note 3", "note 4"]`;
@@ -1862,500 +2166,13 @@ CRITICAL RULES:
             }
           }
         } catch (e) {
-          console.log("Local affirmation active:", e);
+          console.log("Local affirmation fallback active:", e);
         }
       }
     });
 
-    const FIXED_PALETTES = {
-      warm_oatmeal: { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
-      sage_linen: { bg: "#E2E9DC", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
-      terracotta_autumn: { bg: "#EDDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
-      slate_blue: { bg: "#E8ECF0", polaroid: "#FFFFFF", accent: "#4A6B82", text: "#1A2530" }
-    };
-
-    function getFontFamily(fontKey) {
-      if (fontKey === "handwritten") return "'Caveat', cursive, sans-serif";
-      if (fontKey === "typewriter") return "'Courier Prime', monospace";
-      if (fontKey === "playful") return "'Fredoka', sans-serif";
-      if (fontKey === "editorial") return "'Playfair Display', serif";
-      return "'Plus Jakarta Sans', sans-serif";
-    }
-
     // ==========================================
-    // CANVA CREATOR ENGINE: DRAWS HERO OBJECTS & ACCENTS
-    // ==========================================
-    // BULLETPROOF RENDER DISPATCHER (PREVENTS SILENT BLACK CANVAS CRASHES)
-    function renderAll4CreatorCards() {
-      const fallbackImg = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : (rawLoadedImage || targetCanvas);
-      if (!chosen4Variants || chosen4Variants.length < 4) {
-        chosen4Variants = [
-          { id: 1, canvas: fallbackImg },
-          { id: 2, canvas: fallbackImg },
-          { id: 3, canvas: fallbackImg },
-          { id: 4, canvas: fallbackImg }
-        ];
-      }
-
-      const note = (document.getElementById('mainNoteInput')?.value || "Daily routine staple ✨").trim();
-      const val = (document.getElementById('simpleValueInput')?.value || "$17.49 Shipped").trim();
-      const themeKey = document.getElementById('themePaletteSelect')?.value || "crumpled_kraft";
-
-      const sampledPal = themeKey === "auto_sampled" 
-        ? sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg) 
-        : (FIXED_PALETTES[themeKey] || FIXED_PALETTES.warm_oatmeal);
-
-      for (let i = 1; i <= 4; i++) {
-        const c = document.getElementById(`cardCanvas${i}`);
-        if (!c) continue;
-
-        let src = chosen4Variants[i - 1]?.canvas;
-        if (!src || !src.width || src.width === 0) {
-          src = fallbackImg;
-        }
-
-        const conf = cardCustoms[i] || { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, bRot: 0, badgeBg: "sticky", accents: {} };
-        
-        try {
-          renderCardWithStyle(c, src, note, val, sampledPal, conf, i);
-        } catch (err) {
-          console.error(`Error rendering card ${i}:`, err);
-        }
-      }
-    }
-
-    function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
-      const ctx = c.getContext('2d');
-      const font = getFontFamily(conf.font);
-      const themeKey = document.getElementById('themePaletteSelect')?.value || "crumpled_kraft";
-
-      // Reset canvas coordinate transformations
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-      // LAYER 0: BASE SURFACE & CANVA TEXTURES (SAFE INLINE EXECUTION)
-      ctx.fillStyle = pal.bg || "#F5EFE6";
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      try {
-        if (themeKey === "crumpled_kraft") {
-          // Soft textured paper grain lines
-          ctx.save();
-          ctx.strokeStyle = "rgba(80, 50, 20, 0.07)";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(120, 80); ctx.lineTo(960, 220);
-          ctx.moveTo(80, 500); ctx.lineTo(1000, 420);
-          ctx.moveTo(160, 920); ctx.lineTo(920, 860);
-          ctx.stroke();
-
-          // Corner botanical vine
-          ctx.strokeStyle = pal.accent || "#B4845C";
-          ctx.fillStyle = pal.accent || "#B4845C";
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.moveTo(940, 40); ctx.quadraticCurveTo(1040, 80, 1040, 200);
-          ctx.stroke();
-          ctx.beginPath(); ctx.ellipse(970, 65, 12, 6, -0.5, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath(); ctx.ellipse(1020, 110, 12, 6, 0.4, 0, Math.PI * 2); ctx.fill();
-          ctx.restore();
-        } else if (themeKey === "window_shadow") {
-          // Warm window blinds cast shadow
-          ctx.save();
-          ctx.fillStyle = "rgba(40, 30, 20, 0.07)";
-          for (let y = -100; y < 1200; y += 150) {
-            ctx.fillRect(0, y, 1080, 70);
-          }
-          ctx.restore();
-        } else if (themeKey === "organic_waves") {
-          // Organic pastel wave
-          ctx.save();
-          ctx.fillStyle = pal.accent || "#C89567";
-          ctx.globalAlpha = 0.25;
-          ctx.beginPath();
-          ctx.moveTo(680, 0);
-          ctx.bezierCurveTo(760, 180, 900, 200, 1080, 140);
-          ctx.lineTo(1080, 0);
-          ctx.closePath();
-          ctx.fill();
-          ctx.restore();
-        } else if (themeKey === "grid_scrapbook") {
-          // Clean grid lines
-          ctx.save();
-          ctx.strokeStyle = "rgba(100, 120, 150, 0.12)";
-          ctx.lineWidth = 1;
-          for (let x = 0; x < 1080; x += 40) {
-            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
-          }
-          ctx.restore();
-        } else {
-          const grad = ctx.createRadialGradient(540, 480, 80, 540, 540, 720);
-          grad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
-          grad.addColorStop(1, "rgba(0, 0, 0, 0.08)");
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, 1080, 1080);
-        }
-      } catch (texErr) {
-        console.warn("Texture draw skipped:", texErr);
-      }
-
-      // LAYER 1: PRODUCT & HERO STAGING (DRAWN FIRST!)
-      ctx.save();
-      const pScale = conf.pScale || 1.0;
-      const pw = Math.round(760 * pScale);
-      const ph = Math.round(760 * pScale);
-
-      const px = conf.productPos ? conf.productPos.x : 540;
-      const py = conf.productPos ? conf.productPos.y : 490;
-
-      conf._activeProductBox = { x: px - pw / 2, y: py - ph / 2, w: pw, h: ph };
-
-      if (conf.style && conf.style.includes("polaroid")) {
-        ctx.translate(px, py);
-        ctx.rotate(-0.025);
-        ctx.fillStyle = "#FAF8F5";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 36;
-        ctx.shadowOffsetY = 18;
-        ctx.fillRect(-410, -390, 820, 890);
-        ctx.shadowColor = "transparent";
-
-        // Safe inline craft washi tape
-        ctx.save();
-        ctx.fillStyle = "rgba(235, 222, 204, 0.85)";
-        ctx.fillRect(-110, -410, 220, 44);
-        ctx.strokeStyle = "rgba(180, 150, 120, 0.35)";
-        ctx.lineWidth = 2;
-        for (let x = -100; x < 100; x += 16) {
-          ctx.beginPath(); ctx.moveTo(x, -410); ctx.lineTo(x, -366); ctx.stroke();
-        }
-        ctx.restore();
-
-        // Guaranteed product draw
-        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
-        if (drawSrc) {
-          ctx.drawImage(drawSrc, -pw / 2, -ph / 2 - 20, pw, ph);
-        }
-      } else if (conf.style && conf.style.includes("arch_niche")) {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
-        ctx.beginPath();
-        ctx.arc(px, py - 110, 350, Math.PI, 0, false);
-        ctx.lineTo(px + 350, py + 460);
-        ctx.lineTo(px - 350, py + 460);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 40;
-        ctx.shadowOffsetY = 20;
-        if (srcCanvas && srcCanvas.width > 0) {
-          ctx.drawImage(srcCanvas, px - (pw / 2), py - (ph / 2), pw, ph);
-        }
-      } else if (conf.style && conf.style.includes("notebook")) {
-        ctx.fillStyle = "#FEFCE8";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
-        ctx.shadowBlur = 30;
-        ctx.shadowOffsetY = 14;
-        ctx.fillRect(px - 420, py - 380, 840, 840);
-        ctx.shadowColor = "transparent";
-
-        ctx.strokeStyle = "rgba(234, 179, 8, 0.35)";
-        ctx.lineWidth = 1.5;
-        for (let y = py - 300; y < py + 420; y += 44) {
-          ctx.beginPath(); ctx.moveTo(px - 380, y); ctx.lineTo(px + 380, y); ctx.stroke();
-        }
-
-        drawPushPin(ctx, px, py - 380);
-
-        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
-        ctx.shadowBlur = 36;
-        ctx.shadowOffsetY = 18;
-        if (srcCanvas && srcCanvas.width > 0) {
-          ctx.drawImage(srcCanvas, px - (pw / 2), py - (ph / 2), pw, ph);
-        }
-      } else {
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 42;
-        ctx.shadowOffsetY = 22;
-        if (srcCanvas && srcCanvas.width > 0) {
-          ctx.drawImage(srcCanvas, px - (pw / 2), py - (ph / 2), pw, ph);
-        }
-      }
-      ctx.restore();
-
-      // LAYER 2: LABELS & BADGES (ON TOP!)
-      ctx.save();
-      const bScale = conf.bScale || 1.0;
-
-      // Note Text
-      const nx = conf.notePos ? conf.notePos.x : 540;
-      const ny = conf.notePos ? conf.notePos.y : 950;
-      ctx.font = `bold ${Math.round(32 * bScale)}px ${font}`;
-      const noteMetrics = ctx.measureText(note);
-      const nw = noteMetrics.width + 48;
-      const nh = 60;
-      conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
-
-      ctx.save();
-      ctx.translate(nx, ny);
-      ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
-
-      if (conf.hasNoteBg) {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-        ctx.shadowColor = "rgba(0,0,0,0.12)";
-        ctx.shadowBlur = 12;
-        ctx.beginPath();
-        ctx.roundRect(-nw / 2, -nh / 2, nw, nh, 14);
-        ctx.fill();
-        ctx.shadowColor = "transparent";
-      }
-
-      ctx.fillStyle = pal.text || "#1E293B";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 0, 10);
-      ctx.restore();
-
-      // Value Badge
-      if (val) {
-        ctx.font = `bold ${Math.round(28 * bScale)}px ${font}`;
-        const valMetrics = ctx.measureText(val);
-        const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48);
-        const boxH = Math.round(64 * bScale);
-
-        let defBx = 240, defBy = 150;
-        if (conf.style && conf.style.includes("bottom")) { defBx = 540; defBy = 930; }
-
-        const bx = conf.badgePos ? conf.badgePos.x : defBx;
-        const by = conf.badgePos ? conf.badgePos.y : defBy;
-        conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
-
-        ctx.save();
-        ctx.translate(bx, by);
-        ctx.rotate(((conf.bRot || 0) * Math.PI) / 180);
-
-        const bStyle = conf.badgeBg || "sticky";
-
-        if (bStyle === "sticky") {
-          ctx.fillStyle = "#FEF08A";
-          ctx.shadowColor = "rgba(0,0,0,0.22)";
-          ctx.shadowBlur = 18;
-          ctx.shadowOffsetY = 6;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
-          ctx.fill();
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "kraft") {
-          ctx.fillStyle = "#C49A6C";
-          ctx.shadowColor = "rgba(0,0,0,0.2)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
-          ctx.fill();
-          ctx.fillStyle = "#FAF8F5";
-          ctx.beginPath();
-          ctx.arc(-boxW / 2 + 18, 0, 6, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = "#FFFFFF";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 8, 9 * bScale);
-        } else if (bStyle === "pill") {
-          ctx.fillStyle = "#FAF8F5";
-          ctx.shadowColor = "rgba(0,0,0,0.18)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
-          ctx.fill();
-          ctx.fillStyle = pal.text || "#1E293B";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "dark_pill") {
-          ctx.fillStyle = "#0F172A";
-          ctx.shadowColor = "rgba(0,0,0,0.25)";
-          ctx.shadowBlur = 18;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
-          ctx.fill();
-          ctx.fillStyle = "#FFFFFF";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "highlighter") {
-          ctx.fillStyle = "rgba(253, 224, 71, 0.85)";
-          ctx.fillRect(-boxW / 2, -boxH / 2, boxW, boxH);
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else {
-          ctx.fillStyle = pal.text || "#1E293B";
-          ctx.textAlign = "center";
-          ctx.shadowColor = "rgba(255,255,255,0.85)";
-          ctx.shadowBlur = 8;
-          ctx.fillText(val, 0, 9 * bScale);
-        }
-
-        // Accents
-        if (conf.accents && conf.accents.loop) {
-          ctx.strokeStyle = "#DC2626";
-          ctx.lineWidth = 4.5;
-          ctx.beginPath();
-          ctx.ellipse(0, 2, (boxW / 2) + 14, (boxH / 2) + 9, -0.04, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-
-        if (conf.accents && conf.accents.arrow) {
-          drawMarkerArrow(ctx, -boxW / 2 - 25, -55, -boxW / 2 + 8, -boxH / 2);
-          drawMarkerArrow(ctx, -boxW / 2 - 5, -70, -boxW / 2 + 20, -boxH / 2 - 4);
-          drawMarkerArrow(ctx, -boxW / 2 + 20, -75, -boxW / 2 + 35, -boxH / 2 - 8);
-        }
-
-        if (conf.accents && conf.accents.eye) {
-          ctx.save();
-          ctx.font = `${Math.round(40 * bScale)}px sans-serif`;
-          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
-          ctx.restore();
-        }
-
-        if (conf.accents && conf.accents.heart) {
-          drawHeartArrow(ctx, (boxW / 2) + 20, -boxH / 2 - 10);
-        }
-
-        ctx.restore();
-      }
-
-      ctx.restore();
-    }
-
-    // RESTORED MISSING ARROW HELPER FUNCTION
-    function drawMarkerArrow(ctx, fromx, fromy, tox, toy) {
-      const headlen = 14;
-      const dx = tox - fromx;
-      const dy = toy - fromy;
-      const angle = Math.atan2(dy, dx);
-      ctx.save();
-      ctx.fillStyle = "#DC2626";
-      ctx.strokeStyle = "#DC2626";
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(fromx, fromy);
-      ctx.lineTo(tox, toy);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(tox, toy);
-      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // MULTI-OBJECT CANVAS DRAGGING LISTENERS
-    function setupCanvasDragListeners() {
-      for (let i = 1; i <= 4; i++) {
-        const wrap = document.getElementById(`wrap${i}`);
-        const canvas = document.getElementById(`cardCanvas${i}`);
-
-        wrap.addEventListener("mousedown", (e) => {
-          if (e.target.tagName === 'BUTTON') return;
-          const r = canvas.getBoundingClientRect();
-          const mouseX = (e.clientX - r.left) * (1080 / r.width);
-          const mouseY = (e.clientY - r.top) * (1080 / r.height);
-
-          const c = cardCustoms[i];
-          let hitTarget = null;
-
-          if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) {
-            hitTarget = "badge";
-          } else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) {
-            hitTarget = "note";
-          } else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) {
-            hitTarget = "product";
-          } else {
-            hitTarget = "badge";
-          }
-
-          draggingState = { active: true, cardNum: i, target: hitTarget, startX: mouseX, startY: mouseY };
-        });
-
-        window.addEventListener("mousemove", (e) => {
-          if (!draggingState.active || draggingState.cardNum !== i) return;
-          const r = canvas.getBoundingClientRect();
-          const mouseX = Math.max(60, Math.min(1020, (e.clientX - r.left) * (1080 / r.width)));
-          const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
-
-          if (draggingState.target === "badge") {
-            cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
-          } else if (draggingState.target === "note") {
-            cardCustoms[i].notePos = { x: mouseX, y: mouseY };
-          } else if (draggingState.target === "product") {
-            cardCustoms[i].productPos = { x: mouseX, y: mouseY };
-          }
-          renderAll4CreatorCards();
-        });
-
-        window.addEventListener("mouseup", () => {
-          if (draggingState.active) {
-            draggingState.active = false;
-            draggingState.cardNum = null;
-            draggingState.target = null;
-          }
-        });
-      }
-    }
-
-   // BULLETPROOF STEP 2 -> STEP 3 TRANSITION HANDLER
-    function proceedToStep3() {
-      // Ensure we have 4 valid variant canvases to prevent silent aborts
-      if (!chosen4Variants || chosen4Variants.length < 4) {
-        const fallbackSource = sanitizedCanvasSnapshot || outputCanvas || targetCanvas;
-        if (fallbackSource && fallbackSource.width > 0) {
-          chosen4Variants = [
-            { id: 1, name: "Base", canvas: fallbackSource },
-            { id: 2, name: "Base", canvas: fallbackSource },
-            { id: 3, name: "Base", canvas: fallbackSource },
-            { id: 4, name: "Base", canvas: fallbackSource }
-          ];
-        } else {
-          return alert("Please upload or choose a product image first!");
-        }
-      }
-
-      navToStep(3);
-      try {
-        renderAll4CreatorCards();
-      } catch (err) {
-        console.error("Card rendering notice:", err);
-      }
-    }
-    // ==========================================
-    // ZOOM LIGHTBOX MODAL
-    // ==========================================
-    function openZoomModal(canvasId, title) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      activeModalCanvasId = canvasId;
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalImg').src = canvas.toDataURL('image/png');
-      document.getElementById('zoomModal').classList.remove('hidden');
-    }
-
-    function closeZoomModal() {
-      document.getElementById('zoomModal').classList.add('hidden');
-      activeModalCanvasId = null;
-    }
-
-    document.getElementById('modalDownloadBtn').addEventListener('click', () => {
-      if (activeModalCanvasId) {
-        downloadSingleCard(activeModalCanvasId, 'inspected_deal_card');
-      }
-    });
-
-    document.getElementById('zoomModal').addEventListener('click', (e) => {
-      if (e.target.id === 'zoomModal') closeZoomModal();
-    });
-
-    // ==========================================
-    // DOWNLOAD HELPERS (AUTOMATICALLY SCRUBS METADATA)
+    // DOWNLOAD HELPERS (SCRUBS PROVENANCE METADATA)
     // ==========================================
     function downloadCanvasData(dataUrl, filename) {
       const link = document.createElement('a');
@@ -2364,15 +2181,16 @@ CRITICAL RULES:
       link.click();
     }
 
-    function downloadSingleCard(canvasId, name) {
-      const c = document.getElementById(canvasId);
-      downloadCanvasData(c.toDataURL('image/png'), name);
+    function downloadActiveCard() {
+      const c = document.getElementById(`cardCanvas${activeCardIndex}`);
+      if (c) downloadCanvasData(c.toDataURL('image/png'), `deal_card_${activeCardIndex}`);
     }
 
     document.getElementById('downloadAllCardsBtn').addEventListener('click', () => {
       ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => {
         setTimeout(() => {
-          downloadSingleCard(id, `deal_creator_card_${i+1}`);
+          const c = document.getElementById(id);
+          if (c) downloadCanvasData(c.toDataURL('image/png'), `deal_card_${i+1}`);
         }, i * 250);
       });
     });
