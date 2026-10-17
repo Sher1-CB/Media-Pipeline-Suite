@@ -1686,25 +1686,18 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         const data = sCtx.getImageData(0, 0, 24, 24).data;
 
         let r = 0, g = 0, b = 0, count = 0;
-        let hues = [];
-
         for (let i = 0; i < data.length; i += 4) {
           const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
-          // Filter out pure white, pure black & washed out grey
           if (brightness > 35 && brightness < 225) {
             r += data[i]; g += data[i+1]; b += data[i+2]; count++;
-            hues.push([data[i], data[i+1], data[i+2]]);
           }
         }
         if (count > 0) {
           r = Math.round(r / count);
           g = Math.round(g / count);
           b = Math.round(b / count);
-
-          // Contrast Harmony: Warm Rich Pastel Base (never washed out grey)
           const baseBg = `rgb(${Math.min(248, Math.round(226 + r * 0.08))}, ${Math.min(244, Math.round(222 + g * 0.08))}, ${Math.min(236, Math.round(212 + b * 0.08))})`;
-          const accentColor = `rgb(${Math.max(25, Math.round(r * 0.8))}, ${Math.max(25, Math.round(g * 0.8))}, ${Math.max(25, Math.round(b * 0.8))})`;
-
+          const accentColor = `rgb(${Math.max(25, Math.round(r * 0.8))}, ${Math.max(25, Math.round(g * 0.8))}, ${Math.max(25, Math.round(g * 0.8))})`;
           return { bg: baseBg, polaroid: "#FAF7F2", accent: accentColor, text: "#1E293B" };
         }
       } catch (e) {}
@@ -1766,6 +1759,147 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
+    function auditOcrSafety() {
+      const textToScan = [
+        document.getElementById('mainNoteInput').value,
+        document.getElementById('simpleValueInput').value
+      ].join(' ').toLowerCase();
+
+      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
+      const banner = document.getElementById('ocrWarningBanner');
+      if (hits.length > 0) {
+        document.getElementById('ocrWarningText').innerText = `Banned words detected: "${hits.join(', ')}". Replace them to prevent shadowbans!`;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    ['mainNoteInput', 'simpleValueInput', 'themePaletteSelect'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        auditOcrSafety();
+        renderAll4CreatorCards();
+      });
+    });
+
+    // RAW DEAL EXTRACTOR WITH DYNAMIC AI AFFIRMATIONS
+    document.getElementById('extractBtn').addEventListener('click', async () => {
+      const raw = document.getElementById('rawDealPaste').value;
+      if (!raw) return;
+
+      const rLower = raw.toLowerCase();
+
+      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
+        activeCategory = "lawn_garden";
+      } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
+        activeCategory = "beauty_personal";
+      } else if (rLower.includes('clean') || rLower.includes('kitchen') || rLower.includes('pantry') || rLower.includes('detergent') || rLower.includes('wipe') || rLower.includes('towel')) {
+        activeCategory = "home_kitchen";
+      } else {
+        activeCategory = "general";
+      }
+
+      const pool = AFFIRMATIONS[activeCategory];
+      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+
+      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
+      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
+      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
+
+      const saleClean = saleMatch ? saleMatch[0].trim().replace(/\bcomplete\b/gi, '').trim() : "$16.79 Shipped";
+      const unitClean = unitMatch ? unitMatch[0].trim() : "";
+
+      valueTagOptions = [
+        saleClean,
+        `Just ${saleClean} ✨`,
+        `${saleClean.replace(/Shipped|Pickup/i, '').trim()} total`,
+        `All for ${saleClean}`,
+        unitClean ? `${unitClean} · ${saleClean}` : `Just ${saleClean} right now 👀`
+      ];
+
+      if (wasMatch) {
+        valueTagOptions.push(`${saleClean} (was $${wasMatch[1].replace(' ', '.')})`);
+        valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
+      }
+
+      valueTagIndex = 0;
+      document.getElementById('simpleValueInput').value = valueTagOptions[0];
+
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].badgePos = null;
+        cardCustoms[i].notePos = null;
+      }
+
+      auditOcrSafety();
+      renderAll4CreatorCards();
+
+      const key = apiKeyInput.value.trim();
+      if (key) {
+        try {
+          const prompt = `Based on this deal: "${raw.slice(0, 300)}"
+Generate exactly 4 unique, creative, positive human lifestyle observation notes (under 6 words each) suitable for a social post.
+CRITICAL RULES:
+1. STRICT ZERO BANNED WORDS: Never use price, sale, deal, discount, steal, hurry, cheap, offer, buy, shop, savings, bargain.
+2. Return ONLY a valid JSON array of 4 strings: ["note 1", "note 2", "note 3", "note 4"]`;
+
+          const payload = {
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
+          };
+
+          const aiData = await callGeminiLeapingMesh(key, payload);
+          let rawTxt = aiData.candidates[0]?.content?.parts[0]?.text || "[]";
+          rawTxt = rawTxt.replace(/```json/gi, '').replace(/```/g, '').trim();
+          const parsed = JSON.parse(rawTxt);
+
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const safeChips = parsed.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
+            if (safeChips.length > 0) {
+              renderAiChips(safeChips);
+              document.getElementById('mainNoteInput').value = safeChips[0];
+              renderAll4CreatorCards();
+            }
+          }
+        } catch (e) {
+          console.log("Local affirmation active:", e);
+        }
+      }
+    });
+
+    const FIXED_PALETTES = {
+      warm_oatmeal: { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" },
+      sage_linen: { bg: "#E2E9DC", polaroid: "#F6F8F5", accent: "#6B8E62", text: "#243520" },
+      terracotta_autumn: { bg: "#EDDCD2", polaroid: "#FBF7F5", accent: "#B85D36", text: "#422115" },
+      slate_blue: { bg: "#E8ECF0", polaroid: "#FFFFFF", accent: "#4A6B82", text: "#1A2530" }
+    };
+
+    function getFontFamily(fontKey) {
+      if (fontKey === "handwritten") return "'Caveat', cursive, sans-serif";
+      if (fontKey === "typewriter") return "'Courier Prime', monospace";
+      if (fontKey === "playful") return "'Fredoka', sans-serif";
+      if (fontKey === "editorial") return "'Playfair Display', serif";
+      return "'Plus Jakarta Sans', sans-serif";
+    }
+
+    // ==========================================
+    // CANVA CREATOR ENGINE: DRAWS HERO OBJECTS & ACCENTS
+    // ==========================================
+    function renderAll4CreatorCards() {
+      if (chosen4Variants.length < 4) return;
+
+      const note = document.getElementById('mainNoteInput').value.trim();
+      const val = document.getElementById('simpleValueInput').value.trim();
+      const themeKey = document.getElementById('themePaletteSelect').value;
+      const sampledPal = themeKey === "auto_sampled" ? sampleColorsFromCanvas(chosen4Variants[0].canvas) : (FIXED_PALETTES[themeKey] || FIXED_PALETTES.warm_oatmeal);
+
+      for (let i = 1; i <= 4; i++) {
+        const c = document.getElementById(`cardCanvas${i}`);
+        const srcCanvas = chosen4Variants[i - 1].canvas;
+        const conf = cardCustoms[i];
+        renderCardWithStyle(c, srcCanvas, note, val, sampledPal, conf, i);
+      }
+    }
+
     // ==========================================
     // CANVA CREATOR ENGINE: HERO STAGING & MULTI-OBJECT DRAG
     // ==========================================
@@ -1804,7 +1938,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const px = conf.productPos ? conf.productPos.x : 540;
       const py = conf.productPos ? conf.productPos.y : 490;
 
-      // Register bounds for product dragging
       conf._activeProductBox = { x: px - pw / 2, y: py - ph / 2, w: pw, h: ph };
 
       if (conf.style.includes("polaroid")) {
@@ -1819,7 +1952,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
         drawGinghamWashiTape(ctx, 0, -400, 240, 48);
 
-        // Always respect original image pixels (never crop out manual covers/roses!)
+        // Retains 100% of uploaded pixels (never crops pre-made covers/roses!)
         ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
       } else if (conf.style.includes("arch_niche")) {
         ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
@@ -1862,10 +1995,10 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.restore();
 
       // 3. HARDWARE & CANVA ACCENTS (CLIPS & PINS)
-      if (conf.accents.clip) {
+      if (conf.accents && conf.accents.clip) {
         drawBrassPaperclip(ctx, px - 280, py - 360);
       }
-      if (conf.accents.pin) {
+      if (conf.accents && conf.accents.pin) {
         drawPushPin(ctx, px + 280, py - 370);
       }
 
@@ -1990,7 +2123,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         }
 
         // RUN ACCENTS
-        if (conf.accents.loop) {
+        if (conf.accents && conf.accents.loop) {
           ctx.save();
           ctx.strokeStyle = "#DC2626";
           ctx.lineWidth = 4.5;
@@ -2003,7 +2136,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.restore();
         }
 
-        if (conf.accents.arrow) {
+        if (conf.accents && conf.accents.arrow) {
           ctx.save();
           ctx.fillStyle = "#DC2626";
           ctx.strokeStyle = "#DC2626";
@@ -2014,14 +2147,14 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.restore();
         }
 
-        if (conf.accents.eye) {
+        if (conf.accents && conf.accents.eye) {
           ctx.save();
           ctx.font = `${Math.round(42 * conf.bScale)}px sans-serif`;
           ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
           ctx.restore();
         }
 
-        if (conf.accents.heart) {
+        if (conf.accents && conf.accents.heart) {
           drawHeartArrow(ctx, (boxW / 2) + 20, -boxH / 2 - 10);
         }
 
@@ -2065,16 +2198,11 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           const c = cardCustoms[i];
           let hitTarget = null;
 
-          // Check hit on Badge
           if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) {
             hitTarget = "badge";
-          }
-          // Check hit on Note
-          else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) {
+          } else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) {
             hitTarget = "note";
-          }
-          // Check hit on Product
-          else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) {
+          } else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) {
             hitTarget = "product";
           } else {
             hitTarget = "badge";
@@ -2104,412 +2232,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
             draggingState.active = false;
             draggingState.cardNum = null;
             draggingState.target = null;
-          }
-        });
-      }
-    }
-
-      // ==========================================
-      // LAYER 1: PRODUCT & STAGED MATS (HERO COVERAGE 75%-85%)
-      // ==========================================
-      ctx.save();
-      const pw = 800 * conf.pScale;
-      const ph = 800 * conf.pScale;
-
-      if (conf.style.includes("polaroid")) {
-        // Tilted Polaroid Mat
-        ctx.translate(540, 480);
-        ctx.rotate(-0.025);
-        ctx.fillStyle = "#FAF8F5";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 36;
-        ctx.shadowOffsetY = 18;
-        ctx.fillRect(-420, -400, 840, 920);
-        ctx.shadowColor = "transparent";
-
-        drawGinghamWashiTape(ctx, 0, -400, 240, 48);
-
-        if (isPrivacyMode) {
-          ctx.save();
-          ctx.beginPath();
-          ctx.rect(-pw / 2, -ph / 2, pw, ph);
-          ctx.clip();
-          ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw, ph);
-          ctx.restore();
-        } else {
-          ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
-        }
-      } else if (conf.style.includes("arch_niche")) {
-        // Architectural Arch Niche
-        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-        ctx.beginPath();
-        ctx.arc(540, 380, 360, Math.PI, 0, false);
-        ctx.lineTo(900, 960);
-        ctx.lineTo(180, 960);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 40;
-        ctx.shadowOffsetY = 20;
-        ctx.drawImage(srcCanvas, 540 - (pw / 2), 480 - (ph / 2), pw, ph);
-      } else if (conf.style.includes("notebook")) {
-        // Lined Memo Sheet
-        ctx.fillStyle = "#FEFCE8";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
-        ctx.shadowBlur = 30;
-        ctx.shadowOffsetY = 14;
-        ctx.fillRect(100, 100, 880, 880);
-        ctx.shadowColor = "transparent";
-
-        ctx.strokeStyle = "rgba(234, 179, 8, 0.3)";
-        ctx.lineWidth = 1.5;
-        for (let y = 180; y < 940; y += 44) {
-          ctx.beginPath(); ctx.moveTo(140, y); ctx.lineTo(940, y); ctx.stroke();
-        }
-
-        drawPushPin(ctx, 540, 100);
-
-        ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
-        ctx.shadowBlur = 32;
-        ctx.shadowOffsetY = 16;
-        ctx.drawImage(srcCanvas, 540 - (pw / 2), 490 - (ph / 2), pw, ph);
-      } else {
-        // High-end elevated studio staging
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 46;
-        ctx.shadowOffsetY = 24;
-        ctx.drawImage(srcCanvas, 540 - (pw / 2), 480 - (ph / 2), pw, ph);
-      }
-      ctx.restore();
-
-      // ==========================================
-      // LAYER 2: LABELS & BADGES (ALWAYS DRAWN ON TOP!)
-      // ==========================================
-      ctx.save();
-
-      // AFFIRMATION NOTE
-      const noteX = conf.notePos ? conf.notePos.x : 540;
-      const noteY = conf.notePos ? conf.notePos.y : 950;
-      ctx.fillStyle = pal.text;
-      ctx.font = `bold ${Math.round(34 * conf.bScale)}px ${font}`;
-      ctx.textAlign = "center";
-      ctx.fillText(note, noteX, noteY);
-
-      // VALUE BADGE WITH INDEPENDENT ROTATION & BG TOGGLE
-      if (val) {
-        ctx.font = `bold ${Math.round(28 * conf.bScale)}px ${font}`;
-        const valMetrics = ctx.measureText(val);
-        const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48); // TIGHT AUTO-FIT!
-        const boxH = Math.round(64 * conf.bScale);
-
-        let defBx = 240, defBy = 150;
-        if (conf.style.includes("bottom")) { defBx = 540; defBy = 930; }
-
-        const bx = conf.badgePos ? conf.badgePos.x : defBx;
-        const by = conf.badgePos ? conf.badgePos.y : defBy;
-
-        conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
-
-        ctx.save();
-        ctx.translate(bx, by);
-        ctx.rotate((conf.bRot * Math.PI) / 180);
-
-        // BADGE BACKGROUND STYLES
-        if (conf.badgeBg === "sticky") {
-          ctx.fillStyle = "#FEF08A";
-          ctx.shadowColor = "rgba(0,0,0,0.22)";
-          ctx.shadowBlur = 18;
-          ctx.shadowOffsetY = 6;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
-          ctx.fill();
-
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * conf.bScale);
-        } else if (conf.badgeBg === "kraft") {
-          ctx.fillStyle = "#C49A6C";
-          ctx.shadowColor = "rgba(0,0,0,0.2)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
-          ctx.fill();
-
-          ctx.fillStyle = "#FAF8F5";
-          ctx.beginPath();
-          ctx.arc(-boxW / 2 + 18, 0, 6, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.fillStyle = "#FFFFFF";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 8, 9 * conf.bScale);
-        } else if (conf.badgeBg === "pill") {
-          ctx.fillStyle = "#FAF8F5";
-          ctx.shadowColor = "rgba(0,0,0,0.18)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
-          ctx.fill();
-
-          ctx.fillStyle = pal.text;
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * conf.bScale);
-        } else {
-          // Transparent: Text only floating on canvas
-          ctx.fillStyle = pal.text;
-          ctx.textAlign = "center";
-          ctx.shadowColor = "rgba(255,255,255,0.8)";
-          ctx.shadowBlur = 8;
-          ctx.fillText(val, 0, 9 * conf.bScale);
-        }
-
-        // ==========================================
-        // MIX & MATCH RUN ACCENTS
-        // ==========================================
-        if (conf.accents.loop) {
-          ctx.save();
-          ctx.strokeStyle = "#DC2626";
-          ctx.lineWidth = 4.5;
-          ctx.beginPath();
-          ctx.ellipse(0, 2, (boxW / 2) + 14, (boxH / 2) + 9, -0.04, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.ellipse(2, 4, (boxW / 2) + 16, (boxH / 2) + 11, 0.03, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.restore();
-        }
-
-        if (conf.accents.arrow) {
-          ctx.save();
-          ctx.fillStyle = "#DC2626";
-          ctx.strokeStyle = "#DC2626";
-          ctx.lineWidth = 4;
-          drawMarkerArrow(ctx, -boxW / 2 - 25, -55, -boxW / 2 + 8, -boxH / 2);
-          drawMarkerArrow(ctx, -boxW / 2 - 5, -70, -boxW / 2 + 20, -boxH / 2 - 4);
-          drawMarkerArrow(ctx, -boxW / 2 + 20, -75, -boxW / 2 + 35, -boxH / 2 - 8);
-          ctx.restore();
-        }
-
-        if (conf.accents.eye) {
-          ctx.save();
-          ctx.font = `${Math.round(42 * conf.bScale)}px sans-serif`;
-          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
-          ctx.restore();
-        }
-
-        if (conf.accents.heart) {
-          drawHeartArrow(ctx, (boxW / 2) + 20, -boxH / 2 - 10);
-        }
-
-        ctx.restore();
-      }
-
-      ctx.restore();
-    }
-
-    function drawMarkerArrow(ctx, fromx, fromy, tox, toy) {
-      const headlen = 14;
-      const dx = tox - fromx;
-      const dy = toy - fromy;
-      const angle = Math.atan2(dy, dx);
-      ctx.beginPath();
-      ctx.moveTo(fromx, fromy);
-      ctx.lineTo(tox, toy);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(tox, toy);
-      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    function drawHeartArrow(ctx, x, y) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.strokeStyle = "#DC2626";
-      ctx.fillStyle = "#DC2626";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(-30, 10);
-      ctx.quadraticCurveTo(0, -10, 20, -5);
-      ctx.stroke();
-      // Mini heart
-      ctx.beginPath();
-      ctx.arc(24, -8, 6, 0, Math.PI * 2);
-      ctx.arc(32, -8, 6, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // PROCEDURAL CANVA DECORATORS
-    function drawCrumpledPaperTexture(ctx) {
-      ctx.save();
-      ctx.strokeStyle = "rgba(80, 50, 20, 0.08)";
-      ctx.lineWidth = 2.5;
-      for (let i = 0; i < 10; i++) {
-        ctx.beginPath();
-        ctx.moveTo(Math.random() * 1080, Math.random() * 1080);
-        ctx.lineTo(Math.random() * 1080, Math.random() * 1080);
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    function drawBotanicalCornerVines(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
-      ctx.lineWidth = 3;
-
-      ctx.beginPath();
-      ctx.moveTo(940, 40);
-      ctx.quadraticCurveTo(1040, 80, 1040, 200);
-      ctx.stroke();
-
-      const leaves = [[970, 65, -0.5], [1020, 110, 0.4], [1038, 160, -0.2]];
-      leaves.forEach(([lx, ly, rot]) => {
-        ctx.save();
-        ctx.translate(lx, ly);
-        ctx.rotate(rot);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 14, 7, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      ctx.beginPath();
-      ctx.moveTo(140, 1040);
-      ctx.quadraticCurveTo(40, 1000, 40, 880);
-      ctx.stroke();
-
-      ctx.restore();
-    }
-
-    function drawGinghamWashiTape(ctx, cx, cy, w, h) {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(0.015);
-
-      ctx.fillStyle = "rgba(235, 222, 204, 0.85)";
-      ctx.fillRect(-w / 2, -h / 2, w, h);
-
-      ctx.strokeStyle = "rgba(180, 150, 120, 0.4)";
-      ctx.lineWidth = 2.5;
-      for (let x = -w / 2 + 12; x < w / 2; x += 16) {
-        ctx.beginPath(); ctx.moveTo(x, -h / 2); ctx.lineTo(x, h / 2); ctx.stroke();
-      }
-      for (let y = -h / 2 + 8; y < h / 2; y += 14) {
-        ctx.beginPath(); ctx.moveTo(-w / 2, y); ctx.lineTo(w / 2, y); ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    function drawOrganicCornerWaves(ctx, accentColor) {
-      ctx.save();
-      ctx.fillStyle = accentColor;
-      ctx.globalAlpha = 0.4;
-
-      ctx.beginPath();
-      ctx.moveTo(680, 0);
-      ctx.bezierCurveTo(760, 180, 900, 200, 1080, 140);
-      ctx.lineTo(1080, 0);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(0, 760);
-      ctx.bezierCurveTo(200, 820, 260, 960, 180, 1080);
-      ctx.lineTo(0, 1080);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.restore();
-    }
-
-    function drawWindowBlindsShadow(ctx) {
-      ctx.save();
-      ctx.fillStyle = "rgba(40, 30, 20, 0.09)";
-      for (let y = -100; y < 1200; y += 150) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(1080, y + 260);
-        ctx.lineTo(1080, y + 340);
-        ctx.lineTo(0, y + 80);
-        ctx.closePath();
-        ctx.fill();
-      }
-      ctx.restore();
-    }
-
-    function drawGridPaperPattern(ctx) {
-      ctx.save();
-      ctx.strokeStyle = "rgba(100, 120, 150, 0.15)";
-      ctx.lineWidth = 1;
-      for (let x = 0; x < 1080; x += 40) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
-      }
-      for (let y = 0; y < 1080; y += 40) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080); ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    function drawPushPin(ctx, x, y) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.fillStyle = "#A88B7B";
-      ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-      ctx.shadowBlur = 12;
-      ctx.shadowOffsetY = 6;
-
-      ctx.beginPath();
-      ctx.arc(0, -12, 16, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(-9, -4);
-      ctx.lineTo(9, -4);
-      ctx.lineTo(3, 18);
-      ctx.lineTo(-3, 18);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // ==========================================
-    // INTERACTIVE CANVAS CLICK & DRAG TO MOVE
-    // ==========================================
-    function setupCanvasDragListeners() {
-      for (let i = 1; i <= 4; i++) {
-        const wrap = document.getElementById(`wrap${i}`);
-        const canvas = document.getElementById(`cardCanvas${i}`);
-
-        wrap.addEventListener("mousedown", (e) => {
-          if (e.target.tagName === 'BUTTON') return;
-          const r = canvas.getBoundingClientRect();
-          const mouseX = (e.clientX - r.left) * (1080 / r.width);
-          const mouseY = (e.clientY - r.top) * (1080 / r.height);
-
-          draggingState = { active: true, cardNum: i, startX: mouseX, startY: mouseY };
-        });
-
-        window.addEventListener("mousemove", (e) => {
-          if (!draggingState.active || draggingState.cardNum !== i) return;
-          const r = canvas.getBoundingClientRect();
-          const mouseX = Math.max(80, Math.min(1000, (e.clientX - r.left) * (1080 / r.width)));
-          const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
-
-          cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
-          renderAll4CreatorCards();
-        });
-
-        window.addEventListener("mouseup", () => {
-          if (draggingState.active) {
-            draggingState.active = false;
-            draggingState.cardNum = null;
           }
         });
       }
