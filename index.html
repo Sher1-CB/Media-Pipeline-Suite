@@ -2237,6 +2237,15 @@ CRITICAL RULES:
       }
     }
 
+    // RESTORE STEP 2 -> STEP 3 TRANSITION BUTTON
+    const goToStep3Btn = document.getElementById('goToStep3Btn');
+    if (goToStep3Btn) {
+      goToStep3Btn.addEventListener('click', () => {
+        renderAll4CreatorCards();
+        navToStep(3);
+      });
+    }
+
     // ==========================================
     // ZOOM LIGHTBOX MODAL
     // ==========================================
