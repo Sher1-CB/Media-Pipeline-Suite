@@ -690,11 +690,102 @@
     let valueTagIndex = 0;
 
     // ==========================================
+    // DYNAMIC MODEL DISCOVERY: 2ND LATEST LITE
+    // ==========================================
+    function parseModelVersion(name) {
+      const match = name.match(/(\d+)(?:\.(\d+))?/);
+      if (!match) return 0;
+      const major = parseInt(match[1]) || 0;
+      const minor = parseInt(match[2]) || 0;
+      return major * 100 + minor;
+    }
+
+    async function autoDetectModels(key) {
+      if (!key) return;
+      const modelSelect = document.getElementById('modelSelect');
+      if (!modelSelect) return;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
+        const data = await res.json();
+        
+        if (!data.models || !Array.isArray(data.models)) {
+          console.warn("Google API returned no models:", data);
+          return;
+        }
+
+        // 1. Filter strictly for Gemini models that support generateContent
+        const validModels = data.models
+          .filter(m => (m.supportedGenerationMethods || []).includes("generateContent") && m.name.includes("gemini"))
+          .map(m => m.name.replace("models/", ""))
+          .filter(n => !n.includes("preview") && !n.includes("exp"));
+
+        // 2. Sort all models by true numerical version (Newest to Oldest)
+        validModels.sort((a, b) => parseModelVersion(b) - parseModelVersion(a));
+
+        // 3. Extract pure LITE models
+        const liteModels = validModels.filter(m => m.toLowerCase().includes("lite"));
+
+        // 4. Select exactly the 2nd latest LITE (index 1)
+        if (liteModels.length >= 2) {
+          window.n1Lite = liteModels[1];
+        } else if (liteModels.length === 1) {
+          window.n1Lite = liteModels[0];
+        } else {
+          const flashModels = validModels.filter(m => m.includes("flash"));
+          window.n1Lite = flashModels.length >= 2 ? flashModels[1] : flashModels[0];
+        }
+
+        // 5. Populate dropdown with live models
+        modelSelect.innerHTML = "";
+        validModels.forEach(m => {
+          const opt = document.createElement("option");
+          opt.value = m;
+          opt.textContent = m + (m === window.n1Lite ? " (★ 2nd Latest LITE)" : "");
+          modelSelect.appendChild(opt);
+        });
+
+        // 6. Respect saved choice or default to 2nd latest LITE
+        const savedManualChoice = localStorage.getItem('deal_gemini_model');
+        if (savedManualChoice && modelSelect.querySelector(`option[value="${savedManualChoice}"]`)) {
+          modelSelect.value = savedManualChoice;
+        } else if (window.n1Lite && modelSelect.querySelector(`option[value="${window.n1Lite}"]`)) {
+          modelSelect.value = window.n1Lite;
+        }
+      } catch (err) {
+        console.warn("Live model query notice:", err);
+      }
+    }
+
+    // ==========================================
     // INITIALIZATION & DRAGGING SETUP
     // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
       setupCanvasDragListeners();
       generateProceduralDeck();
+
+      // Check saved key and run auto-detection immediately
+      const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
+      const keyInput = document.getElementById('apiKeyInput');
+      if (savedKey && keyInput) {
+        keyInput.value = savedKey;
+        autoDetectModels(savedKey);
+      }
+
+      if (keyInput) {
+        keyInput.addEventListener('input', (e) => {
+          const val = e.target.value.trim();
+          localStorage.setItem('deal_gemini_key', val);
+          if (val) autoDetectModels(val);
+        });
+      }
+
+      const modelSelect = document.getElementById('modelSelect');
+      if (modelSelect) {
+        modelSelect.addEventListener('change', (e) => {
+          localStorage.setItem('deal_gemini_model', e.target.value);
+        });
+      }
     });
 
     // ==========================================
