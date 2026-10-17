@@ -383,15 +383,15 @@
 
           <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Color Palette & Surface</label>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Canva Aesthetic Texture & Frame</label>
               <button type="button" onclick="reRollCardStyles()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase">🔀 Re-Roll Styles</button>
             </div>
             <select id="themePaletteSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
-              <option value="auto_sampled" selected>🎨 Auto-Sample Packaging Colors</option>
-              <option value="warm_oatmeal">Warm Oatmeal & Cream</option>
-              <option value="sage_linen">Sage Green & Linen</option>
-              <option value="terracotta_autumn">Autumn Terracotta & Earth</option>
-              <option value="slate_blue">Oat-Slate & Cool Grey</option>
+              <option value="crumpled_kraft" selected>📜 Crumpled Kraft & Vines (Canva Best)</option>
+              <option value="organic_waves">🌊 Organic Pastel Waves & Blob</option>
+              <option value="window_shadow">🪴 Window Sunbeam & Palm Shadow</option>
+              <option value="grid_scrapbook">📐 Grid Washi Tape & Pushpin</option>
+              <option value="auto_sampled">🎨 Auto-Sample Packaging Colors</option>
             </select>
           </div>
         </div>
@@ -1758,135 +1758,117 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
+    // CANVA AESTHETIC GRAPHICS & PROCEDURAL DECORATORS
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
-      const style = conf.style;
       const font = getFontFamily(conf.font);
+      const themeKey = document.getElementById('themePaletteSelect').value;
 
-      // BASE BACKGROUND MAT (LAYER 0)
+      // ==========================================
+      // LAYER 0: CANVA TEXTURES & AESTHETIC BACKGROUNDS
+      // ==========================================
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Soft ambient light gradient
-      const grad = ctx.createRadialGradient(540, 480, 100, 540, 540, 680);
-      grad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
-      grad.addColorStop(1, "rgba(0, 0, 0, 0.06)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      // ==========================================
-      // LAYER 1: PRODUCT & BACKGROUND STAGING (DRAWN FIRST!)
-      // ==========================================
-      ctx.save();
-      // HERO SCALE: Generous 72% - 82% coverage
-      const pw = 760 * conf.pScale;
-      const ph = 760 * conf.pScale;
-
-      if (style.includes("split_horizon")) {
-        ctx.fillStyle = pal.polaroid;
-        ctx.fillRect(0, 0, 1080, 700);
-        ctx.strokeStyle = "rgba(0,0,0,0.06)";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(0, 700); ctx.lineTo(1080, 700);
-        ctx.stroke();
-      } else if (style.includes("notebook")) {
-        ctx.fillStyle = "#FFFFFF";
-        ctx.shadowColor = "rgba(0,0,0,0.12)";
-        ctx.shadowBlur = 24;
-        ctx.shadowOffsetY = 10;
-        ctx.beginPath();
-        ctx.roundRect(80, 80, 920, 920, 16);
-        ctx.fill();
-        ctx.shadowColor = "transparent";
-
-        // Ruled lines & binder holes
-        ctx.strokeStyle = "rgba(226, 232, 240, 0.8)";
-        ctx.lineWidth = 1.5;
-        for (let y = 160; y < 960; y += 48) {
-          ctx.beginPath(); ctx.moveTo(120, y); ctx.lineTo(960, y); ctx.stroke();
-        }
-        ctx.fillStyle = pal.bg;
-        for (let x = 160; x < 940; x += 70) {
-          ctx.beginPath(); ctx.arc(x, 110, 8, 0, Math.PI * 2); ctx.fill();
-        }
-      } else if (style.includes("polaroid")) {
-        ctx.translate(540, 480);
-        ctx.rotate(-0.03);
-        ctx.fillStyle = pal.polaroid;
-        ctx.shadowColor = "rgba(0,0,0,0.18)";
-        ctx.shadowBlur = 30;
-        ctx.shadowOffsetY = 16;
-        ctx.fillRect(-380, -380, 760, 860);
-        ctx.shadowColor = "transparent";
+      if (themeKey === "crumpled_kraft") {
+        drawCrumpledPaperTexture(ctx, pal.bg);
+        drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
+      } else if (themeKey === "organic_waves") {
+        drawOrganicCornerWaves(ctx, pal.accent || "#C89567");
+      } else if (themeKey === "window_shadow") {
+        drawWindowBlindsShadow(ctx);
+      } else if (themeKey === "grid_scrapbook") {
+        drawGridPaperPattern(ctx);
+      } else {
+        const grad = ctx.createRadialGradient(540, 480, 80, 540, 540, 720);
+        grad.addColorStop(0, "rgba(255, 255, 255, 0.45)");
+        grad.addColorStop(1, "rgba(0, 0, 0, 0.08)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 1080, 1080);
       }
 
-      // PRODUCT DRAW WITH AMBIENT GROUND SHADOW
-      if (isPrivacyMode) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(-pw / 2, -ph / 2, pw, ph, 24);
-        ctx.clip();
-        ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw, ph);
-        ctx.restore();
-      } else {
-        if (style.includes("polaroid")) {
-          // Realistic product drop shadow
-          ctx.shadowColor = "rgba(0,0,0,0.12)";
-          ctx.shadowBlur = 20;
-          ctx.shadowOffsetY = 12;
-          ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+      // ==========================================
+      // LAYER 1: PRODUCT & STAGED MATS (ALWAYS DRAWN FIRST!)
+      // ==========================================
+      ctx.save();
+      const pw = 740 * conf.pScale;
+      const ph = 740 * conf.pScale;
+
+      if (conf.style.includes("polaroid") || themeKey === "crumpled_kraft") {
+        ctx.translate(540, 490);
+        ctx.rotate(-0.025);
+        ctx.fillStyle = "#FAF8F5";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+        ctx.shadowBlur = 36;
+        ctx.shadowOffsetY = 18;
+        ctx.fillRect(-380, -370, 760, 840);
+        ctx.shadowColor = "transparent";
+
+        drawGinghamWashiTape(ctx, 0, -370, 220, 44);
+
+        if (isPrivacyMode) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(-pw / 2, -ph / 2, pw, ph);
+          ctx.clip();
+          ctx.drawImage(srcCanvas, srcCanvas.width * 0.25, srcCanvas.height * 0.2, srcCanvas.width * 0.5, srcCanvas.height * 0.5, -pw / 2, -ph / 2, pw, ph);
+          ctx.restore();
         } else {
-          // Centered hero staging
-          ctx.shadowColor = "rgba(0,0,0,0.16)";
-          ctx.shadowBlur = 36;
-          ctx.shadowOffsetY = 20;
-          ctx.drawImage(srcCanvas, 540 - (pw / 2), 500 - (ph / 2), pw, ph);
+          ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
         }
+      } else {
+        ctx.save();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+        ctx.shadowBlur = 42;
+        ctx.shadowOffsetY = 22;
+        ctx.drawImage(srcCanvas, 540 - (pw / 2), 490 - (ph / 2), pw, ph);
+        ctx.restore();
       }
       ctx.restore();
 
       // ==========================================
-      // LAYER 2: LABELS, BADGES & RUN ACCENTS (ALWAYS ON TOP!)
+      // LAYER 2: DECORATIVE CANVA HARDWARE & ACCENTS
+      // ==========================================
+      if (themeKey === "grid_scrapbook") {
+        drawPushPin(ctx, 540, 100);
+      } else if (themeKey === "crumpled_kraft") {
+        drawPaperAirplaneTrail(ctx, 160, 140);
+      }
+
+      // ==========================================
+      // LAYER 3: LABELS, BADGES & RUN ACCENTS (ALWAYS ON TOP!)
       // ==========================================
       ctx.save();
 
-      // NOTE TEXT (DRAGGED OR AUTO-PLACED)
       const noteX = conf.notePos ? conf.notePos.x : 540;
-      const noteY = conf.notePos ? conf.notePos.y : (style.includes("polaroid") ? 910 : (style.includes("kraft_tag") ? 960 : 950));
+      const noteY = conf.notePos ? conf.notePos.y : 940;
 
       ctx.fillStyle = pal.text;
       ctx.font = `bold ${Math.round(32 * conf.bScale)}px ${font}`;
       ctx.textAlign = "center";
       ctx.fillText(note, noteX, noteY);
 
-      // PRICE / VALUE BADGE (DRAGGED OR AUTO-PLACED)
       if (val) {
         ctx.font = `bold ${Math.round(26 * conf.bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(640, textW + 48); // EXACT TIGHT FIT!
+        const boxW = Math.min(640, textW + 48);
         const boxH = Math.round(62 * conf.bScale);
 
-        let defBx = 540, defBy = 940;
-        if (style.includes("kraft_tag")) { defBx = 220; defBy = 120; }
-        else if (style.includes("notebook")) { defBx = 960 - (boxW / 2); defBy = 170; }
-        else if (style.includes("polaroid")) { defBx = 960 - (boxW / 2); defBy = 930; }
+        let defBx = 220, defBy = 140;
+        if (conf.style.includes("bottom")) { defBx = 540; defBy = 930; }
 
         const bx = conf.badgePos ? conf.badgePos.x : defBx;
         const by = conf.badgePos ? conf.badgePos.y : defBy;
 
-        // Bounding box for drag listeners
         conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
 
         ctx.save();
         ctx.translate(bx, by);
 
-        // BADGE BACKGROUND
         if (conf.accents.sticky || currentDealMode === 'run') {
-          // High-Visibility Neon Post-It Sticky Note
           ctx.fillStyle = "#FEF08A";
-          ctx.shadowColor = "rgba(0,0,0,0.22)";
+          ctx.shadowColor = "rgba(0,0,0,0.24)";
           ctx.shadowBlur = 18;
           ctx.shadowOffsetY = 6;
           ctx.beginPath();
@@ -1896,36 +1878,11 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.fillStyle = "#0F172A";
           ctx.textAlign = "center";
           ctx.fillText(val, 0, 8 * conf.bScale);
-        } else if (style.includes("kraft_tag")) {
-          // Brown Luggage Tag
-          ctx.fillStyle = "#C49A6C";
-          ctx.shadowColor = "rgba(0,0,0,0.18)";
-          ctx.shadowBlur = 14;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
-          ctx.fill();
-
-          ctx.fillStyle = "#FAF8F5";
-          ctx.beginPath();
-          ctx.arc(-boxW / 2 + 16, 0, 6, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.fillStyle = "#FFFFFF";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 8, 8 * conf.bScale);
-        } else if (style.includes("notebook")) {
-          // Yellow Highlighter Strip
-          ctx.fillStyle = "rgba(253, 224, 71, 0.85)";
-          ctx.fillRect(-boxW / 2, -boxH / 2, boxW, boxH);
-
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 8 * conf.bScale);
         } else {
-          // Clean Floating Rounded Pill
-          ctx.fillStyle = pal.polaroid;
-          ctx.shadowColor = "rgba(0,0,0,0.16)";
+          ctx.fillStyle = "#FAF8F5";
+          ctx.shadowColor = "rgba(0,0,0,0.18)";
           ctx.shadowBlur = 16;
+          ctx.shadowOffsetY = 4;
           ctx.beginPath();
           ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
           ctx.fill();
@@ -1936,9 +1893,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         }
 
         // ==========================================
-        // MIX & MATCH ACCENTS (CONTROLLED DIRECTLY BY CHECKBOXES!)
+        // RUN ACCENTS (RED ARROWS, SHARPIE LOOP, EYE STAMP)
         // ==========================================
-        // 1. Hand-Drawn Red Sharpie Marker Loop
         if (conf.accents.loop) {
           ctx.save();
           ctx.strokeStyle = "#DC2626";
@@ -1952,7 +1908,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.restore();
         }
 
-        // 2. Triple Red Marker Arrows pointing directly down to badge
         if (conf.accents.arrow) {
           ctx.save();
           ctx.fillStyle = "#DC2626";
@@ -1964,17 +1919,165 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.restore();
         }
 
-        // 3. Floating Eye Stamp (👀)
         if (conf.accents.eye) {
           ctx.save();
-          ctx.font = `${Math.round(42 * conf.bScale)}px sans-serif`;
-          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
+          ctx.font = `${Math.round(40 * conf.bScale)}px sans-serif`;
+          ctx.fillText("👀", (boxW / 2) + 12, -boxH / 2 + 10);
           ctx.restore();
         }
 
         ctx.restore();
       }
 
+      ctx.restore();
+    }
+
+    // ==========================================
+    // PROCEDURAL CANVA DECORATIVE DRAWING FUNCTIONS
+    // ==========================================
+    function drawBotanicalCornerVines(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2.5;
+
+      ctx.beginPath();
+      ctx.moveTo(960, 40);
+      ctx.quadraticCurveTo(1040, 80, 1040, 180);
+      ctx.stroke();
+
+      const leaves = [[990, 65, -0.5], [1025, 110, 0.4], [1038, 150, -0.2]];
+      leaves.forEach(([lx, ly, rot]) => {
+        ctx.save();
+        ctx.translate(lx, ly);
+        ctx.rotate(rot);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 12, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      ctx.beginPath();
+      ctx.moveTo(120, 1040);
+      ctx.quadraticCurveTo(40, 1000, 40, 900);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawGinghamWashiTape(ctx, cx, cy, w, h) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(0.015);
+
+      ctx.fillStyle = "rgba(235, 222, 204, 0.82)";
+      ctx.fillRect(-w / 2, -h / 2, w, h);
+
+      ctx.strokeStyle = "rgba(180, 150, 120, 0.35)";
+      ctx.lineWidth = 2;
+      for (let x = -w / 2 + 12; x < w / 2; x += 14) {
+        ctx.beginPath(); ctx.moveTo(x, -h / 2); ctx.lineTo(x, h / 2); ctx.stroke();
+      }
+      for (let y = -h / 2 + 8; y < h / 2; y += 12) {
+        ctx.beginPath(); ctx.moveTo(-w / 2, y); ctx.lineTo(w / 2, y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawOrganicCornerWaves(ctx, accentColor) {
+      ctx.save();
+      ctx.fillStyle = accentColor;
+      ctx.globalAlpha = 0.35;
+
+      ctx.beginPath();
+      ctx.moveTo(700, 0);
+      ctx.bezierCurveTo(780, 160, 920, 180, 1080, 120);
+      ctx.lineTo(1080, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(0, 780);
+      ctx.bezierCurveTo(180, 840, 240, 980, 160, 1080);
+      ctx.lineTo(0, 1080);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawWindowBlindsShadow(ctx) {
+      ctx.save();
+      ctx.fillStyle = "rgba(40, 30, 20, 0.08)";
+      for (let y = -100; y < 1200; y += 140) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(1080, y + 240);
+        ctx.lineTo(1080, y + 310);
+        ctx.lineTo(0, y + 70);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawGridPaperPattern(ctx) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(100, 120, 150, 0.12)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x < 1080; x += 36) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
+      }
+      for (let y = 0; y < 1080; y += 36) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(0, 1080); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawPushPin(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.fillStyle = "#A88B7B";
+      ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetY = 6;
+
+      ctx.beginPath();
+      ctx.arc(0, -12, 14, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(-8, -4);
+      ctx.lineTo(8, -4);
+      ctx.lineTo(2, 16);
+      ctx.lineTo(-2, 16);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawPaperAirplaneTrail(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.strokeStyle = "rgba(100, 100, 100, 0.4)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 6]);
+
+      ctx.beginPath();
+      ctx.arc(-40, 20, 30, 0, Math.PI * 1.5);
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#FFFFFF";
+      ctx.strokeStyle = "#94A3B8";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(32, -10);
+      ctx.lineTo(14, 22);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
       ctx.restore();
     }
 
