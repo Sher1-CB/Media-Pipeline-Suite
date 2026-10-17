@@ -1676,15 +1676,438 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
+    // DUAL-TIER PACKAGING COLOR & CONTRAST HARMONIZER
     function sampleColorsFromCanvas(canvas) {
       try {
         const s = document.createElement("canvas");
-        s.width = 16; s.height = 16;
+        s.width = 24; s.height = 24;
         const sCtx = s.getContext("2d");
-        sCtx.drawImage(canvas, 0, 0, 16, 16);
-        const data = sCtx.getImageData(0, 0, 16, 16).data;
-...
-    // All the way down to end of function renderCardWithStyle
+        sCtx.drawImage(canvas, 0, 0, 24, 24);
+        const data = sCtx.getImageData(0, 0, 24, 24).data;
+
+        let r = 0, g = 0, b = 0, count = 0;
+        let hues = [];
+
+        for (let i = 0; i < data.length; i += 4) {
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          // Filter out pure white, pure black & washed out grey
+          if (brightness > 35 && brightness < 225) {
+            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+            hues.push([data[i], data[i+1], data[i+2]]);
+          }
+        }
+        if (count > 0) {
+          r = Math.round(r / count);
+          g = Math.round(g / count);
+          b = Math.round(b / count);
+
+          // Contrast Harmony: Warm Rich Pastel Base (never washed out grey)
+          const baseBg = `rgb(${Math.min(248, Math.round(226 + r * 0.08))}, ${Math.min(244, Math.round(222 + g * 0.08))}, ${Math.min(236, Math.round(212 + b * 0.08))})`;
+          const accentColor = `rgb(${Math.max(25, Math.round(r * 0.8))}, ${Math.max(25, Math.round(g * 0.8))}, ${Math.max(25, Math.round(b * 0.8))})`;
+
+          return { bg: baseBg, polaroid: "#FAF7F2", accent: accentColor, text: "#1E293B" };
+        }
+      } catch (e) {}
+      return { bg: "#F5EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
+    }
+
+    // 1-CLICK RESET TO DEFAULT FOR ALL 4 CARDS
+    function reset4CardsToDefault() {
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].pScale = 1.0;
+        cardCustoms[i].bScale = 1.0;
+        cardCustoms[i].bRot = i === 1 ? -5 : 0;
+        cardCustoms[i].nRot = 0;
+        cardCustoms[i].hasNoteBg = false;
+        cardCustoms[i].productPos = null;
+        cardCustoms[i].badgePos = null;
+        cardCustoms[i].notePos = null;
+
+        const p = document.getElementById(`pScale${i}`);
+        const b = document.getElementById(`bScale${i}`);
+        const r = document.getElementById(`bRot${i}`);
+        const nr = document.getElementById(`nRot${i}`);
+        if (p) p.value = 100;
+        if (b) b.value = 100;
+        if (r) r.value = i === 1 ? -5 : 0;
+        if (nr) nr.value = 0;
+
+        const pv = document.getElementById(`pScaleVal${i}`);
+        const bv = document.getElementById(`bScaleVal${i}`);
+        const rv = document.getElementById(`bRotVal${i}`);
+        const nrv = document.getElementById(`nRotVal${i}`);
+        if (pv) pv.innerText = "100%";
+        if (bv) bv.innerText = "100%";
+        if (rv) rv.innerText = i === 1 ? "-5°" : "0°";
+        if (nrv) nrv.innerText = "0°";
+      }
+      renderAll4CreatorCards();
+    }
+
+    function updateNoteRotation(cardNum) {
+      const el = document.getElementById(`nRot${cardNum}`);
+      if (!el) return;
+      cardCustoms[cardNum].nRot = parseInt(el.value);
+      document.getElementById(`nRotVal${cardNum}`).innerText = `${el.value}°`;
+      renderAll4CreatorCards();
+    }
+
+    function toggleNoteBg(cardNum) {
+      const cb = document.getElementById(`noteBg_${cardNum}`);
+      if (!cb) return;
+      cardCustoms[cardNum].hasNoteBg = cb.checked;
+      renderAll4CreatorCards();
+    }
+
+    function centerObjects(cardNum) {
+      cardCustoms[cardNum].productPos = null;
+      cardCustoms[cardNum].badgePos = null;
+      cardCustoms[cardNum].notePos = null;
+      renderAll4CreatorCards();
+    }
+
+    // ==========================================
+    // CANVA CREATOR ENGINE: HERO STAGING & MULTI-OBJECT DRAG
+    // ==========================================
+    function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
+      const ctx = c.getContext('2d');
+      const font = getFontFamily(conf.font);
+      const themeKey = document.getElementById('themePaletteSelect').value;
+
+      // 1. BACKGROUND SURFACE & TEXTURE
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      if (themeKey === "crumpled_kraft") {
+        drawCrumpledPaperTexture(ctx);
+        drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
+      } else if (themeKey === "window_shadow") {
+        drawWindowBlindsShadow(ctx);
+        drawBotanicalCornerVines(ctx, "rgba(70, 50, 30, 0.35)");
+      } else if (themeKey === "organic_waves") {
+        drawOrganicCornerWaves(ctx, pal.accent || "#C89567");
+      } else if (themeKey === "grid_scrapbook") {
+        drawGridPaperPattern(ctx);
+      } else {
+        const grad = ctx.createRadialGradient(540, 480, 80, 540, 540, 720);
+        grad.addColorStop(0, "rgba(255, 255, 255, 0.45)");
+        grad.addColorStop(1, "rgba(0, 0, 0, 0.08)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 1080, 1080);
+      }
+
+      // 2. PRODUCT HERO STAGING (MOVABLE & HERO SCALE 75%-85%)
+      ctx.save();
+      const pw = 800 * conf.pScale;
+      const ph = 800 * conf.pScale;
+
+      const px = conf.productPos ? conf.productPos.x : 540;
+      const py = conf.productPos ? conf.productPos.y : 490;
+
+      // Register bounds for product dragging
+      conf._activeProductBox = { x: px - pw / 2, y: py - ph / 2, w: pw, h: ph };
+
+      if (conf.style.includes("polaroid")) {
+        ctx.translate(px, py);
+        ctx.rotate(-0.025);
+        ctx.fillStyle = "#FAF8F5";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+        ctx.shadowBlur = 36;
+        ctx.shadowOffsetY = 18;
+        ctx.fillRect(-420, -400, 840, 920);
+        ctx.shadowColor = "transparent";
+
+        drawGinghamWashiTape(ctx, 0, -400, 240, 48);
+
+        // Always respect original image pixels (never crop out manual covers/roses!)
+        ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+      } else if (conf.style.includes("arch_niche")) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
+        ctx.beginPath();
+        ctx.arc(px, py - 110, 360, Math.PI, 0, false);
+        ctx.lineTo(px + 360, py + 480);
+        ctx.lineTo(px - 360, py + 480);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
+        ctx.shadowBlur = 42;
+        ctx.shadowOffsetY = 20;
+        ctx.drawImage(srcCanvas, px - (pw / 2), py - (ph / 2), pw, ph);
+      } else if (conf.style.includes("notebook")) {
+        ctx.fillStyle = "#FEFCE8";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
+        ctx.shadowBlur = 30;
+        ctx.shadowOffsetY = 14;
+        ctx.fillRect(px - 440, py - 400, 880, 880);
+        ctx.shadowColor = "transparent";
+
+        ctx.strokeStyle = "rgba(234, 179, 8, 0.3)";
+        ctx.lineWidth = 1.5;
+        for (let y = py - 320; y < py + 450; y += 44) {
+          ctx.beginPath(); ctx.moveTo(px - 400, y); ctx.lineTo(px + 400, y); ctx.stroke();
+        }
+        drawPushPin(ctx, px, py - 400);
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+        ctx.shadowBlur = 36;
+        ctx.shadowOffsetY = 18;
+        ctx.drawImage(srcCanvas, px - (pw / 2), py - (ph / 2), pw, ph);
+      } else {
+        ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
+        ctx.shadowBlur = 48;
+        ctx.shadowOffsetY = 24;
+        ctx.drawImage(srcCanvas, px - (pw / 2), py - (ph / 2), pw, ph);
+      }
+      ctx.restore();
+
+      // 3. HARDWARE & CANVA ACCENTS (CLIPS & PINS)
+      if (conf.accents.clip) {
+        drawBrassPaperclip(ctx, px - 280, py - 360);
+      }
+      if (conf.accents.pin) {
+        drawPushPin(ctx, px + 280, py - 370);
+      }
+
+      // 4. NOTE / AFFIRMATION (ROTATABLE, MOVABLE & BG TOGGLE)
+      ctx.save();
+      const nx = conf.notePos ? conf.notePos.x : 540;
+      const ny = conf.notePos ? conf.notePos.y : 950;
+      const nRot = conf.nRot || 0;
+
+      ctx.font = `bold ${Math.round(34 * conf.bScale)}px ${font}`;
+      const noteMetrics = ctx.measureText(note);
+      const nw = noteMetrics.width + 48;
+      const nh = 60;
+
+      conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
+
+      ctx.translate(nx, ny);
+      ctx.rotate((nRot * Math.PI) / 180);
+
+      if (conf.hasNoteBg) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+        ctx.shadowColor = "rgba(0,0,0,0.12)";
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.roundRect(-nw / 2, -nh / 2, nw, nh, 14);
+        ctx.fill();
+        ctx.shadowColor = "transparent";
+      }
+
+      ctx.fillStyle = pal.text;
+      ctx.textAlign = "center";
+      ctx.fillText(note, 0, 10);
+      ctx.restore();
+
+      // 5. VALUE BADGE (EXPANDED STYLES & ROTATABLE)
+      if (val) {
+        ctx.save();
+        ctx.font = `bold ${Math.round(28 * conf.bScale)}px ${font}`;
+        const valMetrics = ctx.measureText(val);
+        const textW = valMetrics.width;
+        const boxW = Math.min(680, textW + 48); // TIGHT FIT
+        const boxH = Math.round(64 * conf.bScale);
+
+        let defBx = 240, defBy = 150;
+        if (conf.style.includes("bottom")) { defBx = 540; defBy = 930; }
+
+        const bx = conf.badgePos ? conf.badgePos.x : defBx;
+        const by = conf.badgePos ? conf.badgePos.y : defBy;
+
+        conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
+
+        ctx.translate(bx, by);
+        ctx.rotate(((conf.bRot || 0) * Math.PI) / 180);
+
+        const bStyle = conf.badgeBg || "sticky";
+
+        if (bStyle === "sticky") {
+          ctx.fillStyle = "#FEF08A";
+          ctx.shadowColor = "rgba(0,0,0,0.22)";
+          ctx.shadowBlur = 18;
+          ctx.shadowOffsetY = 6;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
+          ctx.fill();
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        } else if (bStyle === "kraft") {
+          ctx.fillStyle = "#C49A6C";
+          ctx.shadowColor = "rgba(0,0,0,0.2)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
+          ctx.fill();
+          ctx.fillStyle = "#FAF8F5";
+          ctx.beginPath();
+          ctx.arc(-boxW / 2 + 18, 0, 6, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = "#FFFFFF";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 8, 9 * conf.bScale);
+        } else if (bStyle === "pill") {
+          ctx.fillStyle = "#FAF8F5";
+          ctx.shadowColor = "rgba(0,0,0,0.18)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
+          ctx.fill();
+          ctx.fillStyle = pal.text;
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        } else if (bStyle === "dark_pill") {
+          ctx.fillStyle = "#0F172A";
+          ctx.shadowColor = "rgba(0,0,0,0.25)";
+          ctx.shadowBlur = 18;
+          ctx.beginPath();
+          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
+          ctx.fill();
+          ctx.fillStyle = "#FFFFFF";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        } else if (bStyle === "hairline") {
+          ctx.strokeStyle = pal.text;
+          ctx.lineWidth = 2.5;
+          ctx.strokeRect(-boxW / 2, -boxH / 2, boxW, boxH);
+          ctx.fillStyle = pal.text;
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        } else if (bStyle === "highlighter") {
+          ctx.fillStyle = "rgba(253, 224, 71, 0.85)";
+          ctx.fillRect(-boxW / 2, -boxH / 2, boxW, boxH);
+          ctx.fillStyle = "#0F172A";
+          ctx.textAlign = "center";
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        } else {
+          // Transparent (text only)
+          ctx.fillStyle = pal.text;
+          ctx.textAlign = "center";
+          ctx.shadowColor = "rgba(255,255,255,0.85)";
+          ctx.shadowBlur = 8;
+          ctx.fillText(val, 0, 9 * conf.bScale);
+        }
+
+        // RUN ACCENTS
+        if (conf.accents.loop) {
+          ctx.save();
+          ctx.strokeStyle = "#DC2626";
+          ctx.lineWidth = 4.5;
+          ctx.beginPath();
+          ctx.ellipse(0, 2, (boxW / 2) + 14, (boxH / 2) + 9, -0.04, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.ellipse(2, 4, (boxW / 2) + 16, (boxH / 2) + 11, 0.03, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        if (conf.accents.arrow) {
+          ctx.save();
+          ctx.fillStyle = "#DC2626";
+          ctx.strokeStyle = "#DC2626";
+          ctx.lineWidth = 4;
+          drawMarkerArrow(ctx, -boxW / 2 - 25, -55, -boxW / 2 + 8, -boxH / 2);
+          drawMarkerArrow(ctx, -boxW / 2 - 5, -70, -boxW / 2 + 20, -boxH / 2 - 4);
+          drawMarkerArrow(ctx, -boxW / 2 + 20, -75, -boxW / 2 + 35, -boxH / 2 - 8);
+          ctx.restore();
+        }
+
+        if (conf.accents.eye) {
+          ctx.save();
+          ctx.font = `${Math.round(42 * conf.bScale)}px sans-serif`;
+          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
+          ctx.restore();
+        }
+
+        if (conf.accents.heart) {
+          drawHeartArrow(ctx, (boxW / 2) + 20, -boxH / 2 - 10);
+        }
+
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+
+    function drawBrassPaperclip(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(-0.15);
+      ctx.strokeStyle = "#B4845C";
+      ctx.lineWidth = 4.5;
+      ctx.shadowColor = "rgba(0,0,0,0.25)";
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.moveTo(0, 45);
+      ctx.lineTo(0, -25);
+      ctx.arc(10, -25, 10, Math.PI, 0, false);
+      ctx.lineTo(20, 35);
+      ctx.arc(10, 35, 10, 0, Math.PI, false);
+      ctx.lineTo(0, 15);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // MULTI-OBJECT CANVAS DRAGGING LISTENERS
+    function setupCanvasDragListeners() {
+      for (let i = 1; i <= 4; i++) {
+        const wrap = document.getElementById(`wrap${i}`);
+        const canvas = document.getElementById(`cardCanvas${i}`);
+
+        wrap.addEventListener("mousedown", (e) => {
+          if (e.target.tagName === 'BUTTON') return;
+          const r = canvas.getBoundingClientRect();
+          const mouseX = (e.clientX - r.left) * (1080 / r.width);
+          const mouseY = (e.clientY - r.top) * (1080 / r.height);
+
+          const c = cardCustoms[i];
+          let hitTarget = null;
+
+          // Check hit on Badge
+          if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) {
+            hitTarget = "badge";
+          }
+          // Check hit on Note
+          else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) {
+            hitTarget = "note";
+          }
+          // Check hit on Product
+          else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) {
+            hitTarget = "product";
+          } else {
+            hitTarget = "badge";
+          }
+
+          draggingState = { active: true, cardNum: i, target: hitTarget, startX: mouseX, startY: mouseY };
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!draggingState.active || draggingState.cardNum !== i) return;
+          const r = canvas.getBoundingClientRect();
+          const mouseX = Math.max(60, Math.min(1020, (e.clientX - r.left) * (1080 / r.width)));
+          const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
+
+          if (draggingState.target === "badge") {
+            cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
+          } else if (draggingState.target === "note") {
+            cardCustoms[i].notePos = { x: mouseX, y: mouseY };
+          } else if (draggingState.target === "product") {
+            cardCustoms[i].productPos = { x: mouseX, y: mouseY };
+          }
+          renderAll4CreatorCards();
+        });
+
+        window.addEventListener("mouseup", () => {
+          if (draggingState.active) {
+            draggingState.active = false;
+            draggingState.cardNum = null;
+            draggingState.target = null;
+          }
+        });
+      }
+    }
 
       // ==========================================
       // LAYER 1: PRODUCT & STAGED MATS (HERO COVERAGE 75%-85%)
