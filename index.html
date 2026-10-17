@@ -1932,26 +1932,70 @@ CRITICAL RULES:
       // Reset canvas coordinate transformations
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // LAYER 0: BASE SURFACE & CANVA TEXTURES
+      // LAYER 0: BASE SURFACE & CANVA TEXTURES (SAFE INLINE EXECUTION)
       ctx.fillStyle = pal.bg || "#F5EFE6";
       ctx.fillRect(0, 0, 1080, 1080);
 
-      if (themeKey === "crumpled_kraft") {
-        drawCrumpledPaperTexture(ctx);
-        drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
-      } else if (themeKey === "window_shadow") {
-        drawWindowBlindsShadow(ctx);
-        drawBotanicalCornerVines(ctx, "rgba(70, 50, 30, 0.35)");
-      } else if (themeKey === "organic_waves") {
-        drawOrganicCornerWaves(ctx, pal.accent || "#C89567");
-      } else if (themeKey === "grid_scrapbook") {
-        drawGridPaperPattern(ctx);
-      } else {
-        const grad = ctx.createRadialGradient(540, 480, 80, 540, 540, 720);
-        grad.addColorStop(0, "rgba(255, 255, 255, 0.45)");
-        grad.addColorStop(1, "rgba(0, 0, 0, 0.08)");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 1080, 1080);
+      try {
+        if (themeKey === "crumpled_kraft") {
+          // Soft textured paper grain lines
+          ctx.save();
+          ctx.strokeStyle = "rgba(80, 50, 20, 0.07)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(120, 80); ctx.lineTo(960, 220);
+          ctx.moveTo(80, 500); ctx.lineTo(1000, 420);
+          ctx.moveTo(160, 920); ctx.lineTo(920, 860);
+          ctx.stroke();
+
+          // Corner botanical vine
+          ctx.strokeStyle = pal.accent || "#B4845C";
+          ctx.fillStyle = pal.accent || "#B4845C";
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(940, 40); ctx.quadraticCurveTo(1040, 80, 1040, 200);
+          ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(970, 65, 12, 6, -0.5, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.ellipse(1020, 110, 12, 6, 0.4, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+        } else if (themeKey === "window_shadow") {
+          // Warm window blinds cast shadow
+          ctx.save();
+          ctx.fillStyle = "rgba(40, 30, 20, 0.07)";
+          for (let y = -100; y < 1200; y += 150) {
+            ctx.fillRect(0, y, 1080, 70);
+          }
+          ctx.restore();
+        } else if (themeKey === "organic_waves") {
+          // Organic pastel wave
+          ctx.save();
+          ctx.fillStyle = pal.accent || "#C89567";
+          ctx.globalAlpha = 0.25;
+          ctx.beginPath();
+          ctx.moveTo(680, 0);
+          ctx.bezierCurveTo(760, 180, 900, 200, 1080, 140);
+          ctx.lineTo(1080, 0);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        } else if (themeKey === "grid_scrapbook") {
+          // Clean grid lines
+          ctx.save();
+          ctx.strokeStyle = "rgba(100, 120, 150, 0.12)";
+          ctx.lineWidth = 1;
+          for (let x = 0; x < 1080; x += 40) {
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
+          }
+          ctx.restore();
+        } else {
+          const grad = ctx.createRadialGradient(540, 480, 80, 540, 540, 720);
+          grad.addColorStop(0, "rgba(255, 255, 255, 0.4)");
+          grad.addColorStop(1, "rgba(0, 0, 0, 0.08)");
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, 1080, 1080);
+        }
+      } catch (texErr) {
+        console.warn("Texture draw skipped:", texErr);
       }
 
       // LAYER 1: PRODUCT & HERO STAGING (DRAWN FIRST!)
@@ -1975,10 +2019,21 @@ CRITICAL RULES:
         ctx.fillRect(-410, -390, 820, 890);
         ctx.shadowColor = "transparent";
 
-        drawGinghamWashiTape(ctx, 0, -390, 220, 44);
+        // Safe inline craft washi tape
+        ctx.save();
+        ctx.fillStyle = "rgba(235, 222, 204, 0.85)";
+        ctx.fillRect(-110, -410, 220, 44);
+        ctx.strokeStyle = "rgba(180, 150, 120, 0.35)";
+        ctx.lineWidth = 2;
+        for (let x = -100; x < 100; x += 16) {
+          ctx.beginPath(); ctx.moveTo(x, -410); ctx.lineTo(x, -366); ctx.stroke();
+        }
+        ctx.restore();
 
-        if (srcCanvas && srcCanvas.width > 0) {
-          ctx.drawImage(srcCanvas, -pw / 2, -ph / 2 - 20, pw, ph);
+        // Guaranteed product draw
+        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+        if (drawSrc) {
+          ctx.drawImage(drawSrc, -pw / 2, -ph / 2 - 20, pw, ph);
         }
       } else if (conf.style && conf.style.includes("arch_niche")) {
         ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
