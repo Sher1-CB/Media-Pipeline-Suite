@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v7.0</title>
+  <title>CB Media Pipeline Suite v7.5</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Creator Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v7.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v7.5</span>
         </h1>
         <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ Mix & Match Creator Studio</p>
       </div>
@@ -46,7 +46,7 @@
           class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-all active:scale-95"
           title="Clear all images, text, and reset to Step 1"
         >
-          <span>🗑️</span> New Deal
+          <span>🔄</span> Start New Deal
         </button>
 
         <div class="flex items-center gap-2">
@@ -410,7 +410,7 @@
         </div>
       </div>
 
-      <!-- 4 CREATIVE CARDS WITH MIX-AND-MATCH CONTROLS -->
+      <!-- 4 CONSTRAINED CREATIVE CARDS WITH MIX-AND-MATCH CONTROLS -->
       <div class="card-dark p-5 space-y-4">
         <div class="flex justify-between items-center">
           <div>
@@ -742,7 +742,6 @@
 
     let activeCardStyles = ["polaroid", "kraft_tag", "split_horizon", "notebook"];
 
-    // Per-card properties & interactive accent toggles
     let cardCustoms = {
       1: { style: "polaroid", font: "handwritten", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
       2: { style: "kraft_tag", font: "typewriter", pScale: 1.0, bScale: 1.0, badgePos: null, notePos: null, accents: { arrow: false, loop: false, eye: false, sticky: false } },
@@ -795,6 +794,8 @@
     };
 
     let activeCategory = "general";
+    let valueTagOptions = ["$16.79 Shipped", "Just $16.79 ✨", "$16.79 total"];
+    let valueTagIndex = 0;
 
     // ==========================================
     // INITIALIZATION & EVENT LISTENERS
@@ -819,9 +820,7 @@
       }
     }
 
-    // ==========================================
-    // MASTER RESET FUNCTION (STARTS FRESH)
-    // ==========================================
+    // MASTER RESET FUNCTION
     function masterResetDeal() {
       if (!confirm("Are you sure you want to start a brand new deal? All current edits will be cleared.")) return;
 
@@ -841,8 +840,8 @@
       document.getElementById('suggestedTitleInput').value = "";
       document.getElementById('mainNoteInput').value = "Yard project ready 🌾";
       document.getElementById('simpleValueInput').value = "$16.79 Shipped";
+      document.getElementById('aiChipsWrapper').classList.add('hidden');
 
-      // Reset individual scales & drag offsets
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].pScale = 1.0;
         cardCustoms[i].bScale = 1.0;
@@ -1495,17 +1494,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     // ==========================================
     // STEP 3: CREATOR BOARD & INTERACTIVE MIX & MATCH
     // ==========================================
-    let valueTagOptions = ["$16.79 Shipped", "Just $16.79 ✨", "$16.79 total", "Under $17 ✨"];
-    let valueTagIndex = 0;
-
-    function shuffleValueTag() {
-      if (!valueTagOptions || valueTagOptions.length === 0) return;
-      valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
-      document.getElementById('simpleValueInput').value = valueTagOptions[valueTagIndex];
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
     function setDealMode(mode) {
       currentDealMode = mode;
       const regBtn = document.getElementById('modeRegularBtn');
@@ -1520,7 +1508,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
         }
 
-        // Set Run accents as initial defaults in UI, but keep them manually toggleable
+        // Set Run accents as initial defaults in UI
         for (let i = 1; i <= 4; i++) {
           cardCustoms[i].accents = { arrow: true, loop: true, eye: true, sticky: true };
           const a = document.getElementById(`acc_arrow_${i}`);
@@ -1549,13 +1537,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
-    function toggleAccent(cardNum, accentKey) {
-      const cb = document.getElementById(`acc_${accentKey}_${cardNum}`);
-      if (!cb) return;
-      cardCustoms[cardNum].accents[accentKey] = cb.checked;
-      renderAll4CreatorCards();
-    }
-
     function togglePrivacyMode() {
       isPrivacyMode = !isPrivacyMode;
       const btn = document.getElementById('privacyModeBtn');
@@ -1564,12 +1545,19 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       if (isPrivacyMode) {
         btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
         btn.classList.remove('bg-slate-800', 'border-slate-700', 'text-slate-300');
-        status.innerText = "ON (Macro Crop)";
+        status.innerText = "ON (Macro Swatch)";
       } else {
         btn.classList.remove('bg-rose-950/80', 'border-rose-500', 'text-rose-300');
         btn.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300');
         status.innerText = "OFF";
       }
+      renderAll4CreatorCards();
+    }
+
+    function toggleAccent(cardNum, accentKey) {
+      const cb = document.getElementById(`acc_${accentKey}_${cardNum}`);
+      if (!cb) return;
+      cardCustoms[cardNum].accents[accentKey] = cb.checked;
       renderAll4CreatorCards();
     }
 
@@ -1609,81 +1597,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
-    function reRollCardStyles() {
-      const regularPool = Object.keys(STYLES_CATALOG).filter(k => STYLES_CATALOG[k].mode === "regular");
-      const shuffled = [...regularPool].sort(() => 0.5 - Math.random());
-      activeCardStyles = shuffled.slice(0, 4);
-
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].style = activeCardStyles[i - 1];
-        cardCustoms[i].font = STYLES_CATALOG[activeCardStyles[i - 1]].defaultFont;
-        const sel = document.getElementById(`styleSelect${i}`);
-        if (sel) sel.value = activeCardStyles[i - 1];
-        const fontSel = document.getElementById(`fontSelect${i}`);
-        if (fontSel) fontSel.value = cardCustoms[i].font;
-        const lbl = document.getElementById(`cardLabel${i}`);
-        if (lbl) lbl.innerText = STYLES_CATALOG[activeCardStyles[i - 1]].name;
-      }
-
-      renderAll4CreatorCards();
-    }
-
-    // ENRICHED COLOR SAMPLER (WARMER, INVITING PASTELS)
-    function sampleColorsFromCanvas(canvas) {
-      try {
-        const s = document.createElement("canvas");
-        s.width = 16; s.height = 16;
-        const sCtx = s.getContext("2d");
-        sCtx.drawImage(canvas, 0, 0, 16, 16);
-        const data = sCtx.getImageData(0, 0, 16, 16).data;
-
-        let r = 0, g = 0, b = 0, count = 0;
-        for (let i = 0; i < data.length; i += 4) {
-          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
-          if (brightness > 30 && brightness < 235) {
-            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
-          }
-        }
-        if (count > 0) {
-          r = Math.round(r / count);
-          g = Math.round(g / count);
-          b = Math.round(b / count);
-          // Rich, warm tint instead of washed-out grey
-          const bg = `rgb(${Math.round(230 + r * 0.08)}, ${Math.round(226 + g * 0.08)}, ${Math.round(218 + b * 0.08)})`;
-          const accent = `rgb(${Math.max(20, r - 25)}, ${Math.max(20, g - 25)}, ${Math.max(20, b - 25)})`;
-          return { bg: bg, polaroid: "#FAF7F2", accent: accent, text: "#1E293B" };
-        }
-      } catch (e) {}
-      return { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
-    }
-
-    function auditOcrSafety() {
-      const textToScan = [
-        document.getElementById('mainNoteInput').value,
-        document.getElementById('simpleValueInput').value
-      ].join(' ').toLowerCase();
-
-      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
-      const banner = document.getElementById('ocrWarningBanner');
-      if (hits.length > 0) {
-        document.getElementById('ocrWarningText').innerText = `Banned words detected: "${hits.join(', ')}". Replace them to prevent shadowbans!`;
-        banner.classList.remove('hidden');
-      } else {
-        banner.classList.add('hidden');
-      }
-    }
-
-    ['mainNoteInput', 'simpleValueInput', 'themePaletteSelect'].forEach(id => {
-      document.getElementById(id).addEventListener('input', () => {
-        auditOcrSafety();
-        renderAll4CreatorCards();
-      });
-    });
-
-    // DYNAMIC VALUE TAG ROTATION (NO "PRICE" OR "UNDER $17" ALLOWED)
-    let valueTagOptions = ["$16.79 Shipped", "Just $16.79 ✨", "$16.79 total"];
-    let valueTagIndex = 0;
-
     function shuffleValueTag() {
       if (!valueTagOptions || valueTagOptions.length === 0) return;
       valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
@@ -1717,14 +1630,82 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       wrapper.classList.remove('hidden');
     }
 
-    // RAW DEAL EXTRACTOR WITH DYNAMIC AI AFFIRMATIONS
+    function reRollCardStyles() {
+      const regularPool = Object.keys(STYLES_CATALOG).filter(k => STYLES_CATALOG[k].mode === "regular");
+      const shuffled = [...regularPool].sort(() => 0.5 - Math.random());
+      activeCardStyles = shuffled.slice(0, 4);
+
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].style = activeCardStyles[i - 1];
+        cardCustoms[i].font = STYLES_CATALOG[activeCardStyles[i - 1]].defaultFont;
+        const sel = document.getElementById(`styleSelect${i}`);
+        if (sel) sel.value = activeCardStyles[i - 1];
+        const fontSel = document.getElementById(`fontSelect${i}`);
+        if (fontSel) fontSel.value = cardCustoms[i].font;
+        const lbl = document.getElementById(`cardLabel${i}`);
+        if (lbl) lbl.innerText = STYLES_CATALOG[activeCardStyles[i - 1]].name;
+      }
+
+      renderAll4CreatorCards();
+    }
+
+    function sampleColorsFromCanvas(canvas) {
+      try {
+        const s = document.createElement("canvas");
+        s.width = 16; s.height = 16;
+        const sCtx = s.getContext("2d");
+        sCtx.drawImage(canvas, 0, 0, 16, 16);
+        const data = sCtx.getImageData(0, 0, 16, 16).data;
+
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          if (brightness > 30 && brightness < 235) {
+            r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+          }
+        }
+        if (count > 0) {
+          r = Math.round(r / count);
+          g = Math.round(g / count);
+          b = Math.round(b / count);
+          const bg = `rgb(${Math.round(230 + r * 0.08)}, ${Math.round(226 + g * 0.08)}, ${Math.round(218 + b * 0.08)})`;
+          const accent = `rgb(${Math.max(20, r - 25)}, ${Math.max(20, g - 25)}, ${Math.max(20, b - 25)})`;
+          return { bg: bg, polaroid: "#FAF7F2", accent: accent, text: "#1E293B" };
+        }
+      } catch (e) {}
+      return { bg: "#F5F0E6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21" };
+    }
+
+    function auditOcrSafety() {
+      const textToScan = [
+        document.getElementById('mainNoteInput').value,
+        document.getElementById('simpleValueInput').value
+      ].join(' ').toLowerCase();
+
+      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
+      const banner = document.getElementById('ocrWarningBanner');
+      if (hits.length > 0) {
+        document.getElementById('ocrWarningText').innerText = `Banned words detected: "${hits.join(', ')}". Replace them to prevent shadowbans!`;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    ['mainNoteInput', 'simpleValueInput', 'themePaletteSelect'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        auditOcrSafety();
+        renderAll4CreatorCards();
+      });
+    });
+
+    // RAW DEAL EXTRACTOR (WITH AI AFFIRMATIONS)
     document.getElementById('extractBtn').addEventListener('click', async () => {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
 
       const rLower = raw.toLowerCase();
 
-      // Fallback local categories
       if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
         activeCategory = "lawn_garden";
       } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
@@ -1736,10 +1717,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
 
       const pool = AFFIRMATIONS[activeCategory];
-      let initialNote = pool[Math.floor(Math.random() * pool.length)];
-      document.getElementById('mainNoteInput').value = initialNote;
+      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
 
-      // Extract Clean Price and Unit Metrics
       const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
       const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
       const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
@@ -1747,7 +1726,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const saleClean = saleMatch ? saleMatch[0].trim().replace(/\bcomplete\b/gi, '').trim() : "$16.79 Shipped";
       const unitClean = unitMatch ? unitMatch[0].trim() : "";
 
-      // Build 7 Natural Value Options (purged "Under $17", strictly banned word 'Price')
       valueTagOptions = [
         saleClean,
         `Just ${saleClean} ✨`,
@@ -1764,7 +1742,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       valueTagIndex = 0;
       document.getElementById('simpleValueInput').value = valueTagOptions[0];
 
-      // Auto-reset custom drag coordinates for fresh layout
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].badgePos = null;
         cardCustoms[i].notePos = null;
@@ -1773,7 +1750,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       auditOcrSafety();
       renderAll4CreatorCards();
 
-      // OPTIONAL LIVE AI GENERATOR (Runs fast in background)
       const key = apiKeyInput.value.trim();
       if (key) {
         try {
@@ -1794,7 +1770,6 @@ CRITICAL RULES:
           const parsed = JSON.parse(rawTxt);
 
           if (Array.isArray(parsed) && parsed.length > 0) {
-            // Scrub any banned words
             const safeChips = parsed.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
             if (safeChips.length > 0) {
               renderAiChips(safeChips);
@@ -1824,7 +1799,7 @@ CRITICAL RULES:
     }
 
     // ==========================================
-    // MASTER DISPATCHER: RENDERS ALL 4 CREATIVE CARDS
+    // CANVA AESTHETIC RENDERING ENGINE
     // ==========================================
     function renderAll4CreatorCards() {
       if (chosen4Variants.length < 4) return;
@@ -1842,7 +1817,6 @@ CRITICAL RULES:
       }
     }
 
-    // CANVA AESTHETIC GRAPHICS & PROCEDURAL DECORATORS
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
@@ -1872,7 +1846,7 @@ CRITICAL RULES:
       }
 
       // ==========================================
-      // LAYER 1: PRODUCT & STAGED MATS (ALWAYS DRAWN FIRST!)
+      // LAYER 1: PRODUCT & STAGED MATS (DRAWN FIRST!)
       // ==========================================
       ctx.save();
       const pw = 740 * conf.pScale;
@@ -1950,7 +1924,7 @@ CRITICAL RULES:
         ctx.save();
         ctx.translate(bx, by);
 
-        if (conf.accents.sticky || currentDealMode === 'run') {
+        if (conf.accents.sticky) {
           ctx.fillStyle = "#FEF08A";
           ctx.shadowColor = "rgba(0,0,0,0.24)";
           ctx.shadowBlur = 18;
@@ -1977,7 +1951,7 @@ CRITICAL RULES:
         }
 
         // ==========================================
-        // RUN ACCENTS (RED ARROWS, SHARPIE LOOP, EYE STAMP)
+        // RUN ACCENTS (STRICTLY WIRED TO CHECKBOXES!)
         // ==========================================
         if (conf.accents.loop) {
           ctx.save();
@@ -2016,9 +1990,37 @@ CRITICAL RULES:
       ctx.restore();
     }
 
-    // ==========================================
-    // PROCEDURAL CANVA DECORATIVE DRAWING FUNCTIONS
-    // ==========================================
+    function drawMarkerArrow(ctx, fromx, fromy, tox, toy) {
+      const headlen = 14;
+      const dx = tox - fromx;
+      const dy = toy - fromy;
+      const angle = Math.atan2(dy, dx);
+      ctx.beginPath();
+      ctx.moveTo(fromx, fromy);
+      ctx.lineTo(tox, toy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(tox, toy);
+      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // PROCEDURAL CANVA DECORATORS
+    function drawCrumpledPaperTexture(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(60, 40, 20, 0.06)";
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        ctx.moveTo(Math.random() * 1080, Math.random() * 1080);
+        ctx.lineTo(Math.random() * 1080, Math.random() * 1080);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
     function drawBotanicalCornerVines(ctx, color) {
       ctx.save();
       ctx.strokeStyle = color;
@@ -2165,23 +2167,6 @@ CRITICAL RULES:
       ctx.restore();
     }
 
-    function drawMarkerArrow(ctx, fromx, fromy, tox, toy) {
-      const headlen = 14;
-      const dx = tox - fromx;
-      const dy = toy - fromy;
-      const angle = Math.atan2(dy, dx);
-      ctx.beginPath();
-      ctx.moveTo(fromx, fromy);
-      ctx.lineTo(tox, toy);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(tox, toy);
-      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-      ctx.closePath();
-      ctx.fill();
-    }
-
     // ==========================================
     // INTERACTIVE CANVAS CLICK & DRAG TO MOVE
     // ==========================================
@@ -2191,7 +2176,7 @@ CRITICAL RULES:
         const canvas = document.getElementById(`cardCanvas${i}`);
 
         wrap.addEventListener("mousedown", (e) => {
-          if (e.target.tagName === 'BUTTON') return; // Don't trigger drag on Zoom button!
+          if (e.target.tagName === 'BUTTON') return;
           const r = canvas.getBoundingClientRect();
           const mouseX = (e.clientX - r.left) * (1080 / r.width);
           const mouseY = (e.clientY - r.top) * (1080 / r.height);
@@ -2246,7 +2231,7 @@ CRITICAL RULES:
     });
 
     // ==========================================
-    // DOWNLOAD HELPERS (SCRUBS PROVENANCE & EXIF HEADERS)
+    // DOWNLOAD HELPERS (AUTOMATICALLY SCRUBS METADATA)
     // ==========================================
     function downloadCanvasData(dataUrl, filename) {
       const link = document.createElement('a');
