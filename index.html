@@ -955,12 +955,11 @@
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // 1. TACTILE SURFACE TEXTURE & GRADIENT WASH (Wood Grain, Linen, Craft Specks, Travertine)
+      // 1. TACTILE SURFACE TEXTURE (Wood Grain, Linen, Craft Paper, Travertine, Modern Wash)
       const surfaceStyle = hash % 5; 
       const accent = pal.accent || "#A66E38";
 
       if (surfaceStyle === 0) {
-        // TACTILE WOOD GRAIN SLATS
         ctx.fillStyle = pal.bg || "#D4B28C";
         ctx.fillRect(0, 0, 1080, 1080);
         ctx.strokeStyle = accent; ctx.globalAlpha = 0.12; ctx.lineWidth = 2;
@@ -972,14 +971,12 @@
           ctx.stroke();
         }
       } else if (surfaceStyle === 1) {
-        // TACTILE LINEN FABRIC WEAVE
         ctx.fillStyle = pal.bg || "#E8E2D5";
         ctx.fillRect(0, 0, 1080, 1080);
         ctx.strokeStyle = accent; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
         for (let x = 0; x < 1080; x += 6) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
         for (let y = 0; y < 1080; y += 6) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       } else if (surfaceStyle === 2) {
-        // SPECKLED CRAFT PAPER
         ctx.fillStyle = pal.bg || "#E2D3BE";
         ctx.fillRect(0, 0, 1080, 1080);
         ctx.fillStyle = accent; ctx.globalAlpha = 0.08;
@@ -988,13 +985,11 @@
           ctx.fillRect(cx, cy, 3, 3);
         }
       } else if (surfaceStyle === 3) {
-        // TRAVERTINE STONE WASH
         const sGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
         sGrad.addColorStop(0, pal.bg || "#E6DFC5");
         sGrad.addColorStop(1, "#CFC5A2");
         ctx.fillStyle = sGrad; ctx.fillRect(0, 0, 1080, 1080);
       } else {
-        // MODERN EDITORIAL GRADIENT WASH
         const g = ctx.createLinearGradient(0, 0, 1080, 1080);
         g.addColorStop(0, pal.bg || "#F5EFE6");
         g.addColorStop(1, "#D4C3B3");
@@ -1003,6 +998,29 @@
 
       ctx.save();
       const layoutType = hash % 6;
+      if (layoutType === 0) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.28;
+        ctx.beginPath(); ctx.roundRect((hash % 160) + 50, (hash % 120) + 50, 750, 750, 48); ctx.fill();
+      } else if (layoutType === 1) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
+        ctx.beginPath(); ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(380, (hash % 420) + 60, 700, 1080 - (hash % 280), 1080, 420);
+        ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
+      } else if (layoutType === 2) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
+        ctx.beginPath(); ctx.arc(540, 410, 370, Math.PI, 0, false);
+        ctx.lineTo(910, 1080); ctx.lineTo(170, 1080); ctx.closePath(); ctx.fill();
+      } else {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
+        ctx.strokeRect(60, 60, 960, 960);
+      }
+      ctx.restore();
+
+      // Vignette Shadow
+      const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
+      vGrad.addColorStop(0, "transparent");
+      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.3)");
+      ctx.fillStyle = vGrad; ctx.fillRect(0, 0, 1080, 1080);
       if (layoutType === 0) {
         ctx.fillStyle = accent; ctx.globalAlpha = 0.28;
         ctx.beginPath(); ctx.roundRect((hash % 160) + 50, (hash % 120) + 50, 750, 750, 48); ctx.fill();
