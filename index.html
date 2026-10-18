@@ -947,71 +947,131 @@
     // ==========================================
     // TACTILE GENERATIVE TEXTURE & BACKGROUND ENGINE
     // ==========================================
-    function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
+    function function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
       const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, washiOffset: 0, bgPatternSeed: cardNum * 12345 };
       const hash = proc.bgPatternSeed;
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-      // 1. EXPANDED VARIETY ENGINE (Product-Sampled Colors + Tactile Textures)
       ctx.globalAlpha = 1.0;
-      const surfaceStyle = hash % 7; // Expanded variety pool
-      const accent = pal.accent || "#A66E38";
 
-      if (surfaceStyle === 0) {
-        // PRODUCT-CLUSTERED DYNAMIC GRADIENT WASH (Your Original Setup)
+      // 1. VIBRANT PRODUCT-SAMPLED COLOR SCHEME + TACTILE TEXTURE VARIETY
+      const surfaceStyle = hash % 6; 
+      const accent = pal.accent || "#B4845C";
+
+      if (surfaceStyle <= 2) {
+        // VIBRANT PRODUCT-SAMPLED DYNAMIC GRADIENT WASH (Your Preferred Color Scheme)
         const angle = (hash % 360) * (Math.PI / 180);
-        const bgGrad = ctx.createLinearGradient(540 + Math.cos(angle)*600, 540 + Math.sin(angle)*600, 540 - Math.cos(angle)*600, 540 - Math.sin(angle)*600);
+        const bgGrad = ctx.createLinearGradient(540 + Math.cos(angle)*700, 540 + Math.sin(angle)*700, 540 - Math.cos(angle)*700, 540 - Math.sin(angle)*700);
         bgGrad.addColorStop(0, pal.bg || "#F5EFE6");
         bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
-        bgGrad.addColorStop(1, "#E4D6C4");
+        bgGrad.addColorStop(1, pal.vignette ? pal.vignette.replace("0.38", "0.2") : "#E2D8CC");
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 1080, 1080);
-      } else if (surfaceStyle === 1) {
-        // DISTINCT WOOD GRAIN SLATS
-        ctx.fillStyle = pal.bg || "#D4B28C";
+      } else if (surfaceStyle === 3) {
+        // TACTILE WOOD GRAIN SLATS (Tinted with Product Palette)
+        ctx.fillStyle = pal.bg || "#F2E8DC";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 3;
-        for (let y = 0; y < 1080; y += 30 + (hash % 10)) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.22; ctx.lineWidth = 2.5;
+        for (let y = 0; y < 1080; y += 32 + (hash % 10)) {
           ctx.beginPath(); ctx.moveTo(0, y);
-          for (let x = 0; x < 1080; x += 100) {
-            ctx.quadraticCurveTo(x + 50, y + ((hash + x) % 20 - 10), x + 100, y);
+          for (let x = 0; x < 1080; x += 120) {
+            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 16 - 8), x + 120, y);
           }
           ctx.stroke();
         }
-      } else if (surfaceStyle === 2) {
-        // RICH LINEN FABRIC CROSS-HATCH
-        ctx.fillStyle = pal.bg || "#E8E2D5";
+      } else if (surfaceStyle === 4) {
+        // SPECKLED CRAFT PAPER (Tinted with Product Palette)
+        ctx.fillStyle = pal.bg || "#F5EFEB";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.28; ctx.lineWidth = 1.5;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.16;
+        for (let i = 0; i < 350; i++) {
+          ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
+        }
+      } else {
+        // LINEN FABRIC WEAVE
+        ctx.fillStyle = pal.bg || "#FAF6F0";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.14; ctx.lineWidth = 1;
         for (let x = 0; x < 1080; x += 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
         for (let y = 0; y < 1080; y += 10) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
-      } else if (surfaceStyle === 3) {
-        // SPECKLED CRAFT PAPER
-        ctx.fillStyle = pal.bg || "#E2D3BE";
+      }
+
+      ctx.globalAlpha = 1.0;
+      ctx.save();
+      // ADDING VARIETY: Randomly stamp botanical corner vines or sparkle dust
+      const decoType = hash % 3;
+      if (decoType === 0) {
+        drawBotanicalCornerVines(ctx, accent);
+      } else if (decoType === 1) {
+        ctx.font = "bold 52px sans-serif";
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
+        ctx.fillText("✨", 140, 160);
+        ctx.fillText("🌿", 900, 920);
+      }
+      ctx.restore();
+
+      // Vignette Depth Shadow
+      ctx.globalAlpha = 1.0;
+      const vGrad = ctx.createRadialGradient(540, 540, 220, 540, 540, 780);
+      vGrad.addColorStop(0, "transparent");
+      vGrad.addColorStop(1, "rgba(50, 35, 20, 0.2)");
+      ctx.fillStyle = vGrad; ctx.fillRect(0, 0, 1080, 1080);
+      ctx.globalAlpha = 1.0;
+      const accent = pal.accent || "#B4845C";
+
+      if (surfaceStyle <= 2) {
+        // VIBRANT PRODUCT-SAMPLED DYNAMIC GRADIENT WASH (Your Preferred Color Scheme)
+        const angle = (hash % 360) * (Math.PI / 180);
+        const bgGrad = ctx.createLinearGradient(540 + Math.cos(angle)*700, 540 + Math.sin(angle)*700, 540 - Math.cos(angle)*700, 540 - Math.sin(angle)*700);
+        bgGrad.addColorStop(0, pal.bg || "#F5EFE6");
+        bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
+        bgGrad.addColorStop(1, pal.vignette ? pal.vignette.replace("0.38", "0.2") : "#E2D8CC");
+        ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-        for (let i = 0; i < 500; i++) {
-          const cx = (hash * i * 3) % 1080, cy = (hash * i * 7) % 1080;
-          ctx.fillRect(cx, cy, 4, 4);
+      } else if (surfaceStyle === 3) {
+        // TACTILE WOOD GRAIN SLATS (Tinted with Product Palette)
+        ctx.fillStyle = pal.bg || "#F2E8DC";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.22; ctx.lineWidth = 2.5;
+        for (let y = 0; y < 1080; y += 32 + (hash % 10)) {
+          ctx.beginPath(); ctx.moveTo(0, y);
+          for (let x = 0; x < 1080; x += 120) {
+            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 16 - 8), x + 120, y);
+          }
+          ctx.stroke();
         }
       } else if (surfaceStyle === 4) {
-        // VIBRANT RADIAL PRODUCT GLOW WASH
-        const rad = ctx.createRadialGradient(540, 540, 100, 540, 540, 700);
-        rad.addColorStop(0, pal.polaroid || "#FAF8F5");
-        rad.addColorStop(1, pal.bg || "#C89567");
-        ctx.fillStyle = rad;
+        // SPECKLED CRAFT PAPER (Tinted with Product Palette)
+        ctx.fillStyle = pal.bg || "#F5EFEB";
         ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.16;
+        for (let i = 0; i < 350; i++) {
+          ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
+        }
       } else {
-        // WARM TRAVERTINE STONE WASH
-        const sGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
-        sGrad.addColorStop(0, pal.bg || "#E6DFC5");
-        sGrad.addColorStop(0.5, "#D8CEAA");
-        sGrad.addColorStop(1, "#B8AC82");
-        ctx.fillStyle = sGrad; ctx.fillRect(0, 0, 1080, 1080);
+        // LINEN FABRIC WEAVE
+        ctx.fillStyle = pal.bg || "#FAF6F0";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.14; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 10) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       }
+
+      ctx.globalAlpha = 1.0;
+      ctx.save();
+      // ADDING VARIETY: Randomly stamp botanical corner vines, washi tape, or whimsical sparkle dust
+      const decoType = hash % 3;
+      if (decoType === 0) {
+        drawBotanicalCornerVines(ctx, accent);
+      } else if (decoType === 1) {
+        ctx.font = "bold 52px sans-serif";
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
+        ctx.fillText("✨", 140, 160);
+        ctx.fillText("🌿", 900, 920);
+      }
+      ctx.restore();
 
       ctx.globalAlpha = 1.0;
       ctx.save();
