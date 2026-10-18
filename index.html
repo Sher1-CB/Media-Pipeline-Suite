@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v10.6 - Coverflow Studio</title>
+  <title>CB Media Pipeline Suite v11.0 - Generative Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Editorial Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,9 +81,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v10.6</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.0</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Magazine Coverflow Studio ➔ Infinite Procedural Frames ➔ Strict OCR Firewall</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Generative Visual Engine ➔ Infinite Procedural Aesthetics ➔ Strict OCR Firewall</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
@@ -393,7 +393,7 @@
         <div class="flex gap-2">
           <textarea 
             id="rawDealPaste" 
-            placeholder="Paste Command Center raw deal output or deal text here..." 
+            placeholder="Paste raw deal text or product notes here..." 
             class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-16"
           ></textarea>
           <button 
@@ -407,22 +407,26 @@
         </div>
 
         <!-- AI SUGGESTED NOTES CHIPS CONTAINER -->
-        <div id="aiChipsWrapper" class="hidden space-y-1.5 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+        <div id="aiChipsWrapper" class="hidden space-y-2 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
           <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-slate-400 px-1">
-            <span class="flex items-center gap-1.5 text-sky-400"><span>💡</span> Click an AI note to apply:</span>
-            <span id="aiChipsStatus" class="text-slate-500">4 Tailored Options</span>
+            <span class="flex items-center gap-1.5 text-sky-400"><span>💡</span> Click an AI Affirmation to apply:</span>
           </div>
           <div id="aiChipsContainer" class="flex flex-wrap gap-2"></div>
+
+          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-slate-400 px-1 pt-1 border-t border-slate-800/60">
+            <span class="flex items-center gap-1.5 text-emerald-400"><span>🏷️</span> Click an AI Curation Spec to apply:</span>
+          </div>
+          <div id="aiSpecChipsContainer" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <!-- GLOBAL TEXT CONTROLS -->
+        <!-- GLOBAL TEXT CONTROLS (STARTS BLANK BY DEFAULT) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Affirmation Note (Dual-Weight)</label>
               <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase cursor-pointer">🎲 Shuffle Note</button>
             </div>
-            <input type="text" id="mainNoteInput" value="Daily routine staple ✨" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="mainNoteInput" placeholder="Enter affirmation or click AI chip..." oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
           </div>
 
           <div>
@@ -430,7 +434,7 @@
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Curation Spec Tag (Zero Pricing / Clean)</label>
               <button type="button" onclick="shuffleValueTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase cursor-pointer">🎲 Shuffle Tag</button>
             </div>
-            <input type="text" id="simpleValueInput" value="20oz · 12-PACK" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="simpleValueInput" placeholder="e.g. 20oz · 12-PACK, SOLID CHOICE" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
           </div>
 
           <div>
@@ -438,16 +442,7 @@
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Extra Line / Sub-Note (Optional)</label>
               <button type="button" onclick="clearSubNote()" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase cursor-pointer">✕ Clear</button>
             </div>
-            <input type="text" id="subNoteInput" placeholder="e.g., verified favorite, limited restock" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500 shadow-inner">
-          </div>
-        </div>
-
-          <div>
-            <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Extra Line / Sub-Note (Optional)</label>
-              <button type="button" onclick="clearSubNote()" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase cursor-pointer">✕ Clear</button>
-            </div>
-            <input type="text" id="subNoteInput" placeholder="e.g., verified favorite, limited restock" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500 shadow-inner">
+            <input type="text" id="subNoteInput" placeholder="e.g. verified favorite, limited restock" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500 shadow-inner">
           </div>
         </div>
       </div>
@@ -537,7 +532,7 @@
           <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2">
             <span>🎨</span> Active Card Studio Console (<span id="consoleCardName">Card 1</span>)
           </h3>
-          <span class="text-[11px] text-slate-400">Drag objects live on center canvas · 0 Token procedural engine</span>
+          <span class="text-[11px] text-slate-400">Drag objects directly on center canvas · 0 Token procedural engine</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -576,7 +571,7 @@
             </div>
           </div>
 
-          <!-- HEADLINE NOTE & INDEPENDENT SUB-NOTE CONTROLS -->
+          <!-- HEADLINE & SUB-NOTE CONTROLS -->
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
             <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
               <span>✍️ Main Note & Sub-Note:</span>
@@ -705,11 +700,12 @@
 
     let currentDealMode = 'regular'; // 'regular' or 'run'
 
-    // STRICT OCR BLACKLIST (BLOCKS COMMERCIAL TERMS, DOLLAR SIGNS & PRICING VERBS)
+    // STRICT OCR BLACKLIST (ZERO PRICING / ZERO CHECKOUT VOCABULARY)
     const FB_BLACKLIST = [
       "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
-      "bargain", "doorbuster", "bogo", "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
+      "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link",
+      "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
     ];
 
     // Individual Layer State per Card (Infinite Procedural Variations)
@@ -734,8 +730,7 @@
         "Weekend outdoor project ✨", 
         "Ready for greener grass 🌱",
         "Garden refresh season",
-        "Outdoor sanctuary upgrade",
-        "Porch and patio favorite"
+        "Outdoor sanctuary upgrade"
       ],
       home_kitchen: [
         "Kitchen routine staple ✨", 
@@ -743,7 +738,6 @@
         "Stocked up for months", 
         "Dinner prep made simple",
         "Morning coffee ritual ☕",
-        "Countertop upgrade ready",
         "Cooking inspiration unlocked"
       ],
       beauty_personal: [
@@ -751,7 +745,6 @@
         "Spa luxury at home 🧴", 
         "Radiant complexion goals 🌸", 
         "Daily routine reset",
-        "Self-care evening ritual",
         "Skin nourishment pick",
         "Effortless daily hydration"
       ],
@@ -760,17 +753,16 @@
         "Always handy to keep nearby", 
         "Daily routine staple", 
         "Everyday home favorite",
-        "Curated for cozy days",
         "Elevated everyday living"
       ]
     };
 
     let activeCategory = "general";
-    let valueTagOptions = ["20oz · 12-PACK", "SOLID CHOICE", "DAILY ESSENTIAL", "KITCHEN STAPLE"];
+    let valueTagOptions = [];
     let valueTagIndex = 0;
 
     // ==========================================
-    // DUAL-TIER PACKAGING COLOR SAMPLER (GUARANTEED)
+    // DUAL-TIER PACKAGING COLOR SAMPLER
     // ==========================================
     function sampleColorsFromCanvas(canvas) {
       try {
@@ -905,7 +897,7 @@
     }
 
     // ==========================================
-    // STEP NAVIGATION (WITH AUTO-RENDER ON STEP 3)
+    // STEP NAVIGATION (AUTO-RENDERS ON STEP 3)
     // ==========================================
     function navToStep(stepNum) {
       for (let s = 1; s <= 3; s++) {
@@ -935,7 +927,7 @@
     }
 
     // ==========================================
-    // STEP 1: PHOTO UPLOAD HANDLER
+    // STEP 1: PHOTO UPLOAD HANDLER (CLEARS TEXT ON LOAD)
     // ==========================================
     function handlePhotoUpload(input) {
       if (!input || !input.files || !input.files[0]) return;
@@ -959,7 +951,7 @@
           detectedBoxes = [];
           manualBoxes = [];
 
-          // Auto-blank input fields on fresh upload
+          // 1. AUTO-BLANK INPUT FIELDS ON NEW UPLOAD
           const mainNoteEl = document.getElementById('mainNoteInput');
           const specTagEl = document.getElementById('simpleValueInput');
           const subNoteEl = document.getElementById('subNoteInput');
@@ -974,7 +966,7 @@
           if (titleInputEl) titleInputEl.value = "";
           if (chipsWrapperEl) chipsWrapperEl.classList.add('hidden');
 
-          // Instant procedural deck re-roll for new deal
+          // 2. TRUE INFINITE RE-ROLL FOR FRESH DEAL
           generateProceduralDeck();
           for (let i = 1; i <= 4; i++) {
             cardCustoms[i].badgePos = null;
@@ -1077,15 +1069,6 @@
       offCtx.imageSmoothingEnabled = false;
       offCtx.drawImage(mini, 0, 0, mini.width, mini.height, 0, 0, srcW, srcH);
       offCtx.imageSmoothingEnabled = true;
-
-      if (isThinLine) {
-        const pCanvas = document.createElement("canvas");
-        pCanvas.width = 1; pCanvas.height = 1;
-        pCanvas.getContext("2d").drawImage(rawLoadedImage, x + rw * 0.5, Math.max(0, y - 4), 1, 1, 0, 0, 1, 1);
-        const [r, g, b] = pCanvas.getContext("2d").getImageData(0, 0, 1, 1).data;
-        offCtx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.88)`;
-        offCtx.fillRect(0, 0, srcW, srcH);
-      }
 
       const baseBlur = Math.max(18, Math.round(24 * (outputCanvas.width / 1400)));
       const blurRadius = isThinLine ? Math.max(14, Math.round(rh * 0.6)) : baseBlur;
@@ -1381,23 +1364,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           directCanvas.getContext('2d').drawImage(directImg, 0, 0);
           sanitizedCanvasSnapshot = directCanvas;
 
-          // Auto-blank input fields on Step 2 direct photo upload
-          const mainNoteEl = document.getElementById('mainNoteInput');
-          const specTagEl = document.getElementById('simpleValueInput');
-          const subNoteEl = document.getElementById('subNoteInput');
-          if (mainNoteEl) mainNoteEl.value = "";
-          if (specTagEl) specTagEl.value = "";
-          if (subNoteEl) subNoteEl.value = "";
+          // Clear text fields on Step 2 upload
+          document.getElementById('mainNoteInput').value = "";
+          document.getElementById('simpleValueInput').value = "";
+          document.getElementById('subNoteInput').value = "";
 
-          // Randomize procedural deck and prime palette from new photo
           generateProceduralDeck();
-          for (let i = 1; i <= 4; i++) {
-            cardCustoms[i].badgePos = null;
-            cardCustoms[i].notePos = null;
-            cardCustoms[i].productPos = null;
-          }
           sampleColorsFromCanvas(directCanvas);
-
           runVariantLensEngine(sanitizedCanvasSnapshot);
         };
         directImg.src = evt.target.result;
@@ -1548,7 +1521,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     }
 
     // ==========================================
-    // 3D COVERFLOW & STUDIO CONTROLS
+    // 3D COVERFLOW & STUDIO CONSOLE
     // ==========================================
     function selectCardIndex(idx) {
       activeCardIndex = idx;
@@ -1630,15 +1603,29 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       });
     }
 
-    function updateActiveSubTilt(val) {
-      cardCustoms[activeCardIndex].subRot = parseInt(val);
-      document.getElementById('activeSubTiltVal').innerText = `${val}°`;
+    function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
+    function updateActiveFont(val) { cardCustoms[activeCardIndex].font = val; renderAll4CreatorCards(); }
+    function updateActiveBadgeTilt(val) { cardCustoms[activeCardIndex].bRot = parseInt(val); document.getElementById('activeBadgeTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
+    function updateActiveBadgeSize(val) { cardCustoms[activeCardIndex].bScale = parseFloat(val) / 100.0; document.getElementById('activeBadgeSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
+    function updateActiveNoteTilt(val) { cardCustoms[activeCardIndex].nRot = parseInt(val); document.getElementById('activeNoteTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
+    function updateActiveNoteSize(val) { cardCustoms[activeCardIndex].nScale = parseFloat(val) / 100.0; document.getElementById('activeNoteSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
+    function updateActiveSubTilt(val) { cardCustoms[activeCardIndex].subRot = parseInt(val); document.getElementById('activeSubTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
+    function updateActiveSubSize(val) { cardCustoms[activeCardIndex].subScale = parseFloat(val) / 100.0; document.getElementById('activeSubSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
+    function updateActiveProductSize(val) { cardCustoms[activeCardIndex].pScale = parseFloat(val) / 100.0; document.getElementById('activeProductSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
+    function updateActiveNoteBg(checked) { cardCustoms[activeCardIndex].hasNoteBg = checked; renderAll4CreatorCards(); }
+
+    function toggleActiveDecorator(acc) {
+      const cb = document.getElementById(`dec_${acc}`);
+      if (!cardCustoms[activeCardIndex].accents) cardCustoms[activeCardIndex].accents = {};
+      cardCustoms[activeCardIndex].accents[acc] = cb.checked;
       renderAll4CreatorCards();
     }
 
-    function updateActiveSubSize(val) {
-      cardCustoms[activeCardIndex].subScale = parseFloat(val) / 100.0;
-      document.getElementById('activeSubSizeVal').innerText = `${val}%`;
+    function centerActiveElements() {
+      cardCustoms[activeCardIndex].productPos = null;
+      cardCustoms[activeCardIndex].badgePos = null;
+      cardCustoms[activeCardIndex].notePos = null;
+      cardCustoms[activeCardIndex].subPos = null;
       renderAll4CreatorCards();
     }
 
@@ -1647,42 +1634,32 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
-    function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
-    function updateActiveFont(val) { cardCustoms[activeCardIndex].font = val; renderAll4CreatorCards(); }
-    function updateActiveBadgeTilt(val) { cardCustoms[activeCardIndex].bRot = parseInt(val); document.getElementById('activeBadgeTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
-    function updateActiveBadgeSize(val) { cardCustoms[activeCardIndex].bScale = parseFloat(val) / 100.0; document.getElementById('activeBadgeSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
-    function updateActiveNoteTilt(val) { cardCustoms[activeCardIndex].nRot = parseInt(val); document.getElementById('activeNoteTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
-    function updateActiveNoteSize(val) { cardCustoms[activeCardIndex].nScale = parseFloat(val) / 100.0; document.getElementById('activeNoteSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
-    function updateActiveProductSize(val) { cardCustoms[activeCardIndex].pScale = parseFloat(val) / 100.0; document.getElementById('activeProductSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
-    function updateActiveNoteBg(checked) { cardCustoms[activeCardIndex].hasNoteBg = checked; renderAll4CreatorCards(); }
-    function toggleActiveDecorator(acc) {
-      const cb = document.getElementById(`dec_${acc}`);
-      if (!cardCustoms[activeCardIndex].accents) cardCustoms[activeCardIndex].accents = {};
-      cardCustoms[activeCardIndex].accents[acc] = cb.checked;
+    function clearSubNote() {
+      const el = document.getElementById('subNoteInput');
+      if (el) el.value = "";
+      auditOcrSafety();
       renderAll4CreatorCards();
     }
-    function centerActiveElements() {
-      cardCustoms[activeCardIndex].productPos = null;
-      cardCustoms[activeCardIndex].badgePos = null;
-      cardCustoms[activeCardIndex].notePos = null;
-      renderAll4CreatorCards();
-    }
+
     function resetActiveCard() {
       cardCustoms[activeCardIndex].pScale = 1.0;
       cardCustoms[activeCardIndex].bScale = 1.0;
       cardCustoms[activeCardIndex].bRot = 0;
       cardCustoms[activeCardIndex].nRot = 0;
       cardCustoms[activeCardIndex].nScale = 1.0;
+      cardCustoms[activeCardIndex].subRot = 0;
+      cardCustoms[activeCardIndex].subScale = 1.0;
       cardCustoms[activeCardIndex].hasNoteBg = false;
       cardCustoms[activeCardIndex].productPos = null;
       cardCustoms[activeCardIndex].badgePos = null;
       cardCustoms[activeCardIndex].notePos = null;
+      cardCustoms[activeCardIndex].subPos = null;
       syncConsoleControls();
       renderAll4CreatorCards();
     }
 
     // ==========================================
-    // PROCEDURAL ENGINE (8 ARCHETYPES + ANGLE JITTER)
+    // PROCEDURAL ENGINE (8 ARCHETYPES + JITTER)
     // ==========================================
     function generateProceduralDeck() {
       const all8Archetypes = [
@@ -1719,8 +1696,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ];
       }
 
-      const note = (document.getElementById('mainNoteInput')?.value || "Daily routine staple ✨").trim();
-      const val = (document.getElementById('simpleValueInput')?.value || "20oz · 12-PACK").trim();
+      const note = (document.getElementById('mainNoteInput')?.value || "").trim();
+      const val = (document.getElementById('simpleValueInput')?.value || "").trim();
 
       const sampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
 
@@ -1745,7 +1722,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const font = getFontFamily(conf.font);
       const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, washiOffset: 0 };
 
-      // Strictly purge any accidental blacklisted terms before rendering
       const noteLower = note.toLowerCase();
       const valLower = val.toLowerCase();
       const hasBlacklistHit = FB_BLACKLIST.some(term => noteLower.includes(term) || valLower.includes(term));
@@ -1950,53 +1926,55 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       if (conf.accents && conf.accents.pin) drawPushPin(ctx, px + 280, py - 370);
 
       // LAYER 2: DUAL-WEIGHT EDITORIAL TYPOGRAPHY
-      ctx.save();
-      const nx = conf.notePos ? conf.notePos.x : 540;
-      const ny = conf.notePos ? conf.notePos.y : 950;
-      const nScale = conf.nScale || 1.0;
+      if (note) {
+        ctx.save();
+        const nx = conf.notePos ? conf.notePos.x : 540;
+        const ny = conf.notePos ? conf.notePos.y : 950;
+        const nScale = conf.nScale || 1.0;
 
-      const noteWords = note.split(" ");
-      const firstWord = noteWords[0] || "";
-      const remainingWords = noteWords.slice(1).join(" ");
+        const noteWords = note.split(" ");
+        const firstWord = noteWords[0] || "";
+        const remainingWords = noteWords.slice(1).join(" ");
 
-      ctx.save();
-      ctx.translate(nx, ny);
-      ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
+        ctx.save();
+        ctx.translate(nx, ny);
+        ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
 
-      const serifFontSize = Math.round(38 * nScale);
-      const sansFontSize = Math.round(30 * nScale);
+        const serifFontSize = Math.round(38 * nScale);
+        const sansFontSize = Math.round(30 * nScale);
 
-      ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
-      const w1 = ctx.measureText(firstWord + " ").width;
-      ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
-      const w2 = ctx.measureText(remainingWords).width;
-      const nw = w1 + w2 + 54;
-      const nh = 66;
+        ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
+        const w1 = ctx.measureText(firstWord + " ").width;
+        ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
+        const w2 = ctx.measureText(remainingWords).width;
+        const nw = w1 + w2 + 54;
+        const nh = 66;
 
-      conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
+        conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
 
-      if (conf.hasNoteBg) {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.94)";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.12)";
-        ctx.shadowBlur = 14;
-        ctx.beginPath();
-        ctx.roundRect(-nw / 2, -nh / 2, nw, nh, 14);
-        ctx.fill();
-        ctx.shadowColor = "transparent";
+        if (conf.hasNoteBg) {
+          ctx.fillStyle = "rgba(255, 255, 255, 0.94)";
+          ctx.shadowColor = "rgba(0, 0, 0, 0.12)";
+          ctx.shadowBlur = 14;
+          ctx.beginPath();
+          ctx.roundRect(-nw / 2, -nh / 2, nw, nh, 14);
+          ctx.fill();
+          ctx.shadowColor = "transparent";
+        }
+
+        ctx.textAlign = "left";
+        ctx.fillStyle = pal.text || "#1E293B";
+        ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
+        ctx.fillText(firstWord + " ", -nw / 2 + 27, 12);
+
+        ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
+        ctx.fillText(remainingWords, -nw / 2 + 27 + w1, 10);
+
+        ctx.restore();
+        ctx.restore();
       }
 
-      // Draw first word in bold italic Playfair serif
-      ctx.textAlign = "left";
-      ctx.fillStyle = pal.text || "#1E293B";
-      ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
-      ctx.fillText(firstWord + " ", -nw / 2 + 27, 12);
-
-      ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
-      ctx.fillText(remainingWords, -nw / 2 + 27 + w1, 10);
-      ctx.restore();
-      ctx.restore();
-
-      // LAYER 2B: INDEPENDENT SUB-NOTE / EXTRA LINE (HIGH-CONTRAST & DRAGGABLE)
+      // LAYER 2B: INDEPENDENT SUB-NOTE / EXTRA LINE
       const subNote = (document.getElementById('subNoteInput')?.value || "").trim();
       if (subNote && !hasBlacklistHit) {
         ctx.save();
@@ -2004,7 +1982,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         const subRot = conf.subRot || 0;
 
         const defSubX = 540;
-        const defSubY = ny < 540 ? (ny + 50) : (ny - 50);
+        const defSubY = 900;
 
         const sx = conf.subPos ? conf.subPos.x : defSubX;
         const sy = conf.subPos ? conf.subPos.y : defSubY;
@@ -2430,10 +2408,9 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       document.getElementById('rawDealPaste').value = "";
       document.getElementById('suggestedTitleInput').value = "";
-      document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
-      document.getElementById('simpleValueInput').value = "20oz · 12-PACK";
-      const sInput = document.getElementById('subNoteInput');
-      if (sInput) sInput.value = "";
+      document.getElementById('mainNoteInput').value = "";
+      document.getElementById('simpleValueInput').value = "";
+      document.getElementById('subNoteInput').value = "";
       document.getElementById('aiChipsWrapper').classList.add('hidden');
 
       for (let i = 1; i <= 4; i++) {
@@ -2442,10 +2419,13 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         cardCustoms[i].bRot = i === 1 ? -5 : 0;
         cardCustoms[i].nRot = 0;
         cardCustoms[i].nScale = 1.0;
+        cardCustoms[i].subRot = 0;
+        cardCustoms[i].subScale = 1.0;
         cardCustoms[i].hasNoteBg = false;
         cardCustoms[i].productPos = null;
         cardCustoms[i].badgePos = null;
         cardCustoms[i].notePos = null;
+        cardCustoms[i].subPos = null;
         cardCustoms[i].accents = { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true };
       }
 
@@ -2474,7 +2454,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md cursor-pointer";
         runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer";
-        document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
+        document.getElementById('mainNoteInput').value = "";
 
         for (let i = 1; i <= 4; i++) {
           cardCustoms[i].accents.arrow = false;
@@ -2509,49 +2489,67 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       renderAll4CreatorCards();
     }
 
-    function renderAiChips(chips) {
-      const container = document.getElementById('aiChipsContainer');
+    function applyAiSpecTag(text) {
+      document.getElementById('simpleValueInput').value = text;
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function renderAiChips(affirmations, specTags) {
       const wrapper = document.getElementById('aiChipsWrapper');
-      if (!chips || chips.length === 0) {
+      const affContainer = document.getElementById('aiChipsContainer');
+      const specContainer = document.getElementById('aiSpecChipsContainer');
+
+      if ((!affirmations || affirmations.length === 0) && (!specTags || specTags.length === 0)) {
         wrapper.classList.add('hidden');
         return;
       }
-      container.innerHTML = "";
-      chips.forEach(note => {
-        const btn = document.createElement('button');
-        btn.type = "button";
-        btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
-        btn.innerText = note;
-        btn.onclick = () => applyAiNote(note);
-        container.appendChild(btn);
-      });
+
+      affContainer.innerHTML = "";
+      if (affirmations && affirmations.length > 0) {
+        affirmations.forEach(note => {
+          const btn = document.createElement('button');
+          btn.type = "button";
+          btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
+          btn.innerText = note;
+          btn.onclick = () => applyAiNote(note);
+          affContainer.appendChild(btn);
+        });
+      }
+
+      specContainer.innerHTML = "";
+      if (specTags && specTags.length > 0) {
+        specTags.forEach(spec => {
+          const btn = document.createElement('button');
+          btn.type = "button";
+          btn.className = "text-[11px] bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
+          btn.innerText = spec;
+          btn.onclick = () => applyAiSpecTag(spec);
+          specContainer.appendChild(btn);
+        });
+      }
+
       wrapper.classList.remove('hidden');
     }
 
     function auditOcrSafety() {
       const textToScan = [
         document.getElementById('mainNoteInput').value,
-        document.getElementById('simpleValueInput').value
+        document.getElementById('simpleValueInput').value,
+        document.getElementById('subNoteInput').value
       ].join(' ').toLowerCase();
 
       const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
       const banner = document.getElementById('ocrWarningBanner');
       if (hits.length > 0) {
-        document.getElementById('ocrWarningText').innerText = `Banned terms detected: "${hits.join(', ')}". Pure curation specs only!`;
+        document.getElementById('ocrWarningText').innerText = `Banned terms detected: "${hits.join(', ')}". Pure non-commercial curation specs only!`;
         banner.classList.remove('hidden');
       } else {
         banner.classList.add('hidden');
       }
     }
 
-    function clearSubNote() {
-      const el = document.getElementById('subNoteInput');
-      if (el) el.value = "";
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
-    // RAW DEAL EXTRACTOR (ZERO PRICING & SPEC TAG ENFORCER)
+    // RAW DEAL EXTRACTOR (DYNAMIC AI AFFIRMATIONS & SPEC TAGS)
     async function extractDealInfo() {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
@@ -2572,7 +2570,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const pool = AFFIRMATIONS[activeCategory];
       document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
 
-      // Local Regex Spec Harvesting (Counts, Units, Dimensions, Material, Colors - ZERO PRICES)
+      // Local Regex Spec Harvesting (Counts, Units, Dimensions, Material - ZERO PRICES)
       const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?|bags?|piece|pc|set))\b/i);
       const sizeMatch = raw.match(/\b(sizes?\s+[a-z0-9\s-]+|x-small|small|medium|large|xl|xxl)\b/i);
       const materialMatch = raw.match(/\b(stainless\s+steel|natural\s+wood|cast\s+iron|bamboo|silicone|ceramic|linen|cotton)\b/i);
@@ -2595,6 +2593,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].badgePos = null;
         cardCustoms[i].notePos = null;
+        cardCustoms[i].subPos = null;
       }
 
       auditOcrSafety();
@@ -2607,14 +2606,14 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 "${raw.slice(0, 350)}"
 
 Generate two strictly non-commercial text sets formatted as valid JSON:
-1. "spec_tags": Exactly 3 clean, non-commercial product specs/attributes (e.g., "20oz · 12-PACK", "STAINLESS STEEL", "HOME STAPLE", "DAILY PICK", "SOLID CHOICE"). 
-   ABSOLUTE FORBIDDEN RULE: NEVER include prices, dollar signs ($), numbers representing currency, or words like "sale", "deal", "discount", "cheap", "save", "free".
-2. "affirmations": Exactly 4 warm, human-like editorial lifestyle affirmations tailored to this product category (under 6 words each). For example: "Glowing skin routine unlocked", "Spa luxury at home", "Radiant complexion goals", "Dinner prep made simple".
+1. "spec_tags": Exactly 6 clean, non-commercial product specs/attributes (e.g., "20oz · 12-PACK", "STAINLESS STEEL", "HOME STAPLE", "DAILY PICK", "SOLID CHOICE", "BAMBOO FINISH", "SET OF 4"). 
+   CRITICAL FORBIDDEN RULE: NEVER include prices, dollar signs ($), numbers representing currency, or words like "sale", "deal", "discount", "cheap", "save", "free", "price", "shipped", "total".
+2. "affirmations": Exactly 6 warm, human-like editorial lifestyle affirmations tailored to this product category (under 6 words each). For example: "Glowing skin routine unlocked", "Spa luxury at home", "Radiant complexion goals", "Dinner prep made simple".
 
 Return ONLY JSON:
 {
-  "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3"],
-  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4"]
+  "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6"],
+  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"]
 }`;
 
           const payload = {
@@ -2627,9 +2626,9 @@ Return ONLY JSON:
           rawTxt = rawTxt.replace(/```json/gi, '').replace(/```/g, '').trim();
           const parsed = JSON.parse(rawTxt);
 
-          // Ingest AI Spec Tags with strict blacklist screening
+          let safeSpecs = [];
           if (Array.isArray(parsed.spec_tags) && parsed.spec_tags.length > 0) {
-            const safeSpecs = parsed.spec_tags
+            safeSpecs = parsed.spec_tags
               .map(s => s.toUpperCase().trim())
               .filter(s => !FB_BLACKLIST.some(b => s.toLowerCase().includes(b)));
             if (safeSpecs.length > 0) {
@@ -2638,15 +2637,15 @@ Return ONLY JSON:
             }
           }
 
-          // Ingest AI Affirmations with strict blacklist screening
+          let safeAffirmations = [];
           if (Array.isArray(parsed.affirmations) && parsed.affirmations.length > 0) {
-            const safeChips = parsed.affirmations.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
-            if (safeChips.length > 0) {
-              renderAiChips(safeChips);
-              document.getElementById('mainNoteInput').value = safeChips[0];
+            safeAffirmations = parsed.affirmations.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
+            if (safeAffirmations.length > 0) {
+              document.getElementById('mainNoteInput').value = safeAffirmations[0];
             }
           }
 
+          renderAiChips(safeAffirmations, safeSpecs);
           renderAll4CreatorCards();
         } catch (e) {
           console.log("Local categorization active (AI parsing notice):", e);
