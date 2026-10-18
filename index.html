@@ -438,7 +438,7 @@
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Extra Line / Sub-Note (Optional)</label>
               <button type="button" onclick="clearSubNote()" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase cursor-pointer">✕ Clear</button>
             </div>
-            <input type="text" id="subNoteInput" placeholder="e.g., verified favorite, limited restock" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-200 mt-1 focus:border-sky-500">
+            <input type="text" id="subNoteInput" placeholder="e.g., verified favorite, limited restock" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500 shadow-inner">
           </div>
         </div>
       </div>
@@ -924,6 +924,29 @@
           detectedBoxes = [];
           manualBoxes = [];
 
+          // 1. AUTO-BLANK INPUT FIELDS ON NEW UPLOAD
+          const mainNoteEl = document.getElementById('mainNoteInput');
+          const specTagEl = document.getElementById('simpleValueInput');
+          const subNoteEl = document.getElementById('subNoteInput');
+          const rawDealEl = document.getElementById('rawDealPaste');
+          const titleInputEl = document.getElementById('suggestedTitleInput');
+          const chipsWrapperEl = document.getElementById('aiChipsWrapper');
+
+          if (mainNoteEl) mainNoteEl.value = "";
+          if (specTagEl) specTagEl.value = "";
+          if (subNoteEl) subNoteEl.value = "";
+          if (rawDealEl) rawDealEl.value = "";
+          if (titleInputEl) titleInputEl.value = "";
+          if (chipsWrapperEl) chipsWrapperEl.classList.add('hidden');
+
+          // 2. TRUE INFINITE RE-ROLL (ZERO REPETITION FOR NEXT DEAL)
+          generateProceduralDeck();
+          for (let i = 1; i <= 4; i++) {
+            cardCustoms[i].badgePos = null;
+            cardCustoms[i].notePos = null;
+            cardCustoms[i].productPos = null;
+          }
+
           try {
             const maxDim = 1024;
             const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
@@ -933,6 +956,7 @@
             fCanvas.getContext('2d').drawImage(img, 0, 0, fCanvas.width, fCanvas.height);
             base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
 
+            // Extract dual-tier packaging color harmonies immediately
             sampleColorsFromCanvas(fCanvas);
           } catch (e) {
             console.warn("Payload compression notice:", e);
@@ -1321,6 +1345,24 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           directCanvas.height = directImg.naturalHeight;
           directCanvas.getContext('2d').drawImage(directImg, 0, 0);
           sanitizedCanvasSnapshot = directCanvas;
+
+          // Auto-blank input fields on Step 2 direct photo upload
+          const mainNoteEl = document.getElementById('mainNoteInput');
+          const specTagEl = document.getElementById('simpleValueInput');
+          const subNoteEl = document.getElementById('subNoteInput');
+          if (mainNoteEl) mainNoteEl.value = "";
+          if (specTagEl) specTagEl.value = "";
+          if (subNoteEl) subNoteEl.value = "";
+
+          // Randomize procedural deck and prime palette from new photo
+          generateProceduralDeck();
+          for (let i = 1; i <= 4; i++) {
+            cardCustoms[i].badgePos = null;
+            cardCustoms[i].notePos = null;
+            cardCustoms[i].productPos = null;
+          }
+          sampleColorsFromCanvas(directCanvas);
+
           runVariantLensEngine(sanitizedCanvasSnapshot);
         };
         directImg.src = evt.target.result;
