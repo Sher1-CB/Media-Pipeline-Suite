@@ -1237,10 +1237,17 @@
 
       ctx.globalAlpha = 1.0;
       ctx.save();
-      // Optional Botanical Doodles & Sparkle Accents
+      // Optional Botanical Doodles & Sparkle Accents (Freely Randomized Placement & Rotation)
       const decoType = hash % 3;
       if (decoType === 0) {
-        drawBotanicalCornerVines(ctx, accent);
+        ctx.save();
+        const rx = 180 + ((hash * 13) % 720);
+        const ry = 180 + ((hash * 17) % 720);
+        const rRot = (((hash * 23) % 360) * Math.PI) / 180;
+        ctx.translate(rx, ry);
+        ctx.rotate(rRot);
+        drawRandomizedVine(ctx, accent);
+        ctx.restore();
       } else if (decoType === 1) {
         ctx.font = "bold 48px sans-serif";
         ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
