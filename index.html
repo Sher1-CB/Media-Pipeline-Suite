@@ -1156,38 +1156,62 @@
       }
       ctx.restore();
 
-      // LAYER 2: MAIN AFFIRMATION NOTE
+      // LAYER 2: MAIN AFFIRMATION NOTE (AUTOMATIC MULTI-LINE TEXT WRAPPING)
       if (note) {
         ctx.save();
         const nx = conf.notePos ? conf.notePos.x : 540;
-        const ny = conf.notePos ? conf.notePos.y : 950;
+        const ny = conf.notePos ? conf.notePos.y : 940;
         const nScale = conf.nScale || 1.0;
-        const noteWords = note.split(" ");
-        const firstWord = noteWords[0] || "";
-        const remainingWords = noteWords.slice(1).join(" ");
 
         ctx.translate(nx, ny);
         ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
 
-        const serifFontSize = Math.round(38 * nScale), sansFontSize = Math.round(30 * nScale);
-        ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
-        const w1 = ctx.measureText(firstWord + " ").width;
-        ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
-        const w2 = ctx.measureText(remainingWords).width;
-        const nw = w1 + w2 + 54, nh = 66;
+        const fontSize = Math.round(32 * nScale);
+        ctx.font = `800 ${fontSize}px 'Plus Jakarta Sans', sans-serif`;
 
-        conf._activeNoteBox = { x: nx - nw/2, y: ny - nh/2, w: nw, h: nh };
+        // Word-wrap algorithm to fit comfortably within 900px card width
+        const maxLineWidth = 900;
+        const words = note.split(" ");
+        let lines = [];
+        let currentLine = words[0] || "";
+
+        for (let i = 1; i < words.length; i++) {
+          const testLine = currentLine + " " + words[i];
+          if (ctx.measureText(testLine).width < maxLineWidth) {
+            currentLine = testLine;
+          } else {
+            lines.push(currentLine);
+            currentLine = words[i];
+          }
+        }
+        lines.push(currentLine);
+
+        const lineHeight = Math.round(fontSize * 1.35);
+        const totalTextHeight = lines.length * lineHeight;
+        const boxW = Math.min(960, Math.max(...lines.map(l => ctx.measureText(l).width)) + 60);
+        const boxH = totalTextHeight + 36;
+
+        conf._activeNoteBox = { x: nx - boxW/2, y: ny - boxH/2, w: boxW, h: boxH };
 
         if (conf.hasNoteBg) {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.94)"; ctx.shadowColor = "rgba(0, 0, 0, 0.12)"; ctx.shadowBlur = 14;
-          ctx.beginPath(); ctx.roundRect(-nw/2, -nh/2, nw, nh, 14); ctx.fill(); ctx.shadowColor = "transparent";
+          ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+          ctx.shadowColor = "rgba(0, 0, 0, 0.15)";
+          ctx.shadowBlur = 16;
+          ctx.beginPath();
+          ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 14);
+          ctx.fill();
+          ctx.shadowColor = "transparent";
         }
 
-        ctx.textAlign = "left"; ctx.fillStyle = pal.text || "#1E293B";
-        ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
-        ctx.fillText(firstWord + " ", -nw/2 + 27, 12);
-        ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
-        ctx.fillText(remainingWords, -nw/2 + 27 + w1, 10);
+        ctx.textAlign = "center";
+        ctx.fillStyle = pal.text || "#1E293B";
+
+        // Render each wrapped line cleanly stacked
+        const startY = -totalTextHeight / 2 + fontSize * 0.8;
+        lines.forEach((line, idx) => {
+          ctx.fillText(line, 0, startY + (idx * lineHeight));
+        });
+
         ctx.restore();
       }
 
