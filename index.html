@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v10.5 - Magazine Coverflow Studio</title>
+  <title>CB Media Pipeline Suite v10.6 - Coverflow Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Editorial Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +70,7 @@
       height: 100% !important;
       display: block;
       border-radius: 14px;
-      background-color: #000;
+      background-color: #1e293b;
     }
   </style>
 </head>
@@ -81,7 +81,7 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v10.5</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v10.6</span>
         </h1>
         <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Magazine Coverflow Studio ➔ Infinite Procedural Frames ➔ Strict OCR Firewall</p>
       </div>
@@ -666,8 +666,7 @@
     const FB_BLACKLIST = [
       "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
-      "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link",
-      "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
+      "bargain", "doorbuster", "bogo", "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
     ];
 
     // Individual Layer State per Card (Infinite Procedural Variations)
@@ -695,6 +694,47 @@
     let activeCategory = "general";
     let valueTagOptions = ["20oz · 12-PACK", "SOLID CHOICE", "DAILY ESSENTIAL", "KITCHEN STAPLE"];
     let valueTagIndex = 0;
+
+    // ==========================================
+    // DUAL-TIER PACKAGING COLOR SAMPLER (GUARANTEED)
+    // ==========================================
+    function sampleColorsFromCanvas(canvas) {
+      try {
+        if (!canvas || !canvas.width || canvas.width === 0) {
+          return { bg: "#F5EFE6", polaroid: "#FAF8F5", accent: "#C89567", text: "#3C2A21", vignette: "rgba(50, 35, 20, 0.12)" };
+        }
+        const s = document.createElement("canvas");
+        s.width = 24; s.height = 24;
+        const sCtx = s.getContext("2d");
+        sCtx.drawImage(canvas, 0, 0, 24, 24);
+        const data = sCtx.getImageData(0, 0, 24, 24).data;
+
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          if (brightness > 28 && brightness < 228) {
+            const sat = Math.max(data[i], data[i+1], data[i+2]) - Math.min(data[i], data[i+1], data[i+2]);
+            if (sat > 14) {
+              r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+            }
+          }
+        }
+        if (count > 0) {
+          r = Math.round(r / count);
+          g = Math.round(g / count);
+          b = Math.round(b / count);
+
+          const baseBg = `rgb(${Math.min(250, Math.round(226 + r * 0.1))}, ${Math.min(246, Math.round(222 + g * 0.1))}, ${Math.min(238, Math.round(210 + b * 0.1))})`;
+          const accentColor = `rgb(${Math.max(25, Math.round(r * 0.82))}, ${Math.max(25, Math.round(g * 0.82))}, ${Math.max(25, Math.round(b * 0.82))})`;
+          const vignetteShadow = `rgba(${Math.max(15, Math.round(r * 0.4))}, ${Math.max(15, Math.round(g * 0.4))}, ${Math.max(15, Math.round(b * 0.4))}, 0.14)`;
+
+          return { bg: baseBg, polaroid: "#FAF8F5", accent: accentColor, text: "#1E293B", vignette: vignetteShadow };
+        }
+      } catch (e) {
+        console.warn("sampleColorsFromCanvas notice:", e);
+      }
+      return { bg: "#F5EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21", vignette: "rgba(50, 35, 20, 0.12)" };
+    }
 
     // ==========================================
     // INITIALIZATION & DYNAMIC SETUP
@@ -791,7 +831,7 @@
     }
 
     // ==========================================
-    // STEP NAVIGATION
+    // STEP NAVIGATION (WITH AUTO-RENDER ON STEP 3)
     // ==========================================
     function navToStep(stepNum) {
       for (let s = 1; s <= 3; s++) {
@@ -812,6 +852,12 @@
         targetTab.classList.add('step-active');
       }
       activeStep = stepNum;
+
+      if (stepNum === 3) {
+        if (!cardCustoms[1].procedural) generateProceduralDeck();
+        selectCardIndex(activeCardIndex || 1);
+        renderAll4CreatorCards();
+      }
     }
 
     // ==========================================
@@ -848,7 +894,6 @@
             fCanvas.getContext('2d').drawImage(img, 0, 0, fCanvas.width, fCanvas.height);
             base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
 
-            // Prime color sampler immediately
             sampleColorsFromCanvas(fCanvas);
           } catch (e) {
             console.warn("Payload compression notice:", e);
@@ -935,6 +980,15 @@
       offCtx.drawImage(mini, 0, 0, mini.width, mini.height, 0, 0, srcW, srcH);
       offCtx.imageSmoothingEnabled = true;
 
+      if (isThinLine) {
+        const pCanvas = document.createElement("canvas");
+        pCanvas.width = 1; pCanvas.height = 1;
+        pCanvas.getContext("2d").drawImage(rawLoadedImage, x + rw * 0.5, Math.max(0, y - 4), 1, 1, 0, 0, 1, 1);
+        const [r, g, b] = pCanvas.getContext("2d").getImageData(0, 0, 1, 1).data;
+        offCtx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.88)`;
+        offCtx.fillRect(0, 0, srcW, srcH);
+      }
+
       const baseBlur = Math.max(18, Math.round(24 * (outputCanvas.width / 1400)));
       const blurRadius = isThinLine ? Math.max(14, Math.round(rh * 0.6)) : baseBlur;
       const blurCanvas = document.createElement("canvas");
@@ -947,6 +1001,22 @@
       patchCanvas.width = rw; patchCanvas.height = rh;
       const pCtx2 = patchCanvas.getContext("2d");
       pCtx2.drawImage(blurCanvas, x - srcX, y - srcY, rw, rh, 0, 0, rw, rh);
+
+      const maskCanvas = document.createElement("canvas");
+      maskCanvas.width = rw; maskCanvas.height = rh;
+      const mCtx = maskCanvas.getContext("2d");
+      const feather = Math.max(2, Math.min(8, Math.round(Math.min(rw, rh) * 0.1)));
+      mCtx.fillStyle = "#ffffff";
+      mCtx.fillRect(feather, feather, Math.max(1, rw - feather * 2), Math.max(1, rh - feather * 2));
+
+      const softMask = document.createElement("canvas");
+      softMask.width = rw; softMask.height = rh;
+      const sCtx = softMask.getContext("2d");
+      sCtx.filter = "blur(" + feather + "px)";
+      sCtx.drawImage(maskCanvas, 0, 0);
+
+      pCtx2.globalCompositeOperation = "destination-in";
+      pCtx2.drawImage(softMask, 0, 0);
 
       oCtx.save();
       oCtx.drawImage(patchCanvas, x, y);
@@ -1782,7 +1852,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       ctx.restore();
       ctx.restore();
 
-      // LAYER 3: VALUE SPEC BADGE (RANDOMIZED/CUSTOM ROTATION & DRAG)
+      // LAYER 3: VALUE SPEC BADGE
       if (val && !hasBlacklistHit) {
         ctx.save();
         const bScale = conf.bScale || 1.0;
@@ -2305,7 +2375,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const pool = AFFIRMATIONS[activeCategory];
       document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
 
-      // Extract non-commercial specs (units, counts, oz, sizes)
       const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?|bags?))\b/i);
       const sizeMatch = raw.match(/\b(sizes?\s+[a-z0-9\s-]+|x-small|small|medium|large|xl|xxl)\b/i);
       const colorMatch = raw.match(/\b(matte\s+black|stainless|natural\s+wood|assorted\s+colors|multi-color)\b/i);
