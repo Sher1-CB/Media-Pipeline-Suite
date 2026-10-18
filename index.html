@@ -955,8 +955,8 @@
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // 1. TACTILE SURFACE TEXTURE & GRADIENT WASH
-      const surfaceStyle = hash % 5; // 0: Wood Grain, 1: Linen Weave, 2: Craft Specks, 3: Travertine Stone, 4: Clean Editorial Wash
+      // 1. TACTILE SURFACE TEXTURE & GRADIENT WASH (Wood Grain, Linen, Craft Specks, Travertine)
+      const surfaceStyle = hash % 5; 
       const accent = pal.accent || "#A66E38";
 
       if (surfaceStyle === 0) {
