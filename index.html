@@ -431,9 +431,11 @@
     let base64ApiPayload = "";
     let detectedBoxes = [];
     let manualBoxes = [];
+    
+    // Explicit global state for Step 1 manual drag patching
     let isDrawingPatch = false;
-    let patchStartX = 0, patchStartY = 0;
-
+    let patchStartX = 0;
+    let patchStartY = 0;
     let sanitizedCanvasSnapshot = null;
     let all15Variants = [];
     let chosen4Variants = [];
@@ -686,6 +688,8 @@
     }
 
     function setupManualPatchListeners() {
+      if (!outputCanvas) return;
+
       outputCanvas.addEventListener('mousedown', (e) => {
         if (!rawLoadedImage) return;
         isDrawingPatch = true;
@@ -697,7 +701,7 @@
       });
 
       outputCanvas.addEventListener('mousemove', (e) => {
-        if (!isDrawingPatch) return;
+        if (!isDrawingPatch || !rawLoadedImage) return;
         renderOutputCanvas();
         const r = outputCanvas.getBoundingClientRect();
         const scaleX = outputCanvas.width / r.width;
@@ -707,14 +711,14 @@
 
         oCtx.save();
         oCtx.strokeStyle = "#38bdf8";
-        oCtx.lineWidth = Math.max(2, Math.round(3 * scaleX));
+        oCtx.lineWidth = 3;
         oCtx.setLineDash([6, 6]);
         oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
         oCtx.restore();
       });
 
       outputCanvas.addEventListener('mouseup', (e) => {
-        if (!isDrawingPatch) return;
+        if (!isDrawingPatch || !rawLoadedImage) return;
         isDrawingPatch = false;
         const r = outputCanvas.getBoundingClientRect();
         const scaleX = outputCanvas.width / r.width;
@@ -722,10 +726,12 @@
         const endX = (e.clientX - r.left) * scaleX;
         const endY = (e.clientY - r.top) * scaleY;
 
-        const x1 = Math.min(patchStartX, endX), y1 = Math.min(patchStartY, endY);
-        const x2 = Math.max(patchStartX, endX), y2 = Math.max(patchStartY, endY);
+        const x1 = Math.min(patchStartX, endX);
+        const y1 = Math.min(patchStartY, endY);
+        const x2 = Math.max(patchStartX, endX);
+        const y2 = Math.max(patchStartY, endY);
 
-        if (x2 - x1 > 4 && y2 - y1 > 4) {
+        if (x2 - x1 > 6 && y2 - y1 > 6) {
           manualBoxes.push([
             Math.round((y1 / outputCanvas.height) * 1000),
             Math.round((x1 / outputCanvas.width) * 1000),
