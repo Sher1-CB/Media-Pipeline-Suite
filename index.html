@@ -954,79 +954,66 @@
       const hash = proc.bgPatternSeed;
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-      // 1. HIGH-CONTRAST TACTILE TEXTURES & DYNAMIC SHAPE COMPOSITION
       ctx.globalAlpha = 1.0;
+
+      // 1. VIBRANT CONTRAST PALETTE & TACTILE SURFACE TEXTURE (Wood Grain, Linen, Craft Paper, Travertine)
+      // Ensures background colors contrast cleanly with the product instead of matching it monochromatically
       const surfaceStyle = hash % 4; 
-      const accent = pal.accent || "#A66E38";
+      const vibrantAccent = pal.accent || "#B4845C";
 
       if (surfaceStyle === 0) {
-        // DISTINCT WOOD GRAIN SLATS
-        ctx.fillStyle = pal.bg || "#D4B28C";
+        // WOOD GRAIN SLATS
+        ctx.fillStyle = "#F2E8DC";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 3;
-        for (let y = 0; y < 1080; y += 30 + (hash % 10)) {
+        ctx.strokeStyle = vibrantAccent; ctx.globalAlpha = 0.22; ctx.lineWidth = 2.5;
+        for (let y = 0; y < 1080; y += 32 + (hash % 10)) {
           ctx.beginPath(); ctx.moveTo(0, y);
-          for (let x = 0; x < 1080; x += 100) {
-            ctx.quadraticCurveTo(x + 50, y + ((hash + x) % 20 - 10), x + 100, y);
+          for (let x = 0; x < 1080; x += 120) {
+            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 18 - 9), x + 120, y);
           }
           ctx.stroke();
         }
       } else if (surfaceStyle === 1) {
-        // RICH LINEN FABRIC CROSS-HATCH
-        ctx.fillStyle = pal.bg || "#E8E2D5";
+        // LINEN FABRIC CROSS-HATCH
+        ctx.fillStyle = "#FAF6F0";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.28; ctx.lineWidth = 1.5;
-        for (let x = 0; x < 1080; x += 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 10) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+        ctx.strokeStyle = vibrantAccent; ctx.globalAlpha = 0.16; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 8) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 8) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       } else if (surfaceStyle === 2) {
         // SPECKLED CRAFT PAPER
-        ctx.fillStyle = pal.bg || "#E2D3BE";
+        ctx.fillStyle = "#F5EFEB";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-        for (let i = 0; i < 500; i++) {
-          const cx = (hash * i * 3) % 1080, cy = (hash * i * 7) % 1080;
-          ctx.fillRect(cx, cy, 4, 4);
+        ctx.fillStyle = vibrantAccent; ctx.globalAlpha = 0.14;
+        for (let i = 0; i < 350; i++) {
+          ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
         }
       } else {
         // WARM TRAVERTINE STONE WASH
         const sGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
-        sGrad.addColorStop(0, pal.bg || "#E6DFC5");
-        sGrad.addColorStop(0.5, "#D8CEAA");
-        sGrad.addColorStop(1, "#B8AC82");
+        sGrad.addColorStop(0, "#F7F2EC");
+        sGrad.addColorStop(1, "#E6D8CB");
         ctx.fillStyle = sGrad; ctx.fillRect(0, 0, 1080, 1080);
       }
 
       ctx.globalAlpha = 1.0;
       ctx.save();
-      const layoutType = hash % 4;
-      if (layoutType === 0) {
-        // Bold Offset Rounded Color Block
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.45;
-        ctx.beginPath(); ctx.roundRect((hash % 140) + 60, (hash % 100) + 60, 720, 720, 48); ctx.fill();
-      } else if (layoutType === 1) {
-        // Flowing Organic Wave Band
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
-        ctx.beginPath(); ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(380, (hash % 400) + 80, 700, 1080 - (hash % 250), 1080, 450);
-        ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
-      } else if (layoutType === 2) {
-        // Architectural Arch Niche
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.38;
-        ctx.beginPath(); ctx.arc(540, 380, 360, Math.PI, 0, false);
-        ctx.lineTo(900, 1080); ctx.lineTo(180, 1080); ctx.closePath(); ctx.fill();
+      // Organic Boutique Doodles & Botanical Accents (Like your reference sample)
+      if (hash % 2 === 0) {
+        drawBotanicalCornerVines(ctx, vibrantAccent);
       } else {
-        // Modern Split Vertical Panel
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.42;
-        ctx.fillRect(0, 0, 420 + (hash % 150), 1080);
+        ctx.font = "bold 48px sans-serif";
+        ctx.fillStyle = vibrantAccent; ctx.globalAlpha = 0.35;
+        ctx.fillText("✨", 120, 140);
+        ctx.fillText("🌿", 920, 940);
       }
       ctx.restore();
 
-      // Vignette Shadow (Strict Opacity Reset)
+      // Vignette Shadow for 3D Pop
       ctx.globalAlpha = 1.0;
-      const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
+      const vGrad = ctx.createRadialGradient(540, 540, 220, 540, 540, 780);
       vGrad.addColorStop(0, "transparent");
-      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.3)");
+      vGrad.addColorStop(1, "rgba(50, 35, 20, 0.2)");
       ctx.fillStyle = vGrad; ctx.fillRect(0, 0, 1080, 1080);
       ctx.globalAlpha = 1.0;
 
