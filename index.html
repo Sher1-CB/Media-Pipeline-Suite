@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v9.5 - Coverflow Studio</title>
+  <title>CB Media Pipeline Suite v10.0 - Coverflow Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts for Diverse Creator Typographies -->
+  <!-- Google Fonts for Creator Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:wght@700&family=Fredoka:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
       perspective: 1200px;
       position: relative;
       width: 100%;
-      height: 620px;
+      height: 600px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -28,8 +28,8 @@
     }
     .coverflow-card {
       position: absolute;
-      width: 540px;
-      height: 540px;
+      width: 520px;
+      height: 520px;
       transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
       cursor: pointer;
       user-select: none;
@@ -38,7 +38,7 @@
       transform: translateX(0) scale(1) translateZ(60px);
       z-index: 30;
       opacity: 1;
-      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.45));
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.5));
       cursor: default;
     }
     .coverflow-card.pos-left-1 {
@@ -81,9 +81,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v9.5</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v10.0</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">3D Coverflow Studio ➔ Infinite Procedural Aesthetics ➔ 0 Token Canvas</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Auto-Mesh Sanitizer ➔ 15-Variant Lens ➔ 3D Coverflow Studio</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
@@ -91,7 +91,7 @@
         <button 
           type="button" 
           onclick="masterResetDeal()" 
-          class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-all active:scale-95"
+          class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-all active:scale-95 cursor-pointer"
           title="Clear all images, text, and reset to Step 1"
         >
           <span>🔄</span> Start New Deal
@@ -121,7 +121,7 @@
         <button 
           type="button" 
           onclick="toggleEmergencyDrawer()" 
-          class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider"
+          class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer"
           title="Manual Fallback Tools"
         >
           🚨 Fallback
@@ -135,7 +135,7 @@
         <h4 class="text-xs font-bold uppercase tracking-wider text-rose-300 flex items-center gap-2">
           <span>🚨</span> Emergency Outage Suite (Google API Congestion)
         </h4>
-        <button onclick="toggleEmergencyDrawer()" class="text-xs text-slate-400 hover:text-white">✕ Close</button>
+        <button onclick="toggleEmergencyDrawer()" class="text-xs text-slate-400 hover:text-white cursor-pointer">✕ Close</button>
       </div>
       <p class="text-xs text-slate-300">
         If Google API is undergoing maintenance or traffic spikes, switch to your independent standalone workstations:
@@ -190,7 +190,7 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
-            <input type="file" id="rawImageInput" accept="image/*" class="hidden">
+            <input type="file" id="rawImageInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(this)" onclick="this.value=null">
             <button 
               type="button" 
               onclick="document.getElementById('rawImageInput').click()" 
@@ -202,12 +202,13 @@
             <button 
               type="button" 
               id="aiAuditBtn" 
+              onclick="processImageWithAi()"
               class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
             >
               <span>✨</span> Process Image with AI
             </button>
 
-            <select id="maskModeSelect" class="bg-slate-900 border border-slate-700 text-xs text-white px-2.5 py-2 rounded-lg font-medium focus:outline-none focus:border-sky-500">
+            <select id="maskModeSelect" onchange="renderOutputCanvas()" class="bg-slate-900 border border-slate-700 text-xs text-white px-2.5 py-2 rounded-lg font-medium focus:outline-none focus:border-sky-500">
               <option value="diffusion" selected>Frosted Diffusion</option>
               <option value="ambient">Ambient Gradient Block</option>
               <option value="pixelate">Mosaic Pixelation</option>
@@ -217,6 +218,7 @@
             <button 
               type="button" 
               id="resetMasksBtn" 
+              onclick="resetMasks()"
               class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all uppercase tracking-wider cursor-pointer"
             >
               Reset
@@ -268,7 +270,7 @@
         <div class="mt-5 pt-4 border-t border-slate-800 flex items-center gap-3">
           <label class="text-xs font-bold text-sky-400 uppercase tracking-wider whitespace-nowrap">Compliant Generic Title:</label>
           <input type="text" id="suggestedTitleInput" readonly placeholder="Generic title appears here automatically after processing..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-slate-200">
-          <button id="copyTitleBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider whitespace-nowrap">Copy</button>
+          <button id="copyTitleBtn" onclick="copyGenericTitle()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider whitespace-nowrap cursor-pointer">Copy</button>
         </div>
       </div>
     </section>
@@ -283,7 +285,7 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
-            <input type="file" id="step2DirectUpload" accept="image/*" class="hidden">
+            <input type="file" id="step2DirectUpload" accept="image/*" class="hidden" onchange="handleStep2DirectUpload(this)" onclick="this.value=null">
             <button 
               type="button" 
               onclick="document.getElementById('step2DirectUpload').click()" 
@@ -296,6 +298,7 @@
             <button 
               type="button" 
               id="reshuffleVariantsBtn" 
+              onclick="pick4FeaturedVariants()"
               class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
             >
               <span>🔀</span> Re-Shuffle 4
@@ -304,6 +307,7 @@
             <button 
               type="button" 
               id="downloadAllFeaturedBtn" 
+              onclick="downloadAllFeaturedVariants()"
               class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
             >
               <span>📥</span> Download All 4 Featured
@@ -323,7 +327,7 @@
         <div id="featuredGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
 
         <div class="mt-6 pt-4 border-t border-slate-800">
-          <button type="button" id="toggle15DrawerBtn" class="text-xs font-bold text-sky-400 uppercase tracking-wider hover:underline flex items-center gap-1">
+          <button type="button" id="toggle15DrawerBtn" onclick="toggle15Drawer()" class="text-xs font-bold text-sky-400 uppercase tracking-wider hover:underline flex items-center gap-1 cursor-pointer">
             <span>📂</span> <span id="drawerToggleText">Show Full 15-Variant Matrix</span>
           </button>
           <div id="drawer15Matrix" class="hidden mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3"></div>
@@ -349,7 +353,7 @@
                 type="button" 
                 id="modeRegularBtn" 
                 onclick="setDealMode('regular')" 
-                class="px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md"
+                class="px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md cursor-pointer"
               >
                 ☕ Regular Deal
               </button>
@@ -357,7 +361,7 @@
                 type="button" 
                 id="modeRunBtn" 
                 onclick="setDealMode('run')" 
-                class="px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1"
+                class="px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer"
               >
                 👀 Run Deal
               </button>
@@ -366,7 +370,7 @@
             <button 
               type="button" 
               onclick="navToStep(2)" 
-              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-1"
+              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-1 cursor-pointer"
             >
               ⬅ Back to Step 2
             </button>
@@ -374,7 +378,7 @@
             <button 
               type="button" 
               onclick="masterResetDeal()" 
-              class="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1.5 shadow-md ml-1"
+              class="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1.5 shadow-md ml-1 cursor-pointer"
               title="Clear all caches and start a brand new deal from Step 1"
             >
               <span>🔄</span> Clear & New Deal
@@ -396,7 +400,8 @@
           <button 
             type="button" 
             id="extractBtn" 
-            class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider"
+            onclick="extractDealInfo()"
+            class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider cursor-pointer"
           >
             ⚡ Extract Info
           </button>
@@ -416,17 +421,17 @@
           <div>
             <div class="flex justify-between items-center">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Note / Affirmation</label>
-              <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase">🎲 Shuffle Note</button>
+              <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase cursor-pointer">🎲 Shuffle Note</button>
             </div>
-            <input type="text" id="mainNoteInput" value="Daily routine staple ✨" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="mainNoteInput" value="Daily routine staple ✨" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
           <div>
             <div class="flex justify-between items-center">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag (Zero Banned Words)</label>
-              <button type="button" onclick="shuffleValueTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase">🎲 Shuffle Tag</button>
+              <button type="button" onclick="shuffleValueTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase cursor-pointer">🎲 Shuffle Tag</button>
             </div>
-            <input type="text" id="simpleValueInput" value="$16.79 Shipped" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="simpleValueInput" value="$16.79 Shipped" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
         </div>
       </div>
@@ -443,7 +448,7 @@
             <button 
               type="button" 
               onclick="reRollProceduralDeck()" 
-              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all"
+              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer"
               title="Procedurally recalculate colors, curves, and textures (0 Tokens!)"
             >
               <span>🎲</span> Re-Generate Design Deck
@@ -454,21 +459,22 @@
             <button 
               type="button" 
               onclick="resetActiveCard()" 
-              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider"
+              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer"
             >
               🔄 Reset Card
             </button>
             <button 
               type="button" 
               onclick="downloadActiveCard()" 
-              class="px-3.5 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1"
+              class="px-3.5 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1 cursor-pointer"
             >
               <span>📥</span> Download Card
             </button>
             <button 
               type="button" 
               id="downloadAllCardsBtn" 
-              class="px-4 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1.5"
+              onclick="downloadAllCards()"
+              class="px-4 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1.5 cursor-pointer"
             >
               <span>📥</span> Download All 4 Cards
             </button>
@@ -494,14 +500,14 @@
           <button 
             type="button" 
             onclick="prevCard()" 
-            class="absolute left-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all"
+            class="absolute left-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all cursor-pointer"
           >
             ‹
           </button>
           <button 
             type="button" 
             onclick="nextCard()" 
-            class="absolute right-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all"
+            class="absolute right-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all cursor-pointer"
           >
             ›
           </button>
@@ -607,7 +613,7 @@
               <button 
                 type="button" 
                 onclick="centerActiveElements()" 
-                class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider"
+                class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider cursor-pointer"
               >
                 🎯 Re-Center Elements
               </button>
@@ -690,81 +696,13 @@
     let valueTagIndex = 0;
 
     // ==========================================
-    // DYNAMIC MODEL DISCOVERY: 2ND LATEST LITE
-    // ==========================================
-    function parseModelVersion(name) {
-      const match = name.match(/(\d+)(?:\.(\d+))?/);
-      if (!match) return 0;
-      const major = parseInt(match[1]) || 0;
-      const minor = parseInt(match[2]) || 0;
-      return major * 100 + minor;
-    }
-
-    async function autoDetectModels(key) {
-      if (!key) return;
-      const modelSelect = document.getElementById('modelSelect');
-      if (!modelSelect) return;
-
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
-        const data = await res.json();
-        
-        if (!data.models || !Array.isArray(data.models)) {
-          console.warn("Google API returned no models:", data);
-          return;
-        }
-
-        // 1. Filter strictly for Gemini models that support generateContent
-        const validModels = data.models
-          .filter(m => (m.supportedGenerationMethods || []).includes("generateContent") && m.name.includes("gemini"))
-          .map(m => m.name.replace("models/", ""))
-          .filter(n => !n.includes("preview") && !n.includes("exp"));
-
-        // 2. Sort all models by true numerical version (Newest to Oldest)
-        validModels.sort((a, b) => parseModelVersion(b) - parseModelVersion(a));
-
-        // 3. Extract pure LITE models
-        const liteModels = validModels.filter(m => m.toLowerCase().includes("lite"));
-
-        // 4. Select exactly the 2nd latest LITE (index 1)
-        if (liteModels.length >= 2) {
-          window.n1Lite = liteModels[1];
-        } else if (liteModels.length === 1) {
-          window.n1Lite = liteModels[0];
-        } else {
-          const flashModels = validModels.filter(m => m.includes("flash"));
-          window.n1Lite = flashModels.length >= 2 ? flashModels[1] : flashModels[0];
-        }
-
-        // 5. Populate dropdown with live models
-        modelSelect.innerHTML = "";
-        validModels.forEach(m => {
-          const opt = document.createElement("option");
-          opt.value = m;
-          opt.textContent = m + (m === window.n1Lite ? " (★ 2nd Latest LITE)" : "");
-          modelSelect.appendChild(opt);
-        });
-
-        // 6. Respect saved choice or default to 2nd latest LITE
-        const savedManualChoice = localStorage.getItem('deal_gemini_model');
-        if (savedManualChoice && modelSelect.querySelector(`option[value="${savedManualChoice}"]`)) {
-          modelSelect.value = savedManualChoice;
-        } else if (window.n1Lite && modelSelect.querySelector(`option[value="${window.n1Lite}"]`)) {
-          modelSelect.value = window.n1Lite;
-        }
-      } catch (err) {
-        console.warn("Live model query notice:", err);
-      }
-    }
-
-    // ==========================================
     // INITIALIZATION & DRAGGING SETUP
     // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
       setupCanvasDragListeners();
+      setupManualPatchListeners();
       generateProceduralDeck();
 
-      // Check saved key and run auto-detection immediately
       const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
       const keyInput = document.getElementById('apiKeyInput');
       if (savedKey && keyInput) {
@@ -789,7 +727,638 @@
     });
 
     // ==========================================
-    // 3D COVERFLOW CAROUSEL POSITIONING
+    // DYNAMIC MODEL DISCOVERY: 2ND LATEST LITE
+    // ==========================================
+    function parseModelVersion(name) {
+      const match = name.match(/(\d+)(?:\.(\d+))?/);
+      if (!match) return 0;
+      const major = parseInt(match[1]) || 0;
+      const minor = parseInt(match[2]) || 0;
+      return major * 100 + minor;
+    }
+
+    async function autoDetectModels(key) {
+      if (!key) return;
+      const modelSelect = document.getElementById('modelSelect');
+      if (!modelSelect) return;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
+        const data = await res.json();
+        
+        if (!data.models || !Array.isArray(data.models)) return;
+
+        const validModels = data.models
+          .filter(m => (m.supportedGenerationMethods || []).includes("generateContent") && m.name.includes("gemini"))
+          .map(m => m.name.replace("models/", ""))
+          .filter(n => !n.includes("preview") && !n.includes("exp"));
+
+        validModels.sort((a, b) => parseModelVersion(b) - parseModelVersion(a));
+
+        const liteModels = validModels.filter(m => m.toLowerCase().includes("lite"));
+
+        if (liteModels.length >= 2) {
+          window.n1Lite = liteModels[1];
+        } else if (liteModels.length === 1) {
+          window.n1Lite = liteModels[0];
+        } else {
+          const flashModels = validModels.filter(m => m.includes("flash"));
+          window.n1Lite = flashModels.length >= 2 ? flashModels[1] : flashModels[0];
+        }
+
+        modelSelect.innerHTML = "";
+        validModels.forEach(m => {
+          const opt = document.createElement("option");
+          opt.value = m;
+          opt.textContent = m + (m === window.n1Lite ? " (★ 2nd Latest LITE)" : "");
+          modelSelect.appendChild(opt);
+        });
+
+        const savedManualChoice = localStorage.getItem('deal_gemini_model');
+        if (savedManualChoice && modelSelect.querySelector(`option[value="${savedManualChoice}"]`)) {
+          modelSelect.value = savedManualChoice;
+        } else if (window.n1Lite && modelSelect.querySelector(`option[value="${window.n1Lite}"]`)) {
+          modelSelect.value = window.n1Lite;
+        }
+      } catch (err) {
+        console.warn("Live model query notice:", err);
+      }
+    }
+
+    function toggleEmergencyDrawer() {
+      document.getElementById('emergencyDrawer').classList.toggle('hidden');
+    }
+
+    // ==========================================
+    // STEP NAVIGATION
+    // ==========================================
+    function navToStep(stepNum) {
+      for (let s = 1; s <= 3; s++) {
+        const sec = document.getElementById(`step${s}Section`);
+        const tab = document.getElementById(`stepTab${s}`);
+        if (sec) sec.classList.add('hidden');
+        if (tab) {
+          tab.classList.remove('step-active');
+          tab.classList.add('step-inactive');
+        }
+      }
+
+      const targetSec = document.getElementById(`step${stepNum}Section`);
+      const targetTab = document.getElementById(`stepTab${stepNum}`);
+      if (targetSec) targetSec.classList.remove('hidden');
+      if (targetTab) {
+        targetTab.classList.remove('step-inactive');
+        targetTab.classList.add('step-active');
+      }
+      activeStep = stepNum;
+    }
+
+    // ==========================================
+    // STEP 1: PHOTO UPLOAD & DIRECT INLINE EXECUTION
+    // ==========================================
+    function handlePhotoUpload(input) {
+      if (!input || !input.files || !input.files[0]) return;
+      const file = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          rawLoadedImage = img;
+
+          const tCan = document.getElementById('targetCanvas');
+          const oCan = document.getElementById('outputCanvas');
+          if (tCan && oCan) {
+            tCan.width = img.naturalWidth;
+            tCan.height = img.naturalHeight;
+            oCan.width = img.naturalWidth;
+            oCan.height = img.naturalHeight;
+          }
+
+          detectedBoxes = [];
+          manualBoxes = [];
+
+          try {
+            const maxDim = 1024;
+            const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
+            const fCanvas = document.createElement('canvas');
+            fCanvas.width = Math.round(img.naturalWidth * scale);
+            fCanvas.height = Math.round(img.naturalHeight * scale);
+            fCanvas.getContext('2d').drawImage(img, 0, 0, fCanvas.width, fCanvas.height);
+            base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
+          } catch (e) {
+            console.warn("Payload compression notice:", e);
+          }
+
+          renderTargetCanvas();
+          renderOutputCanvas();
+        };
+        img.onerror = function() {
+          alert("Could not load image format. Please select a standard JPG, PNG, or WEBP file.");
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderTargetCanvas() {
+      if (!rawLoadedImage) return;
+      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+      tCtx.drawImage(rawLoadedImage, 0, 0);
+
+      tCtx.strokeStyle = "#ef4444";
+      tCtx.lineWidth = 5;
+      tCtx.setLineDash([8, 6]);
+      detectedBoxes.forEach(b => {
+        const x = (b[1] / 1000) * targetCanvas.width;
+        const y = (b[0] / 1000) * targetCanvas.height;
+        const w = ((b[3] - b[1]) / 1000) * targetCanvas.width;
+        const h = ((b[2] - b[0]) / 1000) * targetCanvas.height;
+        tCtx.strokeRect(x, y, w, h);
+      });
+    }
+
+    function renderOutputCanvas() {
+      if (!rawLoadedImage) return;
+      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+      oCtx.drawImage(rawLoadedImage, 0, 0);
+
+      const mode = document.getElementById('maskModeSelect').value;
+      const all = detectedBoxes.concat(manualBoxes);
+
+      all.forEach(b => {
+        const x = (b[1] / 1000) * outputCanvas.width;
+        const y = (b[0] / 1000) * outputCanvas.height;
+        const w = ((b[3] - b[1]) / 1000) * outputCanvas.width;
+        const h = ((b[2] - b[0]) / 1000) * outputCanvas.height;
+
+        if (mode === "ambient") {
+          applyAmbientBlock(x, y, w, h);
+        } else if (mode === "pixelate") {
+          applyPixelation(x, y, w, h);
+        } else if (mode === "solid") {
+          applySolidTape(x, y, w, h);
+        } else {
+          applyFrostedDiffusion(x, y, w, h);
+        }
+      });
+    }
+
+    function applyFrostedDiffusion(x, y, w, h) {
+      if (w <= 0 || h <= 0) return;
+      const rw = Math.max(1, Math.round(w));
+      const rh = Math.max(1, Math.round(h));
+
+      const pad = Math.round(Math.min(rw, rh) * 0.35 + 16);
+      const srcX = Math.max(0, x - pad);
+      const srcY = Math.max(0, y - pad);
+      const srcW = Math.min(rawLoadedImage.naturalWidth - srcX, rw + pad * 2);
+      const srcH = Math.min(rawLoadedImage.naturalHeight - srcY, rh + pad * 2);
+
+      const off = document.createElement("canvas");
+      off.width = srcW; off.height = srcH;
+      const offCtx = off.getContext("2d");
+
+      const isThinLine = rh < 45;
+      const scale = isThinLine ? 0.025 : 0.04;
+      const mini = document.createElement("canvas");
+      mini.width = Math.max(2, Math.floor(srcW * scale));
+      mini.height = Math.max(2, Math.floor(srcH * scale));
+      const miniCtx = mini.getContext("2d");
+      miniCtx.drawImage(rawLoadedImage, srcX, srcY, srcW, srcH, 0, 0, mini.width, mini.height);
+
+      offCtx.imageSmoothingEnabled = false;
+      offCtx.drawImage(mini, 0, 0, mini.width, mini.height, 0, 0, srcW, srcH);
+      offCtx.imageSmoothingEnabled = true;
+
+      const baseBlur = Math.max(18, Math.round(24 * (outputCanvas.width / 1400)));
+      const blurRadius = isThinLine ? Math.max(14, Math.round(rh * 0.6)) : baseBlur;
+      const blurCanvas = document.createElement("canvas");
+      blurCanvas.width = srcW; blurCanvas.height = srcH;
+      const bCtx = blurCanvas.getContext("2d");
+      bCtx.filter = "blur(" + blurRadius + "px)";
+      bCtx.drawImage(off, 0, 0);
+
+      const patchCanvas = document.createElement("canvas");
+      patchCanvas.width = rw; patchCanvas.height = rh;
+      const pCtx2 = patchCanvas.getContext("2d");
+      pCtx2.drawImage(blurCanvas, x - srcX, y - srcY, rw, rh, 0, 0, rw, rh);
+
+      oCtx.save();
+      oCtx.drawImage(patchCanvas, x, y);
+      oCtx.restore();
+    }
+
+    function applyAmbientBlock(x, y, w, h) {
+      const rw = Math.max(1, Math.round(w));
+      const rh = Math.max(1, Math.round(h));
+      const sCanvas = document.createElement("canvas");
+      sCanvas.width = 4; sCanvas.height = 4;
+      sCanvas.getContext("2d").drawImage(rawLoadedImage, x, y, rw, rh, 0, 0, 4, 4);
+
+      const off = document.createElement("canvas");
+      off.width = rw; off.height = rh;
+      const offCtx = off.getContext("2d");
+      offCtx.imageSmoothingEnabled = true;
+      offCtx.drawImage(sCanvas, 0, 0, 4, 4, 0, 0, rw, rh);
+
+      oCtx.save();
+      oCtx.filter = "blur(18px)";
+      oCtx.drawImage(off, x, y, rw, rh);
+      oCtx.restore();
+    }
+
+    function applyPixelation(x, y, w, h) {
+      const off = document.createElement("canvas");
+      off.width = Math.max(1, Math.floor(w * 0.04));
+      off.height = Math.max(1, Math.floor(h * 0.04));
+      const offCtx = off.getContext("2d");
+      offCtx.drawImage(outputCanvas, x, y, w, h, 0, 0, off.width, off.height);
+      oCtx.save();
+      oCtx.imageSmoothingEnabled = false;
+      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, w, h);
+      oCtx.restore();
+    }
+
+    function applySolidTape(x, y, w, h) {
+      oCtx.save();
+      oCtx.fillStyle = "#0f172a";
+      oCtx.fillRect(x - 2, y - 2, w + 4, h + 4);
+      oCtx.restore();
+    }
+
+    function setupManualPatchListeners() {
+      outputCanvas.addEventListener('mousedown', (e) => {
+        if (!rawLoadedImage) return;
+        isDrawingPatch = true;
+        const r = outputCanvas.getBoundingClientRect();
+        patchStartX = (e.clientX - r.left) * (outputCanvas.width / r.width);
+        patchStartY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+      });
+
+      outputCanvas.addEventListener('mousemove', (e) => {
+        if (!isDrawingPatch) return;
+        renderOutputCanvas();
+        const r = outputCanvas.getBoundingClientRect();
+        const curX = (e.clientX - r.left) * (outputCanvas.width / r.width);
+        const curY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+
+        oCtx.save();
+        oCtx.strokeStyle = "#38bdf8";
+        oCtx.lineWidth = 3;
+        oCtx.setLineDash([6, 6]);
+        oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
+        oCtx.restore();
+      });
+
+      outputCanvas.addEventListener('mouseup', (e) => {
+        if (!isDrawingPatch) return;
+        isDrawingPatch = false;
+        const r = outputCanvas.getBoundingClientRect();
+        const endX = (e.clientX - r.left) * (outputCanvas.width / r.width);
+        const endY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+
+        const x1 = Math.min(patchStartX, endX);
+        const y1 = Math.min(patchStartY, endY);
+        const x2 = Math.max(patchStartX, endX);
+        const y2 = Math.max(patchStartY, endY);
+
+        if (x2 - x1 > 8 && y2 - y1 > 8) {
+          manualBoxes.push([
+            Math.round((y1 / outputCanvas.height) * 1000),
+            Math.round((x1 / outputCanvas.width) * 1000),
+            Math.round((y2 / outputCanvas.height) * 1000),
+            Math.round((x2 / outputCanvas.width) * 1000)
+          ]);
+        }
+        renderOutputCanvas();
+      });
+    }
+
+    function resetMasks() {
+      detectedBoxes = [];
+      manualBoxes = [];
+      renderTargetCanvas();
+      renderOutputCanvas();
+    }
+
+    function cleanGenericTitle(raw) {
+      if (!raw) return "";
+      return raw
+        .replace(/\b(lysol|clorox|aussie|febreze|hempz|tree hut|spray 'n wash|spray n wash|arm & hammer|oxiclean)\b/gi, "")
+        .replace(/\b(laundry\s+)?sanitizer\b/gi, "Fabric Refresher")
+        .replace(/\bdisinfectant(\s+spray)?\b/gi, "Cleaning Spray")
+        .replace(/\bantibacterial\b/gi, "Odor-Fighting")
+        .replace(/\bkills\s+99\.9%(?:\s+of\s+germs)?\b/gi, "Total Clean")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function copyGenericTitle() {
+      const val = document.getElementById('suggestedTitleInput').value;
+      if (!val) return;
+      navigator.clipboard.writeText(val);
+      alert("Generic title copied!");
+    }
+
+    // MULTI-MODEL LEAPING MESH (7.5S TIMEOUT)
+    async function fetchWithTimeout(url, payload, timeoutMs) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(id);
+        const data = await response.json();
+        if (!response.ok || data.error) throw new Error((data.error && data.error.message) || `HTTP ${response.status}`);
+        return data;
+      } catch (err) {
+        clearTimeout(id);
+        throw err;
+      }
+    }
+
+    async function callGeminiLeapingMesh(key, payload) {
+      const selectedModel = document.getElementById('modelSelect').value;
+      const isManualChoice = selectedModel && selectedModel !== "auto" && selectedModel !== window.n1Lite;
+
+      if (isManualChoice) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${encodeURIComponent(key)}`;
+        return await fetchWithTimeout(url, payload, 10000);
+      }
+
+      const modelQueue = [
+        window.n1Lite || "gemini-3.1-flash-lite",
+        "gemini-2.5-flash",
+        "gemini-flash-latest"
+      ].filter((v, i, a) => v && a.indexOf(v) === i);
+
+      let lastError = null;
+      for (let i = 0; i < modelQueue.length; i++) {
+        const model = modelQueue[i];
+        const timeout = i === 0 ? 7500 : 6000;
+        try {
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
+          const data = await fetchWithTimeout(url, payload, timeout);
+          if (data.candidates && data.candidates[0]) {
+            document.getElementById('modelSelect').value = model;
+            return data;
+          }
+        } catch (err) {
+          lastError = err;
+          console.warn(`Model ${model} delayed/failed. Leaping to next model...`);
+        }
+      }
+      throw lastError || new Error("All candidate vision models in mesh failed.");
+    }
+
+    async function processImageWithAi() {
+      const key = document.getElementById('apiKeyInput').value.trim();
+      if (!key) return alert("Please enter your Gemini API Key in the top header!");
+      if (!base64ApiPayload) return alert("Please select a photo first!");
+
+      const btn = document.getElementById('aiAuditBtn');
+      btn.innerText = "⏳ Auditing Packaging...";
+      btn.disabled = true;
+
+      const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for:
+1. Brand logos, trademarks, emblems (Amazon smile, Tree Hut, Spray 'N Wash, Hempz, Lysol, Clorox, watermark badges, brand text).
+2. Regulated medical/claim text: 'SANITIZER', 'DISINFECTANT', 'KILLS 99.9%', 'COVID-19', 'BACTERIA'.
+Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
+
+      try {
+        const payload = {
+          contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }],
+          generationConfig: { temperature: 0.0, responseMimeType: "application/json" }
+        };
+
+        const data = await callGeminiLeapingMesh(key, payload);
+        let rawText = data.candidates[0]?.content?.parts[0]?.text || "{}";
+        rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+        const parsed = JSON.parse(rawText);
+        detectedBoxes = Array.isArray(parsed) ? parsed : (parsed.boxes || []);
+
+        if (parsed.suggested_title) {
+          document.getElementById('suggestedTitleInput').value = cleanGenericTitle(parsed.suggested_title);
+        }
+        renderTargetCanvas();
+        renderOutputCanvas();
+      } catch (err) {
+        alert("Packaging audit notice: " + err.message + "\nYou can still use manual drag patches or skip to Step 2!");
+      } finally {
+        btn.innerText = "✨ Process Image with AI";
+        btn.disabled = false;
+      }
+    }
+
+    // ==========================================
+    // STEP 1 -> STEP 2 TRANSITIONS
+    // ==========================================
+    function proceedToStep2() {
+      if (!rawLoadedImage) return alert("Please choose or upload a product photo first!");
+      sanitizedCanvasSnapshot = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : rawLoadedImage;
+      navToStep(2);
+      try {
+        runVariantLensEngine(sanitizedCanvasSnapshot);
+      } catch (err) {
+        console.warn("Variant engine note:", err);
+      }
+    }
+
+    function skipSanitizer() {
+      if (!rawLoadedImage) return alert("Please choose or upload a product photo first!");
+      try {
+        const link = document.createElement('a');
+        link.download = `raw_photo_${Date.now()}.png`;
+        link.href = rawLoadedImage.src;
+        link.click();
+      } catch (e) {}
+
+      const rawC = document.createElement('canvas');
+      rawC.width = rawLoadedImage.naturalWidth || 800;
+      rawC.height = rawLoadedImage.naturalHeight || 800;
+      rawC.getContext('2d').drawImage(rawLoadedImage, 0, 0);
+      sanitizedCanvasSnapshot = rawC;
+
+      navToStep(2);
+      try {
+        runVariantLensEngine(sanitizedCanvasSnapshot);
+      } catch (err) {
+        console.warn("Variant engine note:", err);
+      }
+    }
+
+    // ==========================================
+    // STEP 2: SILENT VARIANT LENS (MEMORY-SAFE 1080P CAP)
+    // ==========================================
+    function handleStep2DirectUpload(input) {
+      if (!input || !input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const directImg = new Image();
+        directImg.onload = function() {
+          const directCanvas = document.createElement('canvas');
+          directCanvas.width = directImg.naturalWidth;
+          directCanvas.height = directImg.naturalHeight;
+          directCanvas.getContext('2d').drawImage(directImg, 0, 0);
+          sanitizedCanvasSnapshot = directCanvas;
+          runVariantLensEngine(sanitizedCanvasSnapshot);
+        };
+        directImg.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function runVariantLensEngine(sourceCanvas) {
+      const src = sourceCanvas || outputCanvas || rawLoadedImage;
+      if (!src) return;
+
+      const rawW = src.width || src.naturalWidth || 800;
+      const rawH = src.height || src.naturalHeight || 800;
+
+      const maxDim = 1080;
+      const scale = Math.min(1, maxDim / Math.max(rawW, rawH));
+      const w = Math.round(rawW * scale);
+      const h = Math.round(rawH * scale);
+
+      const whites = ['#ffffff', '#fdfdfd', '#fcfcfc', '#fefefe', '#fafafa', '#f8f8f8'];
+      const getWhite = () => whites[Math.floor(Math.random() * whites.length)];
+
+      all15Variants = [];
+      const configs = [
+        { rot: 1, zoom: 1.0, contrast: 1.05, sat: 1.02, name: "1° CW Crisp" },
+        { rot: -1, zoom: 1.04, bright: 1.04, name: "1° CCW Zoom" },
+        { rot: 2.5, zoom: 0.97, bright: 1.03, name: "2.5° CW Bright" },
+        { rot: -2.5, zoom: 0.97, contrast: 1.08, sat: 1.03, name: "2.5° CCW Contrast" },
+        { rot: 1, zoom: 0.98, contrast: 1.1, name: "1° CW Sharpen" },
+        { rot: 3, zoom: 0.95, contrast: 1.03, bright: 1.03, name: "3° CW Radiant" },
+        { rot: -3, zoom: 0.95, contrast: 1.05, sat: 1.05, name: "3° CCW Saturated" },
+        { rot: -1, zoom: 0.96, contrast: 1.07, name: "1° CCW Dynamic" },
+        { rot: 2, zoom: 0.93, bright: 1.04, name: "2° CW Backdrop" },
+        { rot: -2, zoom: 0.93, contrast: 1.09, name: "2° CCW Backdrop" },
+        { rot: 1, zoom: 1.05, bright: 1.04, name: "1° CW Bright High" },
+        { rot: -1, zoom: 1.07, contrast: 1.06, name: "1° CCW Contrast High" },
+        { rot: 1.5, zoom: 1.07, contrast: 1.05, sat: 1.05, name: "1.5° CW Zoom" },
+        { rot: 0, skew: 0.02, zoom: 0.96, contrast: 1.04, name: "Micro-Skew Warp" },
+        { rot: 0, zoom: 1.03, sat: 1.06, name: "Asymmetric Micro-Crop" }
+      ];
+
+      configs.forEach((cfg, idx) => {
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        const cx = c.getContext('2d');
+        cx.fillStyle = getWhite();
+        cx.fillRect(0, 0, w, h);
+
+        cx.save();
+        cx.translate(w / 2, h / 2);
+        if (cfg.skew) cx.transform(1, cfg.skew, -cfg.skew, 1, 0, 0);
+        if (cfg.rot) cx.rotate((cfg.rot * Math.PI) / 180);
+
+        let filter = "";
+        if (cfg.contrast) filter += `contrast(${cfg.contrast}) `;
+        if (cfg.bright) filter += `brightness(${cfg.bright}) `;
+        if (cfg.sat) filter += `saturate(${cfg.sat}) `;
+        if (filter) cx.filter = filter.trim();
+
+        const sw = w * (cfg.zoom || 1.0);
+        const sh = h * (cfg.zoom || 1.0);
+        cx.drawImage(src, -sw / 2, -sh / 2, sw, sh);
+        cx.restore();
+
+        all15Variants.push({ id: idx + 1, name: cfg.name, canvas: c });
+      });
+
+      pick4FeaturedVariants();
+      render15Drawer();
+    }
+
+    function pick4FeaturedVariants() {
+      const shuffled = [...all15Variants].sort(() => 0.5 - Math.random());
+      chosen4Variants = shuffled.slice(0, 4);
+
+      const grid = document.getElementById('featuredGrid');
+      grid.innerHTML = "";
+      chosen4Variants.forEach((v) => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-900 border border-slate-800 p-2.5 rounded-xl space-y-2";
+        card.innerHTML = `
+          <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
+            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Variant ${v.id}</p>
+            <button onclick="downloadCanvasData('${v.canvas.toDataURL()}', 'variant_${v.id}')" class="text-xs text-sky-400 hover:text-sky-300 cursor-pointer">⬇</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function render15Drawer() {
+      const container = document.getElementById('drawer15Matrix');
+      container.innerHTML = "";
+      all15Variants.forEach(v => {
+        const item = document.createElement('div');
+        item.className = "bg-slate-900 border border-slate-800 p-2 rounded-lg space-y-1 text-center";
+        item.innerHTML = `
+          <div class="aspect-square bg-slate-950 rounded overflow-hidden">
+            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
+          </div>
+          <p class="text-[9px] text-slate-400 truncate">${v.id}. ${v.name}</p>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function toggle15Drawer() {
+      const d = document.getElementById('drawer15Matrix');
+      const isHidden = d.classList.contains('hidden');
+      d.classList.toggle('hidden');
+      document.getElementById('drawerToggleText').innerText = isHidden ? "Hide Full 15-Variant Matrix" : "Show Full 15-Variant Matrix";
+    }
+
+    function downloadAllFeaturedVariants() {
+      chosen4Variants.forEach((v, i) => {
+        setTimeout(() => {
+          downloadCanvasData(v.canvas.toDataURL(), `featured_variant_${v.id}`);
+        }, i * 250);
+      });
+    }
+
+    // ==========================================
+    // STEP 2 -> STEP 3 TRANSITION
+    // ==========================================
+    function proceedToStep3() {
+      if (!chosen4Variants || chosen4Variants.length < 4) {
+        const fallbackSource = sanitizedCanvasSnapshot || outputCanvas || targetCanvas;
+        if (fallbackSource && fallbackSource.width > 0) {
+          chosen4Variants = [
+            { id: 1, canvas: fallbackSource },
+            { id: 2, canvas: fallbackSource },
+            { id: 3, canvas: fallbackSource },
+            { id: 4, canvas: fallbackSource }
+          ];
+        } else {
+          return alert("Please upload or choose a product image first!");
+        }
+      }
+
+      navToStep(3);
+      generateProceduralDeck();
+      selectCardIndex(1);
+      renderAll4CreatorCards();
+    }
+
+    // ==========================================
+    // 3D COVERFLOW & STUDIO CONTROLS
     // ==========================================
     function selectCardIndex(idx) {
       activeCardIndex = idx;
@@ -895,7 +1464,7 @@
     }
 
     // ==========================================
-    // PROCEDURAL GENERATION ENGINE (0 TOKENS)
+    // PROCEDURAL ENGINE (0 TOKENS)
     // ==========================================
     function generateProceduralDeck() {
       const archetypes = ["polaroid", "arch_niche", "notebook", "hero_mat"];
@@ -903,8 +1472,6 @@
         cardCustoms[i].procedural = {
           archetype: archetypes[i - 1],
           seedRotation: (Math.random() * 5 - 2.5),
-          waveHeight: 120 + Math.random() * 80,
-          lightAngle: 30 + Math.random() * 30,
           washiOffset: Math.random() * 20 - 10
         };
       }
@@ -915,7 +1482,6 @@
       renderAll4CreatorCards();
     }
 
-    // DUAL-TIER PACKAGING COLOR EXTRACTION (RGB -> HSL)
     function sampleColorsFromCanvas(canvas) {
       try {
         const s = document.createElement("canvas");
@@ -985,7 +1551,7 @@
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
-      const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, waveHeight: 140, lightAngle: 45, washiOffset: 0 };
+      const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, washiOffset: 0 };
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -993,7 +1559,7 @@
       ctx.fillStyle = pal.bg || "#F5EFE6";
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Sunlight window shadow
+      // Procedural sunlight window shadow
       ctx.save();
       ctx.fillStyle = "rgba(40, 30, 20, 0.07)";
       for (let y = -100; y < 1200; y += 150) {
@@ -1046,6 +1612,7 @@
         const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
       } else if (proc.archetype === "notebook") {
+        // Lined Memo Sheet DRAWN BEHIND PHOTO (Photo on top!)
         ctx.fillStyle = "#FEFCE8";
         ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
         ctx.shadowBlur = 30;
@@ -1118,7 +1685,7 @@
         ctx.font = `bold ${Math.round(28 * bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48);
+        const boxW = Math.min(680, textW + 48); // TIGHT FIT
         const boxH = Math.round(64 * bScale);
 
         let defBx = 240, defBy = 150;
@@ -1436,7 +2003,7 @@
         if (!wrap || !canvas) continue;
 
         wrap.addEventListener("mousedown", (e) => {
-          if (activeCardIndex !== i) return;
+          if (activeCardIndex !== i) return; // Only drag elements on active center card!
           const r = canvas.getBoundingClientRect();
           const mouseX = (e.clientX - r.left) * (1080 / r.width);
           const mouseY = (e.clientY - r.top) * (1080 / r.height);
@@ -1484,27 +2051,215 @@
     }
 
     // ==========================================
-    // STEP 2 -> STEP 3 TRANSITION
+    // EXTRACTOR & MASTER RESET FUNCTIONS
     // ==========================================
-    function proceedToStep3() {
-      if (!chosen4Variants || chosen4Variants.length < 4) {
-        const fallbackSource = sanitizedCanvasSnapshot || outputCanvas || targetCanvas;
-        if (fallbackSource && fallbackSource.width > 0) {
-          chosen4Variants = [
-            { id: 1, canvas: fallbackSource },
-            { id: 2, canvas: fallbackSource },
-            { id: 3, canvas: fallbackSource },
-            { id: 4, canvas: fallbackSource }
-          ];
-        } else {
-          return alert("Please upload or choose a product image first!");
+    function masterResetDeal() {
+      if (!confirm("Start brand new deal? All current edits will be cleared.")) return;
+
+      rawLoadedImage = null;
+      base64ApiPayload = "";
+      detectedBoxes = [];
+      manualBoxes = [];
+      sanitizedCanvasSnapshot = null;
+      all15Variants = [];
+      chosen4Variants = [];
+
+      tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+      oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+
+      document.getElementById('rawDealPaste').value = "";
+      document.getElementById('suggestedTitleInput').value = "";
+      document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
+      document.getElementById('simpleValueInput').value = "$16.79 Shipped";
+      document.getElementById('aiChipsWrapper').classList.add('hidden');
+
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].pScale = 1.0;
+        cardCustoms[i].bScale = 1.0;
+        cardCustoms[i].bRot = i === 1 ? -5 : 0;
+        cardCustoms[i].nRot = 0;
+        cardCustoms[i].nScale = 1.0;
+        cardCustoms[i].hasNoteBg = false;
+        cardCustoms[i].productPos = null;
+        cardCustoms[i].badgePos = null;
+        cardCustoms[i].notePos = null;
+        cardCustoms[i].accents = { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true };
+      }
+
+      navToStep(1);
+    }
+
+    function setDealMode(mode) {
+      currentDealMode = mode;
+      const regBtn = document.getElementById('modeRegularBtn');
+      const runBtn = document.getElementById('modeRunBtn');
+
+      if (mode === 'run') {
+        runBtn.className = "px-3 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-md cursor-pointer";
+        regBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all cursor-pointer";
+        
+        const curNote = document.getElementById('mainNoteInput').value;
+        if (!curNote.includes('👀')) {
+          document.getElementById('mainNoteInput').value = "wait... is this price real?! 👀";
+        }
+
+        for (let i = 1; i <= 4; i++) {
+          cardCustoms[i].accents.arrow = true;
+          cardCustoms[i].accents.loop = true;
+          cardCustoms[i].accents.eye = true;
+        }
+      } else {
+        regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md cursor-pointer";
+        runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer";
+        document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
+
+        for (let i = 1; i <= 4; i++) {
+          cardCustoms[i].accents.arrow = false;
+          cardCustoms[i].accents.loop = false;
+          cardCustoms[i].accents.eye = false;
         }
       }
 
-      navToStep(3);
-      generateProceduralDeck();
-      selectCardIndex(1);
+      syncConsoleControls();
       renderAll4CreatorCards();
+    }
+
+    function shuffleNote() {
+      const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
+      const randomNote = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('mainNoteInput').value = randomNote;
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function shuffleValueTag() {
+      if (!valueTagOptions || valueTagOptions.length === 0) return;
+      valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
+      document.getElementById('simpleValueInput').value = valueTagOptions[valueTagIndex];
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function applyAiNote(text) {
+      document.getElementById('mainNoteInput').value = text;
+      auditOcrSafety();
+      renderAll4CreatorCards();
+    }
+
+    function renderAiChips(chips) {
+      const container = document.getElementById('aiChipsContainer');
+      const wrapper = document.getElementById('aiChipsWrapper');
+      if (!chips || chips.length === 0) {
+        wrapper.classList.add('hidden');
+        return;
+      }
+      container.innerHTML = "";
+      chips.forEach(note => {
+        const btn = document.createElement('button');
+        btn.type = "button";
+        btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
+        btn.innerText = note;
+        btn.onclick = () => applyAiNote(note);
+        container.appendChild(btn);
+      });
+      wrapper.classList.remove('hidden');
+    }
+
+    function auditOcrSafety() {
+      const textToScan = [
+        document.getElementById('mainNoteInput').value,
+        document.getElementById('simpleValueInput').value
+      ].join(' ').toLowerCase();
+
+      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
+      const banner = document.getElementById('ocrWarningBanner');
+      if (hits.length > 0) {
+        document.getElementById('ocrWarningText').innerText = `Banned words detected: "${hits.join(', ')}". Replace them to prevent shadowbans!`;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    // RAW DEAL EXTRACTOR (ZERO BANNED WORDS)
+    async function extractDealInfo() {
+      const raw = document.getElementById('rawDealPaste').value;
+      if (!raw) return;
+
+      const rLower = raw.toLowerCase();
+
+      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
+        activeCategory = "lawn_garden";
+      } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin')) {
+        activeCategory = "beauty_personal";
+      } else if (rLower.includes('clean') || rLower.includes('kitchen') || rLower.includes('pantry') || rLower.includes('detergent') || rLower.includes('wipe') || rLower.includes('towel')) {
+        activeCategory = "home_kitchen";
+      } else {
+        activeCategory = "general";
+      }
+
+      const pool = AFFIRMATIONS[activeCategory];
+      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+
+      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
+      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
+      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
+
+      const saleClean = saleMatch ? saleMatch[0].trim().replace(/\bcomplete\b/gi, '').trim() : "$16.79 Shipped";
+      const unitClean = unitMatch ? unitMatch[0].trim() : "";
+
+      valueTagOptions = [
+        saleClean,
+        `Just ${saleClean} ✨`,
+        `${saleClean.replace(/Shipped|Pickup/i, '').trim()} total`,
+        `All for ${saleClean}`
+      ];
+
+      if (unitClean) valueTagOptions.unshift(`${unitClean} · ${saleClean}`);
+      if (wasMatch) valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
+
+      valueTagIndex = 0;
+      document.getElementById('simpleValueInput').value = valueTagOptions[0];
+
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].badgePos = null;
+        cardCustoms[i].notePos = null;
+      }
+
+      auditOcrSafety();
+      renderAll4CreatorCards();
+
+      const key = document.getElementById('apiKeyInput').value.trim();
+      if (key) {
+        try {
+          const prompt = `Based on this deal: "${raw.slice(0, 300)}"
+Generate exactly 4 unique, creative, positive human observation notes (under 6 words each) suitable for social media.
+CRITICAL RULES:
+1. STRICT ZERO BANNED WORDS: Never use price, sale, deal, discount, steal, hurry, cheap, offer, buy, shop, savings, bargain.
+2. Return ONLY a valid JSON array of 4 strings: ["note 1", "note 2", "note 3", "note 4"]`;
+
+          const payload = {
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
+          };
+
+          const aiData = await callGeminiLeapingMesh(key, payload);
+          let rawTxt = aiData.candidates[0]?.content?.parts[0]?.text || "[]";
+          rawTxt = rawTxt.replace(/```json/gi, '').replace(/```/g, '').trim();
+          const parsed = JSON.parse(rawTxt);
+
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const safeChips = parsed.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
+            if (safeChips.length > 0) {
+              renderAiChips(safeChips);
+              document.getElementById('mainNoteInput').value = safeChips[0];
+              renderAll4CreatorCards();
+            }
+          }
+        } catch (e) {
+          console.log("Local affirmation fallback active:", e);
+        }
+      }
     }
 
     // ==========================================
@@ -1522,14 +2277,14 @@
       if (c) downloadCanvasData(c.toDataURL('image/png'), `deal_card_${activeCardIndex}`);
     }
 
-    document.getElementById('downloadAllCardsBtn').addEventListener('click', () => {
+    function downloadAllCards() {
       ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => {
         setTimeout(() => {
           const c = document.getElementById(id);
           if (c) downloadCanvasData(c.toDataURL('image/png'), `deal_card_${i+1}`);
         }, i * 250);
       });
-    });
+    }
   </script>
 </body>
 </html>
