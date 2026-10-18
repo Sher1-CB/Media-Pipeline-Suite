@@ -1374,9 +1374,21 @@ Return ONLY valid JSON:
             return !FB_BLACKLIST.some(b => lower.includes(b));
           });
 
+          // AUTO-INJECT FIRST AI RESULT INTO INPUT BOXES
+          if (safeAffirmations.length > 0) {
+            document.getElementById('mainNoteInput').value = safeAffirmations[0];
+          }
+          if (safeSpecs.length > 0) {
+            document.getElementById('simpleValueInput').value = safeSpecs[0];
+            valueTagOptions = safeSpecs;
+            valueTagIndex = 0;
+          }
+
           renderAiChips(safeAffirmations, safeSpecs);
           renderAll4CreatorCards();
-        } catch (e) {}
+        } catch (e) {
+          console.warn("AI extraction notice:", e);
+        }
       }
     }
 
