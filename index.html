@@ -1345,7 +1345,9 @@
       if (key) {
         try {
           const prompt = `Analyze this product deal info: "${raw.slice(0, 300)}"
-Return ONLY valid JSON with 6 spec tags, 6 affirmations, and 1 suggested font style ("handwritten", "typewriter", "modern_sans", "playful", or "editorial"):
+Generate luxury lifestyle magazine content. 
+CRITICAL RULE: NEVER include commercial terms, prices, dollar signs ($), numbers, urgency, or platform names ("Amazon", "deal", "price", "save", "shipped", "sale").
+Return ONLY valid JSON:
 {
   "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6"],
   "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"],
@@ -1360,7 +1362,19 @@ Return ONLY valid JSON with 6 spec tags, 6 affirmations, and 1 suggested font st
             document.getElementById('activeFontSelect').value = parsed.suggested_font;
             for (let i = 1; i <= 4; i++) cardCustoms[i].font = parsed.suggested_font;
           }
-          renderAiChips(parsed.affirmations || [], parsed.spec_tags || []);
+
+          // STRICT CLIENT-SIDE FIREWALL SCRUBBER
+          const safeAffirmations = (parsed.affirmations || []).filter(item => {
+            const lower = item.toLowerCase();
+            return !FB_BLACKLIST.some(b => lower.includes(b));
+          });
+
+          const safeSpecs = (parsed.spec_tags || []).filter(item => {
+            const lower = item.toLowerCase();
+            return !FB_BLACKLIST.some(b => lower.includes(b));
+          });
+
+          renderAiChips(safeAffirmations, safeSpecs);
           renderAll4CreatorCards();
         } catch (e) {}
       }
