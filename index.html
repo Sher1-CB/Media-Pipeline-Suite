@@ -445,10 +445,36 @@
     let currentDealMode = 'regular';
 
     const FB_BLACKLIST = [
-      "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
-      "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
-      "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link",
-      "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
+      // 1. Direct Checkout & Transactional Terms
+      "buy", "order", "ordered", "ordering", "purchase", "purchased", "purchasing", 
+      "shop", "shopping", "checkout", "cart", "basket",
+
+      // 2. Financial & Pricing Tokens
+      "price", "prices", "cost", "costs", "costing", "budget", "spend", "spending", 
+      "payment", "payments", "fee", "fees", "charge", "charges", "$", "usd", "cents",
+
+      // 3. Sales, Deals & Discount Terminology
+      "sale", "sales", "deal", "deals", "save", "saving", "savings", "discount", "discounts", 
+      "markdown", "marked down", "clearance", "offer", "offers", "promo", "promos", "promotion", "promotions", 
+      "%", "coupon", "coupons", "voucher", "vouchers", "claim", "redeem", "code", "codes", "free", 
+      "steal", "bargain", "doorbuster", "blowout", "bogo", "liquidation", "overstock", "price drop", "price cut", "lowest price", "off",
+
+      // 4. Artificial Urgency & Scarcity Bait
+      "hurry", "hurry up", "act fast", "act now", "today only", "ending soon", "ends soon", 
+      "limited time", "limited drop", "limited offer", "flash sale", "doors close", "last chance", 
+      "sold out", "selling out", "going fast", "moving fast", "miss out", "missing out", "don't wait", 
+      "rare", "exclusive", "restock", "restocked", "restocking", "stock", "in-stock", "gone", "while supplies last", "run", "run alert", "black friday", "cyber monday",
+
+      // 5. Engagement Manipulation & Navigation Pointers
+      "like", "share", "tag", "tag a friend", "comment", "comment yes", "say yes", "type yes", "react", "vote", "drop an emoji", 
+      "thoughts?", "agree?", "like if you agree", "share to win", "let me know below", "tell me below", "who needs this", 
+      "leave a comment", "comment below", "save for later", "bump", "following", "link", "url", "website", "pathway", "access", "click", "click here", "tap", 
+      "check the bio", "bio", "redirect", "inbox me", "dm me", "send a message", "check your notifications", 
+      "link in comments", "in the comments", "first comment", "1st comment", "link in reply", "drop the link", "check the thread", "check comments", "check below", "pinned comment", "direct link", "grab yours", "where to get",
+
+      // 6. Sensationalism & Growth Claims
+      "alert", "restock alert", "you won't believe", "shocking", "mind-blowing", "secret", "hack", "algorithm hack", 
+      "growth hack", "viral", "passive income", "be your own boss", "miracle", "cure", "guaranteed", "proven", "100% effective", "shipped", "total", "reg", "was"
     ];
 
     let cardCustoms = {
