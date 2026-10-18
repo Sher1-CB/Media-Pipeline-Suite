@@ -1091,31 +1091,27 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. 20% LIGHTER LUMINANCE & INFINITE GRAPHIC VARIETY ENGINE
-      // Guarantees airy, luminous backgrounds combined with an infinite rotating library of boutique graphics (Vines, Memphis Blobs, Arch Niches, Grids, Sparkles)
+      // 1. 20% LIGHTER LUMINANCE & FREELY SCATTERED GRAPHIC VARIETY ENGINE
       const surfaceStyle = (cardNum - 1) % 4; 
       const accent = pal.accent || "#B4845C";
 
+      // 20% lighter highlight base wash
       if (surfaceStyle === 0) {
-        // CARD 1: Ultra-Luminous Gradient Wash (20% Lighter Highlights)
         const angle = (hash % 360) * (Math.PI / 180);
         const bgGrad = ctx.createLinearGradient(
-          540 + Math.cos(angle) * 700, 
-          540 + Math.sin(angle) * 700, 
-          540 - Math.cos(angle) * 700, 
-          540 - Math.sin(angle) * 700
+          540 + Math.cos(angle) * 700, 540 + Math.sin(angle) * 700, 
+          540 - Math.cos(angle) * 700, 540 - Math.sin(angle) * 700
         );
         bgGrad.addColorStop(0, "#FFFFFF");
-        bgGrad.addColorStop(0.4, "#FCF9F5");
-        bgGrad.addColorStop(1, "#F3ECE4");
+        bgGrad.addColorStop(0.3, "#FFFEFC");
+        bgGrad.addColorStop(1, "#FAF5F0"); // 20% lighter
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 1080, 1080);
       } else if (surfaceStyle === 1) {
-        // CARD 2: Lighter, Airy Tactile Wood Grain Slats
-        ctx.fillStyle = "#FCF7F2";
+        ctx.fillStyle = "#FFFEFD"; // 20% lighter wood base
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.15; ctx.lineWidth = 2;
-        for (let y = 0; y < 1080; y += 40) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.14; ctx.lineWidth = 2;
+        for (let y = 0; y < 1080; y += 42) {
           ctx.beginPath(); ctx.moveTo(0, y);
           for (let x = 0; x < 1080; x += 140) {
             ctx.quadraticCurveTo(x + 70, y + ((hash + x) % 12 - 6), x + 140, y);
@@ -1123,103 +1119,118 @@
           ctx.stroke();
         }
       } else if (surfaceStyle === 2) {
-        // CARD 3: Luminous Airy Linen Weave
-        ctx.fillStyle = "#FEFCFA";
+        ctx.fillStyle = "#FFFEFC"; // 20% lighter linen base
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.09; ctx.lineWidth = 1;
-        for (let x = 0; x < 1080; x += 14) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 14) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 16) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 16) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       } else {
-        // CARD 4: Soft Luminous Craft Paper
-        ctx.fillStyle = "#FAF5F0";
+        ctx.fillStyle = "#FEFCFA"; // 20% lighter craft base
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.1;
-        for (let i = 0; i < 220; i++) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.08;
+        for (let i = 0; i < 200; i++) {
           ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
         }
       }
 
       ctx.globalAlpha = 1.0;
       ctx.save();
-      
-      // INFINITE 12-PART GRAPHIC VARIETY LIBRARY WITH RANDOMIZED POSITIONING & ROTATION
-      // Ensures zero repetition across 300 daily deals by procedurally scattering graphic elements
-      const graphicVarietyId = (hash * cardNum * 17) % 12;
-      
-      const randX = 120 + (hash % 840);
-      const randY = 120 + ((hash * 3) % 840);
+
+      // 2. ASYMMETRIC ORGANIC BLOB WASHES (Spilling across random corners)
+      const blobX = (hash % 2 === 0) ? 0 : 1080;
+      const blobY = ((hash * 7) % 2 === 0) ? 0 : 1080;
+      const blobGrad = ctx.createRadialGradient(blobX, blobY, 50, blobX, blobY, 700);
+      blobGrad.addColorStop(0, accent);
+      blobGrad.addColorStop(1, "transparent");
+      ctx.fillStyle = blobGrad;
+      ctx.globalAlpha = 0.22;
+      ctx.beginPath();
+      ctx.arc(blobX, blobY, 520 + (hash % 100), 0, Math.PI * 2);
+      ctx.fill();
+
+      // 3. BRIGHT SECONDARY ACCENT POP
+      const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
+      ctx.fillStyle = brightAccent;
+      ctx.globalAlpha = 0.18;
+      ctx.beginPath();
+      const popX = 150 + ((hash * 13) % 780);
+      const popY = 150 + ((hash * 19) % 780);
+      ctx.arc(popX, popY, 130 + (hash % 60), 0, Math.PI * 2);
+      ctx.fill();
+
+      // 4. TRULY FREE-FLOATING GRAPHIC PLACEMENT (Random X, Y, and Rotation anywhere on card)
+      const graphicVarietyId = (hash * cardNum * 19) % 13;
+      const randX = 180 + (hash % 720);
+      const randY = 180 + ((hash * 3) % 720);
       const randRot = ((hash % 360) * Math.PI) / 180;
 
       ctx.save();
       ctx.translate(randX, randY);
       ctx.rotate(randRot);
 
-      if (graphicVarietyId === 0) {
-        // 🌿 Floating Botanical Vine Branch
+      if (graphicVarietyId === 0 || graphicVarietyId === 1) {
+        // 🌿 Free-Floating Botanical Vine Branch (Centered at 0,0)
         drawRandomizedVine(ctx, accent);
-      } else if (graphicVarietyId === 1) {
-        // ✨ Floating Sparkle Dust & Star Bursts
-        ctx.font = "bold 64px sans-serif";
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
-        ctx.fillText("✨", -40, -20);
-        ctx.fillText("⭐", 50, 60);
       } else if (graphicVarietyId === 2) {
-        // 🔵 Modern Memphis Floating Duo-Circles
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.24;
-        ctx.beginPath(); ctx.arc(0, 0, 160, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = pal.text || "#1E293B"; ctx.globalAlpha = 0.1;
-        ctx.beginPath(); ctx.arc(80, 80, 90, 0, Math.PI * 2); ctx.fill();
+        // ✨ Sparkle Burst Dust
+        ctx.font = "bold 64px sans-serif";
+        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.4;
+        ctx.fillText("✨", -30, -20);
+        ctx.fillText("⭐", 40, 50);
       } else if (graphicVarietyId === 3) {
-        // 🏛️ Minimalist Architectural Arch Frame
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.32; ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.arc(0, 0, 320, Math.PI, 0, false); ctx.stroke();
-      } else if (graphicVarietyId === 4) {
-        // 📐 Technical Blueprint Crosshair & Grid Center
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(-100, 0); ctx.lineTo(100, 0); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, -100); ctx.lineTo(0, 100); ctx.stroke();
-        ctx.beginPath(); ctx.arc(0, 0, 70, 0, Math.PI * 2); ctx.stroke();
-      } else if (graphicVarietyId === 5) {
-        // 🎨 Concentric Accent Rings
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.28; ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.arc(0, 0, 140, 0, Math.PI * 2); ctx.stroke();
-        ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, 0, 175, 0, Math.PI * 2); ctx.stroke();
-      } else if (graphicVarietyId === 6) {
-        // 🍂 Scattered Autumn Leaf / Floral Outline
+        // 🔵 Modern Memphis Floating Duo-Circles
         ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-        ctx.beginPath(); ctx.ellipse(0, 0, 90, 45, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = pal.text || "#1E293B"; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(-60, -30); ctx.lineTo(60, 30); ctx.stroke();
-      } else if (graphicVarietyId === 7) {
-        // 🔲 Bauhaus Offset Rounded Rectangle Block
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.26;
-        ctx.beginPath(); ctx.roundRect(-200, -120, 400, 240, 32); ctx.fill();
-      } else if (graphicVarietyId === 8) {
-        // 💫 Swirl Calligraphy Accent Doodle
+        ctx.beginPath(); ctx.arc(0, 0, 140, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.15;
+        ctx.beginPath(); ctx.arc(70, 70, 80, 0, Math.PI * 2); ctx.fill();
+      } else if (graphicVarietyId === 4) {
+        // 🏛️ Minimalist Arch Frame
         ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.moveTo(-80, 0);
-        ctx.bezierCurveTo(-40, -80, 40, 80, 80, 0);
-        ctx.bezierCurveTo(40, -60, -40, 60, -80, 0);
-        ctx.stroke();
-      } else if (graphicVarietyId === 9) {
-        // 🤎 Soft Floating Watercolor Pebble Blob
+        ctx.beginPath(); ctx.arc(0, 0, 260, Math.PI, 0, false); ctx.stroke();
+      } else if (graphicVarietyId === 5) {
+        // 📐 Blueprint Crosshair
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(-80, 0); ctx.lineTo(80, 0); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, -80); ctx.lineTo(0, 80); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, 0, 60, 0, Math.PI * 2); ctx.stroke();
+      } else if (graphicVarietyId === 6) {
+        // 🎨 Concentric Accent Rings
+        ctx.strokeStyle = brightAccent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3.5;
+        ctx.beginPath(); ctx.arc(0, 0, 120, 0, Math.PI * 2); ctx.stroke();
+        ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, 0, 150, 0, Math.PI * 2); ctx.stroke();
+      } else if (graphicVarietyId === 7) {
+        // 🍂 Outline Floral Leaf
         ctx.fillStyle = accent; ctx.globalAlpha = 0.2;
-        ctx.beginPath();
-        ctx.moveTo(-90, -40);
-        ctx.bezierCurveTo(-120, 60, 40, 110, 100, 40);
-        ctx.bezierCurveTo(140, -30, 20, -100, -90, -40);
-        ctx.fill();
+        ctx.beginPath(); ctx.ellipse(0, 0, 80, 40, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = pal.text || "#1E293B"; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(-50, -25); ctx.lineTo(50, 25); ctx.stroke();
+      } else if (graphicVarietyId === 8) {
+        // 🔲 Bauhaus Offset Block
+        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.22;
+        ctx.beginPath(); ctx.roundRect(-160, -100, 320, 200, 24); ctx.fill();
+      } else if (graphicVarietyId === 9) {
+        // 💫 Calligraphy Swirl Doodle
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(-70, 0);
+        ctx.bezierCurveTo(-30, -70, 30, 70, 70, 0);
+        ctx.stroke();
       } else if (graphicVarietyId === 10) {
-        // 🧵 Double Dashed Framing Corner Stamp
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 2;
-        ctx.setLineDash([8, 6]);
-        ctx.strokeRect(-180, -180, 360, 360);
+        // 🤎 Soft Floating Watercolor Pebble
+        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.2;
+        ctx.beginPath(); ctx.moveTo(-80, -30);
+        ctx.bezierCurveTo(-100, 50, 30, 90, 80, 30);
+        ctx.closePath(); ctx.fill();
+      } else if (graphicVarietyId === 11) {
+        // 🧵 Dashed Framing Stamp
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
+        ctx.setLineDash([6, 6]);
+        ctx.strokeRect(-150, -150, 300, 300);
         ctx.setLineDash([]);
       } else {
-        // 🌿 Delicate Double Leaf Cluster
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
-        ctx.beginPath(); ctx.ellipse(-30, 0, 60, 30, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.ellipse(30, 0, 60, 30, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+        // 🌿 Double Leaf Cluster
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
+        ctx.beginPath(); ctx.ellipse(-25, 0, 50, 25, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(25, 0, 50, 25, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
       }
       ctx.restore();
       ctx.restore();
@@ -1638,10 +1649,10 @@ Return ONLY valid JSON:
     function drawRandomizedVine(ctx, color) {
       ctx.save();
       ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.moveTo(-120, -80); ctx.quadraticCurveTo(0, 40, 120, -80); ctx.stroke();
-      [[-70, -30, -0.4], [0, 20, 0.2], [70, -30, 0.5]].forEach(([lx, ly, rot]) => {
+      ctx.beginPath(); ctx.moveTo(-100, 0); ctx.quadraticCurveTo(0, 40, 100, 0); ctx.stroke();
+      [[-50, 15, -0.4], [0, 30, 0.2], [50, 15, 0.5]].forEach(([lx, ly, rot]) => {
         ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(0, 0, 22, 11, 0, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
       });
       ctx.restore();
