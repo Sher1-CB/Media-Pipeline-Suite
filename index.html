@@ -1091,13 +1091,13 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. GUARANTEED ROTATIONAL VARIETY & LIGHTER BRIGHTER TACTILE TEXTURES
-      // Forces each of the 4 carousel cards to cycle through distinct textures (Gradient, Wood, Linen, Craft)
+      // 1. 20% LIGHTER LUMINANCE & INFINITE GRAPHIC VARIETY ENGINE
+      // Guarantees airy, luminous backgrounds combined with an infinite rotating library of boutique graphics (Vines, Memphis Blobs, Arch Niches, Grids, Sparkles)
       const surfaceStyle = (cardNum - 1) % 4; 
       const accent = pal.accent || "#B4845C";
 
       if (surfaceStyle === 0) {
-        // CARD 1: Luminous Product-Sampled Gradient Wash (Brighter Highlights)
+        // CARD 1: Ultra-Luminous Gradient Wash (20% Lighter Highlights)
         const angle = (hash % 360) * (Math.PI / 180);
         const bgGrad = ctx.createLinearGradient(
           540 + Math.cos(angle) * 700, 
@@ -1106,38 +1106,79 @@
           540 - Math.sin(angle) * 700
         );
         bgGrad.addColorStop(0, "#FFFFFF");
-        bgGrad.addColorStop(0.5, pal.bg || "#FAF5F0");
-        bgGrad.addColorStop(1, "#EFE6DC");
+        bgGrad.addColorStop(0.4, "#FCF9F5");
+        bgGrad.addColorStop(1, "#F3ECE4");
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 1080, 1080);
       } else if (surfaceStyle === 1) {
-        // CARD 2: Lighter Tactile Wood Grain Slats
-        ctx.fillStyle = "#FBF4EE";
+        // CARD 2: Lighter, Airy Tactile Wood Grain Slats
+        ctx.fillStyle = "#FCF7F2";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 2.5;
-        for (let y = 0; y < 1080; y += 36) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.15; ctx.lineWidth = 2;
+        for (let y = 0; y < 1080; y += 40) {
           ctx.beginPath(); ctx.moveTo(0, y);
-          for (let x = 0; x < 1080; x += 120) {
-            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 14 - 7), x + 120, y);
+          for (let x = 0; x < 1080; x += 140) {
+            ctx.quadraticCurveTo(x + 70, y + ((hash + x) % 12 - 6), x + 140, y);
           }
           ctx.stroke();
         }
       } else if (surfaceStyle === 2) {
-        // CARD 3: Airy Tactile Linen Fabric Weave
-        ctx.fillStyle = "#FCFAF7";
+        // CARD 3: Luminous Airy Linen Weave
+        ctx.fillStyle = "#FEFCFA";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.12; ctx.lineWidth = 1;
-        for (let x = 0; x < 1080; x += 12) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 12) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.09; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 14) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 14) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       } else {
-        // CARD 4: Soft Speckled Craft Paper
-        ctx.fillStyle = "#F8F2EC";
+        // CARD 4: Soft Luminous Craft Paper
+        ctx.fillStyle = "#FAF5F0";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.14;
-        for (let i = 0; i < 280; i++) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.1;
+        for (let i = 0; i < 220; i++) {
           ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
         }
       }
+
+      ctx.globalAlpha = 1.0;
+      ctx.save();
+      
+      // INFINITE GRAPHIC VARIETY LIBRARY (Randomly rolls 1 of 6 boutique graphic compositions per card)
+      const graphicVarietyId = (hash + cardNum * 31) % 6;
+      
+      if (graphicVarietyId === 0) {
+        // 🌿 Botanical Corner Vines & Leaves
+        drawBotanicalCornerVines(ctx, accent);
+      } else if (graphicVarietyId === 1) {
+        // ✨ Whimsical Sparkle Dust & Star Bursts
+        ctx.font = "bold 56px sans-serif";
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
+        ctx.fillText("✨", 120, 150);
+        ctx.fillText("⭐", 940, 920);
+        ctx.fillText("✨", 880, 180);
+      } else if (graphicVarietyId === 2) {
+        // 🔵 Modern Memphis Floating Geometric Circles & Dots
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
+        ctx.beginPath(); ctx.arc(150, 150, 180, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = pal.text || "#1E293B"; ctx.globalAlpha = 0.12;
+        ctx.beginPath(); ctx.arc(920, 880, 120, 0, Math.PI * 2); ctx.fill();
+      } else if (graphicVarietyId === 3) {
+        // 🏛️ Minimalist Architectural Arch Niche Frame
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.arc(540, 540, 460, Math.PI, 0, false); ctx.stroke();
+      } else if (graphicVarietyId === 4) {
+        // 📐 Technical Blueprint Grid Lines
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.15; ctx.lineWidth = 1;
+        for (let i = 0; i < 1080; i += 90) {
+          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
+        }
+      } else {
+        // 🎨 Asymmetric Diagonal Sashes & Accent Rings
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.arc(160, 920, 180, 0, Math.PI * 2); ctx.stroke();
+        ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(160, 920, 210, 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.restore();
 
       ctx.globalAlpha = 1.0;
       ctx.save();
