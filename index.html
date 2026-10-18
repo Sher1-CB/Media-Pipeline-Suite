@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v11.1 - Infinite Generative Studio</title>
+  <title>CB Media Pipeline Suite v11.2.01 - Tactile Generative Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Editorial Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,32 +81,23 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.2.00</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.2.01</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">True Generative Backgrounds ➔ Infinite Deal Variety ➔ Free Tier AI</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Tactile Generative Textures ➔ Full-Bleed Toggles ➔ 300+ Unique Daily Deals</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
-        <button 
-          type="button" 
-          onclick="masterResetDeal()" 
-          class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-all active:scale-95 cursor-pointer"
-        >
-          <span>🔄</span> Start New Deal
-        </button>
-
+        <button type="button" onclick="masterResetDeal()" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-all active:scale-95 cursor-pointer"><span>🔄</span> Start New Deal</button>
         <div class="flex items-center gap-2">
           <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap"><span>🔑</span> Key:</label>
           <input type="password" id="apiKeyInput" placeholder="AIzaSy... key" class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-32 sm:w-44 focus:outline-none focus:border-sky-500">
         </div>
-
         <div class="flex items-center gap-2">
           <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap"><span>✨</span> Model:</label>
           <select id="modelSelect" class="bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-lg text-sky-400 font-mono font-medium focus:outline-none focus:border-sky-500">
             <option value="auto">⏳ Auto-Detecting...</option>
           </select>
         </div>
-
         <button type="button" onclick="toggleEmergencyDrawer()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer">🚨 Fallback</button>
       </div>
     </header>
@@ -132,7 +123,6 @@
           <p class="text-xs text-slate-400">Mask logos, claims & packaging</p>
         </div>
       </div>
-
       <div id="stepTab2" onclick="navToStep(2)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">2</div>
         <div>
@@ -140,12 +130,11 @@
           <p class="text-xs text-slate-400">15 silent variants ➔ Pick 4</p>
         </div>
       </div>
-
       <div id="stepTab3" onclick="navToStep(3)" class="card-dark p-4 border-2 step-inactive flex items-center gap-3.5 transition-all cursor-pointer">
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
           <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Coverflow Studio</h3>
-          <p class="text-xs text-slate-400">3D carousel & generative layouts</p>
+          <p class="text-xs text-slate-400">3D carousel & tactile textures</p>
         </div>
       </div>
     </nav>
@@ -158,7 +147,6 @@
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Upload & Mask Packaging</h2>
             <p class="text-xs text-slate-400">Automatic packaging audit with Free Tier AI or manual patches.</p>
           </div>
-
           <div class="flex flex-wrap items-center gap-2.5">
             <input type="file" id="rawImageInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(this)" onclick="this.value=null">
             <button type="button" onclick="document.getElementById('rawImageInput').click()" class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"><span>📁</span> Choose Photo</button>
@@ -235,7 +223,7 @@
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: 3D Coverflow Creator Studio</h2>
-            <p class="text-xs text-slate-400">💡 <strong>Infinite Generative Studio:</strong> 300+ unique deals daily with custom procedural backgrounds & font pairing.</p>
+            <p class="text-xs text-slate-400">💡 <strong>Tactile Generative Studio:</strong> Wood grain, linen weaves, craft paper, and full-bleed floating toggles.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-700">
@@ -298,7 +286,7 @@
         <div class="w-full flex justify-between items-center mb-4 z-40">
           <div class="flex items-center gap-3">
             <span id="activeCardIndicator" class="px-3 py-1 bg-sky-500/20 text-sky-400 border border-sky-500/40 rounded-full text-xs font-bold uppercase tracking-wider">Active Focus: Card 1 of 4</span>
-            <button type="button" onclick="reRollProceduralDeck()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer" title="Generate brand new generative backgrounds"><span>🎲</span> Re-Generate Design Deck</button>
+            <button type="button" onclick="reRollProceduralDeck()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer" title="Generate brand new tactile generative backgrounds"><span>🎲</span> Re-Generate Design Deck</button>
           </div>
           <div class="flex items-center gap-2">
             <button type="button" onclick="resetActiveCard()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer">🔄 Reset Card</button>
@@ -323,7 +311,7 @@
         <div class="border-b border-slate-800 pb-3 flex flex-wrap justify-between items-center gap-2">
           <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2"><span>🎨</span> Active Card Studio Console (<span id="consoleCardName">Card 1</span>)</h3>
           <div class="flex items-center gap-2">
-            <button type="button" onclick="shiftActiveCardPalette()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-[11px] font-bold rounded-lg uppercase tracking-wider transition-all cursor-pointer" title="Shift accent colors and generative shapes instantly">🎨 Shift Palette & Accents</button>
+            <button type="button" onclick="shiftActiveCardPalette()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-[11px] font-bold rounded-lg uppercase tracking-wider transition-all cursor-pointer" title="Shift textures and accent shapes instantly">🎨 Shift Texture & Palette</button>
             <span class="text-[11px] text-slate-400 hidden sm:inline">· Drag objects on canvas</span>
           </div>
         </div>
@@ -402,12 +390,9 @@
               <div class="flex justify-between text-[11px] text-slate-400"><span>Hero Scale:</span><span id="activeProductSizeVal" class="text-emerald-400 font-mono">100%</span></div>
               <input type="range" id="activeProductSize" min="60" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveProductSize(this.value)">
             </div>
-            
             <label class="flex items-center gap-1.5 text-[11px] text-slate-300 pt-1 cursor-pointer">
-              <input type="checkbox" id="activeRemoveMatBox" onchange="updateActiveRemoveMat(this.checked)">
-              <span>🔲 Remove White Product Mat (Full-Bleed)</span>
+              <input type="checkbox" id="activeRemoveMatBox" onchange="updateActiveRemoveMat(this.checked)"><span>🔲 Remove White Product Mat</span>
             </label>
-
             <div class="pt-1">
               <button type="button" onclick="centerActiveElements()" class="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider cursor-pointer">🎯 Re-Center</button>
             </div>
@@ -440,47 +425,25 @@
     let base64ApiPayload = "";
     let detectedBoxes = [];
     let manualBoxes = [];
-    
-    // Explicit global state for Step 1 manual drag patching
     let isDrawingPatch = false;
-    let patchStartX = 0;
-    let patchStartY = 0;
+    let patchStartX = 0, patchStartY = 0;
+
     let sanitizedCanvasSnapshot = null;
     let all15Variants = [];
     let chosen4Variants = [];
     let currentDealMode = 'regular';
 
     const FB_BLACKLIST = [
-      // 1. Direct Checkout & Transactional Terms
-      "buy", "order", "ordered", "ordering", "purchase", "purchased", "purchasing", 
-      "shop", "shopping", "checkout", "cart", "basket",
-
-      // 2. Financial & Pricing Tokens
-      "price", "prices", "cost", "costs", "costing", "budget", "spend", "spending", 
-      "payment", "payments", "fee", "fees", "charge", "charges", "$", "usd", "cents",
-
-      // 3. Sales, Deals & Discount Terminology
-      "sale", "sales", "deal", "deals", "save", "saving", "savings", "discount", "discounts", 
-      "markdown", "marked down", "clearance", "offer", "offers", "promo", "promos", "promotion", "promotions", 
-      "%", "coupon", "coupons", "voucher", "vouchers", "claim", "redeem", "code", "codes", "free", 
-      "steal", "bargain", "doorbuster", "blowout", "bogo", "liquidation", "overstock", "price drop", "price cut", "lowest price", "off",
-
-      // 4. Artificial Urgency & Scarcity Bait
-      "hurry", "hurry up", "act fast", "act now", "today only", "ending soon", "ends soon", 
-      "limited time", "limited drop", "limited offer", "flash sale", "doors close", "last chance", 
-      "sold out", "selling out", "going fast", "moving fast", "miss out", "missing out", "don't wait", 
-      "rare", "exclusive", "restock", "restocked", "restocking", "stock", "in-stock", "gone", "while supplies last", "run", "run alert", "black friday", "cyber monday",
-
-      // 5. Engagement Manipulation & Navigation Pointers
-      "like", "share", "tag", "tag a friend", "comment", "comment yes", "say yes", "type yes", "react", "vote", "drop an emoji", 
-      "thoughts?", "agree?", "like if you agree", "share to win", "let me know below", "tell me below", "who needs this", 
-      "leave a comment", "comment below", "save for later", "bump", "following", "link", "url", "website", "pathway", "access", "click", "click here", "tap", 
-      "check the bio", "bio", "redirect", "inbox me", "dm me", "send a message", "check your notifications", 
-      "link in comments", "in the comments", "first comment", "1st comment", "link in reply", "drop the link", "check the thread", "check comments", "check below", "pinned comment", "direct link", "grab yours", "where to get",
-
-      // 6. Sensationalism & Growth Claims
-      "alert", "restock alert", "you won't believe", "shocking", "mind-blowing", "secret", "hack", "algorithm hack", 
-      "growth hack", "viral", "passive income", "be your own boss", "miracle", "cure", "guaranteed", "proven", "100% effective", "shipped", "total", "reg", "was"
+      "buy", "order", "ordered", "ordering", "purchase", "purchased", "purchasing", "shop", "shopping", "checkout", "cart", "basket",
+      "price", "prices", "cost", "costs", "costing", "budget", "spend", "spending", "payment", "payments", "fee", "fees", "charge", "charges", "$", "usd", "cents",
+      "sale", "sales", "deal", "deals", "save", "saving", "savings", "discount", "discounts", "markdown", "marked down", "clearance", "offer", "offers", "promo", "promos", "promotion", "promotions",
+      "%", "coupon", "coupons", "voucher", "vouchers", "claim", "redeem", "code", "codes", "free", "steal", "bargain", "doorbuster", "blowout", "bogo", "liquidation", "overstock", "price drop", "price cut", "lowest price", "off",
+      "hurry", "hurry up", "act fast", "act now", "today only", "ending soon", "ends soon", "limited time", "limited drop", "limited offer", "flash sale", "doors close", "last chance",
+      "sold out", "selling out", "going fast", "moving fast", "miss out", "missing out", "don't wait", "rare", "exclusive", "restock", "restocked", "restocking", "stock", "in-stock", "gone", "while supplies last", "run", "run alert", "black friday", "cyber monday",
+      "like", "share", "tag", "tag a friend", "comment", "comment yes", "say yes", "type yes", "react", "vote", "drop an emoji",
+      "thoughts?", "agree?", "like if you agree", "share to win", "let me know below", "tell me below", "who needs this", "leave a comment", "comment below", "save for later", "bump", "following", "link", "url", "website", "pathway", "access", "click", "click here", "tap",
+      "check the bio", "bio", "redirect", "inbox me", "dm me", "send a message", "check your notifications", "link in comments", "in the comments", "first comment", "1st comment", "link in reply", "drop the link", "check the thread", "check comments", "check below", "pinned comment", "direct link", "grab yours", "where to get",
+      "alert", "restock alert", "you won't believe", "shocking", "mind-blowing", "secret", "hack", "algorithm hack", "growth hack", "viral", "passive income", "be your own boss", "miracle", "cure", "guaranteed", "proven", "100% effective", "shipped", "total", "reg", "was"
     ];
 
     let cardCustoms = {
@@ -511,48 +474,38 @@
     function sampleColorsFromCanvas(canvas) {
       try {
         if (!canvas || !canvas.width || canvas.width === 0) {
-          return { bg: "#F4EBE1", polaroid: "#FAF8F5", accent: "#B4845C", text: "#1E293B", vignette: "rgba(60, 40, 20, 0.15)" };
+          return { bg: "#F0E6D8", polaroid: "#FAF8F5", accent: "#A66E38", text: "#1E293B", vignette: "rgba(40, 20, 10, 0.3)" };
         }
-        const s = document.createElement("canvas");
-        s.width = 32; s.height = 32;
-        const sCtx = s.getContext("2d");
-        sCtx.drawImage(canvas, 0, 0, 32, 32);
+        const s = document.createElement("canvas"); s.width = 32; s.height = 32;
+        const sCtx = s.getContext("2d"); sCtx.drawImage(canvas, 0, 0, 32, 32);
         const data = sCtx.getImageData(0, 0, 32, 32).data;
 
-        let rSum = 0, gSum = 0, bSum = 0, count = 0;
-        let maxSat = 0;
-        let vibrantR = 180, vibrantG = 140, vibrantB = 110;
+        let rSum = 0, gSum = 0, bSum = 0, count = 0, maxSat = 0;
+        let vibrantR = 180, vibrantG = 130, vibrantB = 90;
 
         for (let i = 0; i < data.length; i += 4) {
           const red = data[i], green = data[i+1], blue = data[i+2];
           const brightness = (red + green + blue) / 3;
-          if (brightness > 20 && brightness < 235) {
-            const max = Math.max(red, green, blue);
-            const min = Math.min(red, green, blue);
-            const sat = max - min;
+          if (brightness > 15 && brightness < 240) {
+            const sat = Math.max(red, green, blue) - Math.min(red, green, blue);
             rSum += red; gSum += green; bSum += blue; count++;
             if (sat > maxSat) { maxSat = sat; vibrantR = red; vibrantG = green; vibrantB = blue; }
           }
         }
 
         if (count > 0) {
-          const avgR = Math.round(rSum / count);
-          const avgG = Math.round(gSum / count);
-          const avgB = Math.round(bSum / count);
+          const finalR = Math.round((rSum/count) * 0.25 + vibrantR * 0.75);
+          const finalG = Math.round((gSum/count) * 0.25 + vibrantG * 0.75);
+          const finalB = Math.round((bSum/count) * 0.25 + vibrantB * 0.75);
 
-          const finalR = Math.round(avgR * 0.2 + vibrantR * 0.8);
-          const finalG = Math.round(avgG * 0.2 + vibrantG * 0.8);
-          const finalB = Math.round(avgB * 0.2 + vibrantB * 0.8);
-
-          // Richer boutique color saturation and deeper accent contrast
-          const bg = `rgb(${Math.min(250, Math.round(160 + finalR * 0.45))}, ${Math.min(250, Math.round(155 + finalG * 0.45))}, ${Math.min(250, Math.round(150 + finalB * 0.45))})`;
+          const bg = `rgb(${Math.min(250, Math.round(175 + finalR * 0.35))}, ${Math.min(250, Math.round(165 + finalG * 0.35))}, ${Math.min(250, Math.round(155 + finalB * 0.35))})`;
           const accent = `rgb(${Math.max(15, Math.round(finalR * 0.95))}, ${Math.max(15, Math.round(finalG * 0.95))}, ${Math.max(15, Math.round(finalB * 0.95))})`;
-          const vignette = `rgba(${Math.max(5, Math.round(finalR * 0.2))}, ${Math.max(5, Math.round(finalG * 0.2))}, ${Math.max(5, Math.round(finalB * 0.2))}, 0.4)`;
+          const vignette = `rgba(${Math.max(10, Math.round(finalR * 0.25))}, ${Math.max(10, Math.round(finalG * 0.25))}, ${Math.max(10, Math.round(finalB * 0.25))}, 0.38)`;
 
           return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B", vignette: vignette };
         }
       } catch (e) {}
-      return { bg: "#F4EBE1", polaroid: "#FAF8F5", accent: "#B4845C", text: "#1E293B", vignette: "rgba(60, 40, 20, 0.15)" };
+      return { bg: "#F0E6D8", polaroid: "#FAF8F5", accent: "#A66E38", text: "#1E293B", vignette: "rgba(40, 20, 10, 0.3)" };
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -562,10 +515,7 @@
 
       const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
       const keyInput = document.getElementById('apiKeyInput');
-      if (savedKey && keyInput) {
-        keyInput.value = savedKey;
-        autoDetectModels(savedKey);
-      }
+      if (savedKey && keyInput) { keyInput.value = savedKey; autoDetectModels(savedKey); }
       if (keyInput) {
         keyInput.addEventListener('input', (e) => {
           const val = e.target.value.trim();
@@ -585,12 +535,10 @@
       if (!key) return;
       const modelSelect = document.getElementById('modelSelect');
       if (!modelSelect) return;
-
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
         const data = await res.json();
         if (!data.models || !Array.isArray(data.models)) return;
-
         const validModels = data.models
           .filter(m => (m.supportedGenerationMethods || []).includes("generateContent") && m.name.includes("gemini"))
           .map(m => m.name.replace("models/", ""))
@@ -598,7 +546,6 @@
 
         validModels.sort((a, b) => parseModelVersion(b) - parseModelVersion(a));
         const liteModels = validModels.filter(m => m.toLowerCase().includes("lite"));
-
         window.n1Lite = liteModels.length >= 2 ? liteModels[1] : (liteModels[0] || validModels[0]);
 
         modelSelect.innerHTML = "";
@@ -608,13 +555,10 @@
           opt.textContent = m + (m === window.n1Lite ? " (★ Recommended Lite)" : (m.includes("flash") ? " (Flash)" : ""));
           modelSelect.appendChild(opt);
         });
-
         if (window.n1Lite && modelSelect.querySelector(`option[value="${window.n1Lite}"]`)) {
           modelSelect.value = window.n1Lite;
         }
-      } catch (err) {
-        console.warn("Model discovery notice:", err);
-      }
+      } catch (err) {}
     }
 
     function toggleEmergencyDrawer() { document.getElementById('emergencyDrawer').classList.toggle('hidden'); }
@@ -695,62 +639,22 @@
       if (!rawLoadedImage) return;
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
       oCtx.drawImage(rawLoadedImage, 0, 0);
-      
       const mode = document.getElementById('maskModeSelect').value;
-      const allBoxes = detectedBoxes.concat(manualBoxes);
-
-      allBoxes.forEach(b => {
-        const x = (b[1] / 1000) * outputCanvas.width;
-        const y = (b[0] / 1000) * outputCanvas.height;
-        const w = ((b[3] - b[1]) / 1000) * outputCanvas.width;
-        const h = ((b[2] - b[0]) / 1000) * outputCanvas.height;
-
-        if (mode === "ambient") {
-          applyAmbientBlock(x, y, w, h);
-        } else if (mode === "pixelate") {
-          applyPixelation(x, y, w, h);
-        } else if (mode === "solid") {
-          applySolidTape(x, y, w, h);
-        } else {
-          applyFrostedDiffusion(x, y, w, h);
-        }
+      detectedBoxes.concat(manualBoxes).forEach(b => {
+        const x = (b[1]/1000)*outputCanvas.width, y = (b[0]/1000)*outputCanvas.height;
+        const w = ((b[3]-b[1])/1000)*outputCanvas.width, h = ((b[2]-b[0])/1000)*outputCanvas.height;
+        if (mode === "ambient") applyAmbientBlock(x, y, w, h);
+        else if (mode === "pixelate") applyPixelation(x, y, w, h);
+        else if (mode === "solid") applySolidTape(x, y, w, h);
+        else applyFrostedDiffusion(x, y, w, h);
       });
-    }
-
-    function applyAmbientBlock(x, y, w, h) {
-      const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
-      oCtx.save();
-      oCtx.filter = "blur(18px)";
-      oCtx.drawImage(outputCanvas, x, y, rw, rh, x, y, rw, rh);
-      oCtx.restore();
-    }
-
-    function applyPixelation(x, y, w, h) {
-      const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
-      const off = document.createElement("canvas");
-      off.width = Math.max(2, Math.floor(rw * 0.08));
-      off.height = Math.max(2, Math.floor(rh * 0.08));
-      const offCtx = off.getContext("2d");
-      offCtx.drawImage(outputCanvas, x, y, rw, rh, 0, 0, off.width, off.height);
-      oCtx.save();
-      oCtx.imageSmoothingEnabled = false;
-      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, rw, rh);
-      oCtx.restore();
-    }
-
-    function applySolidTape(x, y, w, h) {
-      oCtx.save();
-      oCtx.fillStyle = "#0f172a";
-      oCtx.fillRect(x - 2, y - 2, w + 4, h + 4);
-      oCtx.restore();
     }
 
     function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
       const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
       const pad = Math.max(4, Math.round(Math.min(rw, rh) * 0.2));
-      const srcX = Math.max(0, Math.round(x - pad));
-      const srcY = Math.max(0, Math.round(y - pad));
+      const srcX = Math.max(0, Math.round(x - pad)), srcY = Math.max(0, Math.round(y - pad));
       const srcW = Math.min(outputCanvas.width - srcX, rw + pad * 2);
       const srcH = Math.min(outputCanvas.height - srcY, rh + pad * 2);
 
@@ -761,75 +665,61 @@
       bCtx.drawImage(outputCanvas, srcX, srcY, srcW, srcH, 0, 0, srcW, srcH);
 
       oCtx.save();
-      oCtx.drawImage(blurCanvas, srcX - srcX, srcY - srcY, srcW, srcH, x, y, rw, rh);
+      oCtx.drawImage(blurCanvas, 0, 0, srcW, srcH, x, y, rw, rh);
       oCtx.restore();
     }
-    
+
+    function applyAmbientBlock(x, y, w, h) {
+      const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
+      oCtx.save(); oCtx.filter = "blur(18px)"; oCtx.drawImage(outputCanvas, x, y, rw, rh, x, y, rw, rh); oCtx.restore();
+    }
+    function applyPixelation(x, y, w, h) {
+      const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
+      const off = document.createElement("canvas"); off.width = Math.max(2, Math.floor(rw * 0.08)); off.height = Math.max(2, Math.floor(rh * 0.08));
+      off.getContext("2d").drawImage(outputCanvas, x, y, rw, rh, 0, 0, off.width, off.height);
+      oCtx.save(); oCtx.imageSmoothingEnabled = false; oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, rw, rh); oCtx.restore();
+    }
+    function applySolidTape(x, y, w, h) {
+      oCtx.save(); oCtx.fillStyle = "#0f172a"; oCtx.fillRect(x - 2, y - 2, w + 4, h + 4); oCtx.restore();
+    }
+
     function setupManualPatchListeners() {
       if (!outputCanvas) return;
-
       outputCanvas.addEventListener('mousedown', (e) => {
         if (!rawLoadedImage) return;
         isDrawingPatch = true;
         const rect = outputCanvas.getBoundingClientRect();
-        const scaleX = outputCanvas.width / rect.width;
-        const scaleY = outputCanvas.height / rect.height;
-        patchStartX = (e.clientX - rect.left) * scaleX;
-        patchStartY = (e.clientY - rect.top) * scaleY;
+        patchStartX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
+        patchStartY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
       });
-
       outputCanvas.addEventListener('mousemove', (e) => {
         if (!isDrawingPatch || !rawLoadedImage) return;
         renderOutputCanvas();
         const rect = outputCanvas.getBoundingClientRect();
-        const scaleX = outputCanvas.width / rect.width;
-        const scaleY = outputCanvas.height / rect.height;
-        const curX = (e.clientX - rect.left) * scaleX;
-        const curY = (e.clientY - rect.top) * scaleY;
-
-        oCtx.save();
-        oCtx.strokeStyle = "#38bdf8";
-        oCtx.lineWidth = 3;
-        oCtx.setLineDash([6, 6]);
+        const curX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
+        const curY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
+        oCtx.save(); oCtx.strokeStyle = "#38bdf8"; oCtx.lineWidth = 4; oCtx.setLineDash([6, 6]);
         oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
         oCtx.restore();
       });
-
       outputCanvas.addEventListener('mouseup', (e) => {
         if (!isDrawingPatch || !rawLoadedImage) return;
         isDrawingPatch = false;
         const rect = outputCanvas.getBoundingClientRect();
-        const scaleX = outputCanvas.width / rect.width;
-        const scaleY = outputCanvas.height / rect.height;
-        const endX = (e.clientX - rect.left) * scaleX;
-        const endY = (e.clientY - rect.top) * scaleY;
-
-        const x1 = Math.min(patchStartX, endX);
-        const y1 = Math.min(patchStartY, endY);
-        const x2 = Math.max(patchStartX, endX);
-        const y2 = Math.max(patchStartY, endY);
-
-        // Lower minimum threshold from 4px to 2px so small logo selections register instantly
-        if (x2 - x1 > 2 && y2 - y1 > 2) {
-          const ymin = Math.round((y1 / outputCanvas.height) * 1000);
-          const xmin = Math.round((x1 / outputCanvas.width) * 1000);
-          const ymax = Math.round((y2 / outputCanvas.height) * 1000);
-          const xmax = Math.round((x2 / outputCanvas.width) * 1000);
-          manualBoxes.push([ymin, xmin, ymax, xmax]);
+        const endX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
+        const endY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
+        const x1 = Math.min(patchStartX, endX), y1 = Math.min(patchStartY, endY);
+        const x2 = Math.max(patchStartX, endX), y2 = Math.max(patchStartY, endY);
+        if (x2 - x1 > 4 && y2 - y1 > 4) {
+          manualBoxes.push([Math.round((y1/outputCanvas.height)*1000), Math.round((x1/outputCanvas.width)*1000), Math.round((y2/outputCanvas.height)*1000), Math.round((x2/outputCanvas.width)*1000)]);
         }
         renderOutputCanvas();
       });
     }
 
     function resetMasks() { detectedBoxes = []; manualBoxes = []; renderTargetCanvas(); renderOutputCanvas(); }
-    function cleanGenericTitle(raw) {
-      if (!raw) return "";
-      return raw.replace(/\b(lysol|clorox|aussie|febreze|hempz|tree hut)\b/gi, "").replace(/\bdisinfectant\b/gi, "Cleaning Spray").trim();
-    }
-    function copyGenericTitle() {
-      navigator.clipboard.writeText(document.getElementById('suggestedTitleInput').value);
-      alert("Generic title copied!");
-    }
+    function cleanGenericTitle(raw) { return raw ? raw.replace(/\b(lysol|clorox|aussie)\b/gi, "").trim() : ""; }
+    function copyGenericTitle() { navigator.clipboard.writeText(document.getElementById('suggestedTitleInput').value); alert("Generic title copied!"); }
 
     async function fetchWithTimeout(url, payload, timeoutMs) {
       const controller = new AbortController();
@@ -845,7 +735,7 @@
 
     async function callGeminiLeapingMesh(key, payload) {
       const selectedModel = document.getElementById('modelSelect').value;
-      const model = (selectedModel && selectedModel !== "auto") ? selectedModel : "gemini-2.5-flash";
+      const model = (selectedModel && selectedModel !== "auto") ? selectedModel : (window.n1Lite || "gemini-2.5-flash");
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
       return await fetchWithTimeout(url, payload, 10000);
     }
@@ -854,11 +744,9 @@
       const key = document.getElementById('apiKeyInput').value.trim();
       if (!key) return alert("Please enter your Gemini API Key!");
       if (!base64ApiPayload) return alert("Please select a photo first!");
-
       const btn = document.getElementById('aiAuditBtn');
-      btn.innerText = "⏳ Auditing Packaging..."; btn.disabled = true;
-
-      const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for logos, trademarks, and regulated claims. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
+      btn.innerText = "⏳ Auditing..."; btn.disabled = true;
+      const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for logos and regulated claims. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item"}`;
       try {
         const payload = { contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }], generationConfig: { temperature: 0.0, responseMimeType: "application/json" } };
         const data = await callGeminiLeapingMesh(key, payload);
@@ -867,28 +755,21 @@
         detectedBoxes = Array.isArray(parsed) ? parsed : (parsed.boxes || []);
         if (parsed.suggested_title) document.getElementById('suggestedTitleInput').value = cleanGenericTitle(parsed.suggested_title);
         renderTargetCanvas(); renderOutputCanvas();
-      } catch (err) {
-        alert("Packaging audit notice: " + err.message);
-      } finally { btn.innerText = "✨ Process Image with AI"; btn.disabled = false; }
+      } catch (err) { alert("Audit notice: " + err.message); }
+      finally { btn.innerText = "✨ Process Image with AI"; btn.disabled = false; }
     }
 
     function proceedToStep2() {
-      if (!rawLoadedImage) return alert("Please choose or upload a product photo first!");
+      if (!rawLoadedImage) return alert("Please choose a product photo first!");
       sanitizedCanvasSnapshot = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : rawLoadedImage;
-      navToStep(2);
-      runVariantLensEngine(sanitizedCanvasSnapshot);
+      navToStep(2); runVariantLensEngine(sanitizedCanvasSnapshot);
     }
-
     function skipSanitizer() {
-      if (!rawLoadedImage) return alert("Please choose or upload a product photo first!");
-      const rawC = document.createElement('canvas');
-      rawC.width = rawLoadedImage.naturalWidth || 800; rawC.height = rawLoadedImage.naturalHeight || 800;
+      if (!rawLoadedImage) return alert("Please choose a product photo first!");
+      const rawC = document.createElement('canvas'); rawC.width = rawLoadedImage.naturalWidth || 800; rawC.height = rawLoadedImage.naturalHeight || 800;
       rawC.getContext('2d').drawImage(rawLoadedImage, 0, 0);
-      sanitizedCanvasSnapshot = rawC;
-      navToStep(2);
-      runVariantLensEngine(sanitizedCanvasSnapshot);
+      sanitizedCanvasSnapshot = rawC; navToStep(2); runVariantLensEngine(sanitizedCanvasSnapshot);
     }
-
     function handleStep2DirectUpload(input) {
       if (!input || !input.files || !input.files[0]) return;
       const file = input.files[0];
@@ -900,12 +781,8 @@
           directCanvas.width = directImg.naturalWidth; directCanvas.height = directImg.naturalHeight;
           directCanvas.getContext('2d').drawImage(directImg, 0, 0);
           sanitizedCanvasSnapshot = directCanvas;
-          document.getElementById('mainNoteInput').value = "";
-          document.getElementById('simpleValueInput').value = "";
-          document.getElementById('subNoteInput').value = "";
-          generateProceduralDeck();
-          sampleColorsFromCanvas(directCanvas);
-          runVariantLensEngine(sanitizedCanvasSnapshot);
+          document.getElementById('mainNoteInput').value = ""; document.getElementById('simpleValueInput').value = ""; document.getElementById('subNoteInput').value = "";
+          generateProceduralDeck(); sampleColorsFromCanvas(directCanvas); runVariantLensEngine(sanitizedCanvasSnapshot);
         };
         directImg.src = evt.target.result;
       };
@@ -916,10 +793,8 @@
       const src = sourceCanvas || outputCanvas || rawLoadedImage;
       if (!src) return;
       const rawW = src.width || src.naturalWidth || 800, rawH = src.height || src.naturalHeight || 800;
-      const maxDim = 1080;
-      const scale = Math.min(1, maxDim / Math.max(rawW, rawH));
+      const maxDim = 1080, scale = Math.min(1, maxDim / Math.max(rawW, rawH));
       const w = Math.round(rawW * scale), h = Math.round(rawH * scale);
-
       all15Variants = [];
       const configs = [
         { rot: 1, zoom: 1.0, contrast: 1.05, name: "1° CW Crisp" },
@@ -931,32 +806,25 @@
         { rot: -3, zoom: 0.95, contrast: 1.05, name: "3° CCW Saturated" },
         { rot: -1, zoom: 0.96, contrast: 1.07, name: "1° CCW Dynamic" }
       ];
-
       configs.forEach((cfg, idx) => {
         const c = document.createElement('canvas'); c.width = w; c.height = h;
-        const cx = c.getContext('2d');
-        cx.fillStyle = "#ffffff"; cx.fillRect(0, 0, w, h);
-        cx.save();
-        cx.translate(w/2, h/2);
+        const cx = c.getContext('2d'); cx.fillStyle = "#ffffff"; cx.fillRect(0, 0, w, h);
+        cx.save(); cx.translate(w/2, h/2);
         if (cfg.rot) cx.rotate((cfg.rot * Math.PI) / 180);
-        let filter = "";
-        if (cfg.contrast) filter += `contrast(${cfg.contrast}) `;
-        if (cfg.bright) filter += `brightness(${cfg.bright}) `;
+        let filter = ""; if (cfg.contrast) filter += `contrast(${cfg.contrast}) `; if (cfg.bright) filter += `brightness(${cfg.bright}) `;
         if (filter) cx.filter = filter.trim();
         const sw = w * cfg.zoom, sh = h * cfg.zoom;
         cx.drawImage(src, -sw/2, -sh/2, sw, sh);
         cx.restore();
         all15Variants.push({ id: idx + 1, name: cfg.name, canvas: c });
       });
-
       pick4FeaturedVariants();
     }
 
     function pick4FeaturedVariants() {
       const shuffled = [...all15Variants].sort(() => 0.5 - Math.random());
       chosen4Variants = shuffled.slice(0, 4);
-      const grid = document.getElementById('featuredGrid');
-      grid.innerHTML = "";
+      const grid = document.getElementById('featuredGrid'); grid.innerHTML = "";
       chosen4Variants.forEach((v) => {
         const card = document.createElement('div');
         card.className = "bg-slate-900 border border-slate-800 p-2.5 rounded-xl space-y-2";
@@ -973,10 +841,7 @@
         const fallbackSource = sanitizedCanvasSnapshot || outputCanvas || targetCanvas;
         chosen4Variants = [{ id: 1, canvas: fallbackSource }, { id: 2, canvas: fallbackSource }, { id: 3, canvas: fallbackSource }, { id: 4, canvas: fallbackSource }];
       }
-      navToStep(3);
-      generateProceduralDeck();
-      selectCardIndex(1);
-      renderAll4CreatorCards();
+      navToStep(3); generateProceduralDeck(); selectCardIndex(1); renderAll4CreatorCards();
     }
 
     function selectCardIndex(idx) { activeCardIndex = idx; updateCoverflowPositions(); syncConsoleControls(); }
@@ -1013,14 +878,8 @@
       document.getElementById('activeProductSize').value = Math.round((conf.pScale || 1.0) * 100);
       document.getElementById('activeProductSizeVal').innerText = `${Math.round((conf.pScale || 1.0) * 100)}%`;
       document.getElementById('activeNoteBgBox').checked = !!conf.hasNoteBg;
-      
       const matBox = document.getElementById('activeRemoveMatBox');
       if (matBox) matBox.checked = !!conf.removeMat;
-    }
-
-    function updateActiveRemoveMat(checked) {
-      cardCustoms[activeCardIndex].removeMat = checked;
-      renderAll4CreatorCards();
     }
 
     function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
@@ -1033,6 +892,7 @@
     function updateActiveSubSize(val) { cardCustoms[activeCardIndex].subScale = parseFloat(val) / 100.0; document.getElementById('activeSubSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
     function updateActiveProductSize(val) { cardCustoms[activeCardIndex].pScale = parseFloat(val) / 100.0; document.getElementById('activeProductSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
     function updateActiveNoteBg(checked) { cardCustoms[activeCardIndex].hasNoteBg = checked; renderAll4CreatorCards(); }
+    function updateActiveRemoveMat(checked) { cardCustoms[activeCardIndex].removeMat = checked; renderAll4CreatorCards(); }
     function toggleActiveDecorator(acc) { cardCustoms[activeCardIndex].accents[acc] = document.getElementById(`dec_${acc}`).checked; renderAll4CreatorCards(); }
     function centerActiveElements() { cardCustoms[activeCardIndex].productPos = null; cardCustoms[activeCardIndex].badgePos = null; cardCustoms[activeCardIndex].notePos = null; cardCustoms[activeCardIndex].subPos = null; renderAll4CreatorCards(); }
     function centerSubNote() { cardCustoms[activeCardIndex].subPos = null; renderAll4CreatorCards(); }
@@ -1040,12 +900,11 @@
 
     function resetActiveCard() {
       const c = cardCustoms[activeCardIndex];
-      c.pScale = 1.0; c.bScale = 1.0; c.bRot = 0; c.nRot = 0; c.nScale = 1.0; c.subRot = 0; c.subScale = 1.0; c.hasNoteBg = false;
+      c.pScale = 1.0; c.bScale = 1.0; c.bRot = 0; c.nRot = 0; c.nScale = 1.0; c.subRot = 0; c.subScale = 1.0; c.hasNoteBg = false; c.removeMat = false;
       c.productPos = null; c.badgePos = null; c.notePos = null; c.subPos = null;
       syncConsoleControls(); renderAll4CreatorCards();
     }
 
-    // TRUE GENERATIVE UNPREDICTABLE DECK GENERATOR (300+ UNIQUE COMBINATIONS)
     function generateProceduralDeck() {
       const archetypes = ["polaroid", "arch_niche", "notebook", "hero_mat", "torn_edge", "receipt_slip", "masonite_board", "floating_shadow"];
       for (let i = 1; i <= 4; i++) {
@@ -1053,19 +912,25 @@
           archetype: archetypes[Math.floor(Math.random() * archetypes.length)],
           seedRotation: (Math.random() * 8 - 4),
           washiOffset: Math.random() * 40 - 20,
-          bgPatternSeed: Math.floor(Math.random() * 1000000) // 100% Unique Procedural Hash
+          bgPatternSeed: Math.floor(Math.random() * 1000000)
         };
       }
     }
 
     function reRollProceduralDeck() { generateProceduralDeck(); renderAll4CreatorCards(); }
+    function shiftActiveCardPalette() {
+      const conf = cardCustoms[activeCardIndex];
+      if (!conf.procedural) conf.procedural = {};
+      conf.procedural.bgPatternSeed = Math.floor(Math.random() * 999999);
+      conf.procedural.seedRotation = (Math.random() * 12 - 6);
+      renderAll4CreatorCards();
+    }
 
     function renderAll4CreatorCards() {
       const fallbackImg = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : (rawLoadedImage || targetCanvas);
       if (!chosen4Variants || chosen4Variants.length < 4) {
         chosen4Variants = [{ id: 1, canvas: fallbackImg }, { id: 2, canvas: fallbackImg }, { id: 3, canvas: fallbackImg }, { id: 4, canvas: fallbackImg }];
       }
-
       const note = (document.getElementById('mainNoteInput')?.value || "").trim();
       const val = (document.getElementById('simpleValueInput')?.value || "").trim();
       const sampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
@@ -1080,7 +945,7 @@
     }
 
     // ==========================================
-    // TRUE INFINITE GENERATIVE BACKGROUND ENGINE
+    // TACTILE GENERATIVE TEXTURE & BACKGROUND ENGINE
     // ==========================================
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
@@ -1090,89 +955,79 @@
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // 1. DYNAMIC MULTI-STOP COLOR TONE & CONTRAST SHIFTING
-      const angle = (hash % 360) * (Math.PI / 180);
-      const bgGrad = ctx.createLinearGradient(
-        540 + Math.cos(angle) * 700, 
-        540 + Math.sin(angle) * 700, 
-        540 - Math.cos(angle) * 700, 
-        540 - Math.sin(angle) * 700
-      );
-      
-      const invertColors = (hash % 3 === 0);
-      bgGrad.addColorStop(0, invertColors ? (pal.accent || "#B4845C") : (pal.bg || "#F5EFE6"));
-      bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
-      bgGrad.addColorStop(1, invertColors ? (pal.bg || "#F5EFE6") : "#D8C7B0");
-      
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
+      // 1. TACTILE SURFACE TEXTURE & GRADIENT WASH
+      const surfaceStyle = hash % 5; // 0: Wood Grain, 1: Linen Weave, 2: Craft Specks, 3: Travertine Stone, 4: Clean Editorial Wash
+      const accent = pal.accent || "#A66E38";
+
+      if (surfaceStyle === 0) {
+        // TACTILE WOOD GRAIN SLATS
+        ctx.fillStyle = pal.bg || "#D4B28C";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.12; ctx.lineWidth = 2;
+        for (let y = 0; y < 1080; y += 24 + (hash % 12)) {
+          ctx.beginPath(); ctx.moveTo(0, y);
+          for (let x = 0; x < 1080; x += 120) {
+            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 15 - 7), x + 120, y);
+          }
+          ctx.stroke();
+        }
+      } else if (surfaceStyle === 1) {
+        // TACTILE LINEN FABRIC WEAVE
+        ctx.fillStyle = pal.bg || "#E8E2D5";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 6) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 6) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+      } else if (surfaceStyle === 2) {
+        // SPECKLED CRAFT PAPER
+        ctx.fillStyle = pal.bg || "#E2D3BE";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.08;
+        for (let i = 0; i < 400; i++) {
+          const cx = (hash * i * 3) % 1080, cy = (hash * i * 7) % 1080;
+          ctx.fillRect(cx, cy, 3, 3);
+        }
+      } else if (surfaceStyle === 3) {
+        // TRAVERTINE STONE WASH
+        const sGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
+        sGrad.addColorStop(0, pal.bg || "#E6DFC5");
+        sGrad.addColorStop(1, "#CFC5A2");
+        ctx.fillStyle = sGrad; ctx.fillRect(0, 0, 1080, 1080);
+      } else {
+        // MODERN EDITORIAL GRADIENT WASH
+        const g = ctx.createLinearGradient(0, 0, 1080, 1080);
+        g.addColorStop(0, pal.bg || "#F5EFE6");
+        g.addColorStop(1, "#D4C3B3");
+        ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 1080);
+      }
 
       ctx.save();
-      const accent = pal.accent || "#B4845C";
-      const layoutType = hash % 8; // Expanded to 8 distinct generative compositions
-
+      const layoutType = hash % 6;
       if (layoutType === 0) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.42;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.28;
         ctx.beginPath(); ctx.roundRect((hash % 160) + 50, (hash % 120) + 50, 750, 750, 48); ctx.fill();
       } else if (layoutType === 1) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.38;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
         ctx.beginPath(); ctx.moveTo(0, 0);
         ctx.bezierCurveTo(380, (hash % 420) + 60, 700, 1080 - (hash % 280), 1080, 420);
         ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 6;
-        ctx.beginPath(); ctx.arc(820, 260, 130, 0, Math.PI * 2); ctx.stroke();
       } else if (layoutType === 2) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
         ctx.beginPath(); ctx.arc(540, 410, 370, Math.PI, 0, false);
         ctx.lineTo(910, 1080); ctx.lineTo(170, 1080); ctx.closePath(); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 4;
-        ctx.strokeRect(50, 50, 980, 980);
-      } else if (layoutType === 3) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
-        ctx.fillRect(0, 0, 420 + (hash % 180), 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.7; ctx.lineWidth = 5;
-        ctx.strokeRect(60, 60, 960, 960);
-      } else if (layoutType === 4) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 4;
-        for (let i = -1000; i < 2000; i += 85) {
-          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + 1080, 1080); ctx.stroke();
-        }
-      } else if (layoutType === 5) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
-        ctx.beginPath(); ctx.arc(200, 200, 260, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(880, 880, 220, 0, Math.PI * 2); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 5;
-        ctx.beginPath(); ctx.arc(880, 880, 240, 0, Math.PI * 2); ctx.stroke();
-      } else if (layoutType === 6) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
-        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(600, 0); ctx.lineTo(0, 600); ctx.closePath(); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 3;
-        ctx.strokeRect(70, 70, 940, 940);
       } else {
-        const rad = ctx.createRadialGradient(540, 540, 50, 540, 540, 600);
-        rad.addColorStop(0, accent); rad.addColorStop(1, "transparent");
-        ctx.fillStyle = rad; ctx.globalAlpha = 0.25; ctx.fillRect(0, 0, 1080, 1080);
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 1.5;
-        for (let i = 0; i < 1080; i += 90) {
-          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
-        }
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
+        ctx.strokeRect(60, 60, 960, 960);
       }
       ctx.restore();
 
-      // Vignette Depth Shadow
+      // Vignette Shadow
       const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
       vGrad.addColorStop(0, "transparent");
-      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.25)");
-      ctx.fillStyle = vGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
+      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.3)");
+      ctx.fillStyle = vGrad; ctx.fillRect(0, 0, 1080, 1080);
 
-      // LAYER 1: PRODUCT STAGING (SUPPORTS FULL-BLEED TRANSPARENT FLOAT OR FRAMED MAT)
+      // LAYER 1: PRODUCT STAGING (SUPPORTS FULL-BLEED FLOAT OR FRAMED MAT)
       const pScale = conf.pScale || 1.0;
       const pw = Math.round(780 * pScale), ph = Math.round(780 * pScale);
       const px = conf.productPos ? conf.productPos.x : 540;
@@ -1185,118 +1040,90 @@
       ctx.rotate(frameRot);
 
       if (conf.removeMat) {
-        // FULL-BLEED FLOAT: No white mat, product floats dramatically over the background texture with deep shadow
-        ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-        ctx.shadowBlur = 52;
-        ctx.shadowOffsetY = 24;
+        // FULL-BLEED FLOAT (No White Mat)
+        ctx.shadowColor = "rgba(0, 0, 0, 0.38)"; ctx.shadowBlur = 48; ctx.shadowOffsetY = 22;
         if (srcCanvas) ctx.drawImage(srcCanvas, -pw/2, -ph/2, pw, ph);
         ctx.shadowColor = "transparent";
       } else {
-        // TRADITIONAL FRAMED POLAROID MAT
+        // FRAMED POLAROID MAT WITH WASHI TAPE
         ctx.fillStyle = "#FAF8F5";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.24)"; 
-        ctx.shadowBlur = 40; 
-        ctx.shadowOffsetY = 18;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.25)"; ctx.shadowBlur = 38; ctx.shadowOffsetY = 16;
         ctx.fillRect(-410, -390, 820, 890);
         ctx.shadowColor = "transparent";
+        drawWashiTape(ctx, proc.washiOffset, -390, 200, 42);
         if (srcCanvas) ctx.drawImage(srcCanvas, -pw/2, -ph/2 - 20, pw, ph);
       }
       ctx.restore();
 
-      // LAYER 2: MAIN AFFIRMATION NOTE (AUTOMATIC MULTI-LINE TEXT WRAPPING)
+      // LAYER 2: MAIN AFFIRMATION NOTE (MULTI-LINE WRAPPING)
       if (note) {
         ctx.save();
         const nx = conf.notePos ? conf.notePos.x : 540;
         const ny = conf.notePos ? conf.notePos.y : 940;
         const nScale = conf.nScale || 1.0;
-
-        ctx.translate(nx, ny);
-        ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
+        ctx.translate(nx, ny); ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
 
         const fontSize = Math.round(32 * nScale);
         ctx.font = `800 ${fontSize}px 'Plus Jakarta Sans', sans-serif`;
-
-        // Word-wrap algorithm to fit comfortably within 900px card width
-        const maxLineWidth = 900;
-        const words = note.split(" ");
-        let lines = [];
-        let currentLine = words[0] || "";
-
+        const words = note.split(" "); let lines = []; let currentLine = words[0] || "";
         for (let i = 1; i < words.length; i++) {
-          const testLine = currentLine + " " + words[i];
-          if (ctx.measureText(testLine).width < maxLineWidth) {
-            currentLine = testLine;
-          } else {
-            lines.push(currentLine);
-            currentLine = words[i];
-          }
+          if (ctx.measureText(currentLine + " " + words[i]).width < 900) currentLine += " " + words[i];
+          else { lines.push(currentLine); currentLine = words[i]; }
         }
         lines.push(currentLine);
 
-        const lineHeight = Math.round(fontSize * 1.35);
-        const totalTextHeight = lines.length * lineHeight;
-        const boxW = Math.min(960, Math.max(...lines.map(l => ctx.measureText(l).width)) + 60);
-        const boxH = totalTextHeight + 36;
-
+        const lineHeight = Math.round(fontSize * 1.35), totalTextHeight = lines.length * lineHeight;
+        const boxW = Math.min(960, Math.max(...lines.map(l => ctx.measureText(l).width)) + 60), boxH = totalTextHeight + 36;
         conf._activeNoteBox = { x: nx - boxW/2, y: ny - boxH/2, w: boxW, h: boxH };
 
         if (conf.hasNoteBg) {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-          ctx.shadowColor = "rgba(0, 0, 0, 0.15)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 14);
-          ctx.fill();
-          ctx.shadowColor = "transparent";
+          ctx.fillStyle = "rgba(255, 255, 255, 0.95)"; ctx.shadowColor = "rgba(0, 0, 0, 0.15)"; ctx.shadowBlur = 16;
+          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 14); ctx.fill(); ctx.shadowColor = "transparent";
         }
-
-        ctx.textAlign = "center";
-        ctx.fillStyle = pal.text || "#1E293B";
-
-        // Render each wrapped line cleanly stacked
+        ctx.textAlign = "center"; ctx.fillStyle = pal.text || "#1E293B";
         const startY = -totalTextHeight / 2 + fontSize * 0.8;
-        lines.forEach((line, idx) => {
-          ctx.fillText(line, 0, startY + (idx * lineHeight));
-        });
-
+        lines.forEach((line, idx) => ctx.fillText(line, 0, startY + (idx * lineHeight)));
         ctx.restore();
       }
 
-      // LAYER 2B: INDEPENDENT SUB-NOTE
+      // LAYER 2B: SUB-NOTE
       const subNote = (document.getElementById('subNoteInput')?.value || "").trim();
       if (subNote) {
         ctx.save();
         const subScale = conf.subScale || 1.0, subRot = conf.subRot || 0;
         const sx = conf.subPos ? conf.subPos.x : 540, sy = conf.subPos ? conf.subPos.y : 900;
         ctx.font = `italic 700 ${Math.round(24 * subScale)}px 'Caveat', cursive, sans-serif`;
-        const subMetrics = ctx.measureText(subNote);
-        const sw = subMetrics.width + 36, sh = 42 * subScale;
+        const subMetrics = ctx.measureText(subNote), sw = subMetrics.width + 36, sh = 42 * subScale;
         conf._activeSubBox = { x: sx - sw/2, y: sy - sh/2, w: sw, h: sh };
-
         ctx.translate(sx, sy); ctx.rotate((subRot * Math.PI) / 180);
         ctx.fillStyle = "rgba(255, 255, 255, 0.96)"; ctx.shadowColor = "rgba(0, 0, 0, 0.16)"; ctx.shadowBlur = 10;
         ctx.beginPath(); ctx.roundRect(-sw/2, -sh/2, sw, sh, 8); ctx.fill(); ctx.shadowColor = "transparent";
-        ctx.textAlign = "center"; ctx.fillStyle = pal.text || "#1E293B";
-        ctx.fillText(subNote, 0, 6 * subScale);
+        ctx.textAlign = "center"; ctx.fillStyle = pal.text || "#1E293B"; ctx.fillText(subNote, 0, 6 * subScale);
         ctx.restore();
       }
 
-      // LAYER 3: VALUE SPEC BADGE
+      // LAYER 3: SPEC BADGE
       if (val) {
         ctx.save();
         const bScale = conf.bScale || 1.0;
-        ctx.font = `bold ${Math.round(26 * bScale)}px ${font}`;
-        const valMetrics = ctx.measureText(val);
-        const boxW = Math.min(680, valMetrics.width + 48), boxH = Math.round(62 * bScale);
+        ctx.font = `bold ${Math.round(26 * bScale)}px ${getFontFamily(conf.font)}`;
+        const valMetrics = ctx.measureText(val), boxW = Math.min(680, valMetrics.width + 48), boxH = Math.round(62 * bScale);
         const bx = conf.badgePos ? conf.badgePos.x : 240, by = conf.badgePos ? conf.badgePos.y : 150;
         conf._activeBadgeBox = { x: bx - boxW/2, y: by - boxH/2, w: boxW, h: boxH };
-
         ctx.translate(bx, by); ctx.rotate(((conf.bRot || 0) * Math.PI) / 180);
         ctx.fillStyle = "#FEF08A"; ctx.shadowColor = "rgba(0,0,0,0.24)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 6;
         ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 12); ctx.fill();
         ctx.fillStyle = "#0F172A"; ctx.textAlign = "center"; ctx.fillText(val, 0, 9 * bScale);
         ctx.restore();
       }
+    }
+
+    function drawWashiTape(ctx, cx, cy, w, h) {
+      ctx.save(); ctx.translate(cx, cy); ctx.rotate(0.015);
+      ctx.fillStyle = "rgba(235, 222, 204, 0.85)"; ctx.fillRect(-w/2, -h/2, w, h);
+      ctx.strokeStyle = "rgba(180, 150, 120, 0.4)"; ctx.lineWidth = 2.5;
+      for (let x = -w/2 + 12; x < w/2; x += 16) { ctx.beginPath(); ctx.moveTo(x, -h/2); ctx.lineTo(x, h/2); ctx.stroke(); }
+      ctx.restore();
     }
 
     function getFontFamily(fontKey) {
@@ -1311,35 +1138,28 @@
       for (let i = 1; i <= 4; i++) {
         const wrap = document.getElementById(`cCard${i}`), canvas = document.getElementById(`cardCanvas${i}`);
         if (!wrap || !canvas) continue;
-
         wrap.addEventListener("mousedown", (e) => {
           if (activeCardIndex !== i) return;
           const r = canvas.getBoundingClientRect();
           const mouseX = (e.clientX - r.left) * (1080 / r.width), mouseY = (e.clientY - r.top) * (1080 / r.height);
-          const c = cardCustoms[i];
-          let hitTarget = "badge";
-
+          const c = cardCustoms[i]; let hitTarget = "badge";
           if (c._activeSubBox && mouseX >= c._activeSubBox.x && mouseX <= c._activeSubBox.x + c._activeSubBox.w && mouseY >= c._activeSubBox.y && mouseY <= c._activeSubBox.y + c._activeSubBox.h) hitTarget = "subNote";
           else if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) hitTarget = "badge";
           else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) hitTarget = "note";
           else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) hitTarget = "product";
-
           draggingState = { active: true, cardNum: i, target: hitTarget, startX: mouseX, startY: mouseY };
         });
-
         window.addEventListener("mousemove", (e) => {
           if (!draggingState.active || draggingState.cardNum !== i) return;
           const r = canvas.getBoundingClientRect();
           const mouseX = Math.max(60, Math.min(1020, (e.clientX - r.left) * (1080 / r.width)));
           const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
-
           if (draggingState.target === "subNote") cardCustoms[i].subPos = { x: mouseX, y: mouseY };
           else if (draggingState.target === "badge") cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
           else if (draggingState.target === "note") cardCustoms[i].notePos = { x: mouseX, y: mouseY };
           else if (draggingState.target === "product") cardCustoms[i].productPos = { x: mouseX, y: mouseY };
           renderAll4CreatorCards();
         });
-
         window.addEventListener("mouseup", () => { draggingState.active = false; });
       }
     }
@@ -1350,13 +1170,9 @@
       sanitizedCanvasSnapshot = null; all15Variants = []; chosen4Variants = [];
       tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
-      document.getElementById('rawDealPaste').value = "";
-      document.getElementById('suggestedTitleInput').value = "";
-      document.getElementById('mainNoteInput').value = "";
-      document.getElementById('simpleValueInput').value = "";
-      document.getElementById('subNoteInput').value = "";
-      document.getElementById('aiChipsWrapper').classList.add('hidden');
-      navToStep(1);
+      document.getElementById('rawDealPaste').value = ""; document.getElementById('suggestedTitleInput').value = "";
+      document.getElementById('mainNoteInput').value = ""; document.getElementById('simpleValueInput').value = ""; document.getElementById('subNoteInput').value = "";
+      document.getElementById('aiChipsWrapper').classList.add('hidden'); navToStep(1);
     }
 
     function setDealMode(mode) {
@@ -1375,12 +1191,10 @@
     }
 
     function shuffleNote() {
-      // Collect all currently visible AI affirmation chip buttons
       const chipButtons = document.querySelectorAll('#aiChipsContainer button');
       if (chipButtons.length > 0) {
         const texts = Array.from(chipButtons).map(b => b.innerText);
-        const randomText = texts[Math.floor(Math.random() * texts.length)];
-        document.getElementById('mainNoteInput').value = randomText;
+        document.getElementById('mainNoteInput').value = texts[Math.floor(Math.random() * texts.length)];
       } else {
         const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
         document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
@@ -1434,31 +1248,21 @@
       if (!raw) return;
       const rLower = raw.toLowerCase();
 
-      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass')) activeCategory = "lawn_garden";
-      else if (rLower.includes('lotion') || rLower.includes('beauty') || rLower.includes('skin')) activeCategory = "beauty_personal";
-      else if (rLower.includes('clean') || rLower.includes('kitchen')) activeCategory = "home_kitchen";
+      if (rLower.includes('lawn') || rLower.includes('yard')) activeCategory = "lawn_garden";
+      else if (rLower.includes('beauty') || rLower.includes('skin') || rLower.includes('lotion')) activeCategory = "beauty_personal";
+      else if (rLower.includes('kitchen') || rLower.includes('clean')) activeCategory = "home_kitchen";
       else activeCategory = "general";
-
-      const pool = AFFIRMATIONS[activeCategory];
-      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
-
-      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?))\b/i);
-      const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : "HOME STAPLE";
-      valueTagOptions = [unitClean, "VERIFIED QUALITY", "DAILY PICK", "CURATED FIND", "SOLID CHOICE"];
-      document.getElementById('simpleValueInput').value = valueTagOptions[0];
-      renderAll4CreatorCards();
 
       const key = document.getElementById('apiKeyInput').value.trim();
       if (key) {
         try {
           const prompt = `You are the lead boutique curator for a high-end lifestyle community. Analyze this product info: "${raw.slice(0, 300)}"
-
-Generate incredibly inviting, scroll-stopping, and positive social media community copy.
+Generate inviting, scroll-stopping social media community copy.
 CRITICAL RULES:
-1. POSITIVE WORDS ONLY: Focus entirely on luxury, elevated daily living, beauty, convenience, and joy (e.g., "The ultimate upgrade for your routine ✨", "Your new daily favorite", "Salon results at home", "Effortless everyday luxury"). Never use negative words like "struggle", "tired", or "pain".
-2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or platform/checkout terms ("Amazon", "deal", "price", "save", "shipped", "sale", "discount", "free", "hurry").
-3. SHORT & PUNCHY: Keep affirmations under 6-8 words so they fit cleanly as card headlines.
-4. SPEC TAGS: Provide bold, uppercase product curation specs (e.g., "MEDICAL GRADE LED", "12-PACK BUNDLE", "STAINLESS STEEL").
+1. POSITIVE WORDS ONLY: Focus entirely on luxury, elevated daily living, beauty, convenience, and joy.
+2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or checkout terms.
+3. SHORT & PUNCHY: Keep affirmations under 6-8 words.
+4. SPEC TAGS: Bold uppercase product specs.
 
 Return ONLY valid JSON:
 {
@@ -1476,42 +1280,26 @@ Return ONLY valid JSON:
             for (let i = 1; i <= 4; i++) cardCustoms[i].font = parsed.suggested_font;
           }
 
-          // STRICT CLIENT-SIDE FIREWALL SCRUBBER
-          const safeAffirmations = (parsed.affirmations || []).filter(item => {
-            const lower = item.toLowerCase();
-            return !FB_BLACKLIST.some(b => lower.includes(b));
-          });
+          const safeAffirmations = (parsed.affirmations || []).filter(item => !FB_BLACKLIST.some(b => item.toLowerCase().includes(b)));
+          const safeSpecs = (parsed.spec_tags || []).filter(item => !FB_BLACKLIST.some(b => item.toLowerCase().includes(b)));
 
-          const safeSpecs = (parsed.spec_tags || []).filter(item => {
-            const lower = item.toLowerCase();
-            return !FB_BLACKLIST.some(b => lower.includes(b));
-          });
-
-          // AUTO-INJECT FIRST AI RESULT INTO INPUT BOXES
-          if (safeAffirmations.length > 0) {
-            document.getElementById('mainNoteInput').value = safeAffirmations[0];
-          }
-          if (safeSpecs.length > 0) {
-            document.getElementById('simpleValueInput').value = safeSpecs[0];
-            valueTagOptions = safeSpecs;
-            valueTagIndex = 0;
-          }
+          if (safeAffirmations.length > 0) document.getElementById('mainNoteInput').value = safeAffirmations[0];
+          if (safeSpecs.length > 0) { document.getElementById('simpleValueInput').value = safeSpecs[0]; valueTagOptions = safeSpecs; valueTagIndex = 0; }
 
           renderAiChips(safeAffirmations, safeSpecs);
           renderAll4CreatorCards();
         } catch (e) {
-          console.warn("AI extraction notice:", e);
+          const pool = AFFIRMATIONS[activeCategory];
+          document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+          document.getElementById('simpleValueInput').value = "HOME STAPLE";
+          renderAll4CreatorCards();
         }
+      } else {
+        const pool = AFFIRMATIONS[activeCategory];
+        document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+        document.getElementById('simpleValueInput').value = "HOME STAPLE";
+        renderAll4CreatorCards();
       }
-    }
-    
-    function shiftActiveCardPalette() {
-      const conf = cardCustoms[activeCardIndex];
-      if (!conf.procedural) conf.procedural = {};
-      // Mutate the hash to force a completely new generative background layout & color shift
-      conf.procedural.bgPatternSeed = Math.floor(Math.random() * 999999);
-      conf.procedural.seedRotation = (Math.random() * 12 - 6);
-      renderAll4CreatorCards();
     }
 
     function downloadCanvasData(dataUrl, filename) {
