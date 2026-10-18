@@ -1091,12 +1091,13 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. EXPANDED SURFACE STYLES (Product Gradients + Tactile Wood/Linen/Craft Textures)
-      const surfaceStyle = hash % 8; // Expands options without losing existing ones
+      // 1. GUARANTEED ROTATIONAL VARIETY & LIGHTER BRIGHTER TACTILE TEXTURES
+      // Forces each of the 4 carousel cards to cycle through distinct textures (Gradient, Wood, Linen, Craft)
+      const surfaceStyle = (cardNum - 1) % 4; 
       const accent = pal.accent || "#B4845C";
 
-      if (surfaceStyle <= 2) {
-        // Original Product-Sampled Dynamic Gradient Wash
+      if (surfaceStyle === 0) {
+        // CARD 1: Luminous Product-Sampled Gradient Wash (Brighter Highlights)
         const angle = (hash % 360) * (Math.PI / 180);
         const bgGrad = ctx.createLinearGradient(
           540 + Math.cos(angle) * 700, 
@@ -1104,37 +1105,36 @@
           540 - Math.cos(angle) * 700, 
           540 - Math.sin(angle) * 700
         );
-        const invertColors = (hash % 3 === 0);
-        bgGrad.addColorStop(0, invertColors ? accent : (pal.bg || "#F5EFE6"));
-        bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
-        bgGrad.addColorStop(1, invertColors ? (pal.bg || "#F5EFE6") : "#D8C7B0");
+        bgGrad.addColorStop(0, "#FFFFFF");
+        bgGrad.addColorStop(0.5, pal.bg || "#FAF5F0");
+        bgGrad.addColorStop(1, "#EFE6DC");
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 1080, 1080);
-      } else if (surfaceStyle === 3) {
-        // Tactile Wood Grain Slats
-        ctx.fillStyle = pal.bg || "#F2E8DC";
+      } else if (surfaceStyle === 1) {
+        // CARD 2: Lighter Tactile Wood Grain Slats
+        ctx.fillStyle = "#FBF4EE";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 2.5;
-        for (let y = 0; y < 1080; y += 32 + (hash % 10)) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 2.5;
+        for (let y = 0; y < 1080; y += 36) {
           ctx.beginPath(); ctx.moveTo(0, y);
           for (let x = 0; x < 1080; x += 120) {
-            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 16 - 8), x + 120, y);
+            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 14 - 7), x + 120, y);
           }
           ctx.stroke();
         }
-      } else if (surfaceStyle === 4) {
-        // Tactile Linen Fabric Weave
-        ctx.fillStyle = pal.bg || "#FAF6F0";
+      } else if (surfaceStyle === 2) {
+        // CARD 3: Airy Tactile Linen Fabric Weave
+        ctx.fillStyle = "#FCFAF7";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.18; ctx.lineWidth = 1.2;
-        for (let x = 0; x < 1080; x += 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 10) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.12; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 12) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 12) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       } else {
-        // Speckled Craft Paper
-        ctx.fillStyle = pal.bg || "#F5EFEB";
+        // CARD 4: Soft Speckled Craft Paper
+        ctx.fillStyle = "#F8F2EC";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.18;
-        for (let i = 0; i < 400; i++) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.14;
+        for (let i = 0; i < 280; i++) {
           ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
         }
       }
