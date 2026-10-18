@@ -320,9 +320,12 @@
 
       <!-- STUDIO CONTROL CONSOLE -->
       <div class="card-dark p-5 space-y-4 shadow-xl">
-        <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+        <div class="border-b border-slate-800 pb-3 flex flex-wrap justify-between items-center gap-2">
           <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2"><span>🎨</span> Active Card Studio Console (<span id="consoleCardName">Card 1</span>)</h3>
-          <span class="text-[11px] text-slate-400">Drag objects on canvas · Fully generative unique backgrounds</span>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="shiftActiveCardPalette()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-[11px] font-bold rounded-lg uppercase tracking-wider transition-all cursor-pointer" title="Shift accent colors and generative shapes instantly">🎨 Shift Palette & Accents</button>
+            <span class="text-[11px] text-slate-400 hidden sm:inline">· Drag objects on canvas</span>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -1047,54 +1050,79 @@
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // 1. DYNAMIC COLOR TONE & GRADIENT WASH
+      // 1. DYNAMIC MULTI-STOP COLOR TONE & CONTRAST SHIFTING
       const angle = (hash % 360) * (Math.PI / 180);
-      const bgGrad = ctx.createLinearGradient(540 + Math.cos(angle)*600, 540 + Math.sin(angle)*600, 540 - Math.cos(angle)*600, 540 - Math.sin(angle)*600);
-      bgGrad.addColorStop(0, pal.bg || "#F5EFE6");
+      const bgGrad = ctx.createLinearGradient(
+        540 + Math.cos(angle) * 700, 
+        540 + Math.sin(angle) * 700, 
+        540 - Math.cos(angle) * 700, 
+        540 - Math.sin(angle) * 700
+      );
+      
+      const invertColors = (hash % 3 === 0);
+      bgGrad.addColorStop(0, invertColors ? (pal.accent || "#B4845C") : (pal.bg || "#F5EFE6"));
       bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
-      bgGrad.addColorStop(1, "#E4D6C4");
+      bgGrad.addColorStop(1, invertColors ? (pal.bg || "#F5EFE6") : "#D8C7B0");
+      
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
       ctx.save();
       const accent = pal.accent || "#B4845C";
-      const layoutType = hash % 6;
+      const layoutType = hash % 8; // Expanded to 8 distinct generative compositions
 
-      // 2. VIBRANT HIGH-POP GENERATIVE COMPOSITION (Boosted Opacity & Saturated Color)
       if (layoutType === 0) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.48;
-        ctx.beginPath(); ctx.roundRect((hash % 180) + 40, (hash % 120) + 40, 780, 780, 40); ctx.fill();
-      } else if (layoutType === 1) {
         ctx.fillStyle = accent; ctx.globalAlpha = 0.42;
+        ctx.beginPath(); ctx.roundRect((hash % 160) + 50, (hash % 120) + 50, 750, 750, 48); ctx.fill();
+      } else if (layoutType === 1) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.38;
         ctx.beginPath(); ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(400, (hash % 450) + 80, 680, 1080 - (hash % 250), 1080, 450);
+        ctx.bezierCurveTo(380, (hash % 420) + 60, 700, 1080 - (hash % 280), 1080, 420);
         ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
 
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 6;
-        ctx.beginPath(); ctx.arc(850, 250, 120, 0, Math.PI * 2); ctx.stroke();
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 6;
+        ctx.beginPath(); ctx.arc(820, 260, 130, 0, Math.PI * 2); ctx.stroke();
       } else if (layoutType === 2) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.38;
-        ctx.beginPath(); ctx.arc(540, 420, 380, Math.PI, 0, false);
-        ctx.lineTo(920, 1080); ctx.lineTo(160, 1080); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
+        ctx.beginPath(); ctx.arc(540, 410, 370, Math.PI, 0, false);
+        ctx.lineTo(910, 1080); ctx.lineTo(170, 1080); ctx.closePath(); ctx.fill();
 
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.7; ctx.lineWidth = 4;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 4;
         ctx.strokeRect(50, 50, 980, 980);
       } else if (layoutType === 3) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.45;
-        ctx.fillRect(0, 0, 450 + (hash % 120), 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.7; ctx.lineWidth = 4;
-        ctx.strokeRect(50, 50, 980, 980);
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
+        ctx.fillRect(0, 0, 420 + (hash % 180), 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.7; ctx.lineWidth = 5;
+        ctx.strokeRect(60, 60, 960, 960);
       } else if (layoutType === 4) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 4;
-        for (let i = -1000; i < 2000; i += 90) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 4;
+        for (let i = -1000; i < 2000; i += 85) {
           ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + 1080, 1080); ctx.stroke();
         }
-      } else {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
-        ctx.beginPath(); ctx.arc(220, 220, 280, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(860, 860, 240, 0, Math.PI * 2); ctx.fill();
-      }
+      } else if (layoutType === 5) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
+        ctx.beginPath(); ctx.arc(200, 200, 260, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(880, 880, 220, 0, Math.PI * 2); ctx.fill();
 
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.arc(880, 880, 240, 0, Math.PI * 2); ctx.stroke();
+      } else if (layoutType === 6) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(600, 0); ctx.lineTo(0, 600); ctx.closePath(); ctx.fill();
+
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 3;
+        ctx.strokeRect(70, 70, 940, 940);
+      } else {
+        const rad = ctx.createRadialGradient(540, 540, 50, 540, 540, 600);
+        rad.addColorStop(0, accent); rad.addColorStop(1, "transparent");
+        ctx.fillStyle = rad; ctx.globalAlpha = 0.25; ctx.fillRect(0, 0, 1080, 1080);
+
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 1.5;
+        for (let i = 0; i < 1080; i += 90) {
+          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
+        }
+      }
       ctx.restore();
 
       // Vignette Depth Shadow
@@ -1276,8 +1304,16 @@
     }
 
     function shuffleNote() {
-      const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
-      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+      // Collect all currently visible AI affirmation chip buttons
+      const chipButtons = document.querySelectorAll('#aiChipsContainer button');
+      if (chipButtons.length > 0) {
+        const texts = Array.from(chipButtons).map(b => b.innerText);
+        const randomText = texts[Math.floor(Math.random() * texts.length)];
+        document.getElementById('mainNoteInput').value = randomText;
+      } else {
+        const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
+        document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
+      }
       renderAll4CreatorCards();
     }
 
@@ -1390,6 +1426,15 @@ Return ONLY valid JSON:
           console.warn("AI extraction notice:", e);
         }
       }
+    }
+    
+    function shiftActiveCardPalette() {
+      const conf = cardCustoms[activeCardIndex];
+      if (!conf.procedural) conf.procedural = {};
+      // Mutate the hash to force a completely new generative background layout & color shift
+      conf.procedural.bgPatternSeed = Math.floor(Math.random() * 999999);
+      conf.procedural.seedRotation = (Math.random() * 12 - 6);
+      renderAll4CreatorCards();
     }
 
     function downloadCanvasData(dataUrl, filename) {
