@@ -1754,106 +1754,124 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // LAYER 0: TRUE INFINITE PROCEDURAL EDITORIAL BACKGROUND (100% UNIQUE PER DEAL)
-      // Generates mathematically unique background gradients, dynamic accent geometry, and high-pop
-      // visual elements seeded from deal pixels to guarantee zero repetition across 300+ daily posts.
+      // LAYER 0: MULTI-STYLE PROCEDURAL LAYOUT ENGINE (100% UNIQUE PER DEAL)
+      // Dynamically switches between 5 completely different aesthetic structures (Wave Banners,
+      // Vintage Collages, Memphis Color Blobs, Split Panels, and Minimalist Grids) with variable white-mat toggles.
       
       const imgHash = rawLoadedImage ? (rawLoadedImage.naturalWidth * 31 + rawLoadedImage.naturalHeight * 17) % 9999 : 1234;
       const seed = (cardNum * 149 + imgHash) % 100000;
+      const aestheticStyle = seed % 5;
       
-      // 1. Dynamic Angular Gradient Wash (Unique angle per card & deal)
-      const gradAngle = ((seed * 37) % 360) * (Math.PI / 180);
-      const x1 = 540 + Math.cos(gradAngle) * 700;
-      const y1 = 540 + Math.sin(gradAngle) * 700;
-      const x2 = 540 - Math.cos(gradAngle) * 700;
-      const y2 = 540 - Math.sin(gradAngle) * 700;
+      const accentCol = pal.accent || "#B4845C";
+      const secondaryCol = pal.polaroid || "#FAF8F5";
 
-      const bgGrad = ctx.createLinearGradient(x1, y1, x2, y2);
-      bgGrad.addColorStop(0, pal.bg || "#F4EBE1");
-      bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
-      bgGrad.addColorStop(1, "#E2D5C3");
-      ctx.fillStyle = bgGrad;
+      // Base Canvas Fill
+      ctx.fillStyle = (aestheticStyle === 3) ? accentCol : (pal.bg || "#F4EBE1");
       ctx.fillRect(0, 0, 1080, 1080);
 
       ctx.save();
-      const accentCol = pal.accent || "#B4845C";
 
-      // 2. Algorithmic High-Pop Accent Shapes & Geometric Composition
-      const variantStyle = seed % 5;
+      if (aestheticStyle === 0) {
+        // STYLE 0: PASTEL WAVE BANNERS (Top & Bottom Flowing Waves - like image_b085db)
+        ctx.fillStyle = secondaryCol;
+        ctx.fillRect(0, 0, 1080, 1080);
 
-      if (variantStyle === 0) {
-        // Modern Asymmetric Offset Sashes
         ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.18;
-        ctx.beginPath();
-        ctx.roundRect((seed % 150) + 40, (seed % 100) + 40, 750, 750, 48);
-        ctx.fill();
-
-        // High-pop contrast secondary accent circle
-        ctx.fillStyle = pal.text || "#1E293B";
-        ctx.globalAlpha = 0.08;
-        ctx.beginPath();
-        ctx.arc(850, 220, 160, 0, Math.PI * 2);
-        ctx.fill();
-      } else if (variantStyle === 1) {
-        // Organic Flowing Bezier Wave Wash
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.2;
+        ctx.globalAlpha = 0.28;
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(400, (seed % 400) + 100, 700, 1080 - (seed % 300), 1080, 300);
+        ctx.bezierCurveTo(360, 160, 720, -60, 1080, 120);
         ctx.lineTo(1080, 0);
         ctx.closePath();
         ctx.fill();
 
-        // Decorative Sparkle Pop
-        ctx.font = "bold 56px sans-serif";
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.45;
-        ctx.fillText("✨", 140, 160);
-      } else if (variantStyle === 2) {
-        // Split Dual-Tone Vertical Color Panel with Framing Border
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.22;
-        ctx.fillRect(0, 0, 400 + (seed % 120), 1080);
-
-        ctx.strokeStyle = accentCol;
-        ctx.globalAlpha = 0.4;
-        ctx.lineWidth = 2.5;
-        ctx.strokeRect(60, 60, 960, 960);
-      } else if (variantStyle === 3) {
-        // Architectural Arch Niche Wash
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.16;
         ctx.beginPath();
-        ctx.arc(540, 360, 340, Math.PI, 0, false);
-        ctx.lineTo(880, 1080);
-        ctx.lineTo(200, 1080);
+        ctx.moveTo(0, 1080);
+        ctx.bezierCurveTo(360, 920, 720, 1140, 1080, 960);
+        ctx.lineTo(1080, 1080);
         ctx.closePath();
         ctx.fill();
-      } else {
-        // Minimalist Floating Polaroid Frame with Grid Lines
+
+      } else if (aestheticStyle === 1) {
+        // STYLE 1: VINTAGE COLLAGE & GRID OVERLAYS (Like image_b0821b)
+        ctx.fillStyle = "#EAE2D8";
+        ctx.fillRect(0, 0, 1080, 1080);
+
+        // Technical Blueprint Grid Lines
         ctx.strokeStyle = accentCol;
-        ctx.globalAlpha = 0.2;
-        ctx.lineWidth = 1;
-        for (let i = 0; i < 1080; i += 80) {
-          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
+        ctx.globalAlpha = 0.18;
+        ctx.lineWidth = 1.5;
+        for (let x = 60; x < 500; x += 50) {
+          ctx.beginPath(); ctx.moveTo(x, 60); ctx.lineTo(x, 500); ctx.stroke();
         }
+        for (let y = 60; y < 500; y += 50) {
+          ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(500, y); ctx.stroke();
+        }
+
+        // Torn Paper Edge Accent
+        ctx.fillStyle = secondaryCol;
+        ctx.globalAlpha = 0.85;
+        ctx.beginPath();
+        ctx.roundRect(120, 100, 840, 880, 12);
+        ctx.fill();
+
+      } else if (aestheticStyle === 2) {
+        // STYLE 2: MODERN MEMPHIS COLOR BLOBS (Like image_b08637)
+        ctx.fillStyle = "#FAF7F2";
+        ctx.fillRect(0, 0, 1080, 1080);
+
+        // Top-Left Organic Blob
+        ctx.fillStyle = accentCol;
+        ctx.globalAlpha = 0.32;
+        ctx.beginPath();
+        ctx.arc(150, 150, 240, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Bottom-Right Geometric Polygon
+        ctx.fillStyle = pal.text || "#1E293B";
+        ctx.globalAlpha = 0.15;
+        ctx.beginPath();
+        ctx.moveTo(700, 900); ctx.lineTo(1080, 800); ctx.lineTo(1080, 1080); ctx.lineTo(600, 1080);
+        ctx.closePath();
+        ctx.fill();
+
+      } else if (aestheticStyle === 3) {
+        // STYLE 3: FULL-BLEED CONTRAST PANEL (Dark Moody Editorial)
+        ctx.fillStyle = "#1E293B";
+        ctx.fillRect(0, 0, 1080, 1080);
 
         ctx.fillStyle = accentCol;
         ctx.globalAlpha = 0.25;
         ctx.beginPath();
-        ctx.roundRect(140, 140, 800, 800, 24);
+        ctx.roundRect(60, 60, 960, 960, 24);
         ctx.fill();
+
+      } else {
+        // STYLE 4: CLEAN ARCHITECTURAL ARCH & SPARKLE DUST
+        ctx.fillStyle = secondaryCol;
+        ctx.fillRect(0, 0, 1080, 1080);
+
+        ctx.fillStyle = accentCol;
+        ctx.globalAlpha = 0.2;
+        ctx.beginPath();
+        ctx.arc(540, 540, 420, Math.PI, 0, false);
+        ctx.lineTo(960, 1080); ctx.lineTo(120, 1080);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.font = "bold 64px sans-serif";
+        ctx.fillStyle = accentCol;
+        ctx.globalAlpha = 0.35;
+        ctx.fillText("✨", 180, 220);
+        ctx.fillText("⭐", 860, 840);
       }
 
       ctx.restore();
 
-      // 3. Rich Vignette Shadow for High-End 3D Pop
-      const vGrad = ctx.createRadialGradient(540, 540, 220, 540, 540, 780);
+      // Rich Vignette Shadow for Depth
+      const vGrad = ctx.createRadialGradient(540, 540, 250, 540, 540, 780);
       vGrad.addColorStop(0, "transparent");
-      vGrad.addColorStop(1, pal.vignette || "rgba(35, 20, 10, 0.24)");
+      vGrad.addColorStop(1, pal.vignette || "rgba(30, 20, 10, 0.28)");
       ctx.fillStyle = vGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
