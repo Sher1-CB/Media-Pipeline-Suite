@@ -678,13 +678,47 @@
     const outputCanvas = document.getElementById('outputCanvas');
     const oCtx = outputCanvas.getContext('2d');
 
-    // STRICT OCR BLACKLIST FIREWALL (ZERO COMMERCIAL/PRICING ON CANVAS)
+    // STRICT OCR BLACKLIST (BLOCKS COMMERCIAL TERMS, DOLLAR SIGNS & PRICING VERBS)
     const FB_BLACKLIST = [
       "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
       "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link",
       "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
     ];
+
+    // DUAL-TIER PACKAGING COLOR SAMPLER WITH RICH WATERCOLOR VIGNETTES
+    function sampleColorsFromCanvas(canvas) {
+      try {
+        const s = document.createElement("canvas");
+        s.width = 24; s.height = 24;
+        const sCtx = s.getContext("2d");
+        sCtx.drawImage(canvas, 0, 0, 24, 24);
+        const data = sCtx.getImageData(0, 0, 24, 24).data;
+
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+          if (brightness > 28 && brightness < 228) {
+            const sat = Math.max(data[i], data[i+1], data[i+2]) - Math.min(data[i], data[i+1], data[i+2]);
+            if (sat > 14) {
+              r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+            }
+          }
+        }
+        if (count > 0) {
+          r = Math.round(r / count);
+          g = Math.round(g / count);
+          b = Math.round(b / count);
+
+          const baseBg = `rgb(${Math.min(250, Math.round(226 + r * 0.1))}, ${Math.min(246, Math.round(222 + g * 0.1))}, ${Math.min(238, Math.round(210 + b * 0.1))})`;
+          const accentColor = `rgb(${Math.max(25, Math.round(r * 0.82))}, ${Math.max(25, Math.round(g * 0.82))}, ${Math.max(25, Math.round(b * 0.82))})`;
+          const vignetteShadow = `rgba(${Math.max(15, Math.round(r * 0.4))}, ${Math.max(15, Math.round(g * 0.4))}, ${Math.max(15, Math.round(b * 0.4))}, 0.14)`;
+
+          return { bg: baseBg, polaroid: "#FAF8F5", accent: accentColor, text: "#1E293B", vignette: vignetteShadow };
+        }
+      } catch (e) {}
+      return { bg: "#F5EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21", vignette: "rgba(50, 35, 20, 0.12)" };
+    }
 
     const AFFIRMATIONS = {
       lawn_garden: ["Yard project ready 🌾", "Fall lawn prep sorted 🍂", "Weekend outdoor project ✨", "Ready for greener grass 🌱"],
@@ -1471,7 +1505,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     // ==========================================
     // PROCEDURAL ENGINE (0 TOKENS)
     // ==========================================
-    // 8-ARCHETYPE PROCEDURAL DECK GENERATOR (INFINITE MAGAZINE VARIETY)
+    // 8-ARCHETYPE PROCEDURAL DECK WITH ORGANIC ANGLE JITTER (-2° to +2°)
     function generateProceduralDeck() {
       const all8Archetypes = [
         "polaroid",
@@ -1483,15 +1517,14 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         "masonite_board",
         "floating_shadow"
       ];
-      // Shuffle and pick 4 distinct structural styles
       const shuffled = [...all8Archetypes].sort(() => 0.5 - Math.random());
 
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].procedural = {
           archetype: shuffled[i - 1],
-          seedRotation: (Math.random() * 6 - 3),
-          washiOffset: Math.random() * 30 - 15,
-          tornRoughness: 12 + Math.random() * 8
+          seedRotation: (Math.random() * 4 - 2), // -2° to +2° organic angle jitter
+          washiOffset: Math.random() * 24 - 12,
+          deckleRoughness: 10 + Math.random() * 8
         };
       }
     }
@@ -1567,21 +1600,40 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       }
     }
 
+    // MAGAZINE-STYLE CREATIVE ENGINE (8 ARCHETYPES + DUAL-WEIGHT TYPOGRAPHY)
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
       const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, washiOffset: 0 };
 
+      // Strictly purge any accidental blacklisted terms before rendering
+      const noteLower = note.toLowerCase();
+      const valLower = val.toLowerCase();
+      const hasBlacklistHit = FB_BLACKLIST.some(term => noteLower.includes(term) || valLower.includes(term));
+      if (hasBlacklistHit) {
+        document.getElementById('ocrWarningBanner')?.classList.remove('hidden');
+      }
+
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // 1. BASE BACKGROUND & PROCEDURAL TEXTURES
+      // ==========================================
+      // LAYER 0: MULTI-TONE WATERCOLOR VIGNETTE GRADIENT
+      // ==========================================
       ctx.fillStyle = pal.bg || "#F5EFE6";
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Procedural sunlight window shadow
+      // Soft organic watercolor radial vignette
+      const vGrad = ctx.createRadialGradient(540, 480, 120, 540, 540, 740);
+      vGrad.addColorStop(0, "rgba(255, 255, 255, 0.48)");
+      vGrad.addColorStop(0.7, "transparent");
+      vGrad.addColorStop(1, pal.vignette || "rgba(45, 30, 15, 0.12)");
+      ctx.fillStyle = vGrad;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Subtle atmospheric sunlight shadow
       ctx.save();
-      ctx.fillStyle = "rgba(40, 30, 20, 0.07)";
-      for (let y = -100; y < 1200; y += 150) {
+      ctx.fillStyle = "rgba(40, 30, 20, 0.05)";
+      for (let y = -100; y < 1200; y += 160) {
         ctx.fillRect(0, y, 1080, 75);
       }
       ctx.restore();
@@ -1591,156 +1643,232 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         drawBotanicalCornerVines(ctx, pal.accent || "#B4845C");
       }
 
-      // 2. PRODUCT HERO STAGING (MOVABLE & HERO SCALE 75%-85%)
+      // ==========================================
+      // LAYER 1: 8 PROCEDURAL EDITORIAL FRAMES (DRAWN BEHIND PHOTO)
+      // ==========================================
       const pScale = conf.pScale || 1.0;
       const pw = Math.round(780 * pScale);
       const ph = Math.round(780 * pScale);
 
       const px = conf.productPos ? conf.productPos.x : 540;
-      const py = conf.productPos ? conf.productPos.y : 490;
+      const py = conf.productPos ? conf.productPos.y : 485;
 
       conf._activeProductBox = { x: px - pw / 2, y: py - ph / 2, w: pw, h: ph };
 
-      ctx.save();
       const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+
+      ctx.save();
+      const frameRot = (proc.seedRotation * Math.PI) / 180; // Organic -2° to +2° angle jitter
 
       if (proc.archetype === "polaroid") {
         ctx.translate(px, py);
-        ctx.rotate((proc.seedRotation * Math.PI) / 180);
+        ctx.rotate(frameRot);
         ctx.fillStyle = "#FAF8F5";
         ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 36;
+        ctx.shadowBlur = 38;
         ctx.shadowOffsetY = 18;
         ctx.fillRect(-410, -390, 820, 890);
         ctx.shadowColor = "transparent";
+
         drawGinghamWashiTape(ctx, proc.washiOffset, -410, 220, 44);
         if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2 - 20, pw, ph);
 
       } else if (proc.archetype === "arch_niche") {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.rotate(frameRot);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
         ctx.beginPath();
-        ctx.arc(px, py - 110, 360, Math.PI, 0, false);
-        ctx.lineTo(px + 360, py + 460);
-        ctx.lineTo(px - 360, py + 460);
+        ctx.arc(0, -110, 360, Math.PI, 0, false);
+        ctx.lineTo(360, 460);
+        ctx.lineTo(-360, 460);
         ctx.closePath();
         ctx.fill();
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
         ctx.shadowBlur = 42;
         ctx.shadowOffsetY = 20;
-        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
+        ctx.restore();
 
       } else if (proc.archetype === "notebook") {
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.rotate(frameRot);
         ctx.fillStyle = "#FEFCE8";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
-        ctx.shadowBlur = 30;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
+        ctx.shadowBlur = 32;
         ctx.shadowOffsetY = 14;
-        ctx.fillRect(px - 420, py - 380, 840, 840);
+        ctx.fillRect(-420, -380, 840, 840);
         ctx.shadowColor = "transparent";
+
         ctx.strokeStyle = "rgba(234, 179, 8, 0.35)";
         ctx.lineWidth = 1.5;
-        for (let y = py - 300; y < py + 420; y += 44) {
-          ctx.beginPath(); ctx.moveTo(px - 380, y); ctx.lineTo(px + 380, y); ctx.stroke();
+        for (let y = -300; y < 420; y += 44) {
+          ctx.beginPath(); ctx.moveTo(-380, y); ctx.lineTo(380, y); ctx.stroke();
         }
-        drawPushPin(ctx, px, py - 380);
+        drawPushPin(ctx, 0, -380);
+
         ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
         ctx.shadowBlur = 36;
         ctx.shadowOffsetY = 18;
-        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
+        ctx.restore();
 
       } else if (proc.archetype === "torn_edge") {
-        // Jagged deckle torn paper border
+        // 5. JAGGED PAPER-TORN TOP & BOTTOM BORDER
         ctx.save();
         ctx.translate(px, py);
-        ctx.rotate((proc.seedRotation * Math.PI) / 180);
+        ctx.rotate(frameRot);
         ctx.fillStyle = "#FAF7F2";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
-        ctx.shadowBlur = 38;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.26)";
+        ctx.shadowBlur = 40;
         ctx.shadowOffsetY = 16;
         ctx.beginPath();
-        ctx.roundRect(-420, -420, 840, 840, 6);
+        ctx.roundRect(-420, -420, 840, 840, 8);
         ctx.fill();
         ctx.shadowColor = "transparent";
-        // Frayed bottom deckle line
-        ctx.strokeStyle = "rgba(200, 180, 160, 0.5)";
+
+        // Jagged deckle edge line top & bottom
+        ctx.strokeStyle = "rgba(180, 150, 130, 0.4)";
         ctx.lineWidth = 3;
-        ctx.setLineDash([4, 6]);
-        ctx.strokeRect(-412, -412, 824, 824);
+        ctx.setLineDash([6, 8]);
+        ctx.beginPath();
+        ctx.moveTo(-400, -410); ctx.lineTo(400, -410);
+        ctx.moveTo(-400, 410); ctx.lineTo(400, 410);
+        ctx.stroke();
+        ctx.setLineDash([]);
         ctx.restore();
-        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
+        if (drawSrc) {
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(frameRot);
+          ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
+          ctx.restore();
+        }
 
       } else if (proc.archetype === "receipt_slip") {
-        // Tall editorial receipt slip with top dashed notches
+        // 6. TALL NARROW VERTICAL RECEIPT WITH DASHED PERFORATIONS
         ctx.save();
         ctx.translate(px, py);
+        ctx.rotate(frameRot * 0.7);
         ctx.fillStyle = "#FFFFFF";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
-        ctx.shadowBlur = 30;
-        ctx.shadowOffsetY = 12;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+        ctx.shadowBlur = 34;
+        ctx.shadowOffsetY = 14;
         ctx.fillRect(-380, -430, 760, 880);
         ctx.shadowColor = "transparent";
-        ctx.strokeStyle = "rgba(180, 180, 180, 0.45)";
+
+        // Invoice perforation dashes
+        ctx.strokeStyle = "rgba(160, 160, 160, 0.5)";
         ctx.setLineDash([8, 8]);
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.moveTo(-360, -410); ctx.lineTo(360, -410);
-        ctx.moveTo(-360, 430); ctx.lineTo(360, 430);
+        ctx.moveTo(-360, -415); ctx.lineTo(360, -415);
+        ctx.moveTo(-360, 435); ctx.lineTo(360, 435);
         ctx.stroke();
+        ctx.setLineDash([]);
         ctx.restore();
-        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
+        if (drawSrc) {
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(frameRot * 0.7);
+          ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
+          ctx.restore();
+        }
 
       } else if (proc.archetype === "masonite_board") {
-        // Textured kraft backing board with brass corner pins
+        // 7. HEAVY TEXTURED BACKING CARD WITH SUBTLE DARK BORDER
         ctx.save();
-        ctx.fillStyle = "#D4B896";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
-        ctx.shadowBlur = 40;
-        ctx.shadowOffsetY = 20;
-        ctx.fillRect(px - 440, py - 430, 880, 880);
-        ctx.shadowColor = "transparent";
-        ctx.fillStyle = "#F5EFE6";
-        ctx.fillRect(px - 420, py - 410, 840, 840);
-        ctx.restore();
-        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
-
-      } else if (proc.archetype === "floating_shadow") {
-        // Minimalist editorial floating drop shadow
-        ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-        ctx.shadowBlur = 55;
-        ctx.shadowOffsetY = 30;
-        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
-
-      } else {
-        // Standard elevated hero mat
-        ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
+        ctx.translate(px, py);
+        ctx.rotate(frameRot);
+        ctx.fillStyle = "#C8B097"; // Heavy backing board
+        ctx.shadowColor = "rgba(0, 0, 0, 0.28)";
         ctx.shadowBlur = 44;
         ctx.shadowOffsetY = 22;
-        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+        ctx.fillRect(-440, -430, 880, 880);
+        ctx.shadowColor = "transparent";
+
+        // Subtle dark interior border frame
+        ctx.strokeStyle = "rgba(50, 40, 30, 0.4)";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(-428, -418, 856, 856);
+
+        ctx.fillStyle = "#FAF7F2";
+        ctx.fillRect(-420, -410, 840, 840);
+        ctx.restore();
+
+        if (drawSrc) {
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(frameRot);
+          ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
+          ctx.restore();
+        }
+
+      } else if (proc.archetype === "floating_shadow") {
+        // 8. BORDERLESS MINIMALIST CARD WITH DEEP ULTRA-SOFT SHADOW
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.rotate(frameRot);
+        ctx.shadowColor = "rgba(0, 0, 0, 0.38)";
+        ctx.shadowBlur = 58;
+        ctx.shadowOffsetY = 28;
+        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
+        ctx.restore();
+
+      } else {
+        // Hero Mat with ambient floor shadow
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.rotate(frameRot);
+        ctx.shadowColor = "rgba(0, 0, 0, 0.26)";
+        ctx.shadowBlur = 46;
+        ctx.shadowOffsetY = 24;
+        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
+        ctx.restore();
       }
       ctx.restore();
 
-      // 3. HARDWARE & CLIPS
+      // HARDWARE ACCENTS
       if (conf.accents && conf.accents.clip) drawBrassPaperclip(ctx, px - 280, py - 360);
       if (conf.accents && conf.accents.pin) drawPushPin(ctx, px + 280, py - 370);
 
-      // 4. NOTE / AFFIRMATION (ROTATABLE, MOVABLE & BG TOGGLE)
+      // ==========================================
+      // LAYER 2: DUAL-WEIGHT EDITORIAL TYPOGRAPHY
+      // ==========================================
       ctx.save();
       const nx = conf.notePos ? conf.notePos.x : 540;
       const ny = conf.notePos ? conf.notePos.y : 950;
       const nScale = conf.nScale || 1.0;
 
-      ctx.font = `bold ${Math.round(34 * nScale)}px ${font}`;
-      const noteMetrics = ctx.measureText(note);
-      const nw = noteMetrics.width + 48;
-      const nh = 62;
-      conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
+      // Dual-Weight Editorial Formatting: Pairs serif italic with clean modern sans
+      const noteWords = note.split(" ");
+      const firstWord = noteWords[0] || "";
+      const remainingWords = noteWords.slice(1).join(" ");
 
       ctx.save();
       ctx.translate(nx, ny);
       ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
 
+      const serifFontSize = Math.round(38 * nScale);
+      const sansFontSize = Math.round(30 * nScale);
+
+      // Measure total dual-weight width
+      ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
+      const w1 = ctx.measureText(firstWord + " ").width;
+      ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
+      const w2 = ctx.measureText(remainingWords).width;
+      const nw = w1 + w2 + 54;
+      const nh = 66;
+
+      conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
+
       if (conf.hasNoteBg) {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
-        ctx.shadowColor = "rgba(0,0,0,0.14)";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.94)";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.12)";
         ctx.shadowBlur = 14;
         ctx.beginPath();
         ctx.roundRect(-nw / 2, -nh / 2, nw, nh, 14);
@@ -1748,21 +1876,30 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.shadowColor = "transparent";
       }
 
+      // Draw first word in bold italic Playfair serif
+      ctx.textAlign = "left";
       ctx.fillStyle = pal.text || "#1E293B";
-      ctx.textAlign = "center";
-      ctx.fillText(note, 0, 10);
+      ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
+      ctx.fillText(firstWord + " ", -nw / 2 + 27, 12);
+
+      // Draw remaining words in clean Plus Jakarta Sans
+      ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
+      ctx.fillText(remainingWords, -nw / 2 + 27 + w1, 10);
+
       ctx.restore();
       ctx.restore();
 
-      // 5. VALUE BADGE (10+ STYLES, ROTATABLE & MOVABLE)
-      if (val) {
+      // ==========================================
+      // LAYER 3: VALUE SPEC BADGE (ROTATABLE & MOVABLE)
+      // ==========================================
+      if (val && !hasBlacklistHit) {
         ctx.save();
         const bScale = conf.bScale || 1.0;
-        ctx.font = `bold ${Math.round(28 * bScale)}px ${font}`;
+        ctx.font = `bold ${Math.round(26 * bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48); // TIGHT FIT
-        const boxH = Math.round(64 * bScale);
+        const boxW = Math.min(680, textW + 48);
+        const boxH = Math.round(62 * bScale);
 
         let defBx = 240, defBy = 150;
         const bx = conf.badgePos ? conf.badgePos.x : defBx;
@@ -1878,7 +2015,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           ctx.fillText(val, 0, 9 * bScale);
         }
 
-        // Accents
+        // ACCENTS (STRICTLY CHECKED)
         if (conf.accents && conf.accents.loop) {
           ctx.save();
           ctx.strokeStyle = "#DC2626";
