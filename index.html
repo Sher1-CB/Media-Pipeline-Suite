@@ -1080,7 +1080,7 @@
     }
 
     // ==========================================
-    // TRUE INFINITE GENERATIVE BACKGROUND ENGINE
+    // TACTILE & GENERATIVE BACKGROUND ENGINE (ADDITIVE VARIETY)
     // ==========================================
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
@@ -1089,27 +1089,72 @@
       const hash = proc.bgPatternSeed;
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalAlpha = 1.0;
 
-      // 1. DYNAMIC MULTI-STOP COLOR TONE & CONTRAST SHIFTING
-      const angle = (hash % 360) * (Math.PI / 180);
-      const bgGrad = ctx.createLinearGradient(
-        540 + Math.cos(angle) * 700, 
-        540 + Math.sin(angle) * 700, 
-        540 - Math.cos(angle) * 700, 
-        540 - Math.sin(angle) * 700
-      );
-      
-      const invertColors = (hash % 3 === 0);
-      bgGrad.addColorStop(0, invertColors ? (pal.accent || "#B4845C") : (pal.bg || "#F5EFE6"));
-      bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
-      bgGrad.addColorStop(1, invertColors ? (pal.bg || "#F5EFE6") : "#D8C7B0");
-      
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
+      // 1. EXPANDED SURFACE STYLES (Product Gradients + Tactile Wood/Linen/Craft Textures)
+      const surfaceStyle = hash % 8; // Expands options without losing existing ones
+      const accent = pal.accent || "#B4845C";
+
+      if (surfaceStyle <= 2) {
+        // Original Product-Sampled Dynamic Gradient Wash
+        const angle = (hash % 360) * (Math.PI / 180);
+        const bgGrad = ctx.createLinearGradient(
+          540 + Math.cos(angle) * 700, 
+          540 + Math.sin(angle) * 700, 
+          540 - Math.cos(angle) * 700, 
+          540 - Math.sin(angle) * 700
+        );
+        const invertColors = (hash % 3 === 0);
+        bgGrad.addColorStop(0, invertColors ? accent : (pal.bg || "#F5EFE6"));
+        bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
+        bgGrad.addColorStop(1, invertColors ? (pal.bg || "#F5EFE6") : "#D8C7B0");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 1080, 1080);
+      } else if (surfaceStyle === 3) {
+        // Tactile Wood Grain Slats
+        ctx.fillStyle = pal.bg || "#F2E8DC";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 2.5;
+        for (let y = 0; y < 1080; y += 32 + (hash % 10)) {
+          ctx.beginPath(); ctx.moveTo(0, y);
+          for (let x = 0; x < 1080; x += 120) {
+            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 16 - 8), x + 120, y);
+          }
+          ctx.stroke();
+        }
+      } else if (surfaceStyle === 4) {
+        // Tactile Linen Fabric Weave
+        ctx.fillStyle = pal.bg || "#FAF6F0";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.18; ctx.lineWidth = 1.2;
+        for (let x = 0; x < 1080; x += 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 10) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+      } else {
+        // Speckled Craft Paper
+        ctx.fillStyle = pal.bg || "#F5EFEB";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.18;
+        for (let i = 0; i < 400; i++) {
+          ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
+        }
+      }
+
+      ctx.globalAlpha = 1.0;
+      ctx.save();
+      // Optional Botanical Doodles & Sparkle Accents
+      const decoType = hash % 3;
+      if (decoType === 0) {
+        drawBotanicalCornerVines(ctx, accent);
+      } else if (decoType === 1) {
+        ctx.font = "bold 48px sans-serif";
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
+        ctx.fillText("✨", 140, 160);
+        ctx.fillText("🌿", 900, 920);
+      }
+      ctx.restore();
 
       ctx.save();
-      const accent = pal.accent || "#B4845C";
-      const layoutType = hash % 8; // Expanded to 8 distinct generative compositions
+      const layoutType = hash % 8;
 
       if (layoutType === 0) {
         ctx.fillStyle = accent; ctx.globalAlpha = 0.42;
@@ -1504,6 +1549,27 @@ Return ONLY valid JSON:
         }
       }
     }
+
+    function drawBotanicalCornerVines(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(940, 40); ctx.quadraticCurveTo(1040, 80, 1040, 200); ctx.stroke();
+      [[970, 65, -0.5], [1020, 110, 0.4], [1038, 160, -0.2]].forEach(([lx, ly, rot]) => {
+        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
+        ctx.beginPath(); ctx.ellipse(0, 0, 14, 7, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      });
+      ctx.restore();
+    }
+
+    function drawWashiTape(ctx, cx, cy, w, h) {
+      ctx.save(); ctx.translate(cx, cy); ctx.rotate(0.015);
+      ctx.fillStyle = "rgba(235, 222, 204, 0.85)"; ctx.fillRect(-w/2, -h/2, w, h);
+      ctx.strokeStyle = "rgba(180, 150, 120, 0.4)"; ctx.lineWidth = 2.5;
+      for (let x = -w/2 + 12; x < w/2; x += 16) { ctx.beginPath(); ctx.moveTo(x, -h/2); ctx.lineTo(x, h/2); ctx.stroke(); }
+      ctx.restore();
+    }
+
     
     function shiftActiveCardPalette() {
       const conf = cardCustoms[activeCardIndex];
