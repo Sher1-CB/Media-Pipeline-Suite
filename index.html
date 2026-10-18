@@ -678,10 +678,12 @@
     const outputCanvas = document.getElementById('outputCanvas');
     const oCtx = outputCanvas.getContext('2d');
 
+    // STRICT OCR BLACKLIST FIREWALL (ZERO COMMERCIAL/PRICING ON CANVAS)
     const FB_BLACKLIST = [
       "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
-      "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link"
+      "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link",
+      "$", "usd", "shipped", "total", "price", "cost", "save", "off", "reg. price", "was", "now"
     ];
 
     const AFFIRMATIONS = {
@@ -846,6 +848,9 @@
             fCanvas.height = Math.round(img.naturalHeight * scale);
             fCanvas.getContext('2d').drawImage(img, 0, 0, fCanvas.width, fCanvas.height);
             base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
+
+            // Prime the dual-tier packaging color palette immediately on upload
+            sampleColorsFromCanvas(fCanvas);
           } catch (e) {
             console.warn("Payload compression notice:", e);
           }
@@ -1466,13 +1471,27 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     // ==========================================
     // PROCEDURAL ENGINE (0 TOKENS)
     // ==========================================
+    // 8-ARCHETYPE PROCEDURAL DECK GENERATOR (INFINITE MAGAZINE VARIETY)
     function generateProceduralDeck() {
-      const archetypes = ["polaroid", "arch_niche", "notebook", "hero_mat"];
+      const all8Archetypes = [
+        "polaroid",
+        "arch_niche",
+        "notebook",
+        "hero_mat",
+        "torn_edge",
+        "receipt_slip",
+        "masonite_board",
+        "floating_shadow"
+      ];
+      // Shuffle and pick 4 distinct structural styles
+      const shuffled = [...all8Archetypes].sort(() => 0.5 - Math.random());
+
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].procedural = {
-          archetype: archetypes[i - 1],
-          seedRotation: (Math.random() * 5 - 2.5),
-          washiOffset: Math.random() * 20 - 10
+          archetype: shuffled[i - 1],
+          seedRotation: (Math.random() * 6 - 3),
+          washiOffset: Math.random() * 30 - 15,
+          tornRoughness: 12 + Math.random() * 8
         };
       }
     }
@@ -1583,6 +1602,8 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       conf._activeProductBox = { x: px - pw / 2, y: py - ph / 2, w: pw, h: ph };
 
       ctx.save();
+      const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+
       if (proc.archetype === "polaroid") {
         ctx.translate(px, py);
         ctx.rotate((proc.seedRotation * Math.PI) / 180);
@@ -1592,11 +1613,9 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.shadowOffsetY = 18;
         ctx.fillRect(-410, -390, 820, 890);
         ctx.shadowColor = "transparent";
-
         drawGinghamWashiTape(ctx, proc.washiOffset, -410, 220, 44);
-
-        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2 - 20, pw, ph);
+
       } else if (proc.archetype === "arch_niche") {
         ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
         ctx.beginPath();
@@ -1605,39 +1624,96 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         ctx.lineTo(px - 360, py + 460);
         ctx.closePath();
         ctx.fill();
-
         ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
         ctx.shadowBlur = 42;
         ctx.shadowOffsetY = 20;
-        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
       } else if (proc.archetype === "notebook") {
-        // Lined Memo Sheet DRAWN BEHIND PHOTO (Photo on top!)
         ctx.fillStyle = "#FEFCE8";
         ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
         ctx.shadowBlur = 30;
         ctx.shadowOffsetY = 14;
         ctx.fillRect(px - 420, py - 380, 840, 840);
         ctx.shadowColor = "transparent";
-
         ctx.strokeStyle = "rgba(234, 179, 8, 0.35)";
         ctx.lineWidth = 1.5;
         for (let y = py - 300; y < py + 420; y += 44) {
           ctx.beginPath(); ctx.moveTo(px - 380, y); ctx.lineTo(px + 380, y); ctx.stroke();
         }
-
         drawPushPin(ctx, px, py - 380);
-
         ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
         ctx.shadowBlur = 36;
         ctx.shadowOffsetY = 18;
-        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
+      } else if (proc.archetype === "torn_edge") {
+        // Jagged deckle torn paper border
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.rotate((proc.seedRotation * Math.PI) / 180);
+        ctx.fillStyle = "#FAF7F2";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
+        ctx.shadowBlur = 38;
+        ctx.shadowOffsetY = 16;
+        ctx.beginPath();
+        ctx.roundRect(-420, -420, 840, 840, 6);
+        ctx.fill();
+        ctx.shadowColor = "transparent";
+        // Frayed bottom deckle line
+        ctx.strokeStyle = "rgba(200, 180, 160, 0.5)";
+        ctx.lineWidth = 3;
+        ctx.setLineDash([4, 6]);
+        ctx.strokeRect(-412, -412, 824, 824);
+        ctx.restore();
+        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
+      } else if (proc.archetype === "receipt_slip") {
+        // Tall editorial receipt slip with top dashed notches
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.fillStyle = "#FFFFFF";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
+        ctx.shadowBlur = 30;
+        ctx.shadowOffsetY = 12;
+        ctx.fillRect(-380, -430, 760, 880);
+        ctx.shadowColor = "transparent";
+        ctx.strokeStyle = "rgba(180, 180, 180, 0.45)";
+        ctx.setLineDash([8, 8]);
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-360, -410); ctx.lineTo(360, -410);
+        ctx.moveTo(-360, 430); ctx.lineTo(360, 430);
+        ctx.stroke();
+        ctx.restore();
+        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
+      } else if (proc.archetype === "masonite_board") {
+        // Textured kraft backing board with brass corner pins
+        ctx.save();
+        ctx.fillStyle = "#D4B896";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
+        ctx.shadowBlur = 40;
+        ctx.shadowOffsetY = 20;
+        ctx.fillRect(px - 440, py - 430, 880, 880);
+        ctx.shadowColor = "transparent";
+        ctx.fillStyle = "#F5EFE6";
+        ctx.fillRect(px - 420, py - 410, 840, 840);
+        ctx.restore();
+        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
+      } else if (proc.archetype === "floating_shadow") {
+        // Minimalist editorial floating drop shadow
+        ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
+        ctx.shadowBlur = 55;
+        ctx.shadowOffsetY = 30;
+        if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
+
       } else {
+        // Standard elevated hero mat
         ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
         ctx.shadowBlur = 44;
         ctx.shadowOffsetY = 22;
-        const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
         if (drawSrc) ctx.drawImage(drawSrc, px - (pw / 2), py - (ph / 2), pw, ph);
       }
       ctx.restore();
