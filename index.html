@@ -1306,10 +1306,6 @@
       }
       ctx.restore();
 
-      // RENDER RICH FREE-FLOATING MULTI-ELEMENT GRAPHICS (3+ randomized items per card)
-      const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
-      renderMultiCardGraphics(ctx, hash, accent, brightAccent, pal.text);
-
       // Vignette Depth Shadow
       const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
       vGrad.addColorStop(0, "transparent");
@@ -1758,4 +1754,3 @@ Return ONLY valid JSON:
   </script>
 </body>
 </html>
-
