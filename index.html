@@ -660,12 +660,54 @@
       if (!rawLoadedImage) return;
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
       oCtx.drawImage(rawLoadedImage, 0, 0);
+      
       const mode = document.getElementById('maskModeSelect').value;
-      detectedBoxes.concat(manualBoxes).forEach(b => {
-        const x = (b[1]/1000)*outputCanvas.width, y = (b[0]/1000)*outputCanvas.height;
-        const w = ((b[3]-b[1])/1000)*outputCanvas.width, h = ((b[2]-b[0])/1000)*outputCanvas.height;
-        applyFrostedDiffusion(x, y, w, h);
+      const allBoxes = detectedBoxes.concat(manualBoxes);
+
+      allBoxes.forEach(b => {
+        const x = (b[1] / 1000) * outputCanvas.width;
+        const y = (b[0] / 1000) * outputCanvas.height;
+        const w = ((b[3] - b[1]) / 1000) * outputCanvas.width;
+        const h = ((b[2] - b[0]) / 1000) * outputCanvas.height;
+
+        if (mode === "ambient") {
+          applyAmbientBlock(x, y, w, h);
+        } else if (mode === "pixelate") {
+          applyPixelation(x, y, w, h);
+        } else if (mode === "solid") {
+          applySolidTape(x, y, w, h);
+        } else {
+          applyFrostedDiffusion(x, y, w, h);
+        }
       });
+    }
+
+    function applyAmbientBlock(x, y, w, h) {
+      const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
+      oCtx.save();
+      oCtx.filter = "blur(18px)";
+      oCtx.drawImage(outputCanvas, x, y, rw, rh, x, y, rw, rh);
+      oCtx.restore();
+    }
+
+    function applyPixelation(x, y, w, h) {
+      const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
+      const off = document.createElement("canvas");
+      off.width = Math.max(2, Math.floor(rw * 0.08));
+      off.height = Math.max(2, Math.floor(rh * 0.08));
+      const offCtx = off.getContext("2d");
+      offCtx.drawImage(outputCanvas, x, y, rw, rh, 0, 0, off.width, off.height);
+      oCtx.save();
+      oCtx.imageSmoothingEnabled = false;
+      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, rw, rh);
+      oCtx.restore();
+    }
+
+    function applySolidTape(x, y, w, h) {
+      oCtx.save();
+      oCtx.fillStyle = "#0f172a";
+      oCtx.fillRect(x - 2, y - 2, w + 4, h + 4);
+      oCtx.restore();
     }
 
     function applyFrostedDiffusion(x, y, w, h) {
