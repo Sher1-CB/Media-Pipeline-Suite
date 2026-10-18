@@ -671,22 +671,23 @@
     function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
       const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
-      const pad = Math.round(Math.min(rw, rh) * 0.35 + 16);
-      const srcX = Math.max(0, x - pad), srcY = Math.max(0, y - pad);
-      const srcW = Math.min(rawLoadedImage.naturalWidth - srcX, rw + pad * 2);
-      const srcH = Math.min(rawLoadedImage.naturalHeight - srcY, rh + pad * 2);
+      const pad = Math.max(4, Math.round(Math.min(rw, rh) * 0.2));
+      const srcX = Math.max(0, Math.round(x - pad));
+      const srcY = Math.max(0, Math.round(y - pad));
+      const srcW = Math.min(outputCanvas.width - srcX, rw + pad * 2);
+      const srcH = Math.min(outputCanvas.height - srcY, rh + pad * 2);
 
       const blurCanvas = document.createElement("canvas");
       blurCanvas.width = srcW; blurCanvas.height = srcH;
       const bCtx = blurCanvas.getContext("2d");
-      bCtx.filter = "blur(20px)";
-      bCtx.drawImage(rawLoadedImage, srcX, srcY, srcW, srcH, 0, 0, srcW, srcH);
+      bCtx.filter = "blur(16px)";
+      bCtx.drawImage(outputCanvas, srcX, srcY, srcW, srcH, 0, 0, srcW, srcH);
 
       oCtx.save();
-      oCtx.drawImage(blurCanvas, srcX, srcY, srcW, srcH, x, y, rw, rh);
+      oCtx.drawImage(blurCanvas, srcX - srcX, srcY - srcY, srcW, srcH, x, y, rw, rh);
       oCtx.restore();
     }
-
+    
     function setupManualPatchListeners() {
       if (!outputCanvas) return;
 
@@ -731,8 +732,8 @@
         const x2 = Math.max(patchStartX, endX);
         const y2 = Math.max(patchStartY, endY);
 
-        if (x2 - x1 > 4 && y2 - y1 > 4) {
-          // Normalize to 0-1000 scale accurately
+        // Lower minimum threshold from 4px to 2px so small logo selections register instantly
+        if (x2 - x1 > 2 && y2 - y1 > 2) {
           const ymin = Math.round((y1 / outputCanvas.height) * 1000);
           const xmin = Math.round((x1 / outputCanvas.width) * 1000);
           const ymax = Math.round((y2 / outputCanvas.height) * 1000);
