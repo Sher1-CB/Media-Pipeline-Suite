@@ -693,25 +693,21 @@
       outputCanvas.addEventListener('mousedown', (e) => {
         if (!rawLoadedImage) return;
         isDrawingPatch = true;
-        const r = outputCanvas.getBoundingClientRect();
-        const scaleX = outputCanvas.width / r.width;
-        const scaleY = outputCanvas.height / r.height;
-        patchStartX = (e.clientX - r.left) * scaleX;
-        patchStartY = (e.clientY - r.top) * scaleY;
+        const rect = outputCanvas.getBoundingClientRect();
+        patchStartX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
+        patchStartY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
       });
 
       outputCanvas.addEventListener('mousemove', (e) => {
         if (!isDrawingPatch || !rawLoadedImage) return;
         renderOutputCanvas();
-        const r = outputCanvas.getBoundingClientRect();
-        const scaleX = outputCanvas.width / r.width;
-        const scaleY = outputCanvas.height / r.height;
-        const curX = (e.clientX - r.left) * scaleX;
-        const curY = (e.clientY - r.top) * scaleY;
+        const rect = outputCanvas.getBoundingClientRect();
+        const curX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
+        const curY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
 
         oCtx.save();
         oCtx.strokeStyle = "#38bdf8";
-        oCtx.lineWidth = 3;
+        oCtx.lineWidth = 4;
         oCtx.setLineDash([6, 6]);
         oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
         oCtx.restore();
@@ -720,11 +716,9 @@
       outputCanvas.addEventListener('mouseup', (e) => {
         if (!isDrawingPatch || !rawLoadedImage) return;
         isDrawingPatch = false;
-        const r = outputCanvas.getBoundingClientRect();
-        const scaleX = outputCanvas.width / r.width;
-        const scaleY = outputCanvas.height / r.height;
-        const endX = (e.clientX - r.left) * scaleX;
-        const endY = (e.clientY - r.top) * scaleY;
+        const rect = outputCanvas.getBoundingClientRect();
+        const endX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
+        const endY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
 
         const x1 = Math.min(patchStartX, endX);
         const y1 = Math.min(patchStartY, endY);
