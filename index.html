@@ -1142,42 +1142,86 @@
       ctx.globalAlpha = 1.0;
       ctx.save();
       
-      // INFINITE GRAPHIC VARIETY LIBRARY (Randomly rolls 1 of 6 boutique graphic compositions per card)
-      const graphicVarietyId = (hash + cardNum * 31) % 6;
+      // INFINITE 12-PART GRAPHIC VARIETY LIBRARY WITH RANDOMIZED POSITIONING & ROTATION
+      // Ensures zero repetition across 300 daily deals by procedurally scattering graphic elements
+      const graphicVarietyId = (hash * cardNum * 17) % 12;
       
+      const randX = 120 + (hash % 840);
+      const randY = 120 + ((hash * 3) % 840);
+      const randRot = ((hash % 360) * Math.PI) / 180;
+
+      ctx.save();
+      ctx.translate(randX, randY);
+      ctx.rotate(randRot);
+
       if (graphicVarietyId === 0) {
-        // 🌿 Botanical Corner Vines & Leaves
-        drawBotanicalCornerVines(ctx, accent);
+        // 🌿 Floating Botanical Vine Branch
+        drawRandomizedVine(ctx, accent);
       } else if (graphicVarietyId === 1) {
-        // ✨ Whimsical Sparkle Dust & Star Bursts
-        ctx.font = "bold 56px sans-serif";
+        // ✨ Floating Sparkle Dust & Star Bursts
+        ctx.font = "bold 64px sans-serif";
         ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
-        ctx.fillText("✨", 120, 150);
-        ctx.fillText("⭐", 940, 920);
-        ctx.fillText("✨", 880, 180);
+        ctx.fillText("✨", -40, -20);
+        ctx.fillText("⭐", 50, 60);
       } else if (graphicVarietyId === 2) {
-        // 🔵 Modern Memphis Floating Geometric Circles & Dots
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-        ctx.beginPath(); ctx.arc(150, 150, 180, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = pal.text || "#1E293B"; ctx.globalAlpha = 0.12;
-        ctx.beginPath(); ctx.arc(920, 880, 120, 0, Math.PI * 2); ctx.fill();
+        // 🔵 Modern Memphis Floating Duo-Circles
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.24;
+        ctx.beginPath(); ctx.arc(0, 0, 160, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = pal.text || "#1E293B"; ctx.globalAlpha = 0.1;
+        ctx.beginPath(); ctx.arc(80, 80, 90, 0, Math.PI * 2); ctx.fill();
       } else if (graphicVarietyId === 3) {
-        // 🏛️ Minimalist Architectural Arch Niche Frame
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2.5;
-        ctx.beginPath(); ctx.arc(540, 540, 460, Math.PI, 0, false); ctx.stroke();
+        // 🏛️ Minimalist Architectural Arch Frame
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.32; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(0, 0, 320, Math.PI, 0, false); ctx.stroke();
       } else if (graphicVarietyId === 4) {
-        // 📐 Technical Blueprint Grid Lines
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.15; ctx.lineWidth = 1;
-        for (let i = 0; i < 1080; i += 90) {
-          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
-        }
+        // 📐 Technical Blueprint Crosshair & Grid Center
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(-100, 0); ctx.lineTo(100, 0); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, -100); ctx.lineTo(0, 100); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, 0, 70, 0, Math.PI * 2); ctx.stroke();
+      } else if (graphicVarietyId === 5) {
+        // 🎨 Concentric Accent Rings
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.28; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.arc(0, 0, 140, 0, Math.PI * 2); ctx.stroke();
+        ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, 0, 175, 0, Math.PI * 2); ctx.stroke();
+      } else if (graphicVarietyId === 6) {
+        // 🍂 Scattered Autumn Leaf / Floral Outline
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
+        ctx.beginPath(); ctx.ellipse(0, 0, 90, 45, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = pal.text || "#1E293B"; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(-60, -30); ctx.lineTo(60, 30); ctx.stroke();
+      } else if (graphicVarietyId === 7) {
+        // 🔲 Bauhaus Offset Rounded Rectangle Block
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.26;
+        ctx.beginPath(); ctx.roundRect(-200, -120, 400, 240, 32); ctx.fill();
+      } else if (graphicVarietyId === 8) {
+        // 💫 Swirl Calligraphy Accent Doodle
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(-80, 0);
+        ctx.bezierCurveTo(-40, -80, 40, 80, 80, 0);
+        ctx.bezierCurveTo(40, -60, -40, 60, -80, 0);
+        ctx.stroke();
+      } else if (graphicVarietyId === 9) {
+        // 🤎 Soft Floating Watercolor Pebble Blob
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.2;
+        ctx.beginPath();
+        ctx.moveTo(-90, -40);
+        ctx.bezierCurveTo(-120, 60, 40, 110, 100, 40);
+        ctx.bezierCurveTo(140, -30, 20, -100, -90, -40);
+        ctx.fill();
+      } else if (graphicVarietyId === 10) {
+        // 🧵 Double Dashed Framing Corner Stamp
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 2;
+        ctx.setLineDash([8, 6]);
+        ctx.strokeRect(-180, -180, 360, 360);
+        ctx.setLineDash([]);
       } else {
-        // 🎨 Asymmetric Diagonal Sashes & Accent Rings
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.arc(160, 920, 180, 0, Math.PI * 2); ctx.stroke();
-        ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(160, 920, 210, 0, Math.PI * 2); ctx.stroke();
+        // 🌿 Delicate Double Leaf Cluster
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
+        ctx.beginPath(); ctx.ellipse(-30, 0, 60, 30, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(30, 0, 60, 30, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
       }
+      ctx.restore();
       ctx.restore();
 
       ctx.globalAlpha = 1.0;
@@ -1591,6 +1635,18 @@ Return ONLY valid JSON:
       }
     }
 
+    function drawRandomizedVine(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(-120, -80); ctx.quadraticCurveTo(0, 40, 120, -80); ctx.stroke();
+      [[-70, -30, -0.4], [0, 20, 0.2], [70, -30, 0.5]].forEach(([lx, ly, rot]) => {
+        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
+        ctx.beginPath(); ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      });
+      ctx.restore();
+    }
+    
     function drawBotanicalCornerVines(ctx, color) {
       ctx.save();
       ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 3;
