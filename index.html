@@ -694,20 +694,24 @@
         if (!rawLoadedImage) return;
         isDrawingPatch = true;
         const rect = outputCanvas.getBoundingClientRect();
-        patchStartX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
-        patchStartY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
+        const scaleX = outputCanvas.width / rect.width;
+        const scaleY = outputCanvas.height / rect.height;
+        patchStartX = (e.clientX - rect.left) * scaleX;
+        patchStartY = (e.clientY - rect.top) * scaleY;
       });
 
       outputCanvas.addEventListener('mousemove', (e) => {
         if (!isDrawingPatch || !rawLoadedImage) return;
         renderOutputCanvas();
         const rect = outputCanvas.getBoundingClientRect();
-        const curX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
-        const curY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
+        const scaleX = outputCanvas.width / rect.width;
+        const scaleY = outputCanvas.height / rect.height;
+        const curX = (e.clientX - rect.left) * scaleX;
+        const curY = (e.clientY - rect.top) * scaleY;
 
         oCtx.save();
         oCtx.strokeStyle = "#38bdf8";
-        oCtx.lineWidth = 4;
+        oCtx.lineWidth = 3;
         oCtx.setLineDash([6, 6]);
         oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
         oCtx.restore();
@@ -717,8 +721,10 @@
         if (!isDrawingPatch || !rawLoadedImage) return;
         isDrawingPatch = false;
         const rect = outputCanvas.getBoundingClientRect();
-        const endX = (e.clientX - rect.left) * (outputCanvas.width / rect.width);
-        const endY = (e.clientY - rect.top) * (outputCanvas.height / rect.height);
+        const scaleX = outputCanvas.width / rect.width;
+        const scaleY = outputCanvas.height / rect.height;
+        const endX = (e.clientX - rect.left) * scaleX;
+        const endY = (e.clientY - rect.top) * scaleY;
 
         const x1 = Math.min(patchStartX, endX);
         const y1 = Math.min(patchStartY, endY);
@@ -726,7 +732,7 @@
         const y2 = Math.max(patchStartY, endY);
 
         if (x2 - x1 > 4 && y2 - y1 > 4) {
-          // Store raw pixel coordinates [ymin, xmin, ymax, xmax] mapped to 0-1000 properly
+          // Normalize to 0-1000 scale accurately
           const ymin = Math.round((y1 / outputCanvas.height) * 1000);
           const xmin = Math.round((x1 / outputCanvas.width) * 1000);
           const ymax = Math.round((y2 / outputCanvas.height) * 1000);
