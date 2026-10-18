@@ -426,12 +426,12 @@
             <input type="text" id="mainNoteInput" value="Daily routine staple ✨" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
 
-          <div>
+         <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simple Value Tag (Zero Banned Words)</label>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Curation Spec Tag (Zero Pricing / Safe)</label>
               <button type="button" onclick="shuffleValueTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase cursor-pointer">🎲 Shuffle Tag</button>
             </div>
-            <input type="text" id="simpleValueInput" value="$16.79 Shipped" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
+            <input type="text" id="simpleValueInput" value="20oz · 12-PACK" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
         </div>
       </div>
@@ -683,7 +683,7 @@
       "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
       "bargain", "doorbuster", "bogo", "link in comments", "first comment", "check comments", "direct link",
-      "$", "usd", "shipped", "total", "price", "cost", "save", "off", "reg. price", "was", "now"
+      "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
     ];
 
     const AFFIRMATIONS = {
@@ -2146,7 +2146,7 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       document.getElementById('rawDealPaste').value = "";
       document.getElementById('suggestedTitleInput').value = "";
       document.getElementById('mainNoteInput').value = "Daily routine staple ✨";
-      document.getElementById('simpleValueInput').value = "$16.79 Shipped";
+      document.getElementById('simpleValueInput').value = "20oz · 12-PACK";
       document.getElementById('aiChipsWrapper').classList.add('hidden');
 
       for (let i = 1; i <= 4; i++) {
@@ -2277,22 +2277,26 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const pool = AFFIRMATIONS[activeCategory];
       document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
 
-      const saleMatch = raw.match(/\$\d+(\.\d{2})?\s*(Shipped|Pickup|Total)?/i);
-      const wasMatch = raw.match(/(?:was|previously|down from)\s*\$?(\d+[.\s]\d{2})/i);
-      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|sheets|pk|bottles|lbs?|bags?))\b/i);
+      // EXTRACT STRICTLY NON-COMMERCIAL SPEC TAGS (NO PRICES, NO DOLLARS, NO NUMBERS 4-9)
+      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?|bags?))\b/i);
+      const sizeMatch = raw.match(/\b(sizes?\s+[a-z0-9\s-]+|x-small|small|medium|large|xl|xxl)\b/i);
+      const colorMatch = raw.match(/\b(matte\s+black|stainless|natural\s+wood|assorted\s+colors|multi-color)\b/i);
 
-      const saleClean = saleMatch ? saleMatch[0].trim().replace(/\bcomplete\b/gi, '').trim() : "$16.79 Shipped";
-      const unitClean = unitMatch ? unitMatch[0].trim() : "";
+      const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : "";
+      const sizeClean = sizeMatch ? sizeMatch[0].toUpperCase().trim() : "";
+      const colorClean = colorMatch ? colorMatch[0].toUpperCase().trim() : "";
 
+      // Safe non-commercial curation pool (purged of all price triggers)
       valueTagOptions = [
-        saleClean,
-        `Just ${saleClean} ✨`,
-        `${saleClean.replace(/Shipped|Pickup/i, '').trim()} total`,
-        `All for ${saleClean}`
-      ];
-
-      if (unitClean) valueTagOptions.unshift(`${unitClean} · ${saleClean}`);
-      if (wasMatch) valueTagOptions.push(`was $${wasMatch[1].replace(' ', '.')} ➔ ${saleClean}`);
+        unitClean || "20oz · 12-PACK",
+        "SOLID CHOICE",
+        "DAILY ESSENTIAL",
+        "KITCHEN STAPLE",
+        "PANTRY MUST-HAVE",
+        "CURATED FIND",
+        sizeClean || "VERIFIED QUALITY",
+        colorClean || "CLASSIC EDITION"
+      ].filter((v, i, a) => v && a.indexOf(v) === i);
 
       valueTagIndex = 0;
       document.getElementById('simpleValueInput').value = valueTagOptions[0];
