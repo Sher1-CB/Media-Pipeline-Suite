@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v11.2.01 - Tactile Generative Studio</title>
+  <title>CB Media Pipeline Suite v11.2.02 - Tactile Generative Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Editorial Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,7 +81,7 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.2.01</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.2.02</span>
         </h1>
         <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Tactile Generative Textures ➔ Full-Bleed Toggles ➔ 300+ Unique Daily Deals</p>
       </div>
@@ -955,7 +955,7 @@
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // 1. TACTILE SURFACE TEXTURE (Wood Grain, Linen, Craft Paper, Travertine, Modern Wash)
+      // 1. TACTILE SURFACE TEXTURE & GRADIENT WASH
       const surfaceStyle = hash % 5; 
       const accent = pal.accent || "#A66E38";
 
@@ -1021,29 +1021,6 @@
       vGrad.addColorStop(0, "transparent");
       vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.3)");
       ctx.fillStyle = vGrad; ctx.fillRect(0, 0, 1080, 1080);
-      if (layoutType === 0) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.28;
-        ctx.beginPath(); ctx.roundRect((hash % 160) + 50, (hash % 120) + 50, 750, 750, 48); ctx.fill();
-      } else if (layoutType === 1) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
-        ctx.beginPath(); ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(380, (hash % 420) + 60, 700, 1080 - (hash % 280), 1080, 420);
-        ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
-      } else if (layoutType === 2) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-        ctx.beginPath(); ctx.arc(540, 410, 370, Math.PI, 0, false);
-        ctx.lineTo(910, 1080); ctx.lineTo(170, 1080); ctx.closePath(); ctx.fill();
-      } else {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
-        ctx.strokeRect(60, 60, 960, 960);
-      }
-      ctx.restore();
-
-      // Vignette Shadow
-      const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
-      vGrad.addColorStop(0, "transparent");
-      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.3)");
-      ctx.fillStyle = vGrad; ctx.fillRect(0, 0, 1080, 1080);
 
       // LAYER 1: PRODUCT STAGING (SUPPORTS FULL-BLEED FLOAT OR FRAMED MAT)
       const pScale = conf.pScale || 1.0;
@@ -1058,12 +1035,10 @@
       ctx.rotate(frameRot);
 
       if (conf.removeMat) {
-        // FULL-BLEED FLOAT (No White Mat)
         ctx.shadowColor = "rgba(0, 0, 0, 0.38)"; ctx.shadowBlur = 48; ctx.shadowOffsetY = 22;
         if (srcCanvas) ctx.drawImage(srcCanvas, -pw/2, -ph/2, pw, ph);
         ctx.shadowColor = "transparent";
       } else {
-        // FRAMED POLAROID MAT WITH WASHI TAPE
         ctx.fillStyle = "#FAF8F5";
         ctx.shadowColor = "rgba(0, 0, 0, 0.25)"; ctx.shadowBlur = 38; ctx.shadowOffsetY = 16;
         ctx.fillRect(-410, -390, 820, 890);
