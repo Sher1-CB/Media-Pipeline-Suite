@@ -955,14 +955,15 @@
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // 1. TACTILE SURFACE TEXTURE & GRADIENT WASH
+      // 1. TACTILE SURFACE TEXTURE & SOLID OPACITY RESET
+      ctx.globalAlpha = 1.0;
       const surfaceStyle = hash % 5; 
       const accent = pal.accent || "#A66E38";
 
       if (surfaceStyle === 0) {
         ctx.fillStyle = pal.bg || "#D4B28C";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.12; ctx.lineWidth = 2;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 2.5;
         for (let y = 0; y < 1080; y += 24 + (hash % 12)) {
           ctx.beginPath(); ctx.moveTo(0, y);
           for (let x = 0; x < 1080; x += 120) {
@@ -973,13 +974,13 @@
       } else if (surfaceStyle === 1) {
         ctx.fillStyle = pal.bg || "#E8E2D5";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
-        for (let x = 0; x < 1080; x += 6) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 6) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.18; ctx.lineWidth = 1.5;
+        for (let x = 0; x < 1080; x += 8) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 8) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       } else if (surfaceStyle === 2) {
         ctx.fillStyle = pal.bg || "#E2D3BE";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.08;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.15;
         for (let i = 0; i < 400; i++) {
           const cx = (hash * i * 3) % 1080, cy = (hash * i * 7) % 1080;
           ctx.fillRect(cx, cy, 3, 3);
@@ -996,31 +997,34 @@
         ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 1080);
       }
 
+      ctx.globalAlpha = 1.0;
       ctx.save();
       const layoutType = hash % 6;
       if (layoutType === 0) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.28;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
         ctx.beginPath(); ctx.roundRect((hash % 160) + 50, (hash % 120) + 50, 750, 750, 48); ctx.fill();
       } else if (layoutType === 1) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.3;
         ctx.beginPath(); ctx.moveTo(0, 0);
         ctx.bezierCurveTo(380, (hash % 420) + 60, 700, 1080 - (hash % 280), 1080, 420);
         ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
       } else if (layoutType === 2) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.28;
         ctx.beginPath(); ctx.arc(540, 410, 370, Math.PI, 0, false);
         ctx.lineTo(910, 1080); ctx.lineTo(170, 1080); ctx.closePath(); ctx.fill();
       } else {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 3;
         ctx.strokeRect(60, 60, 960, 960);
       }
       ctx.restore();
 
-      // Vignette Shadow
+      // Vignette Shadow (Strict Opacity Reset)
+      ctx.globalAlpha = 1.0;
       const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
       vGrad.addColorStop(0, "transparent");
       vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.3)");
       ctx.fillStyle = vGrad; ctx.fillRect(0, 0, 1080, 1080);
+      ctx.globalAlpha = 1.0;
 
       // LAYER 1: PRODUCT STAGING (SUPPORTS FULL-BLEED FLOAT OR FRAMED MAT)
       const pScale = conf.pScale || 1.0;
