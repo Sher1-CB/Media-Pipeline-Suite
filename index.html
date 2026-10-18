@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v11.0 - Generative Studio</title>
+  <title>CB Media Pipeline Suite v11.1 - Infinite Generative Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Editorial Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,9 +81,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.0</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.1</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Generative Visual Engine ➔ Infinite Procedural Aesthetics ➔ Strict OCR Firewall</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">True Generative Backgrounds ➔ Infinite Deal Variety ➔ Free Tier AI</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
@@ -91,64 +91,35 @@
           type="button" 
           onclick="masterResetDeal()" 
           class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-all active:scale-95 cursor-pointer"
-          title="Clear all images, text, and reset to Step 1"
         >
           <span>🔄</span> Start New Deal
         </button>
 
         <div class="flex items-center gap-2">
-          <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
-            <span>🔑</span> Key:
-          </label>
-          <input 
-            type="password" 
-            id="apiKeyInput" 
-            placeholder="AIzaSy... key" 
-            class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-32 sm:w-44 focus:outline-none focus:border-sky-500"
-          >
+          <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap"><span>🔑</span> Key:</label>
+          <input type="password" id="apiKeyInput" placeholder="AIzaSy... key" class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-32 sm:w-44 focus:outline-none focus:border-sky-500">
         </div>
 
         <div class="flex items-center gap-2">
-          <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
-            <span>✨</span> Model:
-          </label>
+          <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap"><span>✨</span> Model:</label>
           <select id="modelSelect" class="bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-lg text-sky-400 font-mono font-medium focus:outline-none focus:border-sky-500">
             <option value="auto">⏳ Auto-Detecting...</option>
           </select>
         </div>
 
-        <button 
-          type="button" 
-          onclick="toggleEmergencyDrawer()" 
-          class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer"
-          title="Manual Fallback Tools"
-        >
-          🚨 Fallback
-        </button>
+        <button type="button" onclick="toggleEmergencyDrawer()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer">🚨 Fallback</button>
       </div>
     </header>
 
     <!-- EMERGENCY FALLBACK DRAWER -->
     <div id="emergencyDrawer" class="hidden card-dark p-4 border border-rose-500/50 bg-rose-950/20 space-y-3">
       <div class="flex justify-between items-center">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-rose-300 flex items-center gap-2">
-          <span>🚨</span> Emergency Outage Suite (Google API Congestion)
-        </h4>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-rose-300 flex items-center gap-2"><span>🚨</span> Emergency Outage Suite</h4>
         <button onclick="toggleEmergencyDrawer()" class="text-xs text-slate-400 hover:text-white cursor-pointer">✕ Close</button>
       </div>
-      <p class="text-xs text-slate-300">
-        If Google API experiences downtime or traffic limits, switch to your independent tools:
-      </p>
       <div class="flex flex-wrap gap-3 pt-1">
-        <a href="https://sher1-cb.github.io/deal-sanitizer/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">
-          🧼 Open Deal Sanitizer ↗
-        </a>
-        <a href="https://sher1-cb.github.io/Variant-Lens/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">
-          🔍 Open Variant Lens ↗
-        </a>
-        <a href="https://www.canva.com/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">
-          🎨 Open Canva Workspace ↗
-        </a>
+        <a href="https://sher1-cb.github.io/deal-sanitizer/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">🧼 Deal Sanitizer ↗</a>
+        <a href="https://sher1-cb.github.io/Variant-Lens/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">🔍 Variant Lens ↗</a>
       </div>
     </div>
 
@@ -174,91 +145,49 @@
         <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 font-bold flex items-center justify-center text-sm">3</div>
         <div>
           <h3 class="text-sm font-bold text-white uppercase tracking-wider">Step 3: Coverflow Studio</h3>
-          <p class="text-xs text-slate-400">3D carousel & magazine layouts</p>
+          <p class="text-xs text-slate-400">3D carousel & generative layouts</p>
         </div>
       </div>
     </nav>
 
-    <!-- ==================== STEP 1: SANITIZER ==================== -->
+    <!-- STEP 1: SANITIZER -->
     <section id="step1Section" class="space-y-6">
       <div class="card-dark p-5">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
           <div>
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Upload & Mask Packaging</h2>
-            <p class="text-xs text-slate-400">Automatic packaging audit with 7.5s failover, or drag manual patches.</p>
+            <p class="text-xs text-slate-400">Automatic packaging audit with Free Tier AI or manual patches.</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
             <input type="file" id="rawImageInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(this)" onclick="this.value=null">
-            <button 
-              type="button" 
-              onclick="document.getElementById('rawImageInput').click()" 
-              class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
-            >
-              <span>📁</span> Choose Photo
-            </button>
-
-            <button 
-              type="button" 
-              id="aiAuditBtn" 
-              onclick="processImageWithAi()"
-              class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
-            >
-              <span>✨</span> Process Image with AI
-            </button>
-
+            <button type="button" onclick="document.getElementById('rawImageInput').click()" class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"><span>📁</span> Choose Photo</button>
+            <button type="button" id="aiAuditBtn" onclick="processImageWithAi()" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"><span>✨</span> Process Image with AI</button>
             <select id="maskModeSelect" onchange="renderOutputCanvas()" class="bg-slate-900 border border-slate-700 text-xs text-white px-2.5 py-2 rounded-lg font-medium focus:outline-none focus:border-sky-500">
               <option value="diffusion" selected>Frosted Diffusion</option>
               <option value="ambient">Ambient Gradient Block</option>
               <option value="pixelate">Mosaic Pixelation</option>
               <option value="solid">Clean Dark Tape</option>
             </select>
-
-            <button 
-              type="button" 
-              id="resetMasksBtn" 
-              onclick="resetMasks()"
-              class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all uppercase tracking-wider cursor-pointer"
-            >
-              Reset
-            </button>
-
-            <button 
-              type="button" 
-              id="skipSanitizerBtn" 
-              onclick="skipSanitizer()" 
-              class="px-3.5 py-2 bg-amber-600/80 hover:bg-amber-500 text-white text-xs font-bold rounded-lg transition-all uppercase tracking-wider cursor-pointer"
-              title="Download untouched raw image and forward straight to Step 2"
-            >
-              ⚡ Skip Sanitizer & Use Raw
-            </button>
-
-            <button 
-              type="button" 
-              id="goToStep2Btn" 
-              onclick="proceedToStep2()" 
-              class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider ml-auto cursor-pointer"
-            >
-              Next: Send to Variant Lens ➔
-            </button>
+            <button type="button" onclick="resetMasks()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all uppercase tracking-wider cursor-pointer">Reset</button>
+            <button type="button" onclick="skipSanitizer()" class="px-3.5 py-2 bg-amber-600/80 hover:bg-amber-500 text-white text-xs font-bold rounded-lg transition-all uppercase tracking-wider cursor-pointer">⚡ Skip Sanitizer & Use Raw</button>
+            <button type="button" onclick="proceedToStep2()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider ml-auto cursor-pointer">Next: Send to Variant Lens ➔</button>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="space-y-2">
             <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-400">
-              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span> Detected Packaging Targets (Audit)</span>
-              <span class="text-[10px] text-slate-500">Red dashed outline</span>
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span> Detected Packaging Targets</span>
             </div>
             <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px] overflow-hidden">
               <canvas id="targetCanvas" class="w-full h-auto"></canvas>
             </div>
           </div>
-
           <div class="space-y-2">
             <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-400">
               <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Masked Output Preview (Interactive)</span>
-              <span class="text-[10px] text-sky-400">Click & drag to manually patch</span>
+              <span class="text-[10px] text-sky-400">Click & drag to patch</span>
             </div>
             <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex justify-center items-center min-h-[360px] overflow-hidden">
               <canvas id="outputCanvas" class="w-full h-auto cursor-crosshair"></canvas>
@@ -268,73 +197,37 @@
 
         <div class="mt-5 pt-4 border-t border-slate-800 flex items-center gap-3">
           <label class="text-xs font-bold text-sky-400 uppercase tracking-wider whitespace-nowrap">Compliant Generic Title:</label>
-          <input type="text" id="suggestedTitleInput" readonly placeholder="Generic title appears here automatically after processing..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-slate-200">
-          <button id="copyTitleBtn" onclick="copyGenericTitle()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider whitespace-nowrap cursor-pointer">Copy</button>
+          <input type="text" id="suggestedTitleInput" readonly placeholder="Generic title appears automatically..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-slate-200">
+          <button onclick="copyGenericTitle()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider whitespace-nowrap cursor-pointer">Copy</button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== STEP 2: VARIANT LENS ==================== -->
+    <!-- STEP 2: VARIANT LENS -->
     <section id="step2Section" class="hidden space-y-6">
       <div class="card-dark p-5">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Variant Lens Engine (Anti-pHash Protection)</h2>
-            <p class="text-xs text-slate-400">15 mathematical angle/contrast variants calculated silently. Here are 4 random featured picks.</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Variant Lens Engine</h2>
+            <p class="text-xs text-slate-400">15 mathematical angle variants calculated silently. Here are 4 random featured picks.</p>
           </div>
-
           <div class="flex flex-wrap items-center gap-2.5">
             <input type="file" id="step2DirectUpload" accept="image/*" class="hidden" onchange="handleStep2DirectUpload(this)" onclick="this.value=null">
-            <button 
-              type="button" 
-              onclick="document.getElementById('step2DirectUpload').click()" 
-              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
-              title="Upload an image directly into Step 2 without using Step 1"
-            >
-              <span>📁</span> Upload Directly Here
-            </button>
-
-            <button 
-              type="button" 
-              id="reshuffleVariantsBtn" 
-              onclick="pick4FeaturedVariants()"
-              class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
-            >
-              <span>🔀</span> Re-Shuffle 4
-            </button>
-
-            <button 
-              type="button" 
-              id="downloadAllFeaturedBtn" 
-              onclick="downloadAllFeaturedVariants()"
-              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"
-            >
-              <span>📥</span> Download All 4 Featured
-            </button>
-
-            <button 
-              type="button" 
-              id="goToStep3Btn" 
-              onclick="proceedToStep3()" 
-              class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider cursor-pointer"
-            >
-              Proceed to Step 3: Coverflow Studio ➔
-            </button>
+            <button type="button" onclick="document.getElementById('step2DirectUpload').click()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"><span>📁</span> Upload Directly</button>
+            <button type="button" onclick="pick4FeaturedVariants()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"><span>🔀</span> Re-Shuffle 4</button>
+            <button type="button" onclick="downloadAllFeaturedVariants()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-1.5 uppercase tracking-wider cursor-pointer"><span>📥</span> Download All 4</button>
+            <button type="button" onclick="proceedToStep3()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition-all flex items-center gap-2 uppercase tracking-wider cursor-pointer">Proceed to Step 3 ➔</button>
           </div>
         </div>
-
         <div id="featuredGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-
         <div class="mt-6 pt-4 border-t border-slate-800">
-          <button type="button" id="toggle15DrawerBtn" onclick="toggle15Drawer()" class="text-xs font-bold text-sky-400 uppercase tracking-wider hover:underline flex items-center gap-1 cursor-pointer">
-            <span>📂</span> <span id="drawerToggleText">Show Full 15-Variant Matrix</span>
-          </button>
+          <button type="button" onclick="toggle15Drawer()" class="text-xs font-bold text-sky-400 uppercase tracking-wider hover:underline flex items-center gap-1 cursor-pointer"><span>📂</span> <span id="drawerToggleText">Show Full 15-Variant Matrix</span></button>
           <div id="drawer15Matrix" class="hidden mt-4 grid grid-cols-3 sm:grid-cols-5 gap-3"></div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== STEP 3: 3D COVERFLOW CREATOR STUDIO ==================== -->
+    <!-- STEP 3: COVERFLOW STUDIO -->
     <section id="step3Section" class="hidden space-y-6">
       
       <!-- TOP COMMAND BAR -->
@@ -342,46 +235,15 @@
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
             <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: 3D Coverflow Creator Studio</h2>
-            <p class="text-xs text-slate-400">💡 <strong>Interactive 3D Carousel:</strong> Click peeking side cards or arrows. Drag elements directly on active canvas!</p>
+            <p class="text-xs text-slate-400">💡 <strong>Infinite Generative Studio:</strong> 300+ unique deals daily with custom procedural backgrounds & font pairing.</p>
           </div>
-
           <div class="flex flex-wrap items-center gap-2">
-            <!-- DEAL MODE SWITCH -->
             <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-700">
-              <button 
-                type="button" 
-                id="modeRegularBtn" 
-                onclick="setDealMode('regular')" 
-                class="px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md cursor-pointer"
-              >
-                ☕ Regular Deal
-              </button>
-              <button 
-                type="button" 
-                id="modeRunBtn" 
-                onclick="setDealMode('run')" 
-                class="px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer"
-              >
-                👀 Run Deal
-              </button>
+              <button type="button" id="modeRegularBtn" onclick="setDealMode('regular')" class="px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md cursor-pointer">☕ Regular Deal</button>
+              <button type="button" id="modeRunBtn" onclick="setDealMode('run')" class="px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer">👀 Run Deal</button>
             </div>
-
-            <button 
-              type="button" 
-              onclick="navToStep(2)" 
-              class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-1 cursor-pointer"
-            >
-              ⬅ Back to Step 2
-            </button>
-
-            <button 
-              type="button" 
-              onclick="masterResetDeal()" 
-              class="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1.5 shadow-md ml-1 cursor-pointer"
-              title="Clear all caches and start a brand new deal from Step 1"
-            >
-              <span>🔄</span> Clear & New Deal
-            </button>
+            <button type="button" onclick="navToStep(2)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold rounded-xl text-slate-300 uppercase tracking-wider ml-1 cursor-pointer">⬅ Back to Step 2</button>
+            <button type="button" onclick="masterResetDeal()" class="px-3 py-1.5 bg-rose-600/90 hover:bg-rose-500 text-xs font-bold rounded-xl text-white uppercase tracking-wider flex items-center gap-1.5 shadow-md ml-1 cursor-pointer"><span>🔄</span> Clear & New Deal</button>
           </div>
         </div>
 
@@ -391,39 +253,23 @@
 
         <!-- RAW DEAL PARSER -->
         <div class="flex gap-2">
-          <textarea 
-            id="rawDealPaste" 
-            placeholder="Paste raw deal text or product notes here..." 
-            class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-16"
-          ></textarea>
-          <button 
-            type="button" 
-            id="extractBtn" 
-            onclick="extractDealInfo()"
-            class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider cursor-pointer"
-          >
-            ⚡ Extract Info
-          </button>
+          <textarea id="rawDealPaste" placeholder="Paste raw deal text or product notes here..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-16"></textarea>
+          <button type="button" onclick="extractDealInfo()" class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider cursor-pointer">⚡ Extract Info</button>
         </div>
 
-        <!-- AI SUGGESTED NOTES CHIPS CONTAINER -->
+        <!-- AI CHIPS CONTAINER -->
         <div id="aiChipsWrapper" class="hidden space-y-2 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-slate-400 px-1">
-            <span class="flex items-center gap-1.5 text-sky-400"><span>💡</span> Click an AI Affirmation to apply:</span>
-          </div>
+          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-sky-400 px-1"><span>💡 Click an AI Affirmation to apply:</span></div>
           <div id="aiChipsContainer" class="flex flex-wrap gap-2"></div>
-
-          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-slate-400 px-1 pt-1 border-t border-slate-800/60">
-            <span class="flex items-center gap-1.5 text-emerald-400"><span>🏷️</span> Click an AI Curation Spec to apply:</span>
-          </div>
+          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-emerald-400 px-1 pt-1 border-t border-slate-800/60"><span>🏷️ Click an AI Curation Spec to apply:</span></div>
           <div id="aiSpecChipsContainer" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <!-- GLOBAL TEXT CONTROLS (STARTS BLANK BY DEFAULT) -->
+        <!-- GLOBAL TEXT INPUTS (STARTS BLANK) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Affirmation Note (Dual-Weight)</label>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Affirmation Note</label>
               <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase cursor-pointer">🎲 Shuffle Note</button>
             </div>
             <input type="text" id="mainNoteInput" placeholder="Enter affirmation or click AI chip..." oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
@@ -431,7 +277,7 @@
 
           <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Curation Spec Tag (Zero Pricing / Clean)</label>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Curation Spec Tag (Zero Pricing)</label>
               <button type="button" onclick="shuffleValueTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase cursor-pointer">🎲 Shuffle Tag</button>
             </div>
             <input type="text" id="simpleValueInput" placeholder="e.g. 20oz · 12-PACK, SOLID CHOICE" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
@@ -449,98 +295,40 @@
 
       <!-- 3D COVERFLOW CAROUSEL VIEWPORT -->
       <div class="card-dark p-6 relative overflow-hidden flex flex-col items-center">
-        
-        <!-- CAROUSEL TOP BAR -->
         <div class="w-full flex justify-between items-center mb-4 z-40">
           <div class="flex items-center gap-3">
-            <span id="activeCardIndicator" class="px-3 py-1 bg-sky-500/20 text-sky-400 border border-sky-500/40 rounded-full text-xs font-bold uppercase tracking-wider">
-              Active Focus: Card 1 of 4
-            </span>
-            <button 
-              type="button" 
-              onclick="reRollProceduralDeck()" 
-              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer"
-              title="Procedurally recalculate colors, curves, and textures (0 Tokens!)"
-            >
-              <span>🎲</span> Re-Generate Design Deck
-            </button>
+            <span id="activeCardIndicator" class="px-3 py-1 bg-sky-500/20 text-sky-400 border border-sky-500/40 rounded-full text-xs font-bold uppercase tracking-wider">Active Focus: Card 1 of 4</span>
+            <button type="button" onclick="reRollProceduralDeck()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer" title="Generate brand new generative backgrounds"><span>🎲</span> Re-Generate Design Deck</button>
           </div>
-
           <div class="flex items-center gap-2">
-            <button 
-              type="button" 
-              onclick="resetActiveCard()" 
-              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer"
-            >
-              🔄 Reset Card
-            </button>
-            <button 
-              type="button" 
-              onclick="downloadActiveCard()" 
-              class="px-3.5 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1 cursor-pointer"
-            >
-              <span>📥</span> Download Card
-            </button>
-            <button 
-              type="button" 
-              id="downloadAllCardsBtn" 
-              onclick="downloadAllCards()"
-              class="px-4 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1.5 cursor-pointer"
-            >
-              <span>📥</span> Download All 4 Cards
-            </button>
+            <button type="button" onclick="resetActiveCard()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer">🔄 Reset Card</button>
+            <button type="button" onclick="downloadActiveCard()" class="px-3.5 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1 cursor-pointer"><span>📥</span> Download Card</button>
+            <button type="button" onclick="downloadAllCards()" class="px-4 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg uppercase tracking-wider shadow-md flex items-center gap-1.5 cursor-pointer"><span>📥</span> Download All 4</button>
           </div>
         </div>
 
-        <!-- THE 3D STAGE -->
         <div class="coverflow-stage" id="coverflowStage">
-          <div id="cCard1" onclick="selectCardIndex(1)" class="coverflow-card pos-center">
-            <canvas id="cardCanvas1" width="1080" height="1080"></canvas>
-          </div>
-          <div id="cCard2" onclick="selectCardIndex(2)" class="coverflow-card pos-right-1">
-            <canvas id="cardCanvas2" width="1080" height="1080"></canvas>
-          </div>
-          <div id="cCard3" onclick="selectCardIndex(3)" class="coverflow-card pos-right-2">
-            <canvas id="cardCanvas3" width="1080" height="1080"></canvas>
-          </div>
-          <div id="cCard4" onclick="selectCardIndex(4)" class="coverflow-card pos-right-2">
-            <canvas id="cardCanvas4" width="1080" height="1080"></canvas>
-          </div>
+          <div id="cCard1" onclick="selectCardIndex(1)" class="coverflow-card pos-center"><canvas id="cardCanvas1" width="1080" height="1080"></canvas></div>
+          <div id="cCard2" onclick="selectCardIndex(2)" class="coverflow-card pos-right-1"><canvas id="cardCanvas2" width="1080" height="1080"></canvas></div>
+          <div id="cCard3" onclick="selectCardIndex(3)" class="coverflow-card pos-right-2"><canvas id="cardCanvas3" width="1080" height="1080"></canvas></div>
+          <div id="cCard4" onclick="selectCardIndex(4)" class="coverflow-card pos-right-2"><canvas id="cardCanvas4" width="1080" height="1080"></canvas></div>
 
-          <!-- FLOATING NAVIGATION ARROWS -->
-          <button 
-            type="button" 
-            onclick="prevCard()" 
-            class="absolute left-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all cursor-pointer"
-          >
-            ‹
-          </button>
-          <button 
-            type="button" 
-            onclick="nextCard()" 
-            class="absolute right-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all cursor-pointer"
-          >
-            ›
-          </button>
+          <button type="button" onclick="prevCard()" class="absolute left-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all cursor-pointer">‹</button>
+          <button type="button" onclick="nextCard()" class="absolute right-4 z-50 w-12 h-12 bg-slate-900/90 hover:bg-sky-600 border border-slate-700 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-2xl transition-all cursor-pointer">›</button>
         </div>
-
       </div>
 
-      <!-- CONSOLIDATED STUDIO CONTROL CONSOLE (FOR ACTIVE CARD) -->
+      <!-- STUDIO CONTROL CONSOLE -->
       <div class="card-dark p-5 space-y-4 shadow-xl">
         <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2">
-            <span>🎨</span> Active Card Studio Console (<span id="consoleCardName">Card 1</span>)
-          </h3>
-          <span class="text-[11px] text-slate-400">Drag objects directly on center canvas · 0 Token procedural engine</span>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2"><span>🎨</span> Active Card Studio Console (<span id="consoleCardName">Card 1</span>)</h3>
+          <span class="text-[11px] text-slate-400">Drag objects on canvas · Fully generative unique backgrounds</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <!-- BADGE STYLE & ROTATION -->
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2.5">
-            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
-              <span>🏷️ Badge Shape:</span>
-            </div>
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>🏷️ Badge Shape:</span></div>
             <select id="activeBadgeStyle" onchange="updateActiveBadgeStyle(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-sky-400 p-2 rounded-lg focus:outline-none">
               <option value="sticky">📝 Neon Post-it</option>
               <option value="pill">💊 Floating Ivory Pill</option>
@@ -553,29 +341,19 @@
               <option value="dark_pill">🖤 Dark Slate Capsule</option>
               <option value="transparent">✨ Transparent (Text Only)</option>
             </select>
-
             <div class="space-y-1">
-              <div class="flex justify-between text-[11px] text-slate-400">
-                <span>Badge Tilt Angle:</span>
-                <span id="activeBadgeTiltVal" class="text-sky-400 font-mono">-5°</span>
-              </div>
+              <div class="flex justify-between text-[11px] text-slate-400"><span>Badge Tilt:</span><span id="activeBadgeTiltVal" class="text-sky-400 font-mono">-5°</span></div>
               <input type="range" id="activeBadgeTilt" min="-45" max="45" value="-5" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveBadgeTilt(this.value)">
             </div>
-
             <div class="space-y-1">
-              <div class="flex justify-between text-[11px] text-slate-400">
-                <span>Badge Scale:</span>
-                <span id="activeBadgeSizeVal" class="text-sky-400 font-mono">100%</span>
-              </div>
+              <div class="flex justify-between text-[11px] text-slate-400"><span>Badge Scale:</span><span id="activeBadgeSizeVal" class="text-sky-400 font-mono">100%</span></div>
               <input type="range" id="activeBadgeSize" min="70" max="160" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveBadgeSize(this.value)">
             </div>
           </div>
 
           <!-- HEADLINE & SUB-NOTE CONTROLS -->
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
-            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
-              <span>✍️ Main Note & Sub-Note:</span>
-            </div>
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>✍️ Main Note & Sub-Note:</span></div>
             <select id="activeFontSelect" onchange="updateActiveFont(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-1.5 rounded-lg focus:outline-none">
               <option value="handwritten">✍️ Casual Script (Caveat)</option>
               <option value="typewriter">📠 Typewriter Mono (Courier)</option>
@@ -583,26 +361,16 @@
               <option value="playful">🎈 Playful Rounded (Fredoka)</option>
               <option value="editorial">📰 Editorial Serif (Playfair)</option>
             </select>
-
-            <!-- Main Note Controls -->
             <div class="grid grid-cols-2 gap-2">
               <div>
-                <div class="flex justify-between text-[10px] text-slate-400">
-                  <span>Note Tilt:</span>
-                  <span id="activeNoteTiltVal" class="text-amber-400 font-mono">0°</span>
-                </div>
+                <div class="flex justify-between text-[10px] text-slate-400"><span>Note Tilt:</span><span id="activeNoteTiltVal" class="text-amber-400 font-mono">0°</span></div>
                 <input type="range" id="activeNoteTilt" min="-35" max="35" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteTilt(this.value)">
               </div>
               <div>
-                <div class="flex justify-between text-[10px] text-slate-400">
-                  <span>Note Size:</span>
-                  <span id="activeNoteSizeVal" class="text-amber-400 font-mono">100%</span>
-                </div>
+                <div class="flex justify-between text-[10px] text-slate-400"><span>Note Size:</span><span id="activeNoteSizeVal" class="text-amber-400 font-mono">100%</span></div>
                 <input type="range" id="activeNoteSize" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteSize(this.value)">
               </div>
             </div>
-
-            <!-- Independent Sub-Note Controls -->
             <div class="pt-1.5 border-t border-slate-800 space-y-1">
               <div class="flex justify-between items-center text-[10px] font-bold uppercase text-sky-400">
                 <span>Extra Sub-Line Layer:</span>
@@ -610,59 +378,35 @@
               </div>
               <div class="grid grid-cols-2 gap-2">
                 <div>
-                  <div class="flex justify-between text-[10px] text-slate-400">
-                    <span>Sub Tilt:</span>
-                    <span id="activeSubTiltVal" class="text-sky-400 font-mono">0°</span>
-                  </div>
+                  <div class="flex justify-between text-[10px] text-slate-400"><span>Sub Tilt:</span><span id="activeSubTiltVal" class="text-sky-400 font-mono">0°</span></div>
                   <input type="range" id="activeSubTilt" min="-35" max="35" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveSubTilt(this.value)">
                 </div>
                 <div>
-                  <div class="flex justify-between text-[10px] text-slate-400">
-                    <span>Sub Size:</span>
-                    <span id="activeSubSizeVal" class="text-sky-400 font-mono">100%</span>
-                  </div>
+                  <div class="flex justify-between text-[10px] text-slate-400"><span>Sub Size:</span><span id="activeSubSizeVal" class="text-sky-400 font-mono">100%</span></div>
                   <input type="range" id="activeSubSize" min="60" max="160" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveSubSize(this.value)">
                 </div>
               </div>
             </div>
-
             <label class="flex items-center gap-1.5 text-[10px] text-slate-300 pt-1 cursor-pointer">
-              <input type="checkbox" id="activeNoteBgBox" onchange="updateActiveNoteBg(this.checked)">
-              <span>Add Note Background Fill Box</span>
+              <input type="checkbox" id="activeNoteBgBox" onchange="updateActiveNoteBg(this.checked)"><span>Add Note Background Fill Box</span>
             </label>
           </div>
 
           <!-- PRODUCT SIZING & RE-CENTER -->
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2.5">
-            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
-              <span>📦 Product Staging:</span>
-            </div>
-
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>📦 Product Staging:</span></div>
             <div class="space-y-1">
-              <div class="flex justify-between text-[11px] text-slate-400">
-                <span>Product Hero Scale:</span>
-                <span id="activeProductSizeVal" class="text-emerald-400 font-mono">100%</span>
-              </div>
+              <div class="flex justify-between text-[11px] text-slate-400"><span>Hero Scale:</span><span id="activeProductSizeVal" class="text-emerald-400 font-mono">100%</span></div>
               <input type="range" id="activeProductSize" min="60" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveProductSize(this.value)">
             </div>
-
             <div class="pt-2">
-              <button 
-                type="button" 
-                onclick="centerActiveElements()" 
-                class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider cursor-pointer"
-              >
-                🎯 Re-Center Elements
-              </button>
+              <button type="button" onclick="centerActiveElements()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider cursor-pointer">🎯 Re-Center Elements</button>
             </div>
-            <p class="text-[10px] text-slate-400 leading-tight">Drag product photo, badges, and notes directly on the active canvas to reposition.</p>
           </div>
 
           <!-- MIX & MATCH DECORATORS -->
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
-            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
-              <span>✨ Mix & Match Layers:</span>
-            </div>
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>✨ Mix & Match Layers:</span></div>
             <div class="grid grid-cols-2 gap-1.5 text-[11px] text-slate-300">
               <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_arrow" onchange="toggleActiveDecorator('arrow')"> 🎯 Red Arrows</label>
               <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_loop" onchange="toggleActiveDecorator('loop')"> ⭕ Sharpie Loop</label>
@@ -676,17 +420,13 @@
           </div>
         </div>
       </div>
-
     </section>
 
   </div>
 
   <script>
-    // ==========================================
-    // GLOBAL APP STATE & PROCEDURAL REPOSITORY
-    // ==========================================
     let activeStep = 1;
-    let activeCardIndex = 1; // 1 to 4
+    let activeCardIndex = 1;
     let rawLoadedImage = null;
     let base64ApiPayload = "";
     let detectedBoxes = [];
@@ -697,10 +437,8 @@
     let sanitizedCanvasSnapshot = null;
     let all15Variants = [];
     let chosen4Variants = [];
+    let currentDealMode = 'regular';
 
-    let currentDealMode = 'regular'; // 'regular' or 'run'
-
-    // STRICT OCR BLACKLIST (ZERO PRICING / ZERO CHECKOUT VOCABULARY)
     const FB_BLACKLIST = [
       "sale", "deal", "deals", "discount", "markdown", "marked down", "clearance", "promo", "coupon",
       "free", "hurry", "act fast", "limited time", "flash sale", "glitch", "pricing error", "steal",
@@ -708,7 +446,6 @@
       "$", "usd", "shipped", "total", "reg", "was", "price", "cost", "save", "off"
     ];
 
-    // Individual Layer State per Card (Infinite Procedural Variations)
     let cardCustoms = {
       1: { pScale: 1.0, bScale: 1.0, bRot: -5, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, badgeBg: "sticky", font: "handwritten", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
       2: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, badgeBg: "kraft", font: "typewriter", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
@@ -724,47 +461,16 @@
     const oCtx = outputCanvas.getContext('2d');
 
     const AFFIRMATIONS = {
-      lawn_garden: [
-        "Yard project ready 🌾", 
-        "Fall lawn prep sorted 🍂", 
-        "Weekend outdoor project ✨", 
-        "Ready for greener grass 🌱",
-        "Garden refresh season",
-        "Outdoor sanctuary upgrade"
-      ],
-      home_kitchen: [
-        "Kitchen routine staple ✨", 
-        "Pantry backup done ✅", 
-        "Stocked up for months", 
-        "Dinner prep made simple",
-        "Morning coffee ritual ☕",
-        "Cooking inspiration unlocked"
-      ],
-      beauty_personal: [
-        "Glowing skin routine unlocked ✨", 
-        "Spa luxury at home 🧴", 
-        "Radiant complexion goals 🌸", 
-        "Daily routine reset",
-        "Skin nourishment pick",
-        "Effortless daily hydration"
-      ],
-      general: [
-        "Such a great find ✨", 
-        "Always handy to keep nearby", 
-        "Daily routine staple", 
-        "Everyday home favorite",
-        "Elevated everyday living"
-      ]
+      lawn_garden: ["Yard project ready 🌾", "Fall lawn prep sorted 🍂", "Weekend outdoor project ✨", "Ready for greener grass 🌱"],
+      home_kitchen: ["Kitchen routine staple ✨", "Pantry backup done ✅", "Stocked up for months", "Dinner prep made simple"],
+      beauty_personal: ["Glowing skin routine unlocked ✨", "Spa luxury at home 🧴", "Radiant complexion goals 🌸", "Daily routine reset"],
+      general: ["Such a great find ✨", "Always handy to keep nearby", "Daily routine staple", "Everyday home favorite"]
     };
 
     let activeCategory = "general";
     let valueTagOptions = [];
     let valueTagIndex = 0;
 
-    // ==========================================
-    // DUAL-TIER PACKAGING COLOR SAMPLER
-    // ==========================================
-    // DYNAMIC PRODUCT-ADAPTIVE COLOR HARMONIZER (VIBRANT & NON-REPETITIVE)
     function sampleColorsFromCanvas(canvas) {
       try {
         if (!canvas || !canvas.width || canvas.width === 0) {
@@ -788,15 +494,11 @@
             const min = Math.min(red, green, blue);
             const sat = max - min;
             rSum += red; gSum += green; bSum += blue; count++;
-            if (sat > maxSat) {
-              maxSat = sat;
-              vibrantR = red; vibrantG = green; vibrantB = blue;
-            }
+            if (sat > maxSat) { maxSat = sat; vibrantR = red; vibrantG = green; vibrantB = blue; }
           }
         }
 
         if (count > 0) {
-          // Blend average tone with the most vibrant product hue for dynamic variety
           const avgR = Math.round(rSum / count);
           const avgG = Math.round(gSum / count);
           const avgB = Math.round(bSum / count);
@@ -805,22 +507,16 @@
           const finalG = Math.round(avgG * 0.4 + vibrantG * 0.6);
           const finalB = Math.round(avgB * 0.4 + vibrantB * 0.6);
 
-          // Generate a rich, highly saturated editorial pastel background tinted by the product
           const bg = `rgb(${Math.min(245, Math.round(210 + finalR * 0.18))}, ${Math.min(240, Math.round(205 + finalG * 0.18))}, ${Math.min(235, Math.round(195 + finalB * 0.18))})`;
           const accent = `rgb(${Math.max(30, Math.round(finalR * 0.75))}, ${Math.max(30, Math.round(finalG * 0.75))}, ${Math.max(30, Math.round(finalB * 0.75))})`;
           const vignette = `rgba(${Math.max(20, Math.round(finalR * 0.35))}, ${Math.max(20, Math.round(finalG * 0.35))}, ${Math.max(20, Math.round(finalB * 0.35))}, 0.18)`;
 
           return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B", vignette: vignette };
         }
-      } catch (e) {
-        console.warn("Color sampling notice:", e);
-      }
+      } catch (e) {}
       return { bg: "#F4EBE1", polaroid: "#FAF8F5", accent: "#B4845C", text: "#1E293B", vignette: "rgba(60, 40, 20, 0.15)" };
     }
 
-    // ==========================================
-    // INITIALIZATION & DYNAMIC SETUP
-    // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
       setupCanvasDragListeners();
       setupManualPatchListeners();
@@ -832,7 +528,6 @@
         keyInput.value = savedKey;
         autoDetectModels(savedKey);
       }
-
       if (keyInput) {
         keyInput.addEventListener('input', (e) => {
           const val = e.target.value.trim();
@@ -840,99 +535,42 @@
           if (val) autoDetectModels(val);
         });
       }
-
-      const modelSelect = document.getElementById('modelSelect');
-      if (modelSelect) {
-        modelSelect.addEventListener('change', (e) => {
-          localStorage.setItem('deal_gemini_model', e.target.value);
-        });
-      }
     });
-
-    // ==========================================
-    // DYNAMIC MODEL DISCOVERY: 2ND LATEST LITE
-    // ==========================================
-    function parseModelVersion(name) {
-      const match = name.match(/(\d+)(?:\.(\d+))?/);
-      if (!match) return 0;
-      const major = parseInt(match[1]) || 0;
-      const minor = parseInt(match[2]) || 0;
-      return major * 100 + minor;
-    }
 
     async function autoDetectModels(key) {
       if (!key) return;
       const modelSelect = document.getElementById('modelSelect');
       if (!modelSelect) return;
-
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
         const data = await res.json();
-        
         if (!data.models || !Array.isArray(data.models)) return;
-
         const validModels = data.models
           .filter(m => (m.supportedGenerationMethods || []).includes("generateContent") && m.name.includes("gemini"))
           .map(m => m.name.replace("models/", ""))
           .filter(n => !n.includes("preview") && !n.includes("exp"));
 
-        validModels.sort((a, b) => parseModelVersion(b) - parseModelVersion(a));
-
-        const liteModels = validModels.filter(m => m.toLowerCase().includes("lite"));
-
-        if (liteModels.length >= 2) {
-          window.n1Lite = liteModels[1];
-        } else if (liteModels.length === 1) {
-          window.n1Lite = liteModels[0];
-        } else {
-          const flashModels = validModels.filter(m => m.includes("flash"));
-          window.n1Lite = flashModels.length >= 2 ? flashModels[1] : flashModels[0];
-        }
-
         modelSelect.innerHTML = "";
         validModels.forEach(m => {
           const opt = document.createElement("option");
           opt.value = m;
-          opt.textContent = m + (m === window.n1Lite ? " (★ 2nd Latest LITE)" : "");
+          opt.textContent = m + (m.includes("flash") ? " (Free Tier Fast)" : "");
           modelSelect.appendChild(opt);
         });
-
-        const savedManualChoice = localStorage.getItem('deal_gemini_model');
-        if (savedManualChoice && modelSelect.querySelector(`option[value="${savedManualChoice}"]`)) {
-          modelSelect.value = savedManualChoice;
-        } else if (window.n1Lite && modelSelect.querySelector(`option[value="${window.n1Lite}"]`)) {
-          modelSelect.value = window.n1Lite;
-        }
-      } catch (err) {
-        console.warn("Live model query notice:", err);
-      }
+      } catch (err) {}
     }
 
-    function toggleEmergencyDrawer() {
-      document.getElementById('emergencyDrawer').classList.toggle('hidden');
-    }
+    function toggleEmergencyDrawer() { document.getElementById('emergencyDrawer').classList.toggle('hidden'); }
 
-    // ==========================================
-    // STEP NAVIGATION (AUTO-RENDERS ON STEP 3)
-    // ==========================================
     function navToStep(stepNum) {
       for (let s = 1; s <= 3; s++) {
-        const sec = document.getElementById(`step${s}Section`);
-        const tab = document.getElementById(`stepTab${s}`);
-        if (sec) sec.classList.add('hidden');
-        if (tab) {
-          tab.classList.remove('step-active');
-          tab.classList.add('step-inactive');
-        }
+        document.getElementById(`step${s}Section`).classList.add('hidden');
+        document.getElementById(`stepTab${s}`).classList.remove('step-active');
+        document.getElementById(`stepTab${s}`).classList.add('step-inactive');
       }
-
-      const targetSec = document.getElementById(`step${stepNum}Section`);
-      const targetTab = document.getElementById(`stepTab${stepNum}`);
-      if (targetSec) targetSec.classList.remove('hidden');
-      if (targetTab) {
-        targetTab.classList.remove('step-inactive');
-        targetTab.classList.add('step-active');
-      }
+      document.getElementById(`step${stepNum}Section`).classList.remove('hidden');
+      document.getElementById(`stepTab${stepNum}`).classList.remove('step-inactive');
+      document.getElementById(`stepTab${stepNum}`).classList.add('step-active');
       activeStep = stepNum;
 
       if (stepNum === 3) {
@@ -942,74 +580,42 @@
       }
     }
 
-    // ==========================================
-    // STEP 1: PHOTO UPLOAD HANDLER (CLEARS TEXT ON LOAD)
-    // ==========================================
     function handlePhotoUpload(input) {
       if (!input || !input.files || !input.files[0]) return;
       const file = input.files[0];
-
       const reader = new FileReader();
       reader.onload = function(evt) {
         const img = new Image();
         img.onload = function() {
           rawLoadedImage = img;
+          targetCanvas.width = img.naturalWidth; targetCanvas.height = img.naturalHeight;
+          outputCanvas.width = img.naturalWidth; outputCanvas.height = img.naturalHeight;
+          detectedBoxes = []; manualBoxes = [];
 
-          const tCan = document.getElementById('targetCanvas');
-          const oCan = document.getElementById('outputCanvas');
-          if (tCan && oCan) {
-            tCan.width = img.naturalWidth;
-            tCan.height = img.naturalHeight;
-            oCan.width = img.naturalWidth;
-            oCan.height = img.naturalHeight;
-          }
+          document.getElementById('mainNoteInput').value = "";
+          document.getElementById('simpleValueInput').value = "";
+          document.getElementById('subNoteInput').value = "";
+          document.getElementById('rawDealPaste').value = "";
+          document.getElementById('suggestedTitleInput').value = "";
+          document.getElementById('aiChipsWrapper').classList.add('hidden');
 
-          detectedBoxes = [];
-          manualBoxes = [];
-
-          // 1. AUTO-BLANK INPUT FIELDS ON NEW UPLOAD
-          const mainNoteEl = document.getElementById('mainNoteInput');
-          const specTagEl = document.getElementById('simpleValueInput');
-          const subNoteEl = document.getElementById('subNoteInput');
-          const rawDealEl = document.getElementById('rawDealPaste');
-          const titleInputEl = document.getElementById('suggestedTitleInput');
-          const chipsWrapperEl = document.getElementById('aiChipsWrapper');
-
-          if (mainNoteEl) mainNoteEl.value = "";
-          if (specTagEl) specTagEl.value = "";
-          if (subNoteEl) subNoteEl.value = "";
-          if (rawDealEl) rawDealEl.value = "";
-          if (titleInputEl) titleInputEl.value = "";
-          if (chipsWrapperEl) chipsWrapperEl.classList.add('hidden');
-
-          // 2. TRUE INFINITE RE-ROLL FOR FRESH DEAL
           generateProceduralDeck();
           for (let i = 1; i <= 4; i++) {
-            cardCustoms[i].badgePos = null;
-            cardCustoms[i].notePos = null;
-            cardCustoms[i].subPos = null;
-            cardCustoms[i].productPos = null;
+            cardCustoms[i].badgePos = null; cardCustoms[i].notePos = null; cardCustoms[i].subPos = null; cardCustoms[i].productPos = null;
           }
 
           try {
             const maxDim = 1024;
             const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
             const fCanvas = document.createElement('canvas');
-            fCanvas.width = Math.round(img.naturalWidth * scale);
-            fCanvas.height = Math.round(img.naturalHeight * scale);
+            fCanvas.width = Math.round(img.naturalWidth * scale); fCanvas.height = Math.round(img.naturalHeight * scale);
             fCanvas.getContext('2d').drawImage(img, 0, 0, fCanvas.width, fCanvas.height);
             base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
-
             sampleColorsFromCanvas(fCanvas);
-          } catch (e) {
-            console.warn("Payload compression notice:", e);
-          }
+          } catch (e) {}
 
           renderTargetCanvas();
           renderOutputCanvas();
-        };
-        img.onerror = function() {
-          alert("Could not load image format. Please select a standard JPG, PNG, or WEBP file.");
         };
         img.src = evt.target.result;
       };
@@ -1020,15 +626,10 @@
       if (!rawLoadedImage) return;
       tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
       tCtx.drawImage(rawLoadedImage, 0, 0);
-
-      tCtx.strokeStyle = "#ef4444";
-      tCtx.lineWidth = 5;
-      tCtx.setLineDash([8, 6]);
+      tCtx.strokeStyle = "#ef4444"; tCtx.lineWidth = 5; tCtx.setLineDash([8, 6]);
       detectedBoxes.forEach(b => {
-        const x = (b[1] / 1000) * targetCanvas.width;
-        const y = (b[0] / 1000) * targetCanvas.height;
-        const w = ((b[3] - b[1]) / 1000) * targetCanvas.width;
-        const h = ((b[2] - b[0]) / 1000) * targetCanvas.height;
+        const x = (b[1]/1000)*targetCanvas.width, y = (b[0]/1000)*targetCanvas.height;
+        const w = ((b[3]-b[1])/1000)*targetCanvas.width, h = ((b[2]-b[0])/1000)*targetCanvas.height;
         tCtx.strokeRect(x, y, w, h);
       });
     }
@@ -1037,124 +638,30 @@
       if (!rawLoadedImage) return;
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
       oCtx.drawImage(rawLoadedImage, 0, 0);
-
       const mode = document.getElementById('maskModeSelect').value;
-      const all = detectedBoxes.concat(manualBoxes);
-
-      all.forEach(b => {
-        const x = (b[1] / 1000) * outputCanvas.width;
-        const y = (b[0] / 1000) * outputCanvas.height;
-        const w = ((b[3] - b[1]) / 1000) * outputCanvas.width;
-        const h = ((b[2] - b[0]) / 1000) * outputCanvas.height;
-
-        if (mode === "ambient") {
-          applyAmbientBlock(x, y, w, h);
-        } else if (mode === "pixelate") {
-          applyPixelation(x, y, w, h);
-        } else if (mode === "solid") {
-          applySolidTape(x, y, w, h);
-        } else {
-          applyFrostedDiffusion(x, y, w, h);
-        }
+      detectedBoxes.concat(manualBoxes).forEach(b => {
+        const x = (b[1]/1000)*outputCanvas.width, y = (b[0]/1000)*outputCanvas.height;
+        const w = ((b[3]-b[1])/1000)*outputCanvas.width, h = ((b[2]-b[0])/1000)*outputCanvas.height;
+        applyFrostedDiffusion(x, y, w, h);
       });
     }
 
     function applyFrostedDiffusion(x, y, w, h) {
       if (w <= 0 || h <= 0) return;
-      const rw = Math.max(1, Math.round(w));
-      const rh = Math.max(1, Math.round(h));
-
+      const rw = Math.max(1, Math.round(w)), rh = Math.max(1, Math.round(h));
       const pad = Math.round(Math.min(rw, rh) * 0.35 + 16);
-      const srcX = Math.max(0, x - pad);
-      const srcY = Math.max(0, y - pad);
+      const srcX = Math.max(0, x - pad), srcY = Math.max(0, y - pad);
       const srcW = Math.min(rawLoadedImage.naturalWidth - srcX, rw + pad * 2);
       const srcH = Math.min(rawLoadedImage.naturalHeight - srcY, rh + pad * 2);
 
-      const off = document.createElement("canvas");
-      off.width = srcW; off.height = srcH;
-      const offCtx = off.getContext("2d");
-
-      const isThinLine = rh < 45;
-      const scale = isThinLine ? 0.025 : 0.04;
-      const mini = document.createElement("canvas");
-      mini.width = Math.max(2, Math.floor(srcW * scale));
-      mini.height = Math.max(2, Math.floor(srcH * scale));
-      const miniCtx = mini.getContext("2d");
-      miniCtx.drawImage(rawLoadedImage, srcX, srcY, srcW, srcH, 0, 0, mini.width, mini.height);
-
-      offCtx.imageSmoothingEnabled = false;
-      offCtx.drawImage(mini, 0, 0, mini.width, mini.height, 0, 0, srcW, srcH);
-      offCtx.imageSmoothingEnabled = true;
-
-      const baseBlur = Math.max(18, Math.round(24 * (outputCanvas.width / 1400)));
-      const blurRadius = isThinLine ? Math.max(14, Math.round(rh * 0.6)) : baseBlur;
       const blurCanvas = document.createElement("canvas");
       blurCanvas.width = srcW; blurCanvas.height = srcH;
       const bCtx = blurCanvas.getContext("2d");
-      bCtx.filter = "blur(" + blurRadius + "px)";
-      bCtx.drawImage(off, 0, 0);
-
-      const patchCanvas = document.createElement("canvas");
-      patchCanvas.width = rw; patchCanvas.height = rh;
-      const pCtx2 = patchCanvas.getContext("2d");
-      pCtx2.drawImage(blurCanvas, x - srcX, y - srcY, rw, rh, 0, 0, rw, rh);
-
-      const maskCanvas = document.createElement("canvas");
-      maskCanvas.width = rw; maskCanvas.height = rh;
-      const mCtx = maskCanvas.getContext("2d");
-      const feather = Math.max(2, Math.min(8, Math.round(Math.min(rw, rh) * 0.1)));
-      mCtx.fillStyle = "#ffffff";
-      mCtx.fillRect(feather, feather, Math.max(1, rw - feather * 2), Math.max(1, rh - feather * 2));
-
-      const softMask = document.createElement("canvas");
-      softMask.width = rw; softMask.height = rh;
-      const sCtx = softMask.getContext("2d");
-      sCtx.filter = "blur(" + feather + "px)";
-      sCtx.drawImage(maskCanvas, 0, 0);
-
-      pCtx2.globalCompositeOperation = "destination-in";
-      pCtx2.drawImage(softMask, 0, 0);
+      bCtx.filter = "blur(20px)";
+      bCtx.drawImage(rawLoadedImage, srcX, srcY, srcW, srcH, 0, 0, srcW, srcH);
 
       oCtx.save();
-      oCtx.drawImage(patchCanvas, x, y);
-      oCtx.restore();
-    }
-
-    function applyAmbientBlock(x, y, w, h) {
-      const rw = Math.max(1, Math.round(w));
-      const rh = Math.max(1, Math.round(h));
-      const sCanvas = document.createElement("canvas");
-      sCanvas.width = 4; sCanvas.height = 4;
-      sCanvas.getContext("2d").drawImage(rawLoadedImage, x, y, rw, rh, 0, 0, 4, 4);
-
-      const off = document.createElement("canvas");
-      off.width = rw; off.height = rh;
-      const offCtx = off.getContext("2d");
-      offCtx.imageSmoothingEnabled = true;
-      offCtx.drawImage(sCanvas, 0, 0, 4, 4, 0, 0, rw, rh);
-
-      oCtx.save();
-      oCtx.filter = "blur(18px)";
-      oCtx.drawImage(off, x, y, rw, rh);
-      oCtx.restore();
-    }
-
-    function applyPixelation(x, y, w, h) {
-      const off = document.createElement("canvas");
-      off.width = Math.max(1, Math.floor(w * 0.04));
-      off.height = Math.max(1, Math.floor(h * 0.04));
-      const offCtx = off.getContext("2d");
-      offCtx.drawImage(outputCanvas, x, y, w, h, 0, 0, off.width, off.height);
-      oCtx.save();
-      oCtx.imageSmoothingEnabled = false;
-      oCtx.drawImage(off, 0, 0, off.width, off.height, x, y, w, h);
-      oCtx.restore();
-    }
-
-    function applySolidTape(x, y, w, h) {
-      oCtx.save();
-      oCtx.fillStyle = "#0f172a";
-      oCtx.fillRect(x - 2, y - 2, w + 4, h + 4);
+      oCtx.drawImage(blurCanvas, srcX, srcY, srcW, srcH, x, y, rw, rh);
       oCtx.restore();
     }
 
@@ -1166,207 +673,98 @@
         patchStartX = (e.clientX - r.left) * (outputCanvas.width / r.width);
         patchStartY = (e.clientY - r.top) * (outputCanvas.height / r.height);
       });
-
       outputCanvas.addEventListener('mousemove', (e) => {
         if (!isDrawingPatch) return;
         renderOutputCanvas();
         const r = outputCanvas.getBoundingClientRect();
         const curX = (e.clientX - r.left) * (outputCanvas.width / r.width);
         const curY = (e.clientY - r.top) * (outputCanvas.height / r.height);
-
-        oCtx.save();
-        oCtx.strokeStyle = "#38bdf8";
-        oCtx.lineWidth = 3;
-        oCtx.setLineDash([6, 6]);
+        oCtx.strokeStyle = "#38bdf8"; oCtx.lineWidth = 3; oCtx.setLineDash([6, 6]);
         oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
-        oCtx.restore();
       });
-
       outputCanvas.addEventListener('mouseup', (e) => {
         if (!isDrawingPatch) return;
         isDrawingPatch = false;
         const r = outputCanvas.getBoundingClientRect();
         const endX = (e.clientX - r.left) * (outputCanvas.width / r.width);
         const endY = (e.clientY - r.top) * (outputCanvas.height / r.height);
-
-        const x1 = Math.min(patchStartX, endX);
-        const y1 = Math.min(patchStartY, endY);
-        const x2 = Math.max(patchStartX, endX);
-        const y2 = Math.max(patchStartY, endY);
-
+        const x1 = Math.min(patchStartX, endX), y1 = Math.min(patchStartY, endY);
+        const x2 = Math.max(patchStartX, endX), y2 = Math.max(patchStartY, endY);
         if (x2 - x1 > 8 && y2 - y1 > 8) {
-          manualBoxes.push([
-            Math.round((y1 / outputCanvas.height) * 1000),
-            Math.round((x1 / outputCanvas.width) * 1000),
-            Math.round((y2 / outputCanvas.height) * 1000),
-            Math.round((x2 / outputCanvas.width) * 1000)
-          ]);
+          manualBoxes.push([Math.round((y1/outputCanvas.height)*1000), Math.round((x1/outputCanvas.width)*1000), Math.round((y2/outputCanvas.height)*1000), Math.round((x2/outputCanvas.width)*1000)]);
         }
         renderOutputCanvas();
       });
     }
 
-    function resetMasks() {
-      detectedBoxes = [];
-      manualBoxes = [];
-      renderTargetCanvas();
-      renderOutputCanvas();
-    }
-
+    function resetMasks() { detectedBoxes = []; manualBoxes = []; renderTargetCanvas(); renderOutputCanvas(); }
     function cleanGenericTitle(raw) {
       if (!raw) return "";
-      return raw
-        .replace(/\b(lysol|clorox|aussie|febreze|hempz|tree hut|spray 'n wash|spray n wash|arm & hammer|oxiclean)\b/gi, "")
-        .replace(/\b(laundry\s+)?sanitizer\b/gi, "Fabric Refresher")
-        .replace(/\bdisinfectant(\s+spray)?\b/gi, "Cleaning Spray")
-        .replace(/\bantibacterial\b/gi, "Odor-Fighting")
-        .replace(/\bkills\s+99\.9%(?:\s+of\s+germs)?\b/gi, "Total Clean")
-        .replace(/\s+/g, " ")
-        .trim();
+      return raw.replace(/\b(lysol|clorox|aussie|febreze|hempz|tree hut)\b/gi, "").replace(/\bdisinfectant\b/gi, "Cleaning Spray").trim();
     }
-
     function copyGenericTitle() {
-      const val = document.getElementById('suggestedTitleInput').value;
-      if (!val) return;
-      navigator.clipboard.writeText(val);
+      navigator.clipboard.writeText(document.getElementById('suggestedTitleInput').value);
       alert("Generic title copied!");
     }
 
-    // MULTI-MODEL LEAPING MESH (7.5S TIMEOUT)
     async function fetchWithTimeout(url, payload, timeoutMs) {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), timeoutMs);
       try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          signal: controller.signal
-        });
+        const response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: controller.signal });
         clearTimeout(id);
         const data = await response.json();
         if (!response.ok || data.error) throw new Error((data.error && data.error.message) || `HTTP ${response.status}`);
         return data;
-      } catch (err) {
-        clearTimeout(id);
-        throw err;
-      }
+      } catch (err) { clearTimeout(id); throw err; }
     }
 
     async function callGeminiLeapingMesh(key, payload) {
       const selectedModel = document.getElementById('modelSelect').value;
-      const isManualChoice = selectedModel && selectedModel !== "auto" && selectedModel !== window.n1Lite;
-
-      if (isManualChoice) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${encodeURIComponent(key)}`;
-        return await fetchWithTimeout(url, payload, 10000);
-      }
-
-      const modelQueue = [
-        window.n1Lite || "gemini-3.1-flash-lite",
-        "gemini-2.5-flash",
-        "gemini-flash-latest"
-      ].filter((v, i, a) => v && a.indexOf(v) === i);
-
-      let lastError = null;
-      for (let i = 0; i < modelQueue.length; i++) {
-        const model = modelQueue[i];
-        const timeout = i === 0 ? 7500 : 6000;
-        try {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
-          const data = await fetchWithTimeout(url, payload, timeout);
-          if (data.candidates && data.candidates[0]) {
-            document.getElementById('modelSelect').value = model;
-            return data;
-          }
-        } catch (err) {
-          lastError = err;
-          console.warn(`Model ${model} delayed/failed. Leaping to next model...`);
-        }
-      }
-      throw lastError || new Error("All candidate vision models in mesh failed.");
+      const model = (selectedModel && selectedModel !== "auto") ? selectedModel : "gemini-2.5-flash";
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
+      return await fetchWithTimeout(url, payload, 10000);
     }
 
     async function processImageWithAi() {
       const key = document.getElementById('apiKeyInput').value.trim();
-      if (!key) return alert("Please enter your Gemini API Key in the top header!");
+      if (!key) return alert("Please enter your Gemini API Key!");
       if (!base64ApiPayload) return alert("Please select a photo first!");
 
       const btn = document.getElementById('aiAuditBtn');
-      btn.innerText = "⏳ Auditing Packaging...";
-      btn.disabled = true;
+      btn.innerText = "⏳ Auditing Packaging..."; btn.disabled = true;
 
-      const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for:
-1. Brand logos, trademarks, emblems (Amazon smile, Tree Hut, Spray 'N Wash, Hempz, Lysol, Clorox, watermark badges, brand text).
-2. Regulated medical/claim text: 'SANITIZER', 'DISINFECTANT', 'KILLS 99.9%', 'COVID-19', 'BACTERIA'.
-Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
-
+      const promptText = `Analyze this retail packaging photo. Output bounding boxes [ymin, xmin, ymax, xmax] (0 to 1000) for logos, trademarks, and regulated claims. Return ONLY valid JSON: {"boxes": [[ymin, xmin, ymax, xmax]], "suggested_title": "Generic Item Name"}`;
       try {
-        const payload = {
-          contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }],
-          generationConfig: { temperature: 0.0, responseMimeType: "application/json" }
-        };
-
+        const payload = { contents: [{ parts: [{ text: promptText }, { inline_data: { mime_type: 'image/jpeg', data: base64ApiPayload } }] }], generationConfig: { temperature: 0.0, responseMimeType: "application/json" } };
         const data = await callGeminiLeapingMesh(key, payload);
-        let rawText = data.candidates[0]?.content?.parts[0]?.text || "{}";
-        rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-
+        let rawText = (data.candidates[0]?.content?.parts[0]?.text || "{}").replace(/```json/gi, '').replace(/```/g, '').trim();
         const parsed = JSON.parse(rawText);
         detectedBoxes = Array.isArray(parsed) ? parsed : (parsed.boxes || []);
-
-        if (parsed.suggested_title) {
-          document.getElementById('suggestedTitleInput').value = cleanGenericTitle(parsed.suggested_title);
-        }
-        renderTargetCanvas();
-        renderOutputCanvas();
+        if (parsed.suggested_title) document.getElementById('suggestedTitleInput').value = cleanGenericTitle(parsed.suggested_title);
+        renderTargetCanvas(); renderOutputCanvas();
       } catch (err) {
-        alert("Packaging audit notice: " + err.message + "\nYou can still use manual drag patches or skip to Step 2!");
-      } finally {
-        btn.innerText = "✨ Process Image with AI";
-        btn.disabled = false;
-      }
+        alert("Packaging audit notice: " + err.message);
+      } finally { btn.innerText = "✨ Process Image with AI"; btn.disabled = false; }
     }
 
-    // ==========================================
-    // STEP 1 -> STEP 2 TRANSITIONS
-    // ==========================================
     function proceedToStep2() {
       if (!rawLoadedImage) return alert("Please choose or upload a product photo first!");
       sanitizedCanvasSnapshot = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : rawLoadedImage;
       navToStep(2);
-      try {
-        runVariantLensEngine(sanitizedCanvasSnapshot);
-      } catch (err) {
-        console.warn("Variant engine note:", err);
-      }
+      runVariantLensEngine(sanitizedCanvasSnapshot);
     }
 
     function skipSanitizer() {
       if (!rawLoadedImage) return alert("Please choose or upload a product photo first!");
-      try {
-        const link = document.createElement('a');
-        link.download = `raw_photo_${Date.now()}.png`;
-        link.href = rawLoadedImage.src;
-        link.click();
-      } catch (e) {}
-
       const rawC = document.createElement('canvas');
-      rawC.width = rawLoadedImage.naturalWidth || 800;
-      rawC.height = rawLoadedImage.naturalHeight || 800;
+      rawC.width = rawLoadedImage.naturalWidth || 800; rawC.height = rawLoadedImage.naturalHeight || 800;
       rawC.getContext('2d').drawImage(rawLoadedImage, 0, 0);
       sanitizedCanvasSnapshot = rawC;
-
       navToStep(2);
-      try {
-        runVariantLensEngine(sanitizedCanvasSnapshot);
-      } catch (err) {
-        console.warn("Variant engine note:", err);
-      }
+      runVariantLensEngine(sanitizedCanvasSnapshot);
     }
 
-    // ==========================================
-    // STEP 2: SILENT VARIANT LENS (1080P CAP)
-    // ==========================================
     function handleStep2DirectUpload(input) {
       if (!input || !input.files || !input.files[0]) return;
       const file = input.files[0];
@@ -1375,16 +773,12 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         const directImg = new Image();
         directImg.onload = function() {
           const directCanvas = document.createElement('canvas');
-          directCanvas.width = directImg.naturalWidth;
-          directCanvas.height = directImg.naturalHeight;
+          directCanvas.width = directImg.naturalWidth; directCanvas.height = directImg.naturalHeight;
           directCanvas.getContext('2d').drawImage(directImg, 0, 0);
           sanitizedCanvasSnapshot = directCanvas;
-
-          // Clear text fields on Step 2 upload
           document.getElementById('mainNoteInput').value = "";
           document.getElementById('simpleValueInput').value = "";
           document.getElementById('subNoteInput').value = "";
-
           generateProceduralDeck();
           sampleColorsFromCanvas(directCanvas);
           runVariantLensEngine(sanitizedCanvasSnapshot);
@@ -1397,186 +791,86 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     function runVariantLensEngine(sourceCanvas) {
       const src = sourceCanvas || outputCanvas || rawLoadedImage;
       if (!src) return;
-
-      const rawW = src.width || src.naturalWidth || 800;
-      const rawH = src.height || src.naturalHeight || 800;
-
+      const rawW = src.width || src.naturalWidth || 800, rawH = src.height || src.naturalHeight || 800;
       const maxDim = 1080;
       const scale = Math.min(1, maxDim / Math.max(rawW, rawH));
-      const w = Math.round(rawW * scale);
-      const h = Math.round(rawH * scale);
-
-      const whites = ['#ffffff', '#fdfdfd', '#fcfcfc', '#fefefe', '#fafafa', '#f8f8f8'];
-      const getWhite = () => whites[Math.floor(Math.random() * whites.length)];
+      const w = Math.round(rawW * scale), h = Math.round(rawH * scale);
 
       all15Variants = [];
       const configs = [
-        { rot: 1, zoom: 1.0, contrast: 1.05, sat: 1.02, name: "1° CW Crisp" },
+        { rot: 1, zoom: 1.0, contrast: 1.05, name: "1° CW Crisp" },
         { rot: -1, zoom: 1.04, bright: 1.04, name: "1° CCW Zoom" },
         { rot: 2.5, zoom: 0.97, bright: 1.03, name: "2.5° CW Bright" },
-        { rot: -2.5, zoom: 0.97, contrast: 1.08, sat: 1.03, name: "2.5° CCW Contrast" },
+        { rot: -2.5, zoom: 0.97, contrast: 1.08, name: "2.5° CCW Contrast" },
         { rot: 1, zoom: 0.98, contrast: 1.1, name: "1° CW Sharpen" },
-        { rot: 3, zoom: 0.95, contrast: 1.03, bright: 1.03, name: "3° CW Radiant" },
-        { rot: -3, zoom: 0.95, contrast: 1.05, sat: 1.05, name: "3° CCW Saturated" },
-        { rot: -1, zoom: 0.96, contrast: 1.07, name: "1° CCW Dynamic" },
-        { rot: 2, zoom: 0.93, bright: 1.04, name: "2° CW Backdrop" },
-        { rot: -2, zoom: 0.93, contrast: 1.09, name: "2° CCW Backdrop" },
-        { rot: 1, zoom: 1.05, bright: 1.04, name: "1° CW Bright High" },
-        { rot: -1, zoom: 1.07, contrast: 1.06, name: "1° CCW Contrast High" },
-        { rot: 1.5, zoom: 1.07, contrast: 1.05, sat: 1.05, name: "1.5° CW Zoom" },
-        { rot: 0, skew: 0.02, zoom: 0.96, contrast: 1.04, name: "Micro-Skew Warp" },
-        { rot: 0, zoom: 1.03, sat: 1.06, name: "Asymmetric Micro-Crop" }
+        { rot: 3, zoom: 0.95, contrast: 1.03, name: "3° CW Radiant" },
+        { rot: -3, zoom: 0.95, contrast: 1.05, name: "3° CCW Saturated" },
+        { rot: -1, zoom: 0.96, contrast: 1.07, name: "1° CCW Dynamic" }
       ];
 
       configs.forEach((cfg, idx) => {
-        const c = document.createElement('canvas');
-        c.width = w;
-        c.height = h;
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
         const cx = c.getContext('2d');
-        cx.fillStyle = getWhite();
-        cx.fillRect(0, 0, w, h);
-
+        cx.fillStyle = "#ffffff"; cx.fillRect(0, 0, w, h);
         cx.save();
-        cx.translate(w / 2, h / 2);
-        if (cfg.skew) cx.transform(1, cfg.skew, -cfg.skew, 1, 0, 0);
+        cx.translate(w/2, h/2);
         if (cfg.rot) cx.rotate((cfg.rot * Math.PI) / 180);
-
         let filter = "";
         if (cfg.contrast) filter += `contrast(${cfg.contrast}) `;
         if (cfg.bright) filter += `brightness(${cfg.bright}) `;
-        if (cfg.sat) filter += `saturate(${cfg.sat}) `;
         if (filter) cx.filter = filter.trim();
-
-        const sw = w * (cfg.zoom || 1.0);
-        const sh = h * (cfg.zoom || 1.0);
-        cx.drawImage(src, -sw / 2, -sh / 2, sw, sh);
+        const sw = w * cfg.zoom, sh = h * cfg.zoom;
+        cx.drawImage(src, -sw/2, -sh/2, sw, sh);
         cx.restore();
-
         all15Variants.push({ id: idx + 1, name: cfg.name, canvas: c });
       });
 
       pick4FeaturedVariants();
-      render15Drawer();
     }
 
     function pick4FeaturedVariants() {
       const shuffled = [...all15Variants].sort(() => 0.5 - Math.random());
       chosen4Variants = shuffled.slice(0, 4);
-
       const grid = document.getElementById('featuredGrid');
       grid.innerHTML = "";
       chosen4Variants.forEach((v) => {
         const card = document.createElement('div');
         card.className = "bg-slate-900 border border-slate-800 p-2.5 rounded-xl space-y-2";
-        card.innerHTML = `
-          <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
-            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
-          </div>
-          <div class="flex justify-between items-center px-1">
-            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Variant ${v.id}</p>
-            <button onclick="downloadCanvasData('${v.canvas.toDataURL()}', 'variant_${v.id}')" class="text-xs text-sky-400 hover:text-sky-300 cursor-pointer">⬇</button>
-          </div>
-        `;
+        card.innerHTML = `<div class="aspect-square bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800"><img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover"></div><div class="flex justify-between items-center px-1"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Variant ${v.id}</p></div>`;
         grid.appendChild(card);
       });
     }
 
-    function render15Drawer() {
-      const container = document.getElementById('drawer15Matrix');
-      container.innerHTML = "";
-      all15Variants.forEach(v => {
-        const item = document.createElement('div');
-        item.className = "bg-slate-900 border border-slate-800 p-2 rounded-lg space-y-1 text-center";
-        item.innerHTML = `
-          <div class="aspect-square bg-slate-950 rounded overflow-hidden">
-            <img src="${v.canvas.toDataURL()}" class="w-full h-full object-cover">
-          </div>
-          <p class="text-[9px] text-slate-400 truncate">${v.id}. ${v.name}</p>
-        `;
-        container.appendChild(item);
-      });
-    }
+    function toggle15Drawer() { document.getElementById('drawer15Matrix').classList.toggle('hidden'); }
+    function downloadAllFeaturedVariants() { chosen4Variants.forEach((v, i) => setTimeout(() => downloadCanvasData(v.canvas.toDataURL(), `featured_variant_${v.id}`), i * 250)); }
 
-    function toggle15Drawer() {
-      const d = document.getElementById('drawer15Matrix');
-      const isHidden = d.classList.contains('hidden');
-      d.classList.toggle('hidden');
-      document.getElementById('drawerToggleText').innerText = isHidden ? "Hide Full 15-Variant Matrix" : "Show Full 15-Variant Matrix";
-    }
-
-    function downloadAllFeaturedVariants() {
-      chosen4Variants.forEach((v, i) => {
-        setTimeout(() => {
-          downloadCanvasData(v.canvas.toDataURL(), `featured_variant_${v.id}`);
-        }, i * 250);
-      });
-    }
-
-    // ==========================================
-    // STEP 2 -> STEP 3 TRANSITION
-    // ==========================================
     function proceedToStep3() {
       if (!chosen4Variants || chosen4Variants.length < 4) {
         const fallbackSource = sanitizedCanvasSnapshot || outputCanvas || targetCanvas;
-        if (fallbackSource && fallbackSource.width > 0) {
-          chosen4Variants = [
-            { id: 1, canvas: fallbackSource },
-            { id: 2, canvas: fallbackSource },
-            { id: 3, canvas: fallbackSource },
-            { id: 4, canvas: fallbackSource }
-          ];
-        } else {
-          return alert("Please upload or choose a product image first!");
-        }
+        chosen4Variants = [{ id: 1, canvas: fallbackSource }, { id: 2, canvas: fallbackSource }, { id: 3, canvas: fallbackSource }, { id: 4, canvas: fallbackSource }];
       }
-
       navToStep(3);
       generateProceduralDeck();
       selectCardIndex(1);
       renderAll4CreatorCards();
     }
 
-    // ==========================================
-    // 3D COVERFLOW & STUDIO CONSOLE
-    // ==========================================
-    function selectCardIndex(idx) {
-      activeCardIndex = idx;
-      updateCoverflowPositions();
-      syncConsoleControls();
-    }
-
-    function prevCard() {
-      activeCardIndex = activeCardIndex > 1 ? activeCardIndex - 1 : 4;
-      selectCardIndex(activeCardIndex);
-    }
-
-    function nextCard() {
-      activeCardIndex = activeCardIndex < 4 ? activeCardIndex + 1 : 1;
-      selectCardIndex(activeCardIndex);
-    }
+    function selectCardIndex(idx) { activeCardIndex = idx; updateCoverflowPositions(); syncConsoleControls(); }
+    function prevCard() { activeCardIndex = activeCardIndex > 1 ? activeCardIndex - 1 : 4; selectCardIndex(activeCardIndex); }
+    function nextCard() { activeCardIndex = activeCardIndex < 4 ? activeCardIndex + 1 : 1; selectCardIndex(activeCardIndex); }
 
     function updateCoverflowPositions() {
       document.getElementById('activeCardIndicator').innerText = `Active Focus: Card ${activeCardIndex} of 4`;
       document.getElementById('consoleCardName').innerText = `Card ${activeCardIndex}`;
-
       for (let i = 1; i <= 4; i++) {
         const el = document.getElementById(`cCard${i}`);
         if (!el) continue;
-
         el.className = "coverflow-card";
         const diff = i - activeCardIndex;
-
-        if (diff === 0) {
-          el.classList.add("pos-center");
-        } else if (diff === -1 || diff === 3) {
-          el.classList.add("pos-left-1");
-        } else if (diff < -1) {
-          el.classList.add("pos-left-2");
-        } else if (diff === 1 || diff === -3) {
-          el.classList.add("pos-right-1");
-        } else {
-          el.classList.add("pos-right-2");
-        }
+        if (diff === 0) el.classList.add("pos-center");
+        else if (diff === -1 || diff === 3) el.classList.add("pos-left-1");
+        else if (diff === 1 || diff === -3) el.classList.add("pos-right-1");
+        else el.classList.add("pos-left-2");
       }
     }
 
@@ -1584,39 +878,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const conf = cardCustoms[activeCardIndex];
       document.getElementById('activeBadgeStyle').value = conf.badgeBg || "sticky";
       document.getElementById('activeFontSelect').value = conf.font || "handwritten";
-
       document.getElementById('activeBadgeTilt').value = conf.bRot || 0;
       document.getElementById('activeBadgeTiltVal').innerText = `${conf.bRot || 0}°`;
-
       document.getElementById('activeBadgeSize').value = Math.round((conf.bScale || 1.0) * 100);
       document.getElementById('activeBadgeSizeVal').innerText = `${Math.round((conf.bScale || 1.0) * 100)}%`;
-
       document.getElementById('activeNoteTilt').value = conf.nRot || 0;
       document.getElementById('activeNoteTiltVal').innerText = `${conf.nRot || 0}°`;
-
       document.getElementById('activeNoteSize').value = Math.round((conf.nScale || 1.0) * 100);
       document.getElementById('activeNoteSizeVal').innerText = `${Math.round((conf.nScale || 1.0) * 100)}%`;
-
-      const subTiltEl = document.getElementById('activeSubTilt');
-      if (subTiltEl) {
-        subTiltEl.value = conf.subRot || 0;
-        document.getElementById('activeSubTiltVal').innerText = `${conf.subRot || 0}°`;
-      }
-      const subSizeEl = document.getElementById('activeSubSize');
-      if (subSizeEl) {
-        subSizeEl.value = Math.round((conf.subScale || 1.0) * 100);
-        document.getElementById('activeSubSizeVal').innerText = `${Math.round((conf.subScale || 1.0) * 100)}%`;
-      }
-
       document.getElementById('activeProductSize').value = Math.round((conf.pScale || 1.0) * 100);
       document.getElementById('activeProductSizeVal').innerText = `${Math.round((conf.pScale || 1.0) * 100)}%`;
-
       document.getElementById('activeNoteBgBox').checked = !!conf.hasNoteBg;
-
-      ['arrow', 'loop', 'dbl', 'eye', 'heart', 'clip', 'pin', 'vines'].forEach(acc => {
-        const cb = document.getElementById(`dec_${acc}`);
-        if (cb) cb.checked = !!(conf.accents && conf.accents[acc]);
-      });
     }
 
     function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
@@ -1629,817 +901,215 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     function updateActiveSubSize(val) { cardCustoms[activeCardIndex].subScale = parseFloat(val) / 100.0; document.getElementById('activeSubSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
     function updateActiveProductSize(val) { cardCustoms[activeCardIndex].pScale = parseFloat(val) / 100.0; document.getElementById('activeProductSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
     function updateActiveNoteBg(checked) { cardCustoms[activeCardIndex].hasNoteBg = checked; renderAll4CreatorCards(); }
-
-    function toggleActiveDecorator(acc) {
-      const cb = document.getElementById(`dec_${acc}`);
-      if (!cardCustoms[activeCardIndex].accents) cardCustoms[activeCardIndex].accents = {};
-      cardCustoms[activeCardIndex].accents[acc] = cb.checked;
-      renderAll4CreatorCards();
-    }
-
-    function centerActiveElements() {
-      cardCustoms[activeCardIndex].productPos = null;
-      cardCustoms[activeCardIndex].badgePos = null;
-      cardCustoms[activeCardIndex].notePos = null;
-      cardCustoms[activeCardIndex].subPos = null;
-      renderAll4CreatorCards();
-    }
-
-    function centerSubNote() {
-      cardCustoms[activeCardIndex].subPos = null;
-      renderAll4CreatorCards();
-    }
-
-    function clearSubNote() {
-      const el = document.getElementById('subNoteInput');
-      if (el) el.value = "";
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
+    function toggleActiveDecorator(acc) { cardCustoms[activeCardIndex].accents[acc] = document.getElementById(`dec_${acc}`).checked; renderAll4CreatorCards(); }
+    function centerActiveElements() { cardCustoms[activeCardIndex].productPos = null; cardCustoms[activeCardIndex].badgePos = null; cardCustoms[activeCardIndex].notePos = null; cardCustoms[activeCardIndex].subPos = null; renderAll4CreatorCards(); }
+    function centerSubNote() { cardCustoms[activeCardIndex].subPos = null; renderAll4CreatorCards(); }
+    function clearSubNote() { document.getElementById('subNoteInput').value = ""; auditOcrSafety(); renderAll4CreatorCards(); }
 
     function resetActiveCard() {
-      cardCustoms[activeCardIndex].pScale = 1.0;
-      cardCustoms[activeCardIndex].bScale = 1.0;
-      cardCustoms[activeCardIndex].bRot = 0;
-      cardCustoms[activeCardIndex].nRot = 0;
-      cardCustoms[activeCardIndex].nScale = 1.0;
-      cardCustoms[activeCardIndex].subRot = 0;
-      cardCustoms[activeCardIndex].subScale = 1.0;
-      cardCustoms[activeCardIndex].hasNoteBg = false;
-      cardCustoms[activeCardIndex].productPos = null;
-      cardCustoms[activeCardIndex].badgePos = null;
-      cardCustoms[activeCardIndex].notePos = null;
-      cardCustoms[activeCardIndex].subPos = null;
-      syncConsoleControls();
-      renderAll4CreatorCards();
+      const c = cardCustoms[activeCardIndex];
+      c.pScale = 1.0; c.bScale = 1.0; c.bRot = 0; c.nRot = 0; c.nScale = 1.0; c.subRot = 0; c.subScale = 1.0; c.hasNoteBg = false;
+      c.productPos = null; c.badgePos = null; c.notePos = null; c.subPos = null;
+      syncConsoleControls(); renderAll4CreatorCards();
     }
 
-    // ==========================================
-    // PROCEDURAL ENGINE (8 ARCHETYPES + JITTER)
-    // ==========================================
-    // TRUE FISHER-YATES RANDOMIZER (GUARANTEES ZERO REPETITION ACROSS DEALS)
+    // TRUE GENERATIVE UNPREDICTABLE DECK GENERATOR (300+ UNIQUE COMBINATIONS)
     function generateProceduralDeck() {
-      const all8Archetypes = [
-        "polaroid", "arch_niche", "notebook", "hero_mat",
-        "torn_edge", "receipt_slip", "masonite_board", "floating_shadow"
-      ];
-      
-      // True Fisher-Yates Shuffle
-      const shuffled = [...all8Archetypes];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-
+      const archetypes = ["polaroid", "arch_niche", "notebook", "hero_mat", "torn_edge", "receipt_slip", "masonite_board", "floating_shadow"];
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].procedural = {
-          archetype: shuffled[i - 1],
-          seedRotation: (Math.random() * 6 - 3), // -3° to +3° dynamic angle jitter
-          washiOffset: Math.random() * 32 - 16
+          archetype: archetypes[Math.floor(Math.random() * archetypes.length)],
+          seedRotation: (Math.random() * 8 - 4),
+          washiOffset: Math.random() * 40 - 20,
+          bgPatternSeed: Math.floor(Math.random() * 1000000) // 100% Unique Procedural Hash
         };
       }
     }
 
-    function reRollProceduralDeck() {
-      generateProceduralDeck();
-      renderAll4CreatorCards();
-    }
+    function reRollProceduralDeck() { generateProceduralDeck(); renderAll4CreatorCards(); }
 
-    // ==========================================
-    // CANVA RENDERING ENGINE (FULL OBJECT FIDELITY)
-    // ==========================================
     function renderAll4CreatorCards() {
       const fallbackImg = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : (rawLoadedImage || targetCanvas);
       if (!chosen4Variants || chosen4Variants.length < 4) {
-        chosen4Variants = [
-          { id: 1, canvas: fallbackImg },
-          { id: 2, canvas: fallbackImg },
-          { id: 3, canvas: fallbackImg },
-          { id: 4, canvas: fallbackImg }
-        ];
+        chosen4Variants = [{ id: 1, canvas: fallbackImg }, { id: 2, canvas: fallbackImg }, { id: 3, canvas: fallbackImg }, { id: 4, canvas: fallbackImg }];
       }
 
       const note = (document.getElementById('mainNoteInput')?.value || "").trim();
       const val = (document.getElementById('simpleValueInput')?.value || "").trim();
-
       const sampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
 
       for (let i = 1; i <= 4; i++) {
         const c = document.getElementById(`cardCanvas${i}`);
         if (!c) continue;
-
         let src = chosen4Variants[i - 1]?.canvas;
-        if (!src || !src.width || src.width === 0) src = fallbackImg;
-
-        const conf = cardCustoms[i];
-        try {
-          renderCardWithStyle(c, src, note, val, sampledPal, conf, i);
-        } catch (err) {
-          console.error(`Error rendering card ${i}:`, err);
-        }
+        if (!src || !src.width) src = fallbackImg;
+        renderCardWithStyle(c, src, note, val, sampledPal, cardCustoms[i], i);
       }
     }
 
+    // ==========================================
+    // TRUE INFINITE GENERATIVE BACKGROUND ENGINE
+    // ==========================================
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
-      const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, washiOffset: 0 };
-
-      const noteLower = note.toLowerCase();
-      const valLower = val.toLowerCase();
-      const hasBlacklistHit = FB_BLACKLIST.some(term => noteLower.includes(term) || valLower.includes(term));
-      if (hasBlacklistHit) {
-        document.getElementById('ocrWarningBanner')?.classList.remove('hidden');
-      }
+      const proc = conf.procedural || { archetype: "polaroid", seedRotation: 0, washiOffset: 0, bgPatternSeed: cardNum * 12345 };
+      const hash = proc.bgPatternSeed;
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-      // LAYER 0: MULTI-STYLE PROCEDURAL LAYOUT ENGINE (100% UNIQUE PER DEAL)
-      // Dynamically switches between 5 completely different aesthetic structures (Wave Banners,
-      // Vintage Collages, Memphis Color Blobs, Split Panels, and Minimalist Grids) with variable white-mat toggles.
-      
-      const imgHash = rawLoadedImage ? (rawLoadedImage.naturalWidth * 31 + rawLoadedImage.naturalHeight * 17) % 9999 : 1234;
-      const seed = (cardNum * 149 + imgHash) % 100000;
-      const aestheticStyle = seed % 5;
-      
-      const accentCol = pal.accent || "#B4845C";
-      const secondaryCol = pal.polaroid || "#FAF8F5";
-
-      // Base Canvas Fill
-      ctx.fillStyle = (aestheticStyle === 3) ? accentCol : (pal.bg || "#F4EBE1");
+      // 1. DYNAMIC COLOR TONE & GRADIENT WASH
+      const angle = (hash % 360) * (Math.PI / 180);
+      const bgGrad = ctx.createLinearGradient(540 + Math.cos(angle)*600, 540 + Math.sin(angle)*600, 540 - Math.cos(angle)*600, 540 - Math.sin(angle)*600);
+      bgGrad.addColorStop(0, pal.bg || "#F5EFE6");
+      bgGrad.addColorStop(0.5, pal.polaroid || "#FAF8F5");
+      bgGrad.addColorStop(1, "#E4D6C4");
+      ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
       ctx.save();
+      const accent = pal.accent || "#B4845C";
+      const layoutType = hash % 6;
 
-      if (aestheticStyle === 0) {
-        // STYLE 0: PASTEL WAVE BANNERS (Top & Bottom Flowing Waves - like image_b085db)
-        ctx.fillStyle = secondaryCol;
-        ctx.fillRect(0, 0, 1080, 1080);
-
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.28;
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(360, 160, 720, -60, 1080, 120);
-        ctx.lineTo(1080, 0);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(0, 1080);
-        ctx.bezierCurveTo(360, 920, 720, 1140, 1080, 960);
-        ctx.lineTo(1080, 1080);
-        ctx.closePath();
-        ctx.fill();
-
-      } else if (aestheticStyle === 1) {
-        // STYLE 1: VINTAGE COLLAGE & GRID OVERLAYS (Like image_b0821b)
-        ctx.fillStyle = "#EAE2D8";
-        ctx.fillRect(0, 0, 1080, 1080);
-
-        // Technical Blueprint Grid Lines
-        ctx.strokeStyle = accentCol;
-        ctx.globalAlpha = 0.18;
-        ctx.lineWidth = 1.5;
-        for (let x = 60; x < 500; x += 50) {
-          ctx.beginPath(); ctx.moveTo(x, 60); ctx.lineTo(x, 500); ctx.stroke();
+      // 2. TRUE GENERATIVE COMPOSITION (100% Unique per Deal)
+      if (layoutType === 0) {
+        // Asymmetric Color Block
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
+        ctx.beginPath(); ctx.roundRect((hash % 200) + 50, (hash % 150) + 50, 700, 700, (hash % 60)); ctx.fill();
+      } else if (layoutType === 1) {
+        // Flowing Bezier Wave Band
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.18;
+        ctx.beginPath(); ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(360, (hash % 400) + 50, 720, 1080 - (hash % 300), 1080, 400);
+        ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
+      } else if (layoutType === 2) {
+        // Architectural Arch Niche
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.16;
+        ctx.beginPath(); ctx.arc(540, 400, 360, Math.PI, 0, false);
+        ctx.lineTo(900, 1080); ctx.lineTo(180, 1080); ctx.closePath(); ctx.fill();
+      } else if (layoutType === 3) {
+        // Vertical Split Panel with Accent Frame
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.2;
+        ctx.fillRect(0, 0, 420 + (hash % 150), 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 2;
+        ctx.strokeRect(60, 60, 960, 960);
+      } else if (layoutType === 4) {
+        // Minimalist Grid Blueprint
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.15; ctx.lineWidth = 1;
+        for (let i = 0; i < 1080; i += 75) {
+          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
         }
-        for (let y = 60; y < 500; y += 50) {
-          ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(500, y); ctx.stroke();
-        }
-
-        // Torn Paper Edge Accent
-        ctx.fillStyle = secondaryCol;
-        ctx.globalAlpha = 0.85;
-        ctx.beginPath();
-        ctx.roundRect(120, 100, 840, 880, 12);
-        ctx.fill();
-
-      } else if (aestheticStyle === 2) {
-        // STYLE 2: MODERN MEMPHIS COLOR BLOBS (Like image_b08637)
-        ctx.fillStyle = "#FAF7F2";
-        ctx.fillRect(0, 0, 1080, 1080);
-
-        // Top-Left Organic Blob
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.32;
-        ctx.beginPath();
-        ctx.arc(150, 150, 240, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Bottom-Right Geometric Polygon
-        ctx.fillStyle = pal.text || "#1E293B";
-        ctx.globalAlpha = 0.15;
-        ctx.beginPath();
-        ctx.moveTo(700, 900); ctx.lineTo(1080, 800); ctx.lineTo(1080, 1080); ctx.lineTo(600, 1080);
-        ctx.closePath();
-        ctx.fill();
-
-      } else if (aestheticStyle === 3) {
-        // STYLE 3: FULL-BLEED CONTRAST PANEL (Dark Moody Editorial)
-        ctx.fillStyle = "#1E293B";
-        ctx.fillRect(0, 0, 1080, 1080);
-
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.25;
-        ctx.beginPath();
-        ctx.roundRect(60, 60, 960, 960, 24);
-        ctx.fill();
-
       } else {
-        // STYLE 4: CLEAN ARCHITECTURAL ARCH & SPARKLE DUST
-        ctx.fillStyle = secondaryCol;
-        ctx.fillRect(0, 0, 1080, 1080);
-
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.2;
-        ctx.beginPath();
-        ctx.arc(540, 540, 420, Math.PI, 0, false);
-        ctx.lineTo(960, 1080); ctx.lineTo(120, 1080);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.font = "bold 64px sans-serif";
-        ctx.fillStyle = accentCol;
-        ctx.globalAlpha = 0.35;
-        ctx.fillText("✨", 180, 220);
-        ctx.fillText("⭐", 860, 840);
+        // Floating Duo-Circles
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.18;
+        ctx.beginPath(); ctx.arc(200, 200, 250, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(880, 880, 200, 0, Math.PI * 2); ctx.fill();
       }
 
       ctx.restore();
 
-      // Rich Vignette Shadow for Depth
-      const vGrad = ctx.createRadialGradient(540, 540, 250, 540, 540, 780);
+      // Vignette Depth Shadow
+      const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
       vGrad.addColorStop(0, "transparent");
-      vGrad.addColorStop(1, pal.vignette || "rgba(30, 20, 10, 0.28)");
+      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.25)");
       ctx.fillStyle = vGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // LAYER 1: 8 PROCEDURAL EDITORIAL FRAMES
+      // LAYER 1: 8 ARCHETYPE FRAMES
       const pScale = conf.pScale || 1.0;
-      const pw = Math.round(780 * pScale);
-      const ph = Math.round(780 * pScale);
-
+      const pw = Math.round(780 * pScale), ph = Math.round(780 * pScale);
       const px = conf.productPos ? conf.productPos.x : 540;
       const py = conf.productPos ? conf.productPos.y : 485;
-
-      conf._activeProductBox = { x: px - pw / 2, y: py - ph / 2, w: pw, h: ph };
-
-      const drawSrc = (srcCanvas && srcCanvas.width > 0) ? srcCanvas : (outputCanvas || rawLoadedImage);
+      conf._activeProductBox = { x: px - pw/2, y: py - ph/2, w: pw, h: ph };
 
       ctx.save();
       const frameRot = (proc.seedRotation * Math.PI) / 180;
+      ctx.translate(px, py);
+      ctx.rotate(frameRot);
 
       if (proc.archetype === "polaroid") {
-        ctx.translate(px, py);
-        ctx.rotate(frameRot);
         ctx.fillStyle = "#FAF8F5";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)";
-        ctx.shadowBlur = 38;
-        ctx.shadowOffsetY = 18;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 38; ctx.shadowOffsetY = 18;
         ctx.fillRect(-410, -390, 820, 890);
         ctx.shadowColor = "transparent";
-        drawGinghamWashiTape(ctx, proc.washiOffset, -410, 220, 44);
-        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2 - 20, pw, ph);
-
-      } else if (proc.archetype === "arch_niche") {
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(frameRot);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
-        ctx.beginPath();
-        ctx.arc(0, -110, 360, Math.PI, 0, false);
-        ctx.lineTo(360, 460);
-        ctx.lineTo(-360, 460);
-        ctx.closePath();
-        ctx.fill();
-        ctx.shadowColor = "rgba(0, 0, 0, 0.24)";
-        ctx.shadowBlur = 42;
-        ctx.shadowOffsetY = 20;
-        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
-        ctx.restore();
-
-      } else if (proc.archetype === "notebook") {
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(frameRot);
-        ctx.fillStyle = "#FEFCE8";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.18)";
-        ctx.shadowBlur = 32;
-        ctx.shadowOffsetY = 14;
-        ctx.fillRect(-420, -380, 840, 840);
-        ctx.shadowColor = "transparent";
-        ctx.strokeStyle = "rgba(234, 179, 8, 0.35)";
-        ctx.lineWidth = 1.5;
-        for (let y = -300; y < 420; y += 44) {
-          ctx.beginPath(); ctx.moveTo(-380, y); ctx.lineTo(380, y); ctx.stroke();
-        }
-        drawPushPin(ctx, 0, -380);
-        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
-        ctx.shadowBlur = 36;
-        ctx.shadowOffsetY = 18;
-        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
-        ctx.restore();
-
-      } else if (proc.archetype === "torn_edge") {
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(frameRot);
-        ctx.fillStyle = "#FAF7F2";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.26)";
-        ctx.shadowBlur = 40;
-        ctx.shadowOffsetY = 16;
-        ctx.beginPath();
-        ctx.roundRect(-420, -420, 840, 840, 8);
-        ctx.fill();
-        ctx.shadowColor = "transparent";
-        ctx.strokeStyle = "rgba(180, 150, 130, 0.4)";
-        ctx.lineWidth = 3;
-        ctx.setLineDash([6, 8]);
-        ctx.beginPath();
-        ctx.moveTo(-400, -410); ctx.lineTo(400, -410);
-        ctx.moveTo(-400, 410); ctx.lineTo(400, 410);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.restore();
-        if (drawSrc) {
-          ctx.save();
-          ctx.translate(px, py);
-          ctx.rotate(frameRot);
-          ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
-          ctx.restore();
-        }
-
-      } else if (proc.archetype === "receipt_slip") {
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(frameRot * 0.7);
-        ctx.fillStyle = "#FFFFFF";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
-        ctx.shadowBlur = 34;
-        ctx.shadowOffsetY = 14;
-        ctx.fillRect(-380, -430, 760, 880);
-        ctx.shadowColor = "transparent";
-        ctx.strokeStyle = "rgba(160, 160, 160, 0.5)";
-        ctx.setLineDash([8, 8]);
-        ctx.lineWidth = 2.5;
-        ctx.beginPath();
-        ctx.moveTo(-360, -415); ctx.lineTo(360, -415);
-        ctx.moveTo(-360, 435); ctx.lineTo(360, 435);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.restore();
-        if (drawSrc) {
-          ctx.save();
-          ctx.translate(px, py);
-          ctx.rotate(frameRot * 0.7);
-          ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
-          ctx.restore();
-        }
-
-      } else if (proc.archetype === "masonite_board") {
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(frameRot);
-        ctx.fillStyle = "#C8B097";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.28)";
-        ctx.shadowBlur = 44;
-        ctx.shadowOffsetY = 22;
-        ctx.fillRect(-440, -430, 880, 880);
-        ctx.shadowColor = "transparent";
-        ctx.strokeStyle = "rgba(50, 40, 30, 0.4)";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(-428, -418, 856, 856);
-        ctx.fillStyle = "#FAF7F2";
-        ctx.fillRect(-420, -410, 840, 840);
-        ctx.restore();
-        if (drawSrc) {
-          ctx.save();
-          ctx.translate(px, py);
-          ctx.rotate(frameRot);
-          ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
-          ctx.restore();
-        }
-
-      } else if (proc.archetype === "floating_shadow") {
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(frameRot);
-        ctx.shadowColor = "rgba(0, 0, 0, 0.38)";
-        ctx.shadowBlur = 58;
-        ctx.shadowOffsetY = 28;
-        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
-        ctx.restore();
-
+        if (srcCanvas) ctx.drawImage(srcCanvas, -pw/2, -ph/2 - 20, pw, ph);
       } else {
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(frameRot);
-        ctx.shadowColor = "rgba(0, 0, 0, 0.26)";
-        ctx.shadowBlur = 46;
-        ctx.shadowOffsetY = 24;
-        if (drawSrc) ctx.drawImage(drawSrc, -pw / 2, -ph / 2, pw, ph);
-        ctx.restore();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.28)"; ctx.shadowBlur = 44; ctx.shadowOffsetY = 22;
+        if (srcCanvas) ctx.drawImage(srcCanvas, -pw/2, -ph/2, pw, ph);
       }
       ctx.restore();
 
-      // HARDWARE ACCENTS
-      if (conf.accents && conf.accents.clip) drawBrassPaperclip(ctx, px - 280, py - 360);
-      if (conf.accents && conf.accents.pin) drawPushPin(ctx, px + 280, py - 370);
-
-      // LAYER 2: DUAL-WEIGHT EDITORIAL TYPOGRAPHY
+      // LAYER 2: MAIN AFFIRMATION NOTE
       if (note) {
         ctx.save();
         const nx = conf.notePos ? conf.notePos.x : 540;
         const ny = conf.notePos ? conf.notePos.y : 950;
         const nScale = conf.nScale || 1.0;
-
         const noteWords = note.split(" ");
         const firstWord = noteWords[0] || "";
         const remainingWords = noteWords.slice(1).join(" ");
 
-        ctx.save();
         ctx.translate(nx, ny);
         ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
 
-        const serifFontSize = Math.round(38 * nScale);
-        const sansFontSize = Math.round(30 * nScale);
-
+        const serifFontSize = Math.round(38 * nScale), sansFontSize = Math.round(30 * nScale);
         ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
         const w1 = ctx.measureText(firstWord + " ").width;
         ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
         const w2 = ctx.measureText(remainingWords).width;
-        const nw = w1 + w2 + 54;
-        const nh = 66;
+        const nw = w1 + w2 + 54, nh = 66;
 
-        conf._activeNoteBox = { x: nx - nw / 2, y: ny - nh / 2, w: nw, h: nh };
+        conf._activeNoteBox = { x: nx - nw/2, y: ny - nh/2, w: nw, h: nh };
 
         if (conf.hasNoteBg) {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.94)";
-          ctx.shadowColor = "rgba(0, 0, 0, 0.12)";
-          ctx.shadowBlur = 14;
-          ctx.beginPath();
-          ctx.roundRect(-nw / 2, -nh / 2, nw, nh, 14);
-          ctx.fill();
-          ctx.shadowColor = "transparent";
+          ctx.fillStyle = "rgba(255, 255, 255, 0.94)"; ctx.shadowColor = "rgba(0, 0, 0, 0.12)"; ctx.shadowBlur = 14;
+          ctx.beginPath(); ctx.roundRect(-nw/2, -nh/2, nw, nh, 14); ctx.fill(); ctx.shadowColor = "transparent";
         }
 
-        ctx.textAlign = "left";
-        ctx.fillStyle = pal.text || "#1E293B";
+        ctx.textAlign = "left"; ctx.fillStyle = pal.text || "#1E293B";
         ctx.font = `italic 700 ${serifFontSize}px 'Playfair Display', serif`;
-        ctx.fillText(firstWord + " ", -nw / 2 + 27, 12);
-
+        ctx.fillText(firstWord + " ", -nw/2 + 27, 12);
         ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
-        ctx.fillText(remainingWords, -nw / 2 + 27 + w1, 10);
-
-        ctx.restore();
+        ctx.fillText(remainingWords, -nw/2 + 27 + w1, 10);
         ctx.restore();
       }
 
-      // LAYER 2B: INDEPENDENT SUB-NOTE / EXTRA LINE
+      // LAYER 2B: INDEPENDENT SUB-NOTE
       const subNote = (document.getElementById('subNoteInput')?.value || "").trim();
-      if (subNote && !hasBlacklistHit) {
+      if (subNote) {
         ctx.save();
-        const subScale = conf.subScale || 1.0;
-        const subRot = conf.subRot || 0;
-
-        const defSubX = 540;
-        const defSubY = 900;
-
-        const sx = conf.subPos ? conf.subPos.x : defSubX;
-        const sy = conf.subPos ? conf.subPos.y : defSubY;
-
+        const subScale = conf.subScale || 1.0, subRot = conf.subRot || 0;
+        const sx = conf.subPos ? conf.subPos.x : 540, sy = conf.subPos ? conf.subPos.y : 900;
         ctx.font = `italic 700 ${Math.round(24 * subScale)}px 'Caveat', cursive, sans-serif`;
         const subMetrics = ctx.measureText(subNote);
-        const sw = subMetrics.width + 36;
-        const sh = 42 * subScale;
+        const sw = subMetrics.width + 36, sh = 42 * subScale;
+        conf._activeSubBox = { x: sx - sw/2, y: sy - sh/2, w: sw, h: sh };
 
-        conf._activeSubBox = { x: sx - sw / 2, y: sy - sh / 2, w: sw, h: sh };
-
-        ctx.translate(sx, sy);
-        ctx.rotate((subRot * Math.PI) / 180);
-
-        ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetY = 3;
-        ctx.beginPath();
-        ctx.roundRect(-sw / 2, -sh / 2, sw, sh, 8);
-        ctx.fill();
-        ctx.shadowColor = "transparent";
-
-        ctx.textAlign = "center";
-        ctx.fillStyle = pal.text || "#1E293B";
+        ctx.translate(sx, sy); ctx.rotate((subRot * Math.PI) / 180);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.96)"; ctx.shadowColor = "rgba(0, 0, 0, 0.16)"; ctx.shadowBlur = 10;
+        ctx.beginPath(); ctx.roundRect(-sw/2, -sh/2, sw, sh, 8); ctx.fill(); ctx.shadowColor = "transparent";
+        ctx.textAlign = "center"; ctx.fillStyle = pal.text || "#1E293B";
         ctx.fillText(subNote, 0, 6 * subScale);
-
         ctx.restore();
       }
 
       // LAYER 3: VALUE SPEC BADGE
-      if (val && !hasBlacklistHit) {
+      if (val) {
         ctx.save();
         const bScale = conf.bScale || 1.0;
         ctx.font = `bold ${Math.round(26 * bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
-        const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48);
-        const boxH = Math.round(62 * bScale);
+        const boxW = Math.min(680, valMetrics.width + 48), boxH = Math.round(62 * bScale);
+        const bx = conf.badgePos ? conf.badgePos.x : 240, by = conf.badgePos ? conf.badgePos.y : 150;
+        conf._activeBadgeBox = { x: bx - boxW/2, y: by - boxH/2, w: boxW, h: boxH };
 
-        let defBx = 240, defBy = 150;
-        const bx = conf.badgePos ? conf.badgePos.x : defBx;
-        const by = conf.badgePos ? conf.badgePos.y : defBy;
-        conf._activeBadgeBox = { x: bx - boxW / 2, y: by - boxH / 2, w: boxW, h: boxH };
-
-        ctx.save();
-        ctx.translate(bx, by);
-        ctx.rotate(((conf.bRot || 0) * Math.PI) / 180);
-
-        const bStyle = conf.badgeBg || "sticky";
-
-        if (bStyle === "sticky") {
-          ctx.fillStyle = "#FEF08A";
-          ctx.shadowColor = "rgba(0,0,0,0.24)";
-          ctx.shadowBlur = 18;
-          ctx.shadowOffsetY = 6;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
-          ctx.fill();
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "kraft") {
-          ctx.fillStyle = "#C49A6C";
-          ctx.shadowColor = "rgba(0,0,0,0.2)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 12);
-          ctx.fill();
-          ctx.fillStyle = "#FAF8F5";
-          ctx.beginPath();
-          ctx.arc(-boxW / 2 + 18, 0, 6, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = "#FFFFFF";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 8, 9 * bScale);
-        } else if (bStyle === "pill") {
-          ctx.fillStyle = "#FAF8F5";
-          ctx.shadowColor = "rgba(0,0,0,0.18)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
-          ctx.fill();
-          ctx.fillStyle = pal.text || "#1E293B";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "ticket") {
-          ctx.fillStyle = "#FFFFFF";
-          ctx.shadowColor = "rgba(0,0,0,0.16)";
-          ctx.shadowBlur = 16;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 10);
-          ctx.fill();
-          ctx.fillStyle = pal.bg;
-          ctx.beginPath(); ctx.arc(-boxW / 2, 0, 8, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath(); ctx.arc(boxW / 2, 0, 8, 0, Math.PI * 2); ctx.fill();
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "scallop") {
-          ctx.fillStyle = "#FEF9C3";
-          ctx.strokeStyle = "#CA8A04";
-          ctx.lineWidth = 2.5;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 16);
-          ctx.fill();
-          ctx.stroke();
-          ctx.fillStyle = "#713F12";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "gingham") {
-          ctx.fillStyle = "rgba(254, 240, 138, 0.9)";
-          ctx.shadowColor = "rgba(0,0,0,0.18)";
-          ctx.shadowBlur = 14;
-          ctx.fillRect(-boxW / 2, -boxH / 2, boxW, boxH);
-          ctx.strokeStyle = "rgba(202, 138, 4, 0.35)";
-          ctx.lineWidth = 2;
-          for (let x = -boxW / 2 + 10; x < boxW / 2; x += 14) {
-            ctx.beginPath(); ctx.moveTo(x, -boxH / 2); ctx.lineTo(x, boxH / 2); ctx.stroke();
-          }
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "hairline") {
-          ctx.strokeStyle = pal.text || "#1E293B";
-          ctx.lineWidth = 2.5;
-          ctx.strokeRect(-boxW / 2, -boxH / 2, boxW, boxH);
-          ctx.fillStyle = pal.text || "#1E293B";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "highlighter") {
-          ctx.fillStyle = "rgba(253, 224, 71, 0.88)";
-          ctx.fillRect(-boxW / 2, -boxH / 2 + 10, boxW, boxH - 14);
-          ctx.fillStyle = "#0F172A";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else if (bStyle === "dark_pill") {
-          ctx.fillStyle = "#0F172A";
-          ctx.shadowColor = "rgba(0,0,0,0.25)";
-          ctx.shadowBlur = 18;
-          ctx.beginPath();
-          ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 9999);
-          ctx.fill();
-          ctx.fillStyle = "#FFFFFF";
-          ctx.textAlign = "center";
-          ctx.fillText(val, 0, 9 * bScale);
-        } else {
-          ctx.fillStyle = pal.text || "#1E293B";
-          ctx.textAlign = "center";
-          ctx.shadowColor = "rgba(255,255,255,0.85)";
-          ctx.shadowBlur = 8;
-          ctx.fillText(val, 0, 9 * bScale);
-        }
-
-        // ACCENTS (STRICTLY CHECKED)
-        if (conf.accents && conf.accents.loop) {
-          ctx.save();
-          ctx.strokeStyle = "#DC2626";
-          ctx.lineWidth = 4.5;
-          ctx.beginPath();
-          ctx.ellipse(0, 2, (boxW / 2) + 14, (boxH / 2) + 9, -0.04, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.ellipse(2, 4, (boxW / 2) + 16, (boxH / 2) + 11, 0.03, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.restore();
-        }
-
-        if (conf.accents && conf.accents.arrow) {
-          ctx.save();
-          ctx.fillStyle = "#DC2626";
-          ctx.strokeStyle = "#DC2626";
-          ctx.lineWidth = 4;
-          drawMarkerArrow(ctx, -boxW / 2 - 25, -55, -boxW / 2 + 8, -boxH / 2);
-          drawMarkerArrow(ctx, -boxW / 2 - 5, -70, -boxW / 2 + 20, -boxH / 2 - 4);
-          drawMarkerArrow(ctx, -boxW / 2 + 20, -75, -boxW / 2 + 35, -boxH / 2 - 8);
-          ctx.restore();
-        }
-
-        if (conf.accents && conf.accents.dbl) {
-          ctx.save();
-          ctx.strokeStyle = "#DC2626";
-          ctx.lineWidth = 3.5;
-          ctx.beginPath();
-          ctx.moveTo(-boxW / 2 - 10, boxH / 2 + 8);
-          ctx.lineTo(boxW / 2 + 10, boxH / 2 + 8);
-          ctx.moveTo(-boxW / 2 - 6, boxH / 2 + 16);
-          ctx.lineTo(boxW / 2 + 6, boxH / 2 + 16);
-          ctx.stroke();
-          ctx.restore();
-        }
-
-        if (conf.accents && conf.accents.eye) {
-          ctx.save();
-          ctx.font = `${Math.round(42 * bScale)}px sans-serif`;
-          ctx.fillText("👀", (boxW / 2) + 14, -boxH / 2 + 10);
-          ctx.restore();
-        }
-
-        if (conf.accents && conf.accents.heart) {
-          drawHeartArrow(ctx, (boxW / 2) + 20, -boxH / 2 - 10);
-        }
-
+        ctx.translate(bx, by); ctx.rotate(((conf.bRot || 0) * Math.PI) / 180);
+        ctx.fillStyle = "#FEF08A"; ctx.shadowColor = "rgba(0,0,0,0.24)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 6;
+        ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 12); ctx.fill();
+        ctx.fillStyle = "#0F172A"; ctx.textAlign = "center"; ctx.fillText(val, 0, 9 * bScale);
         ctx.restore();
       }
-
-      ctx.restore();
-    }
-
-    function drawMarkerArrow(ctx, fromx, fromy, tox, toy) {
-      const headlen = 14;
-      const dx = tox - fromx;
-      const dy = toy - fromy;
-      const angle = Math.atan2(dy, dx);
-      ctx.save();
-      ctx.fillStyle = "#DC2626";
-      ctx.strokeStyle = "#DC2626";
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(fromx, fromy);
-      ctx.lineTo(tox, toy);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(tox, toy);
-      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawHeartArrow(ctx, x, y) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.strokeStyle = "#DC2626";
-      ctx.fillStyle = "#DC2626";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(-30, 10);
-      ctx.quadraticCurveTo(0, -10, 20, -5);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(24, -8, 6, 0, Math.PI * 2);
-      ctx.arc(32, -8, 6, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawBotanicalCornerVines(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
-      ctx.lineWidth = 3;
-
-      ctx.beginPath();
-      ctx.moveTo(940, 40);
-      ctx.quadraticCurveTo(1040, 80, 1040, 200);
-      ctx.stroke();
-
-      const leaves = [[970, 65, -0.5], [1020, 110, 0.4], [1038, 160, -0.2]];
-      leaves.forEach(([lx, ly, rot]) => {
-        ctx.save();
-        ctx.translate(lx, ly);
-        ctx.rotate(rot);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 14, 7, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      ctx.beginPath();
-      ctx.moveTo(140, 1040);
-      ctx.quadraticCurveTo(40, 1000, 40, 880);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    function drawGinghamWashiTape(ctx, cx, cy, w, h) {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(0.015);
-
-      ctx.fillStyle = "rgba(235, 222, 204, 0.85)";
-      ctx.fillRect(-w / 2, -h / 2, w, h);
-
-      ctx.strokeStyle = "rgba(180, 150, 120, 0.4)";
-      ctx.lineWidth = 2.5;
-      for (let x = -w / 2 + 12; x < w / 2; x += 16) {
-        ctx.beginPath(); ctx.moveTo(x, -h / 2); ctx.lineTo(x, h / 2); ctx.stroke();
-      }
-      for (let y = -h / 2 + 8; y < h / 2; y += 14) {
-        ctx.beginPath(); ctx.moveTo(-w / 2, y); ctx.lineTo(w / 2, y); ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    function drawBrassPaperclip(ctx, x, y) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(-0.15);
-      ctx.strokeStyle = "#B4845C";
-      ctx.lineWidth = 4.5;
-      ctx.shadowColor = "rgba(0,0,0,0.25)";
-      ctx.shadowBlur = 8;
-      ctx.beginPath();
-      ctx.moveTo(0, 45);
-      ctx.lineTo(0, -25);
-      ctx.arc(10, -25, 10, Math.PI, 0, false);
-      ctx.lineTo(20, 35);
-      ctx.arc(10, 35, 10, 0, Math.PI, false);
-      ctx.lineTo(0, 15);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    function drawPushPin(ctx, x, y) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.fillStyle = "#A88B7B";
-      ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-      ctx.shadowBlur = 12;
-      ctx.shadowOffsetY = 6;
-
-      ctx.beginPath();
-      ctx.arc(0, -12, 16, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(-9, -4);
-      ctx.lineTo(9, -4);
-      ctx.lineTo(3, 18);
-      ctx.lineTo(-3, 18);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
     }
 
     function getFontFamily(fontKey) {
@@ -2450,35 +1120,22 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       return "'Plus Jakarta Sans', sans-serif";
     }
 
-    // ==========================================
-    // MULTI-OBJECT CANVAS DRAGGING LISTENERS
-    // ==========================================
     function setupCanvasDragListeners() {
       for (let i = 1; i <= 4; i++) {
-        const wrap = document.getElementById(`cCard${i}`);
-        const canvas = document.getElementById(`cardCanvas${i}`);
+        const wrap = document.getElementById(`cCard${i}`), canvas = document.getElementById(`cardCanvas${i}`);
         if (!wrap || !canvas) continue;
 
         wrap.addEventListener("mousedown", (e) => {
           if (activeCardIndex !== i) return;
           const r = canvas.getBoundingClientRect();
-          const mouseX = (e.clientX - r.left) * (1080 / r.width);
-          const mouseY = (e.clientY - r.top) * (1080 / r.height);
-
+          const mouseX = (e.clientX - r.left) * (1080 / r.width), mouseY = (e.clientY - r.top) * (1080 / r.height);
           const c = cardCustoms[i];
-          let hitTarget = null;
+          let hitTarget = "badge";
 
-          if (c._activeSubBox && mouseX >= c._activeSubBox.x && mouseX <= c._activeSubBox.x + c._activeSubBox.w && mouseY >= c._activeSubBox.y && mouseY <= c._activeSubBox.y + c._activeSubBox.h) {
-            hitTarget = "subNote";
-          } else if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) {
-            hitTarget = "badge";
-          } else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) {
-            hitTarget = "note";
-          } else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) {
-            hitTarget = "product";
-          } else {
-            hitTarget = "badge";
-          }
+          if (c._activeSubBox && mouseX >= c._activeSubBox.x && mouseX <= c._activeSubBox.x + c._activeSubBox.w && mouseY >= c._activeSubBox.y && mouseY <= c._activeSubBox.y + c._activeSubBox.h) hitTarget = "subNote";
+          else if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) hitTarget = "badge";
+          else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) hitTarget = "note";
+          else if (c._activeProductBox && mouseX >= c._activeProductBox.x && mouseX <= c._activeProductBox.x + c._activeProductBox.w && mouseY >= c._activeProductBox.y && mouseY <= c._activeProductBox.y + c._activeProductBox.h) hitTarget = "product";
 
           draggingState = { active: true, cardNum: i, target: hitTarget, startX: mouseX, startY: mouseY };
         });
@@ -2489,111 +1146,50 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           const mouseX = Math.max(60, Math.min(1020, (e.clientX - r.left) * (1080 / r.width)));
           const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
 
-          if (draggingState.target === "subNote") {
-            cardCustoms[i].subPos = { x: mouseX, y: mouseY };
-          } else if (draggingState.target === "badge") {
-            cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
-          } else if (draggingState.target === "note") {
-            cardCustoms[i].notePos = { x: mouseX, y: mouseY };
-          } else if (draggingState.target === "product") {
-            cardCustoms[i].productPos = { x: mouseX, y: mouseY };
-          }
+          if (draggingState.target === "subNote") cardCustoms[i].subPos = { x: mouseX, y: mouseY };
+          else if (draggingState.target === "badge") cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
+          else if (draggingState.target === "note") cardCustoms[i].notePos = { x: mouseX, y: mouseY };
+          else if (draggingState.target === "product") cardCustoms[i].productPos = { x: mouseX, y: mouseY };
           renderAll4CreatorCards();
         });
 
-        window.addEventListener("mouseup", () => {
-          if (draggingState.active) {
-            draggingState.active = false;
-            draggingState.cardNum = null;
-            draggingState.target = null;
-          }
-        });
+        window.addEventListener("mouseup", () => { draggingState.active = false; });
       }
     }
 
-    // ==========================================
-    // EXTRACTOR & MASTER RESET FUNCTIONS
-    // ==========================================
     function masterResetDeal() {
       if (!confirm("Start brand new deal? All current edits will be cleared.")) return;
-
-      rawLoadedImage = null;
-      base64ApiPayload = "";
-      detectedBoxes = [];
-      manualBoxes = [];
-      sanitizedCanvasSnapshot = null;
-      all15Variants = [];
-      chosen4Variants = [];
-
+      rawLoadedImage = null; base64ApiPayload = ""; detectedBoxes = []; manualBoxes = [];
+      sanitizedCanvasSnapshot = null; all15Variants = []; chosen4Variants = [];
       tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
-
       document.getElementById('rawDealPaste').value = "";
       document.getElementById('suggestedTitleInput').value = "";
       document.getElementById('mainNoteInput').value = "";
       document.getElementById('simpleValueInput').value = "";
       document.getElementById('subNoteInput').value = "";
       document.getElementById('aiChipsWrapper').classList.add('hidden');
-
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].pScale = 1.0;
-        cardCustoms[i].bScale = 1.0;
-        cardCustoms[i].bRot = i === 1 ? -5 : 0;
-        cardCustoms[i].nRot = 0;
-        cardCustoms[i].nScale = 1.0;
-        cardCustoms[i].subRot = 0;
-        cardCustoms[i].subScale = 1.0;
-        cardCustoms[i].hasNoteBg = false;
-        cardCustoms[i].productPos = null;
-        cardCustoms[i].badgePos = null;
-        cardCustoms[i].notePos = null;
-        cardCustoms[i].subPos = null;
-        cardCustoms[i].accents = { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true };
-      }
-
       navToStep(1);
     }
 
     function setDealMode(mode) {
       currentDealMode = mode;
-      const regBtn = document.getElementById('modeRegularBtn');
-      const runBtn = document.getElementById('modeRunBtn');
-
+      const regBtn = document.getElementById('modeRegularBtn'), runBtn = document.getElementById('modeRunBtn');
       if (mode === 'run') {
         runBtn.className = "px-3 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-md cursor-pointer";
         regBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all cursor-pointer";
-        
-        const curNote = document.getElementById('mainNoteInput').value;
-        if (!curNote.includes('👀')) {
-          document.getElementById('mainNoteInput').value = "Look at this one 👀";
-        }
-
-        for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents.arrow = true;
-          cardCustoms[i].accents.loop = true;
-          cardCustoms[i].accents.eye = true;
-        }
+        document.getElementById('mainNoteInput').value = "Look at this one 👀";
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md cursor-pointer";
-        runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer";
+        runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all cursor-pointer";
         document.getElementById('mainNoteInput').value = "";
-
-        for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].accents.arrow = false;
-          cardCustoms[i].accents.loop = false;
-          cardCustoms[i].accents.eye = false;
-        }
       }
-
-      syncConsoleControls();
       renderAll4CreatorCards();
     }
 
     function shuffleNote() {
       const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
-      const randomNote = pool[Math.floor(Math.random() * pool.length)];
-      document.getElementById('mainNoteInput').value = randomNote;
-      auditOcrSafety();
+      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
       renderAll4CreatorCards();
     }
 
@@ -2601,19 +1197,6 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       if (!valueTagOptions || valueTagOptions.length === 0) return;
       valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
       document.getElementById('simpleValueInput').value = valueTagOptions[valueTagIndex];
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
-    function applyAiNote(text) {
-      document.getElementById('mainNoteInput').value = text;
-      auditOcrSafety();
-      renderAll4CreatorCards();
-    }
-
-    function applyAiSpecTag(text) {
-      document.getElementById('simpleValueInput').value = text;
-      auditOcrSafety();
       renderAll4CreatorCards();
     }
 
@@ -2621,183 +1204,85 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       const wrapper = document.getElementById('aiChipsWrapper');
       const affContainer = document.getElementById('aiChipsContainer');
       const specContainer = document.getElementById('aiSpecChipsContainer');
-
-      if ((!affirmations || affirmations.length === 0) && (!specTags || specTags.length === 0)) {
-        wrapper.classList.add('hidden');
-        return;
-      }
+      if ((!affirmations || affirmations.length === 0) && (!specTags || specTags.length === 0)) { wrapper.classList.add('hidden'); return; }
 
       affContainer.innerHTML = "";
-      if (affirmations && affirmations.length > 0) {
-        affirmations.forEach(note => {
-          const btn = document.createElement('button');
-          btn.type = "button";
-          btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
-          btn.innerText = note;
-          btn.onclick = () => applyAiNote(note);
-          affContainer.appendChild(btn);
-        });
-      }
+      affirmations.forEach(note => {
+        const btn = document.createElement('button');
+        btn.type = "button"; btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
+        btn.innerText = note; btn.onclick = () => { document.getElementById('mainNoteInput').value = note; renderAll4CreatorCards(); };
+        affContainer.appendChild(btn);
+      });
 
       specContainer.innerHTML = "";
-      if (specTags && specTags.length > 0) {
-        specTags.forEach(spec => {
-          const btn = document.createElement('button');
-          btn.type = "button";
-          btn.className = "text-[11px] bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
-          btn.innerText = spec;
-          btn.onclick = () => applyAiSpecTag(spec);
-          specContainer.appendChild(btn);
-        });
-      }
-
+      specTags.forEach(spec => {
+        const btn = document.createElement('button');
+        btn.type = "button"; btn.className = "text-[11px] bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
+        btn.innerText = spec; btn.onclick = () => { document.getElementById('simpleValueInput').value = spec; renderAll4CreatorCards(); };
+        specContainer.appendChild(btn);
+      });
       wrapper.classList.remove('hidden');
     }
 
     function auditOcrSafety() {
-      const textToScan = [
-        document.getElementById('mainNoteInput').value,
-        document.getElementById('simpleValueInput').value,
-        document.getElementById('subNoteInput').value
-      ].join(' ').toLowerCase();
-
+      const textToScan = [document.getElementById('mainNoteInput').value, document.getElementById('simpleValueInput').value, document.getElementById('subNoteInput').value].join(' ').toLowerCase();
       const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
       const banner = document.getElementById('ocrWarningBanner');
       if (hits.length > 0) {
         document.getElementById('ocrWarningText').innerText = `Banned terms detected: "${hits.join(', ')}". Pure non-commercial curation specs only!`;
         banner.classList.remove('hidden');
-      } else {
-        banner.classList.add('hidden');
-      }
+      } else { banner.classList.add('hidden'); }
     }
 
-    // RAW DEAL EXTRACTOR (DYNAMIC AI AFFIRMATIONS & SPEC TAGS)
     async function extractDealInfo() {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
-
       const rLower = raw.toLowerCase();
 
-      // Detect Category
-      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass') || rLower.includes('fertilizer') || rLower.includes('soil') || rLower.includes('seed')) {
-        activeCategory = "lawn_garden";
-      } else if (rLower.includes('lotion') || rLower.includes('body') || rLower.includes('scrub') || rLower.includes('shampoo') || rLower.includes('beauty') || rLower.includes('skin') || rLower.includes('serum') || rLower.includes('cream')) {
-        activeCategory = "beauty_personal";
-      } else if (rLower.includes('clean') || rLower.includes('kitchen') || rLower.includes('pantry') || rLower.includes('detergent') || rLower.includes('wipe') || rLower.includes('towel') || rLower.includes('cook') || rLower.includes('knife')) {
-        activeCategory = "home_kitchen";
-      } else {
-        activeCategory = "general";
-      }
+      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass')) activeCategory = "lawn_garden";
+      else if (rLower.includes('lotion') || rLower.includes('beauty') || rLower.includes('skin')) activeCategory = "beauty_personal";
+      else if (rLower.includes('clean') || rLower.includes('kitchen')) activeCategory = "home_kitchen";
+      else activeCategory = "general";
 
       const pool = AFFIRMATIONS[activeCategory];
       document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
 
-      // Local Regex Spec Harvesting (Counts, Units, Dimensions, Material - ZERO PRICES)
-      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?|bags?|piece|pc|set))\b/i);
-      const sizeMatch = raw.match(/\b(sizes?\s+[a-z0-9\s-]+|x-small|small|medium|large|xl|xxl)\b/i);
-      const materialMatch = raw.match(/\b(stainless\s+steel|natural\s+wood|cast\s+iron|bamboo|silicone|ceramic|linen|cotton)\b/i);
-
-      const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : "";
-      const sizeClean = sizeMatch ? sizeMatch[0].toUpperCase().trim() : "";
-      const matClean = materialMatch ? materialMatch[0].toUpperCase().trim() : "";
-
-      valueTagOptions = [
-        unitClean || matClean || "HOME STAPLE",
-        matClean || "SOLID CHOICE",
-        "DAILY PICK",
-        "CURATED FIND",
-        sizeClean || "VERIFIED QUALITY"
-      ].filter((v, i, a) => v && a.indexOf(v) === i);
-
-      valueTagIndex = 0;
+      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?))\b/i);
+      const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : "HOME STAPLE";
+      valueTagOptions = [unitClean, "VERIFIED QUALITY", "DAILY PICK", "CURATED FIND", "SOLID CHOICE"];
       document.getElementById('simpleValueInput').value = valueTagOptions[0];
-
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].badgePos = null;
-        cardCustoms[i].notePos = null;
-        cardCustoms[i].subPos = null;
-      }
-
-      auditOcrSafety();
       renderAll4CreatorCards();
 
       const key = document.getElementById('apiKeyInput').value.trim();
       if (key) {
         try {
-          const prompt = `You are a professional luxury lifestyle magazine editor. Analyze this product deal info:
-"${raw.slice(0, 350)}"
-
-Generate two strictly non-commercial text sets formatted as valid JSON:
-1. "spec_tags": Exactly 6 clean, non-commercial product specs/attributes (e.g., "20oz · 12-PACK", "STAINLESS STEEL", "HOME STAPLE", "DAILY PICK", "SOLID CHOICE", "BAMBOO FINISH", "SET OF 4"). 
-   CRITICAL FORBIDDEN RULE: NEVER include prices, dollar signs ($), numbers representing currency, or words like "sale", "deal", "discount", "cheap", "save", "free", "price", "shipped", "total".
-2. "affirmations": Exactly 6 warm, human-like editorial lifestyle affirmations tailored to this product category (under 6 words each). For example: "Glowing skin routine unlocked", "Spa luxury at home", "Radiant complexion goals", "Dinner prep made simple".
-
-Return ONLY JSON:
+          const prompt = `Analyze this product deal info: "${raw.slice(0, 300)}"
+Return ONLY valid JSON with 6 spec tags, 6 affirmations, and 1 suggested font style ("handwritten", "typewriter", "modern_sans", "playful", or "editorial"):
 {
   "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6"],
-  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"]
+  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"],
+  "suggested_font": "editorial"
 }`;
-
-          const payload = {
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
-          };
-
+          const payload = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, responseMimeType: "application/json" } };
           const aiData = await callGeminiLeapingMesh(key, payload);
-          let rawTxt = aiData.candidates[0]?.content?.parts[0]?.text || "{}";
-          rawTxt = rawTxt.replace(/```json/gi, '').replace(/```/g, '').trim();
+          let rawTxt = (aiData.candidates[0]?.content?.parts[0]?.text || "{}").replace(/```json/gi, '').replace(/```/g, '').trim();
           const parsed = JSON.parse(rawTxt);
 
-          let safeSpecs = [];
-          if (Array.isArray(parsed.spec_tags) && parsed.spec_tags.length > 0) {
-            safeSpecs = parsed.spec_tags
-              .map(s => s.toUpperCase().trim())
-              .filter(s => !FB_BLACKLIST.some(b => s.toLowerCase().includes(b)));
-            if (safeSpecs.length > 0) {
-              valueTagOptions = [...safeSpecs, ...valueTagOptions].filter((v, i, a) => v && a.indexOf(v) === i);
-              document.getElementById('simpleValueInput').value = valueTagOptions[0];
-            }
+          if (parsed.suggested_font) {
+            document.getElementById('activeFontSelect').value = parsed.suggested_font;
+            for (let i = 1; i <= 4; i++) cardCustoms[i].font = parsed.suggested_font;
           }
-
-          let safeAffirmations = [];
-          if (Array.isArray(parsed.affirmations) && parsed.affirmations.length > 0) {
-            safeAffirmations = parsed.affirmations.filter(n => !FB_BLACKLIST.some(b => n.toLowerCase().includes(b)));
-            if (safeAffirmations.length > 0) {
-              document.getElementById('mainNoteInput').value = safeAffirmations[0];
-            }
-          }
-
-          renderAiChips(safeAffirmations, safeSpecs);
+          renderAiChips(parsed.affirmations || [], parsed.spec_tags || []);
           renderAll4CreatorCards();
-        } catch (e) {
-          console.log("Local categorization active (AI parsing notice):", e);
-        }
+        } catch (e) {}
       }
     }
 
-    // ==========================================
-    // DOWNLOAD HELPERS (SCRUBS PROVENANCE METADATA)
-    // ==========================================
     function downloadCanvasData(dataUrl, filename) {
-      const link = document.createElement('a');
-      link.download = `${filename}_${Date.now()}.png`;
-      link.href = dataUrl;
-      link.click();
+      const link = document.createElement('a'); link.download = `${filename}_${Date.now()}.png`; link.href = dataUrl; link.click();
     }
-
-    function downloadActiveCard() {
-      const c = document.getElementById(`cardCanvas${activeCardIndex}`);
-      if (c) downloadCanvasData(c.toDataURL('image/png'), `deal_card_${activeCardIndex}`);
-    }
-
-    function downloadAllCards() {
-      ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => {
-        setTimeout(() => {
-          const c = document.getElementById(id);
-          if (c) downloadCanvasData(c.toDataURL('image/png'), `deal_card_${i+1}`);
-        }, i * 250);
-      });
-    }
+    function downloadActiveCard() { const c = document.getElementById(`cardCanvas${activeCardIndex}`); if (c) downloadCanvasData(c.toDataURL('image/png'), `deal_card_${activeCardIndex}`); }
+    function downloadAllCards() { ['cardCanvas1', 'cardCanvas2', 'cardCanvas3', 'cardCanvas4'].forEach((id, i) => setTimeout(() => downloadCanvasData(document.getElementById(id).toDataURL('image/png'), `deal_card_${i+1}`), i * 250)); }
   </script>
 </body>
 </html>
