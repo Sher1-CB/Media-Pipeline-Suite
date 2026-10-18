@@ -1404,9 +1404,15 @@
       const key = document.getElementById('apiKeyInput').value.trim();
       if (key) {
         try {
-          const prompt = `Analyze this product deal info: "${raw.slice(0, 300)}"
-Generate luxury lifestyle magazine content. 
-CRITICAL RULE: NEVER include commercial terms, prices, dollar signs ($), numbers, urgency, or platform names ("Amazon", "deal", "price", "save", "shipped", "sale").
+          const prompt = `You are the lead boutique curator for a high-end lifestyle community. Analyze this product info: "${raw.slice(0, 300)}"
+
+Generate incredibly inviting, scroll-stopping, and positive social media community copy.
+CRITICAL RULES:
+1. POSITIVE WORDS ONLY: Focus entirely on luxury, elevated daily living, beauty, convenience, and joy (e.g., "The ultimate upgrade for your routine ✨", "Your new daily favorite", "Salon results at home", "Effortless everyday luxury"). Never use negative words like "struggle", "tired", or "pain".
+2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or platform/checkout terms ("Amazon", "deal", "price", "save", "shipped", "sale", "discount", "free", "hurry").
+3. SHORT & PUNCHY: Keep affirmations under 6-8 words so they fit cleanly as card headlines.
+4. SPEC TAGS: Provide bold, uppercase product curation specs (e.g., "MEDICAL GRADE LED", "12-PACK BUNDLE", "STAINLESS STEEL").
+
 Return ONLY valid JSON:
 {
   "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6"],
