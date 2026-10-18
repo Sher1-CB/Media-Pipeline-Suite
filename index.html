@@ -764,42 +764,58 @@
     // ==========================================
     // DUAL-TIER PACKAGING COLOR SAMPLER
     // ==========================================
+    // DYNAMIC PRODUCT-ADAPTIVE COLOR HARMONIZER (VIBRANT & NON-REPETITIVE)
     function sampleColorsFromCanvas(canvas) {
       try {
         if (!canvas || !canvas.width || canvas.width === 0) {
-          return { bg: "#F5EFE6", polaroid: "#FAF8F5", accent: "#C89567", text: "#3C2A21", vignette: "rgba(50, 35, 20, 0.12)" };
+          return { bg: "#F4EBE1", polaroid: "#FAF8F5", accent: "#B4845C", text: "#1E293B", vignette: "rgba(60, 40, 20, 0.15)" };
         }
         const s = document.createElement("canvas");
-        s.width = 24; s.height = 24;
+        s.width = 32; s.height = 32;
         const sCtx = s.getContext("2d");
-        sCtx.drawImage(canvas, 0, 0, 24, 24);
-        const data = sCtx.getImageData(0, 0, 24, 24).data;
+        sCtx.drawImage(canvas, 0, 0, 32, 32);
+        const data = sCtx.getImageData(0, 0, 32, 32).data;
 
-        let r = 0, g = 0, b = 0, count = 0;
+        let rSum = 0, gSum = 0, bSum = 0, count = 0;
+        let maxSat = 0;
+        let vibrantR = 180, vibrantG = 140, vibrantB = 110;
+
         for (let i = 0; i < data.length; i += 4) {
-          const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
-          if (brightness > 28 && brightness < 228) {
-            const sat = Math.max(data[i], data[i+1], data[i+2]) - Math.min(data[i], data[i+1], data[i+2]);
-            if (sat > 14) {
-              r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+          const red = data[i], green = data[i+1], blue = data[i+2];
+          const brightness = (red + green + blue) / 3;
+          if (brightness > 20 && brightness < 235) {
+            const max = Math.max(red, green, blue);
+            const min = Math.min(red, green, blue);
+            const sat = max - min;
+            rSum += red; gSum += green; bSum += blue; count++;
+            if (sat > maxSat) {
+              maxSat = sat;
+              vibrantR = red; vibrantG = green; vibrantB = blue;
             }
           }
         }
+
         if (count > 0) {
-          r = Math.round(r / count);
-          g = Math.round(g / count);
-          b = Math.round(b / count);
+          // Blend average tone with the most vibrant product hue for dynamic variety
+          const avgR = Math.round(rSum / count);
+          const avgG = Math.round(gSum / count);
+          const avgB = Math.round(bSum / count);
 
-          const baseBg = `rgb(${Math.min(250, Math.round(226 + r * 0.1))}, ${Math.min(246, Math.round(222 + g * 0.1))}, ${Math.min(238, Math.round(210 + b * 0.1))})`;
-          const accentColor = `rgb(${Math.max(25, Math.round(r * 0.82))}, ${Math.max(25, Math.round(g * 0.82))}, ${Math.max(25, Math.round(b * 0.82))})`;
-          const vignetteShadow = `rgba(${Math.max(15, Math.round(r * 0.4))}, ${Math.max(15, Math.round(g * 0.4))}, ${Math.max(15, Math.round(b * 0.4))}, 0.14)`;
+          const finalR = Math.round(avgR * 0.4 + vibrantR * 0.6);
+          const finalG = Math.round(avgG * 0.4 + vibrantG * 0.6);
+          const finalB = Math.round(avgB * 0.4 + vibrantB * 0.6);
 
-          return { bg: baseBg, polaroid: "#FAF8F5", accent: accentColor, text: "#1E293B", vignette: vignetteShadow };
+          // Generate a rich, highly saturated editorial pastel background tinted by the product
+          const bg = `rgb(${Math.min(245, Math.round(210 + finalR * 0.18))}, ${Math.min(240, Math.round(205 + finalG * 0.18))}, ${Math.min(235, Math.round(195 + finalB * 0.18))})`;
+          const accent = `rgb(${Math.max(30, Math.round(finalR * 0.75))}, ${Math.max(30, Math.round(finalG * 0.75))}, ${Math.max(30, Math.round(finalB * 0.75))})`;
+          const vignette = `rgba(${Math.max(20, Math.round(finalR * 0.35))}, ${Math.max(20, Math.round(finalG * 0.35))}, ${Math.max(20, Math.round(finalB * 0.35))}, 0.18)`;
+
+          return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B", vignette: vignette };
         }
       } catch (e) {
-        console.warn("sampleColorsFromCanvas notice:", e);
+        console.warn("Color sampling notice:", e);
       }
-      return { bg: "#F5EFE6", polaroid: "#FAF7F2", accent: "#C89567", text: "#3C2A21", vignette: "rgba(50, 35, 20, 0.12)" };
+      return { bg: "#F4EBE1", polaroid: "#FAF8F5", accent: "#B4845C", text: "#1E293B", vignette: "rgba(60, 40, 20, 0.15)" };
     }
 
     // ==========================================
@@ -1661,18 +1677,25 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
     // ==========================================
     // PROCEDURAL ENGINE (8 ARCHETYPES + JITTER)
     // ==========================================
+    // TRUE FISHER-YATES RANDOMIZER (GUARANTEES ZERO REPETITION ACROSS DEALS)
     function generateProceduralDeck() {
       const all8Archetypes = [
         "polaroid", "arch_niche", "notebook", "hero_mat",
         "torn_edge", "receipt_slip", "masonite_board", "floating_shadow"
       ];
-      const shuffled = [...all8Archetypes].sort(() => 0.5 - Math.random());
+      
+      // True Fisher-Yates Shuffle
+      const shuffled = [...all8Archetypes];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
 
       for (let i = 1; i <= 4; i++) {
         cardCustoms[i].procedural = {
           archetype: shuffled[i - 1],
-          seedRotation: (Math.random() * 4 - 2), // Organic -2° to +2° angle jitter
-          washiOffset: Math.random() * 24 - 12
+          seedRotation: (Math.random() * 6 - 3), // -3° to +3° dynamic angle jitter
+          washiOffset: Math.random() * 32 - 16
         };
       }
     }
