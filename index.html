@@ -503,14 +503,14 @@
           const avgG = Math.round(gSum / count);
           const avgB = Math.round(bSum / count);
 
-          // Boost vibrance and contrast for high-pop backgrounds
-          const finalR = Math.round(avgR * 0.3 + vibrantR * 0.7);
-          const finalG = Math.round(avgG * 0.3 + vibrantG * 0.7);
-          const finalB = Math.round(avgB * 0.3 + vibrantB * 0.7);
+          const finalR = Math.round(avgR * 0.2 + vibrantR * 0.8);
+          const finalG = Math.round(avgG * 0.2 + vibrantG * 0.8);
+          const finalB = Math.round(avgB * 0.2 + vibrantB * 0.8);
 
-          const bg = `rgb(${Math.min(250, Math.round(190 + finalR * 0.3))}, ${Math.min(250, Math.round(185 + finalG * 0.3))}, ${Math.min(250, Math.round(180 + finalB * 0.3))})`;
-          const accent = `rgb(${Math.max(20, Math.round(finalR * 0.9))}, ${Math.max(20, Math.round(finalG * 0.9))}, ${Math.max(20, Math.round(finalB * 0.9))})`;
-          const vignette = `rgba(${Math.max(10, Math.round(finalR * 0.25))}, ${Math.max(10, Math.round(finalG * 0.25))}, ${Math.max(10, Math.round(finalB * 0.25))}, 0.35)`;
+          // Richer boutique color saturation and deeper accent contrast
+          const bg = `rgb(${Math.min(250, Math.round(160 + finalR * 0.45))}, ${Math.min(250, Math.round(155 + finalG * 0.45))}, ${Math.min(250, Math.round(150 + finalB * 0.45))})`;
+          const accent = `rgb(${Math.max(15, Math.round(finalR * 0.95))}, ${Math.max(15, Math.round(finalG * 0.95))}, ${Math.max(15, Math.round(finalB * 0.95))})`;
+          const vignette = `rgba(${Math.max(5, Math.round(finalR * 0.2))}, ${Math.max(5, Math.round(finalG * 0.2))}, ${Math.max(5, Math.round(finalB * 0.2))}, 0.4)`;
 
           return { bg: bg, polaroid: "#FAF8F5", accent: accent, text: "#1E293B", vignette: vignette };
         }
@@ -538,27 +538,46 @@
       }
     });
 
+    function parseModelVersion(name) {
+      const match = name.match(/(\d+)(?:\.(\d+))?/);
+      if (!match) return 0;
+      return (parseInt(match[1]) || 0) * 100 + (parseInt(match[2]) || 0);
+    }
+
     async function autoDetectModels(key) {
       if (!key) return;
       const modelSelect = document.getElementById('modelSelect');
       if (!modelSelect) return;
+
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
         const data = await res.json();
         if (!data.models || !Array.isArray(data.models)) return;
+
         const validModels = data.models
           .filter(m => (m.supportedGenerationMethods || []).includes("generateContent") && m.name.includes("gemini"))
           .map(m => m.name.replace("models/", ""))
           .filter(n => !n.includes("preview") && !n.includes("exp"));
 
+        validModels.sort((a, b) => parseModelVersion(b) - parseModelVersion(a));
+        const liteModels = validModels.filter(m => m.toLowerCase().includes("lite"));
+
+        window.n1Lite = liteModels.length >= 2 ? liteModels[1] : (liteModels[0] || validModels[0]);
+
         modelSelect.innerHTML = "";
         validModels.forEach(m => {
           const opt = document.createElement("option");
           opt.value = m;
-          opt.textContent = m + (m.includes("flash") ? " (Free Tier Fast)" : "");
+          opt.textContent = m + (m === window.n1Lite ? " (★ Recommended Lite)" : (m.includes("flash") ? " (Flash)" : ""));
           modelSelect.appendChild(opt);
         });
-      } catch (err) {}
+
+        if (window.n1Lite && modelSelect.querySelector(`option[value="${window.n1Lite}"]`)) {
+          modelSelect.value = window.n1Lite;
+        }
+      } catch (err) {
+        console.warn("Model discovery notice:", err);
+      }
     }
 
     function toggleEmergencyDrawer() { document.getElementById('emergencyDrawer').classList.toggle('hidden'); }
@@ -671,28 +690,48 @@
         if (!rawLoadedImage) return;
         isDrawingPatch = true;
         const r = outputCanvas.getBoundingClientRect();
-        patchStartX = (e.clientX - r.left) * (outputCanvas.width / r.width);
-        patchStartY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+        const scaleX = outputCanvas.width / r.width;
+        const scaleY = outputCanvas.height / r.height;
+        patchStartX = (e.clientX - r.left) * scaleX;
+        patchStartY = (e.clientY - r.top) * scaleY;
       });
+
       outputCanvas.addEventListener('mousemove', (e) => {
         if (!isDrawingPatch) return;
         renderOutputCanvas();
         const r = outputCanvas.getBoundingClientRect();
-        const curX = (e.clientX - r.left) * (outputCanvas.width / r.width);
-        const curY = (e.clientY - r.top) * (outputCanvas.height / r.height);
-        oCtx.strokeStyle = "#38bdf8"; oCtx.lineWidth = 3; oCtx.setLineDash([6, 6]);
+        const scaleX = outputCanvas.width / r.width;
+        const scaleY = outputCanvas.height / r.height;
+        const curX = (e.clientX - r.left) * scaleX;
+        const curY = (e.clientY - r.top) * scaleY;
+
+        oCtx.save();
+        oCtx.strokeStyle = "#38bdf8";
+        oCtx.lineWidth = Math.max(2, Math.round(3 * scaleX));
+        oCtx.setLineDash([6, 6]);
         oCtx.strokeRect(patchStartX, patchStartY, curX - patchStartX, curY - patchStartY);
+        oCtx.restore();
       });
+
       outputCanvas.addEventListener('mouseup', (e) => {
         if (!isDrawingPatch) return;
         isDrawingPatch = false;
         const r = outputCanvas.getBoundingClientRect();
-        const endX = (e.clientX - r.left) * (outputCanvas.width / r.width);
-        const endY = (e.clientY - r.top) * (outputCanvas.height / r.height);
+        const scaleX = outputCanvas.width / r.width;
+        const scaleY = outputCanvas.height / r.height;
+        const endX = (e.clientX - r.left) * scaleX;
+        const endY = (e.clientY - r.top) * scaleY;
+
         const x1 = Math.min(patchStartX, endX), y1 = Math.min(patchStartY, endY);
         const x2 = Math.max(patchStartX, endX), y2 = Math.max(patchStartY, endY);
-        if (x2 - x1 > 8 && y2 - y1 > 8) {
-          manualBoxes.push([Math.round((y1/outputCanvas.height)*1000), Math.round((x1/outputCanvas.width)*1000), Math.round((y2/outputCanvas.height)*1000), Math.round((x2/outputCanvas.width)*1000)]);
+
+        if (x2 - x1 > 4 && y2 - y1 > 4) {
+          manualBoxes.push([
+            Math.round((y1 / outputCanvas.height) * 1000),
+            Math.round((x1 / outputCanvas.width) * 1000),
+            Math.round((y2 / outputCanvas.height) * 1000),
+            Math.round((x2 / outputCanvas.width) * 1000)
+          ]);
         }
         renderOutputCanvas();
       });
@@ -972,49 +1011,39 @@
       const accent = pal.accent || "#B4845C";
       const layoutType = hash % 6;
 
-      // 2. VIBRANT HIGH-POP GENERATIVE COMPOSITION (Rich Contrast & Bold Accents)
+      // 2. VIBRANT HIGH-POP GENERATIVE COMPOSITION (Boosted Opacity & Saturated Color)
       if (layoutType === 0) {
-        // High-Contrast Bold Offset Color Block
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.38;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.48;
         ctx.beginPath(); ctx.roundRect((hash % 180) + 40, (hash % 120) + 40, 780, 780, 40); ctx.fill();
       } else if (layoutType === 1) {
-        // Flowing Wave Band with Secondary Accent Ring
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.32;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.42;
         ctx.beginPath(); ctx.moveTo(0, 0);
         ctx.bezierCurveTo(400, (hash % 450) + 80, 680, 1080 - (hash % 250), 1080, 450);
         ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
 
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 6;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 6;
         ctx.beginPath(); ctx.arc(850, 250, 120, 0, Math.PI * 2); ctx.stroke();
       } else if (layoutType === 2) {
-        // Architectural Arch Niche with Deep Frame
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.28;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.38;
         ctx.beginPath(); ctx.arc(540, 420, 380, Math.PI, 0, false);
         ctx.lineTo(920, 1080); ctx.lineTo(160, 1080); ctx.closePath(); ctx.fill();
 
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 4;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.7; ctx.lineWidth = 4;
         ctx.strokeRect(50, 50, 980, 980);
       } else if (layoutType === 3) {
-        // Bold Vertical Split Panel with Double Border
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.45;
         ctx.fillRect(0, 0, 450 + (hash % 120), 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 4;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.7; ctx.lineWidth = 4;
         ctx.strokeRect(50, 50, 980, 980);
-        ctx.lineWidth = 1.5; ctx.strokeRect(62, 62, 956, 956);
       } else if (layoutType === 4) {
-        // High-Impact Geometric Diagonal Sashes
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 4;
         for (let i = -1000; i < 2000; i += 90) {
           ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + 1080, 1080); ctx.stroke();
         }
       } else {
-        // Dynamic Floating Duo-Circles with High Pop
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.3;
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
         ctx.beginPath(); ctx.arc(220, 220, 280, 0, Math.PI * 2); ctx.fill();
         ctx.beginPath(); ctx.arc(860, 860, 240, 0, Math.PI * 2); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 5;
-        ctx.beginPath(); ctx.arc(860, 860, 260, 0, Math.PI * 2); ctx.stroke();
       }
 
       ctx.restore();
