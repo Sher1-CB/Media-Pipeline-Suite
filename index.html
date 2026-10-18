@@ -415,7 +415,7 @@
           <div id="aiChipsContainer" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <!-- GLOBAL TEXT CONTROLS (WITH EXTRA LINE / SUB-NOTE) -->
+        <!-- GLOBAL TEXT CONTROLS -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
@@ -432,6 +432,15 @@
             </div>
             <input type="text" id="simpleValueInput" value="20oz · 12-PACK" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white mt-1 focus:border-sky-500">
           </div>
+
+          <div>
+            <div class="flex justify-between items-center">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Extra Line / Sub-Note (Optional)</label>
+              <button type="button" onclick="clearSubNote()" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase cursor-pointer">✕ Clear</button>
+            </div>
+            <input type="text" id="subNoteInput" placeholder="e.g., verified favorite, limited restock" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500 shadow-inner">
+          </div>
+        </div>
 
           <div>
             <div class="flex justify-between items-center">
@@ -567,12 +576,12 @@
             </div>
           </div>
 
-          <!-- HEADLINE NOTE CONTROLS -->
-          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2.5">
+          <!-- HEADLINE NOTE & INDEPENDENT SUB-NOTE CONTROLS -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
             <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300">
-              <span>✍️ Typography Pairing:</span>
+              <span>✍️ Main Note & Sub-Note:</span>
             </div>
-            <select id="activeFontSelect" onchange="updateActiveFont(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-2 rounded-lg focus:outline-none">
+            <select id="activeFontSelect" onchange="updateActiveFont(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-1.5 rounded-lg focus:outline-none">
               <option value="handwritten">✍️ Casual Script (Caveat)</option>
               <option value="typewriter">📠 Typewriter Mono (Courier)</option>
               <option value="modern_sans">✨ Modern Sans (Plus Jakarta)</option>
@@ -580,23 +589,49 @@
               <option value="editorial">📰 Editorial Serif (Playfair)</option>
             </select>
 
-            <div class="space-y-1">
-              <div class="flex justify-between text-[11px] text-slate-400">
-                <span>Note Tilt:</span>
-                <span id="activeNoteTiltVal" class="text-amber-400 font-mono">0°</span>
+            <!-- Main Note Controls -->
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <div class="flex justify-between text-[10px] text-slate-400">
+                  <span>Note Tilt:</span>
+                  <span id="activeNoteTiltVal" class="text-amber-400 font-mono">0°</span>
+                </div>
+                <input type="range" id="activeNoteTilt" min="-35" max="35" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteTilt(this.value)">
               </div>
-              <input type="range" id="activeNoteTilt" min="-35" max="35" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteTilt(this.value)">
+              <div>
+                <div class="flex justify-between text-[10px] text-slate-400">
+                  <span>Note Size:</span>
+                  <span id="activeNoteSizeVal" class="text-amber-400 font-mono">100%</span>
+                </div>
+                <input type="range" id="activeNoteSize" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteSize(this.value)">
+              </div>
             </div>
 
-            <div class="space-y-1">
-              <div class="flex justify-between text-[11px] text-slate-400">
-                <span>Note Size:</span>
-                <span id="activeNoteSizeVal" class="text-amber-400 font-mono">100%</span>
+            <!-- Independent Sub-Note Controls -->
+            <div class="pt-1.5 border-t border-slate-800 space-y-1">
+              <div class="flex justify-between items-center text-[10px] font-bold uppercase text-sky-400">
+                <span>Extra Sub-Line Layer:</span>
+                <button type="button" onclick="centerSubNote()" class="text-[9px] text-sky-300 hover:underline uppercase cursor-pointer">Reset Sub-Pos</button>
               </div>
-              <input type="range" id="activeNoteSize" min="70" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveNoteSize(this.value)">
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <div class="flex justify-between text-[10px] text-slate-400">
+                    <span>Sub Tilt:</span>
+                    <span id="activeSubTiltVal" class="text-sky-400 font-mono">0°</span>
+                  </div>
+                  <input type="range" id="activeSubTilt" min="-35" max="35" value="0" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveSubTilt(this.value)">
+                </div>
+                <div>
+                  <div class="flex justify-between text-[10px] text-slate-400">
+                    <span>Sub Size:</span>
+                    <span id="activeSubSizeVal" class="text-sky-400 font-mono">100%</span>
+                  </div>
+                  <input type="range" id="activeSubSize" min="60" max="160" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveSubSize(this.value)">
+                </div>
+              </div>
             </div>
 
-            <label class="flex items-center gap-1.5 text-[11px] text-slate-300 pt-1 cursor-pointer">
+            <label class="flex items-center gap-1.5 text-[10px] text-slate-300 pt-1 cursor-pointer">
               <input type="checkbox" id="activeNoteBgBox" onchange="updateActiveNoteBg(this.checked)">
               <span>Add Note Background Fill Box</span>
             </label>
@@ -679,10 +714,10 @@
 
     // Individual Layer State per Card (Infinite Procedural Variations)
     let cardCustoms = {
-      1: { pScale: 1.0, bScale: 1.0, bRot: -5, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "sticky", font: "handwritten", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
-      2: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "kraft", font: "typewriter", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
-      3: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "pill", font: "editorial", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
-      4: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, hasNoteBg: false, badgeBg: "ticket", font: "modern_sans", productPos: null, badgePos: null, notePos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null }
+      1: { pScale: 1.0, bScale: 1.0, bRot: -5, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, badgeBg: "sticky", font: "handwritten", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
+      2: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, badgeBg: "kraft", font: "typewriter", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
+      3: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, badgeBg: "pill", font: "editorial", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null },
+      4: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, badgeBg: "ticket", font: "modern_sans", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: true }, procedural: null }
     };
 
     let draggingState = { active: false, cardNum: null, target: null, startX: 0, startY: 0 };
@@ -924,7 +959,7 @@
           detectedBoxes = [];
           manualBoxes = [];
 
-          // 1. AUTO-BLANK INPUT FIELDS ON NEW UPLOAD
+          // Auto-blank input fields on fresh upload
           const mainNoteEl = document.getElementById('mainNoteInput');
           const specTagEl = document.getElementById('simpleValueInput');
           const subNoteEl = document.getElementById('subNoteInput');
@@ -939,11 +974,12 @@
           if (titleInputEl) titleInputEl.value = "";
           if (chipsWrapperEl) chipsWrapperEl.classList.add('hidden');
 
-          // 2. TRUE INFINITE RE-ROLL (ZERO REPETITION FOR NEXT DEAL)
+          // Instant procedural deck re-roll for new deal
           generateProceduralDeck();
           for (let i = 1; i <= 4; i++) {
             cardCustoms[i].badgePos = null;
             cardCustoms[i].notePos = null;
+            cardCustoms[i].subPos = null;
             cardCustoms[i].productPos = null;
           }
 
@@ -956,7 +992,6 @@
             fCanvas.getContext('2d').drawImage(img, 0, 0, fCanvas.width, fCanvas.height);
             base64ApiPayload = fCanvas.toDataURL('image/jpeg', 0.82).split(',')[1];
 
-            // Extract dual-tier packaging color harmonies immediately
             sampleColorsFromCanvas(fCanvas);
           } catch (e) {
             console.warn("Payload compression notice:", e);
@@ -1573,6 +1608,17 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
       document.getElementById('activeNoteSize').value = Math.round((conf.nScale || 1.0) * 100);
       document.getElementById('activeNoteSizeVal').innerText = `${Math.round((conf.nScale || 1.0) * 100)}%`;
 
+      const subTiltEl = document.getElementById('activeSubTilt');
+      if (subTiltEl) {
+        subTiltEl.value = conf.subRot || 0;
+        document.getElementById('activeSubTiltVal').innerText = `${conf.subRot || 0}°`;
+      }
+      const subSizeEl = document.getElementById('activeSubSize');
+      if (subSizeEl) {
+        subSizeEl.value = Math.round((conf.subScale || 1.0) * 100);
+        document.getElementById('activeSubSizeVal').innerText = `${Math.round((conf.subScale || 1.0) * 100)}%`;
+      }
+
       document.getElementById('activeProductSize').value = Math.round((conf.pScale || 1.0) * 100);
       document.getElementById('activeProductSizeVal').innerText = `${Math.round((conf.pScale || 1.0) * 100)}%`;
 
@@ -1582,6 +1628,23 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
         const cb = document.getElementById(`dec_${acc}`);
         if (cb) cb.checked = !!(conf.accents && conf.accents[acc]);
       });
+    }
+
+    function updateActiveSubTilt(val) {
+      cardCustoms[activeCardIndex].subRot = parseInt(val);
+      document.getElementById('activeSubTiltVal').innerText = `${val}°`;
+      renderAll4CreatorCards();
+    }
+
+    function updateActiveSubSize(val) {
+      cardCustoms[activeCardIndex].subScale = parseFloat(val) / 100.0;
+      document.getElementById('activeSubSizeVal').innerText = `${val}%`;
+      renderAll4CreatorCards();
+    }
+
+    function centerSubNote() {
+      cardCustoms[activeCardIndex].subPos = null;
+      renderAll4CreatorCards();
     }
 
     function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
@@ -1930,20 +1993,47 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
 
       ctx.font = `800 ${sansFontSize}px 'Plus Jakarta Sans', sans-serif`;
       ctx.fillText(remainingWords, -nw / 2 + 27 + w1, 10);
+      ctx.restore();
+      ctx.restore();
 
-      // Optional Extra Line / Sub-Note Rendering
+      // LAYER 2B: INDEPENDENT SUB-NOTE / EXTRA LINE (HIGH-CONTRAST & DRAGGABLE)
       const subNote = (document.getElementById('subNoteInput')?.value || "").trim();
-      if (subNote) {
+      if (subNote && !hasBlacklistHit) {
         ctx.save();
+        const subScale = conf.subScale || 1.0;
+        const subRot = conf.subRot || 0;
+
+        const defSubX = 540;
+        const defSubY = ny < 540 ? (ny + 50) : (ny - 50);
+
+        const sx = conf.subPos ? conf.subPos.x : defSubX;
+        const sy = conf.subPos ? conf.subPos.y : defSubY;
+
+        ctx.font = `italic 700 ${Math.round(24 * subScale)}px 'Caveat', cursive, sans-serif`;
+        const subMetrics = ctx.measureText(subNote);
+        const sw = subMetrics.width + 36;
+        const sh = 42 * subScale;
+
+        conf._activeSubBox = { x: sx - sw / 2, y: sy - sh / 2, w: sw, h: sh };
+
+        ctx.translate(sx, sy);
+        ctx.rotate((subRot * Math.PI) / 180);
+
+        ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.16)";
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetY = 3;
+        ctx.beginPath();
+        ctx.roundRect(-sw / 2, -sh / 2, sw, sh, 8);
+        ctx.fill();
+        ctx.shadowColor = "transparent";
+
         ctx.textAlign = "center";
-        ctx.fillStyle = pal.accent || "#B4845C";
-        ctx.font = `italic 600 ${Math.round(20 * nScale)}px 'Caveat', cursive, sans-serif`;
-        ctx.fillText(subNote, 0, 38);
+        ctx.fillStyle = pal.text || "#1E293B";
+        ctx.fillText(subNote, 0, 6 * subScale);
+
         ctx.restore();
       }
-
-      ctx.restore();
-      ctx.restore();
 
       // LAYER 3: VALUE SPEC BADGE
       if (val && !hasBlacklistHit) {
@@ -2278,7 +2368,9 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           const c = cardCustoms[i];
           let hitTarget = null;
 
-          if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) {
+          if (c._activeSubBox && mouseX >= c._activeSubBox.x && mouseX <= c._activeSubBox.x + c._activeSubBox.w && mouseY >= c._activeSubBox.y && mouseY <= c._activeSubBox.y + c._activeSubBox.h) {
+            hitTarget = "subNote";
+          } else if (c._activeBadgeBox && mouseX >= c._activeBadgeBox.x && mouseX <= c._activeBadgeBox.x + c._activeBadgeBox.w && mouseY >= c._activeBadgeBox.y && mouseY <= c._activeBadgeBox.y + c._activeBadgeBox.h) {
             hitTarget = "badge";
           } else if (c._activeNoteBox && mouseX >= c._activeNoteBox.x && mouseX <= c._activeNoteBox.x + c._activeNoteBox.w && mouseY >= c._activeNoteBox.y && mouseY <= c._activeNoteBox.y + c._activeNoteBox.h) {
             hitTarget = "note";
@@ -2297,7 +2389,9 @@ Do not mask generic category nouns or sizes. Return ONLY valid JSON: {"boxes": [
           const mouseX = Math.max(60, Math.min(1020, (e.clientX - r.left) * (1080 / r.width)));
           const mouseY = Math.max(60, Math.min(1020, (e.clientY - r.top) * (1080 / r.height)));
 
-          if (draggingState.target === "badge") {
+          if (draggingState.target === "subNote") {
+            cardCustoms[i].subPos = { x: mouseX, y: mouseY };
+          } else if (draggingState.target === "badge") {
             cardCustoms[i].badgePos = { x: mouseX, y: mouseY };
           } else if (draggingState.target === "note") {
             cardCustoms[i].notePos = { x: mouseX, y: mouseY };
