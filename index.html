@@ -1658,16 +1658,74 @@ Return ONLY valid JSON:
       ctx.restore();
     }
     
-    function drawBotanicalCornerVines(ctx, color) {
+    // MULTI-ELEMENT BOUTIQUE GRAPHIC SCATTER ENGINE (Ensures 3+ rich overlapping elements per card)
+    function drawRandomizedVine(ctx, color) {
       ctx.save();
-      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(940, 40); ctx.quadraticCurveTo(1040, 80, 1040, 200); ctx.stroke();
-      [[970, 65, -0.5], [1020, 110, 0.4], [1038, 160, -0.2]].forEach(([lx, ly, rot]) => {
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(-100, 0); ctx.quadraticCurveTo(0, 40, 100, 0); ctx.stroke();
+      [[-50, 15, -0.4], [0, 30, 0.2], [50, 15, 0.5]].forEach(([lx, ly, rot]) => {
         ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 14, 7, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(0, 0, 22, 11, 0, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
       });
       ctx.restore();
+    }
+
+    function renderMultiCardGraphics(ctx, hash, accent, brightAccent, textCol) {
+      const seed1 = hash % 13;
+      const seed2 = (hash * 7) % 13;
+      const seed3 = (hash * 13) % 13;
+
+      [seed1, seed2, seed3].forEach((id, idx) => {
+        ctx.save();
+        const rx = 150 + ((hash * (idx + 3)) % 780);
+        const ry = 150 + ((hash * (idx + 7)) % 780);
+        const rRot = (((hash * (idx + 1)) % 360) * Math.PI) / 180;
+
+        ctx.translate(rx, ry);
+        ctx.rotate(rRot);
+
+        if (id === 0 || id === 1) {
+          drawRandomizedVine(ctx, accent);
+        } else if (id === 2) {
+          ctx.font = "bold 56px sans-serif";
+          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.4;
+          ctx.fillText("✨", -20, -10);
+          ctx.fillText("⭐", 30, 40);
+        } else if (id === 3) {
+          ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
+          ctx.beginPath(); ctx.arc(0, 0, 120, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.15;
+          ctx.beginPath(); ctx.arc(50, 50, 70, 0, Math.PI * 2); ctx.fill();
+        } else if (id === 4) {
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(0, 0, 200, Math.PI, 0, false); ctx.stroke();
+        } else if (id === 5) {
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(-60, 0); ctx.lineTo(60, 0); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(0, -60); ctx.lineTo(0, 60); ctx.stroke();
+          ctx.beginPath(); ctx.arc(0, 0, 40, 0, Math.PI * 2); ctx.stroke();
+        } else if (id === 6) {
+          ctx.strokeStyle = brightAccent; ctx.globalAlpha = 0.35; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.arc(0, 0, 90, 0, Math.PI * 2); ctx.stroke();
+        } else if (id === 7) {
+          ctx.fillStyle = accent; ctx.globalAlpha = 0.18;
+          ctx.beginPath(); ctx.ellipse(0, 0, 70, 35, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
+        } else if (id === 8) {
+          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.2;
+          ctx.beginPath(); ctx.roundRect(-120, -80, 240, 160, 20); ctx.fill();
+        } else if (id === 9) {
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(-50, 0); ctx.bezierCurveTo(-20, -50, 20, 50, 50, 0); ctx.stroke();
+        } else if (id === 10) {
+          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.18;
+          ctx.beginPath(); ctx.moveTo(-60, -20); ctx.bezierCurveTo(-80, 40, 20, 70, 60, 20); ctx.closePath(); ctx.fill();
+        } else {
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
+          ctx.setLineDash([5, 5]); ctx.strokeRect(-100, -100, 200, 200); ctx.setLineDash([]);
+        }
+        ctx.restore();
+      });
     }
 
     function drawWashiTape(ctx, cx, cy, w, h) {
