@@ -725,13 +725,13 @@
         const x2 = Math.max(patchStartX, endX);
         const y2 = Math.max(patchStartY, endY);
 
-        if (x2 - x1 > 6 && y2 - y1 > 6) {
-          manualBoxes.push([
-            Math.round((y1 / outputCanvas.height) * 1000),
-            Math.round((x1 / outputCanvas.width) * 1000),
-            Math.round((y2 / outputCanvas.height) * 1000),
-            Math.round((x2 / outputCanvas.width) * 1000)
-          ]);
+        if (x2 - x1 > 4 && y2 - y1 > 4) {
+          // Store raw pixel coordinates [ymin, xmin, ymax, xmax] mapped to 0-1000 properly
+          const ymin = Math.round((y1 / outputCanvas.height) * 1000);
+          const xmin = Math.round((x1 / outputCanvas.width) * 1000);
+          const ymax = Math.round((y2 / outputCanvas.height) * 1000);
+          const xmax = Math.round((x2 / outputCanvas.width) * 1000);
+          manualBoxes.push([ymin, xmin, ymax, xmax]);
         }
         renderOutputCanvas();
       });
