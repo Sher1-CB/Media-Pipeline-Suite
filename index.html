@@ -1243,27 +1243,23 @@
       ctx.fillStyle = dynamicBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. VIBRANT ASYMMETRIC ORGANIC LIQUID BLOB WASHES
-      ctx.save();
-      const cornerX = (hash % 2 === 0) ? 0 : 1080;
-      const cornerY = ((hash * 7) % 2 === 0) ? 0 : 1080;
-      const organicGrad = ctx.createRadialGradient(cornerX, cornerY, 60, cornerX, cornerY, 800);
-      organicGrad.addColorStop(0, accentColor);
-      organicGrad.addColorStop(1, "transparent");
-      ctx.fillStyle = organicGrad;
-      ctx.globalAlpha = 0.50; // Rich, vibrant color presence matching your Canva samples
-      ctx.beginPath();
-      ctx.arc(cornerX, cornerY, 540 + (hash % 100), 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = brightPopColor;
-      ctx.globalAlpha = 0.40;
-      ctx.beginPath();
-      const popX = 200 + ((hash * 13) % 680);
-      const popY = 200 + ((hash * 19) % 680);
-      ctx.arc(popX, popY, 150 + (hash % 60), 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+      // 2. OPTIONAL RANDOMIZED BOTTOM-LAYER ORGANIC BLOB (Appears randomly as a subtle deep wash)
+      if (hash % 3 !== 0) { // Only appears on ~65% of cards for natural variety
+        ctx.save();
+        const randCorner = hash % 4; // 0: Top-Left, 1: Top-Right, 2: Bottom-Left, 3: Bottom-Right
+        const bX = (randCorner === 0 || randCorner === 2) ? 0 : 1080;
+        const bY = (randCorner === 0 || randCorner === 1) ? 0 : 1080;
+        
+        const bottomBlobGrad = ctx.createRadialGradient(bX, bY, 40, bX, bY, 800);
+        bottomBlobGrad.addColorStop(0, accentColor);
+        bottomBlobGrad.addColorStop(1, "transparent");
+        ctx.fillStyle = bottomBlobGrad;
+        ctx.globalAlpha = 0.25; // Soft, artistic background depth
+        ctx.beginPath();
+        ctx.arc(bX, bY, 500 + (hash % 150), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
 
       // 3. ACTIVATING THE MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
       ctx.save();
