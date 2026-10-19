@@ -1319,12 +1319,25 @@
       ctx.fillStyle = vGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // LAYER 1: PRODUCT STAGING (SUPPORTS FULL-BLEED TRANSPARENT FLOAT OR FRAMED MAT)
+      // LAYER 1: PROPORTIONAL PRODUCT STAGING (PREVENTS SQUISHING/COMPRESSION)
       const pScale = conf.pScale || 1.0;
-      const pw = Math.round(780 * pScale), ph = Math.round(780 * pScale);
       const px = conf.productPos ? conf.productPos.x : 540;
       const py = conf.productPos ? conf.productPos.y : 485;
-      conf._activeProductBox = { x: px - pw/2, y: py - ph/2, w: pw, h: ph };
+
+      // Calculate natural aspect ratio to prevent any image compression
+      const imgW = srcCanvas.width || srcCanvas.naturalWidth || 800;
+      const imgH = srcCanvas.height || srcCanvas.naturalHeight || 800;
+      const maxBox = Math.round(720 * pScale);
+      const ratio = imgW / imgH;
+      
+      let drawW = maxBox, drawH = maxBox;
+      if (ratio > 1) {
+        drawH = Math.round(maxBox / ratio);
+      } else {
+        drawW = Math.round(maxBox * ratio);
+      }
+
+      conf._activeProductBox = { x: px - drawW/2, y: py - drawH/2, w: drawW, h: drawH };
 
       ctx.save();
       const frameRot = (proc.seedRotation * Math.PI) / 180;
@@ -1332,21 +1345,20 @@
       ctx.rotate(frameRot);
 
       if (conf.removeMat) {
-        // FULL-BLEED FLOAT: No white mat, product floats dramatically over the background texture with deep shadow
-        ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-        ctx.shadowBlur = 52;
-        ctx.shadowOffsetY = 24;
-        if (srcCanvas) ctx.drawImage(srcCanvas, -pw/2, -ph/2, pw, ph);
+        // FULL-BLEED FLOAT WITH PROPORTIONAL DIMENSIONS
+        ctx.shadowColor = "rgba(0, 0, 0, 0.38)"; ctx.shadowBlur = 48; ctx.shadowOffsetY = 22;
+        if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
         ctx.shadowColor = "transparent";
       } else {
-        // TRADITIONAL FRAMED POLAROID MAT
+        // FRAMED POLAROID MAT (Dynamically adapts to image proportions)
+        const matW = Math.max(820, drawW + 90);
+        const matH = Math.max(860, drawH + 150);
         ctx.fillStyle = "#FAF8F5";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.24)"; 
-        ctx.shadowBlur = 40; 
-        ctx.shadowOffsetY = 18;
-        ctx.fillRect(-410, -390, 820, 890);
+        ctx.shadowColor = "rgba(0, 0, 0, 0.25)"; ctx.shadowBlur = 38; ctx.shadowOffsetY = 16;
+        ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
-        if (srcCanvas) ctx.drawImage(srcCanvas, -pw/2, -ph/2 - 20, pw, ph);
+        drawWashiTape(ctx, proc.washiOffset, -matH/2, 200, 42);
+        if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2 - 20, drawW, drawH);
       }
       ctx.restore();
 
