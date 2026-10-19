@@ -1243,23 +1243,36 @@
       ctx.fillStyle = dynamicBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. OPTIONAL RANDOMIZED BOTTOM-LAYER ORGANIC BLOB (Appears randomly as a subtle deep wash)
-      if (hash % 3 !== 0) { // Only appears on ~65% of cards for natural variety
+      // 2. TRULY RANDOM FREE-FLOATING ORGANIC BLOB SHAPES (Asymmetric & Unconstrained)
+      if (hash % 3 !== 0) { // Appears on ~65% of cards for natural variety
         ctx.save();
-        const randCorner = hash % 4; // 0: Top-Left, 1: Top-Right, 2: Bottom-Left, 3: Bottom-Right
-        const bX = (randCorner === 0 || randCorner === 2) ? 0 : 1080;
-        const bY = (randCorner === 0 || randCorner === 1) ? 0 : 1080;
-        
-        const bottomBlobGrad = ctx.createRadialGradient(bX, bY, 40, bX, bY, 800);
-        bottomBlobGrad.addColorStop(0, accentColor);
-        bottomBlobGrad.addColorStop(1, "transparent");
-        ctx.fillStyle = bottomBlobGrad;
-        ctx.globalAlpha = 0.25; // Soft, artistic background depth
+        // Fully random coordinates anywhere on the canvas (no more half-cards pinned to corners)
+        const freeX = 200 + ((hash * 37) % 680);
+        const freeY = 200 + ((hash * 43) % 680);
+        const freeRot = (((hash * 17) % 360) * Math.PI) / 180;
+
+        ctx.translate(freeX, freeY);
+        ctx.rotate(freeRot);
+
+        const blobColor = (hash % 2 === 0) ? accentColor : ((hash % 3 === 0) ? "#E0A96D" : "#D48C68");
+        ctx.fillStyle = blobColor;
+        ctx.globalAlpha = 0.22; // Soft, beautiful watercolor depth
+
+        // Draw an organic, free-form amoeba blob path instead of a clipped circle
         ctx.beginPath();
-        ctx.arc(bX, bY, 500 + (hash % 150), 0, Math.PI * 2);
+        ctx.moveTo(0, -120);
+        ctx.bezierCurveTo(140, -160, 220, -20, 180, 120);
+        ctx.bezierCurveTo(140, 220, -40, 180, -140, 140);
+        ctx.bezierCurveTo(-220, 100, -160, -80, 0, -120);
+        ctx.closePath();
         ctx.fill();
         ctx.restore();
       }
+
+      // 3. ACTIVATING THE MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
+      ctx.save();
+      renderMultiScaleScatterEngine(ctx, hash, accentColor, (hash % 2 === 0) ? "#E0A96D" : "#D48C68");
+      ctx.restore();
 
       // 3. ACTIVATING THE MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
       ctx.save();
