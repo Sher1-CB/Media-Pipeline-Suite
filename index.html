@@ -1132,45 +1132,120 @@
       ctx.restore();
     }
 
+    // ==========================================
+    // ULTIMATE CANVA-STYLE MULTI-SCALE SCATTER ENGINE
+    // ==========================================
+    function drawDetailedWildflower(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.8;
+      ctx.beginPath(); ctx.moveTo(0, 90); ctx.quadraticCurveTo(12, 30, 0, -40); ctx.stroke();
+      [[-22, 25, -0.5], [18, 5, 0.4], [-15, -20, -0.3]].forEach(([lx, ly, rot]) => {
+        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
+        ctx.beginPath(); ctx.ellipse(0, 0, 15, 7, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      });
+      for (let i = 0; i < 3; i++) {
+        ctx.save();
+        ctx.translate((i - 1) * 15, -50 - (i % 2) * 10);
+        ctx.beginPath(); ctx.arc(0, 0, 10, 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    function drawTopographicWaves(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.45;
+      for (let r = 20; r <= 160; r += 20) {
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 0.5, false);
+        ctx.stroke();
+      }
+      // Add tiny node dots along waves
+      ctx.fillStyle = color;
+      [40, 80, 120].forEach(rad => {
+        ctx.beginPath(); ctx.arc(rad, 0, 3, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(0, rad, 3, 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    function drawGridNotebookPatch(ctx, color) {
+      ctx.save();
+      ctx.fillStyle = "#FAF8F5";
+      ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.85;
+      ctx.fillRect(-120, -120, 240, 240);
+      ctx.strokeRect(-120, -120, 240, 240);
+      
+      // Grid lines
+      ctx.globalAlpha = 0.2;
+      for (let x = -120; x <= 120; x += 24) {
+        ctx.beginPath(); ctx.moveTo(x, -120); ctx.lineTo(x, 120); ctx.stroke();
+      }
+      for (let y = -120; y <= 120; y += 24) {
+        ctx.beginPath(); ctx.moveTo(-120, y); ctx.lineTo(120, y); ctx.stroke();
+      }
+      
+      // Washi tape on top of grid patch
+      ctx.fillStyle = "rgba(200, 175, 150, 0.75)";
+      ctx.fillRect(-50, -135, 100, 25);
+      ctx.restore();
+    }
+
     function renderMultiScaleScatterEngine(ctx, hash, accent, brightAccent) {
       ctx.save();
 
-      // --- 3 TO 5 BIG STRUCTURAL ELEMENTS (Guaranteed Variety: Botanicals, Waves, Grids, Frames)
+      // --- 3 TO 5 BIG STRUCTURAL ELEMENTS (Randomly appearing with true independent randomness)
       const bigCount = 3 + (hash % 3); 
       for (let i = 0; i < bigCount; i++) {
+        // Only render if random chance permits (prevents crowding every single card identically)
+        if (((hash * (i + 5)) % 100) > 85) continue;
+
         ctx.save();
         const bHash = hash * (i + 17);
-        const bx = 150 + (bHash % 780);
-        const by = 150 + ((bHash * 3) % 780);
+        const bx = 120 + (bHash % 840);
+        const by = 120 + ((bHash * 3) % 840);
         const bRot = (((bHash * 7) % 360) * Math.PI) / 180;
-        const bScale = 0.8 + ((bHash % 50) / 100);
+        const bScale = 0.75 + ((bHash % 50) / 100);
 
         ctx.translate(bx, by);
         ctx.rotate(bRot);
         ctx.scale(bScale, bScale);
 
-        // Rotate through botanicals, fluid waves, note grids, and architectural frames
-        const bigTypeId = (bHash + i) % 4;
+        const bigTypeId = (bHash + i) % 5;
         if (bigTypeId === 0) {
-          drawDetailedWildflower(ctx, accent);
+          // Asymmetric Organic Liquid Blob (Free-floating anywhere)
+          const blobGrad = ctx.createRadialGradient(0, 0, 20, 0, 0, 320);
+          blobGrad.addColorStop(0, accent);
+          blobGrad.addColorStop(1, "transparent");
+          ctx.fillStyle = blobGrad; ctx.globalAlpha = 0.32;
+          ctx.beginPath();
+          ctx.moveTo(0, -140);
+          ctx.bezierCurveTo(160, -180, 240, -20, 200, 140);
+          ctx.bezierCurveTo(160, 240, -40, 200, -160, 160);
+          ctx.bezierCurveTo(-240, 120, -180, -90, 0, -140);
+          ctx.closePath(); ctx.fill();
         } else if (bigTypeId === 1) {
-          drawFluidWaveRibbon(ctx, brightAccent);
+          drawDetailedWildflower(ctx, accent);
         } else if (bigTypeId === 2) {
-          drawNoteGridPattern(ctx, accent);
+          drawTopographicWaves(ctx, accent);
+        } else if (bigTypeId === 3) {
+          drawGridNotebookPatch(ctx, accent);
         } else {
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.45; ctx.lineWidth = 3;
-          ctx.strokeRect(-160, -160, 320, 320);
+          // Minimalist Arch Frame
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(0, 0, 180, Math.PI, 0, false); ctx.stroke();
         }
         ctx.restore();
       }
 
-      // --- 3 TO 5 SMALL ACCENT ELEMENTS (Pins, Paperclips, Arrows, Sparkles, Seed Dots)
+      // --- 3 TO 5 SMALL ACCENT ELEMENTS (Mid-Century Stars, Seed Dots, Paperclips, Swirls)
       const smallCount = 3 + ((hash >> 3) % 3);
       for (let j = 0; j < smallCount; j++) {
         ctx.save();
         const sHash = hash * (j + 29);
-        const sx = 100 + (sHash % 880);
-        const sy = 100 + ((sHash * 5) % 880);
+        const sx = 80 + (sHash % 920);
+        const sy = 80 + ((sHash * 5) % 920);
         const sRot = (((sHash * 11) % 360) * Math.PI) / 180;
 
         ctx.translate(sx, sy);
@@ -1178,35 +1253,35 @@
 
         const smallTypeId = (sHash + j) % 6;
         if (smallTypeId === 0) {
-          // Metallic Pushpin
-          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.8;
-          ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill();
-          ctx.fillStyle = "#1E293B"; ctx.beginPath(); ctx.arc(0, -3, 3, 0, Math.PI * 2); ctx.fill();
+          // Mid-Century 4-Point Starburst
+          ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(0, -50); ctx.quadraticCurveTo(0, 0, 50, 0);
+          ctx.quadraticCurveTo(0, 0, 0, 50); ctx.quadraticCurveTo(0, 0, -50, 0);
+          ctx.quadraticCurveTo(0, 0, 0, -50); ctx.fill();
         } else if (smallTypeId === 1) {
-          // Sparkle Dust
-          ctx.font = "bold 48px sans-serif";
-          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.65;
-          ctx.fillText("✨", -15, 10);
-        } else if (smallTypeId === 2) {
-          // Hand-Drawn Arrow
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 2.5;
-          ctx.beginPath(); ctx.moveTo(-35, 0); ctx.lineTo(35, 0);
-          ctx.moveTo(18, -12); ctx.lineTo(35, 0); ctx.lineTo(18, 12); ctx.stroke();
-        } else if (smallTypeId === 3) {
-          // Seed Pods / Scatter Dots
-          ctx.fillStyle = accent; ctx.globalAlpha = 0.6;
-          for (let d = 0; d < 5; d++) {
-            ctx.beginPath(); ctx.arc((d * 14) - 28, (d % 2) * 12 - 6, 4.5, 0, Math.PI * 2); ctx.fill();
-          }
-        } else if (smallTypeId === 4) {
-          // Brass Paperclip
-          ctx.strokeStyle = "#D97706"; ctx.globalAlpha = 0.8; ctx.lineWidth = 3.5;
-          ctx.beginPath(); ctx.roundRect(-14, -28, 28, 56, 14); ctx.stroke();
-        } else {
-          // Tiny Leaf Cluster
+          // Stippled Seed Dots Cluster
           ctx.fillStyle = accent; ctx.globalAlpha = 0.5;
-          ctx.beginPath(); ctx.ellipse(-12, 0, 22, 11, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath(); ctx.ellipse(12, 0, 22, 11, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+          for (let d = 0; d < 7; d++) {
+            ctx.beginPath(); ctx.arc((d * 10) - 30, (d % 3) * 12 - 6, 3, 0, Math.PI * 2); ctx.fill();
+          }
+        } else if (smallTypeId === 2) {
+          // Calligraphy Swirl Doodle
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(-60, 0);
+          ctx.bezierCurveTo(-20, -50, 20, 50, 60, 0); ctx.stroke();
+        } else if (smallTypeId === 3) {
+          // Brass Paperclip
+          ctx.strokeStyle = "#C5A059"; ctx.globalAlpha = 0.8; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.roundRect(-12, -24, 24, 48, 12); ctx.stroke();
+        } else if (smallTypeId === 4) {
+          // Pushpin Stud
+          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.8;
+          ctx.beginPath(); ctx.arc(0, 0, 10, 0, Math.PI * 2); ctx.fill();
+        } else {
+          // Tiny Leaf Tendril
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(-30, 0); ctx.quadraticCurveTo(0, 20, 30, 0); ctx.stroke();
         }
         ctx.restore();
       }
