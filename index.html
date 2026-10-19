@@ -1093,28 +1093,61 @@
       ctx.fillStyle = baseCream;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. AIRY 10% SOFT MUTED ORGANIC LIQUID BLOB WASHES
+      // 2. VIBRANT ORGANIC LIQUID BLOBS & ACTIVE LINE-ART BOTANICALS
       ctx.save();
       const cornerX = (hash % 2 === 0) ? 0 : 1080;
       const cornerY = ((hash * 7) % 2 === 0) ? 0 : 1080;
-      const organicGrad = ctx.createRadialGradient(cornerX, cornerY, 80, cornerX, cornerY, 850);
+      const organicGrad = ctx.createRadialGradient(cornerX, cornerY, 60, cornerX, cornerY, 800);
       organicGrad.addColorStop(0, primaryColor);
       organicGrad.addColorStop(1, "transparent");
       ctx.fillStyle = organicGrad;
-      ctx.globalAlpha = 0.10; // Soft 10% airy opacity
+      ctx.globalAlpha = 0.35; // Rich, vibrant color presence
       ctx.beginPath();
-      ctx.arc(cornerX, cornerY, 580 + (hash % 120), 0, Math.PI * 2);
+      ctx.arc(cornerX, cornerY, 540 + (hash % 100), 0, Math.PI * 2);
       ctx.fill();
 
-      // Secondary soft pastel blob at 8%
-      const secondaryPastel = (hash % 3 === 0) ? "#D8C5B2" : ((hash % 3 === 1) ? "#C2D4C8" : "#D4C2C8");
-      ctx.fillStyle = secondaryPastel;
-      ctx.globalAlpha = 0.08;
+      // Secondary vibrant color accent blob
+      const secondaryPop = secondBrightAccent;
+      ctx.fillStyle = secondaryPop;
+      ctx.globalAlpha = 0.3;
       ctx.beginPath();
       const secX = 200 + ((hash * 11) % 680);
       const secY = 200 + ((hash * 17) % 680);
-      ctx.arc(secX, secY, 180 + (hash % 80), 0, Math.PI * 2);
+      ctx.arc(secX, secY, 160 + (hash % 70), 0, Math.PI * 2);
       ctx.fill();
+      ctx.restore();
+
+      // 3. EXPLICITLY RENDER BOTANICAL BRANCHES & LINE-ART ON EVERY CARD
+      ctx.save();
+      const lineArtId = (hash * cardNum * 17) % 4;
+      const artX = 160 + (hash % 760);
+      const artY = 160 + ((hash * 5) % 760);
+      const artRot = ((hash % 360) * Math.PI) / 180;
+
+      ctx.translate(artX, artY);
+      ctx.rotate(artRot);
+
+      if (lineArtId === 0) {
+        // 🌿 Botanical Line-Art Branch
+        drawRandomizedVine(ctx, primaryColor);
+      } else if (lineArtId === 1) {
+        // ✨ Sparkle Burst Dust
+        ctx.font = "bold 60px sans-serif";
+        ctx.fillStyle = primaryColor; ctx.globalAlpha = 0.55;
+        ctx.fillText("✨", -20, 0);
+        ctx.fillText("⭐", 40, 50);
+      } else if (lineArtId === 2) {
+        // 💫 Calligraphy Swirl Doodle
+        ctx.strokeStyle = primaryColor; ctx.globalAlpha = 0.45; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(-70, 0);
+        ctx.bezierCurveTo(-30, -70, 30, 70, 70, 0);
+        ctx.stroke();
+      } else {
+        // 🌿 Minimalist Leaf Cluster
+        ctx.fillStyle = primaryColor; ctx.globalAlpha = 0.4;
+        ctx.beginPath(); ctx.ellipse(-25, 0, 50, 25, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(25, 0, 50, 25, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+      }
       ctx.restore();
 
       // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES
