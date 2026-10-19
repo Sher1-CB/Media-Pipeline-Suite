@@ -1322,11 +1322,6 @@
       renderMultiScaleScatterEngine(ctx, hash, accentColor, (hash % 2 === 0) ? "#E0A96D" : "#D48C68");
       ctx.restore();
 
-      // 3. ACTIVATING THE MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
-      ctx.save();
-      renderMultiScaleScatterEngine(ctx, hash, accentColor, brightPopColor);
-      ctx.restore();
-
       // Vignette Depth Shadow
       const vignetteGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
       vignetteGrad.addColorStop(0, "transparent");
