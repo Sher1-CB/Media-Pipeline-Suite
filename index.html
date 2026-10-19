@@ -1090,17 +1090,26 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. CANVA-STYLE 30% MUTED ORGANIC COLOR HARMONY
-      const accentColor = pal.accent || "#4A5D4E";
+      // 1. VIBRANT PHOTO-DEPENDENT CANVA COLOR HARMONY
+      const accentColor = pal.accent || "#3C2A21"; // Rich sampled accent
       const primaryColor = accentColor;
-      const baseCream = "#FAF6F5";
-      const secondBrightAccent = (hash % 2 === 0) ? "#D8C5B2" : "#C2D4C8";
+      // Uses the rich photo-sampled background tint instead of a flat grey/cream
+      const vibrantBaseBg = pal.bg || "#EBF3F9"; 
+      const secondBrightAccent = (hash % 2 === 0) ? "#93C5FD" : "#60A5FA";
 
-      // Clean luminous paper background
-      ctx.fillStyle = baseCream;
+      // Vibrant tinted background wash based on the product photo
+      const bgAngle = (hash % 360) * (Math.PI / 180);
+      const dynamicBgGrad = ctx.createLinearGradient(
+        540 + Math.cos(bgAngle) * 700, 540 + Math.sin(bgAngle) * 700, 
+        540 - Math.cos(bgAngle) * 700, 540 - Math.sin(bgAngle) * 700
+      );
+      dynamicBgGrad.addColorStop(0, "#FFFFFF");
+      dynamicBgGrad.addColorStop(0.5, vibrantBaseBg);
+      dynamicBgGrad.addColorStop(1, "#D6E4EF");
+      ctx.fillStyle = dynamicBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. VIBRANT ORGANIC LIQUID BLOBS & ACTIVE LINE-ART BOTANICALS
+      // 2. RICH 40% VIBRANT ORGANIC LIQUID BLOB WASHES (Spilling from random corners)
       ctx.save();
       const cornerX = (hash % 2 === 0) ? 0 : 1080;
       const cornerY = ((hash * 7) % 2 === 0) ? 0 : 1080;
@@ -1108,7 +1117,7 @@
       organicGrad.addColorStop(0, primaryColor);
       organicGrad.addColorStop(1, "transparent");
       ctx.fillStyle = organicGrad;
-      ctx.globalAlpha = 0.35; // Rich, vibrant color presence
+      ctx.globalAlpha = 0.40; // Rich, vibrant color presence matching your Canva samples
       ctx.beginPath();
       ctx.arc(cornerX, cornerY, 540 + (hash % 100), 0, Math.PI * 2);
       ctx.fill();
