@@ -1084,7 +1084,8 @@
       ctx.globalAlpha = 1.0;
 
       // 1. CANVA-STYLE 30% MUTED ORGANIC COLOR HARMONY
-      const primaryColor = pal.accent || "#4A5D4E"; // Photo-dependent accent
+      const accentColor = pal.accent || "#4A5D4E"; // Bridges lower function calls
+      const primaryColor = accentColor;
       const baseCream = "#FAF6F5"; // Airy luminous cream paper base
 
       // Clean luminous paper background
