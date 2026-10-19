@@ -44,26 +44,26 @@
     .coverflow-card.pos-left-1 {
       transform: translateX(-340px) scale(0.82) rotateY(24deg);
       z-index: 20;
-      opacity: 0.78;
-      filter: drop-shadow(0 15px 20px rgba(0,0,0,0.35));
+      opacity: 1;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.45)) brightness(0.88);
     }
     .coverflow-card.pos-left-2 {
       transform: translateX(-560px) scale(0.68) rotateY(35deg);
       z-index: 10;
-      opacity: 0.45;
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25));
+      opacity: 1;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35)) brightness(0.72);
     }
     .coverflow-card.pos-right-1 {
       transform: translateX(340px) scale(0.82) rotateY(-24deg);
       z-index: 20;
-      opacity: 0.78;
-      filter: drop-shadow(0 15px 20px rgba(0,0,0,0.35));
+      opacity: 1;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.45)) brightness(0.88);
     }
     .coverflow-card.pos-right-2 {
       transform: translateX(560px) scale(0.68) rotateY(-35deg);
       z-index: 10;
-      opacity: 0.45;
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25));
+      opacity: 1;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35)) brightness(0.72);
     }
     .coverflow-card canvas {
       width: 100% !important;
@@ -572,42 +572,73 @@
         const sCtx = s.getContext("2d"); sCtx.drawImage(canvas, 0, 0, 48, 48);
         const data = sCtx.getImageData(0, 0, 48, 48).data;
 
-        let maxScore = 0;
-        let bestR = 196, bestG = 138, bestB = 92;
+        let maxScore1 = 0;
+        let r1 = 196, g1 = 138, b1 = 92;
 
+        // Pass 1: Find dominant primary vibrant color
         for (let i = 0; i < data.length; i += 4) {
-          const red = data[i], green = data[i+1], blue = data[i+2], alpha = data[i+3];
-          if (alpha < 120) continue;
-          const brightness = (red + green + blue) / 3;
-          if (brightness > 25 && brightness < 230) {
-            const max = Math.max(red, green, blue);
-            const min = Math.min(red, green, blue);
-            const saturation = max - min;
-            const score = saturation * 2.2 + (255 - Math.abs(brightness - 128));
-            if (score > maxScore) {
-              maxScore = score;
-              bestR = red; bestG = green; bestB = blue;
+          const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
+          if (a < 120) continue;
+          const br = (r + g + b) / 3;
+          if (br > 25 && br < 235) {
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            const sat = max - min;
+            const score = sat * 2.5 + (255 - Math.abs(br - 128));
+            if (score > maxScore1) {
+              maxScore1 = score;
+              r1 = r; g1 = g; b1 = b;
             }
           }
         }
 
-        const hsl = rgbToHsl(bestR, bestG, bestB);
-        const baseHue = hsl.h;
-        const baseSat = Math.max(35, Math.min(85, hsl.s));
+        const hsl1 = rgbToHsl(r1, g1, b1);
+        const h1 = hsl1.h;
+
+        // Pass 2: Find contrasting secondary accent (at least 45 degrees away in Hue, e.g. Teal vs Orange)
+        let maxScore2 = 0;
+        let r2 = r1, g2 = g1, b2 = b1;
+
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
+          if (a < 120) continue;
+          const br = (r + g + b) / 3;
+          if (br > 25 && br < 235) {
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            const sat = max - min;
+            const curHsl = rgbToHsl(r, g, b);
+            const hueDiff = Math.abs(curHsl.h - h1);
+            const dist = Math.min(hueDiff, 360 - hueDiff);
+
+            // Reward colors that are noticeably different in hue from primary
+            if (dist > 45 && sat > 25) {
+              const score2 = sat * 2.0 + dist * 1.5;
+              if (score2 > maxScore2) {
+                maxScore2 = score2;
+                r2 = r; g2 = g; b2 = b;
+              }
+            }
+          }
+        }
+
+        let hsl2 = (maxScore2 > 0) ? rgbToHsl(r2, g2, b2) : { h: (h1 + 160) % 360, s: 65, l: 45 };
+        const h2 = hsl2.h;
 
         return {
-          h: baseHue,
+          h: h1,
+          h2: h2,
           // Airy, high-key pastel wash
-          bg: `hsl(${baseHue}, ${Math.min(baseSat, 28)}%, 96%)`,
-          bgSecondary: `hsl(${baseHue}, ${Math.min(baseSat, 42)}%, 91%)`,
-          // Punchy primary accent matching product tone
-          accent: `hsl(${baseHue}, ${Math.max(baseSat, 70)}%, ${Math.min(Math.max(hsl.l, 36), 46)}%)`,
-          // Warm bright pop (analogous shift)
-          brightPop: `hsl(${(baseHue + 25) % 360}, ${Math.max(baseSat, 75)}%, 52%)`,
-          // Luxury dark charcoal tinted with product hue
-          text: `hsl(${baseHue}, 30%, 14%)`,
+          bg: `hsl(${h1}, 24%, 96%)`,
+          bgSecondary: `hsl(${h2}, 28%, 92%)`,
+          // Primary Hero Accent (e.g. Burnt Orange)
+          accent: `hsl(${h1}, 75%, 44%)`,
+          // Secondary Contrasting Accent (e.g. Deep Teal)
+          accent2: `hsl(${h2}, 70%, 38%)`,
+          // Warm bright pop
+          brightPop: `hsl(${(h1 + 25) % 360}, 80%, 54%)`,
+          // Deep tinted charcoal
+          text: `hsl(${h1}, 32%, 14%)`,
           paper: "#FAF8F5",
-          vignette: `hsla(${baseHue}, 35%, 15%, 0.16)`
+          vignette: `hsla(${h1}, 35%, 15%, 0.16)`
         };
       } catch (e) {
         return getDefaultPalette();
@@ -616,10 +647,12 @@
 
     function getDefaultPalette() {
       return {
-        h: 30,
+        h: 28,
+        h2: 175,
         bg: "#FAF6F5",
-        bgSecondary: "#F1EAE4",
+        bgSecondary: "#EBF3F2",
         accent: "#C27847",
+        accent2: "#1F7A7A",
         brightPop: "#E09852",
         text: "#241D1A",
         paper: "#FAF8F5",
@@ -1362,61 +1395,61 @@
     }
 
     function drawLinenBackground(ctx, pal) {
-      // Warm woven linen studio texture (Sample 1 Card 2)
-      ctx.fillStyle = pal.bg;
+      // Visible Tinted Studio Linen (Sample 1 Card 2)
+      ctx.save();
+      ctx.fillStyle = pal.bgSecondary || "#EBF0EE";
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Fine woven fabric cross-hatch
-      ctx.save();
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.04)";
-      ctx.lineWidth = 1;
-      for (let x = 0; x < 1080; x += 6) {
+      // Crisp woven fabric cross-hatch
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.06)";
+      ctx.lineWidth = 1.2;
+      for (let x = 0; x < 1080; x += 8) {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
       }
-      for (let y = 0; y < 1080; y += 6) {
+      for (let y = 0; y < 1080; y += 8) {
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke();
       }
       ctx.restore();
     }
 
     function drawKraftBackground(ctx, pal) {
-      // Warm oatmeal kraft paper (Sample 1 Card 3 & 4)
-      ctx.fillStyle = "#EAE0D2";
+      // Rich Warm Oatmeal Kraft Paper (Sample 1 Card 3 & 4)
+      ctx.save();
+      ctx.fillStyle = "#E4D6C2";
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Organic recycled kraft specks & fibers
-      ctx.save();
-      ctx.fillStyle = "rgba(70, 50, 30, 0.18)";
-      for (let i = 0; i < 80; i++) {
-        const x = (i * 127) % 1080, y = (i * 311) % 1080;
-        ctx.fillRect(x, y, 2.5, 1.5);
+      // Noticeable organic kraft specks & fibers
+      ctx.fillStyle = "rgba(60, 40, 20, 0.22)";
+      for (let i = 0; i < 110; i++) {
+        const x = (i * 137) % 1080, y = (i * 283) % 1080;
+        ctx.fillRect(x, y, 3, 1.8);
       }
       ctx.restore();
     }
 
     function drawOrganicWavesBackground(ctx, pal, hash) {
-      // 70s Retro Fluid Curved Color Bands (Sample 2 & Sample 5)
+      // 70s Retro Dual-Accent Curved Waves (Using Primary Accent + Contrasting Teal/Secondary)
+      ctx.save();
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      ctx.save();
-      // Wave 1: Saturated corner organic shape
+      // Wave 1: Primary Accent Wave (e.g. Burnt Orange)
       ctx.fillStyle = pal.accent;
-      ctx.globalAlpha = 0.85;
+      ctx.globalAlpha = 0.88;
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(460, 0);
-      ctx.bezierCurveTo(420, 260, 200, 420, 0, 480);
+      ctx.lineTo(520, 0);
+      ctx.bezierCurveTo(460, 280, 220, 440, 0, 520);
       ctx.closePath();
       ctx.fill();
 
-      // Wave 2: Opposing bright pop wave
-      ctx.fillStyle = pal.brightPop;
-      ctx.globalAlpha = 0.75;
+      // Wave 2: Contrasting Secondary Accent (e.g. Deep Teal)
+      ctx.fillStyle = pal.accent2 || pal.brightPop;
+      ctx.globalAlpha = 0.82;
       ctx.beginPath();
       ctx.moveTo(1080, 1080);
-      ctx.lineTo(680, 1080);
-      ctx.bezierCurveTo(720, 840, 900, 680, 1080, 620);
+      ctx.lineTo(620, 1080);
+      ctx.bezierCurveTo(680, 800, 880, 640, 1080, 580);
       ctx.closePath();
       ctx.fill();
       ctx.restore();
@@ -2173,10 +2206,11 @@
 
 Generate incredibly inviting, scroll-stopping, and positive social media community copy.
 CRITICAL RULES:
-1. POSITIVE WORDS ONLY: Focus entirely on luxury, elevated daily living, beauty, convenience, and joy (e.g., "The ultimate upgrade for your routine ✨", "Your new daily favorite", "Salon results at home", "Effortless everyday luxury").
-2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or platform/checkout terms ("Amazon", "deal", "price", "save", "shipped", "sale", "discount", "free", "hurry").
-3. SHORT & PUNCHY: Keep affirmations under 6-8 words so they fit cleanly as card headlines.
-4. SPEC TAGS: Provide bold, uppercase product curation specs (e.g., "MEDICAL GRADE LED", "12-PACK BUNDLE", "STAINLESS STEEL").
+1. POSITIVE WORDS ONLY: Focus entirely on elevated daily living, beauty, convenience, and joy (e.g., "The ultimate upgrade for your routine ✨", "Your new daily favorite", "Effortless everyday luxury").
+2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or platform/checkout terms ("Amazon", "deal", "price", "save", "shipped", "sale", "discount", "free", "hurry", "drop").
+3. FACTUAL SPECS ONLY (NO HALLUCINATIONS): Never invent certifications, materials, or claims not explicitly written in the input text. NEVER assume words like "organic", "artisan", "medical grade", "non-gmo", "handcrafted", "wooden", or "cotton" unless explicitly present in the input.
+4. SPEC TAGS: Provide bold, uppercase product curation specs based strictly on factual counts, sizes, pack quantities, or safe neutral lifestyle curation terms (e.g., "24 COUNT", "10 OZ BOTTLES", "DUAL PACK BUNDLE", "PANTRY STAPLE", "SOLID CHOICE", "HOME ESSENTIAL").
+5. SHORT & PUNCHY: Keep affirmations under 6-8 words so they fit cleanly as card headlines.
 
 Return ONLY valid JSON:
 {
