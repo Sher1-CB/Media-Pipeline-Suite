@@ -1074,6 +1074,9 @@
     // ==========================================
     // VIBRANT MULTI-LAYER BOUTIQUE GENERATIVE ENGINE
     // ==========================================
+    // ==========================================
+    // VIBRANT MULTI-LAYER BOUTIQUE GENERATIVE ENGINE
+    // ==========================================
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
@@ -1084,127 +1087,52 @@
       ctx.globalAlpha = 1.0;
 
       // 1. VIBRANT PRODUCT-SAMPLED COLOR HARMONY & LUSTROUS BASE
-      const accent = pal.accent || "#3C2A21";
-      const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
+      const accentColor = pal.accent || "#3C2A21";
+      const secondBrightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
       
-      const angle = (hash % 360) * (Math.PI / 180);
-      const bgGrad = ctx.createLinearGradient(
-        540 + Math.cos(angle) * 700, 540 + Math.sin(angle) * 700, 
-        540 - Math.cos(angle) * 700, 540 - Math.sin(angle) * 700
+      const gradAngle = (hash % 360) * (Math.PI / 180);
+      const canvasBgGrad = ctx.createLinearGradient(
+        540 + Math.cos(gradAngle) * 700, 540 + Math.sin(gradAngle) * 700, 
+        540 - Math.cos(gradAngle) * 700, 540 - Math.sin(angle) * 700
       );
-      bgGrad.addColorStop(0, "#FFFFFF");
-      bgGrad.addColorStop(0.4, pal.bg || "#F5EFE6");
-      bgGrad.addColorStop(1, "#EAE0D5");
-      ctx.fillStyle = bgGrad;
+      canvasBgGrad.addColorStop(0, "#FFFFFF");
+      canvasBgGrad.addColorStop(0.4, pal.bg || "#F5EFE6");
+      canvasBgGrad.addColorStop(1, "#EAE0D5");
+      ctx.fillStyle = canvasBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES (Spilling across random canvas edges)
+      // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES
       ctx.save();
-      const blobX = (hash % 2 === 0) ? 0 : 1080;
-      const blobY = ((hash * 7) % 2 === 0) ? 0 : 1080;
-      const customBlobGrad = ctx.createRadialGradient(bX, bY, 50, bX, bY, 750);
-      customBlobGrad.addColorStop(0, accent);
-      customBlobGrad.addColorStop(1, "transparent");
-      ctx.fillStyle = customBlobGrad;
+      const liquidX = (hash % 2 === 0) ? 0 : 1080;
+      const liquidY = ((hash * 7) % 2 === 0) ? 0 : 1080;
+      const liquidGrad = ctx.createRadialGradient(liquidX, liquidY, 50, liquidX, liquidY, 750);
+      liquidGrad.addColorStop(0, accentColor);
+      liquidGrad.addColorStop(1, "transparent");
+      ctx.fillStyle = liquidGrad;
       ctx.globalAlpha = 0.28;
       ctx.beginPath();
-      ctx.arc(blobX, blobY, 540 + (hash % 100), 0, Math.PI * 2);
+      ctx.arc(liquidX, liquidY, 540 + (hash % 100), 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = brightAccent;
+      ctx.fillStyle = secondBrightAccent;
       ctx.globalAlpha = 0.2;
       ctx.beginPath();
-      const popX = 200 + ((hash * 13) % 680);
-      const popY = 200 + ((hash * 19) % 680);
-      ctx.arc(popX, popY, 150 + (hash % 60), 0, Math.PI * 2);
+      const circleX = 200 + ((hash * 13) % 680);
+      const circleY = 200 + ((hash * 19) % 680);
+      ctx.arc(circleX, circleY, 150 + (hash % 60), 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // 3. ACTIVATING THE MULTI-ELEMENT SCATTER ENGINE (Draws 3+ rich elements per card)
+      // 3. ACTIVATING MULTI-ELEMENT SCATTER ENGINE
       ctx.save();
-      renderMultiCardGraphics(ctx, hash, accent, brightAccent, pal.text);
+      renderMultiCardGraphics(ctx, hash, accentColor, secondBrightAccent, pal.text);
       ctx.restore();
 
       // Vignette Depth Shadow
-      const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
-      vGrad.addColorStop(0, "transparent");
-      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.25)");
-      ctx.fillStyle = vGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
-
-      // B. Organic Liquid Blobs (Deep Contrast Shapes)
-      ctx.save();
-      const bX = (hash % 2 === 0) ? 0 : 1080;
-      const bY = ((hash * 7) % 2 === 0) ? 0 : 1080;
-      const blobGrad = ctx.createRadialGradient(bX, bY, 50, bX, bY, 750);
-      blobGrad.addColorStop(0, accent);
-      blobGrad.addColorStop(1, "transparent");
-      ctx.fillStyle = blobGrad;
-      ctx.globalAlpha = 0.28;
-      ctx.beginPath();
-      ctx.arc(bX, bY, 540 + (hash % 100), 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = brightAccent;
-      ctx.globalAlpha = 0.2;
-      ctx.beginPath();
-      const popX = 200 + ((hash * 13) % 680);
-      const popY = 200 + ((hash * 19) % 680);
-      ctx.arc(popX, popY, 150 + (hash % 60), 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-      blobGrad.addColorStop(0, accent);
-      blobGrad.addColorStop(1, "transparent");
-      ctx.fillStyle = blobGrad;
-      ctx.globalAlpha = 0.28;
-      ctx.beginPath();
-      ctx.arc(blobX, blobY, 540 + (hash % 100), 0, Math.PI * 2);
-      ctx.fill();
-
-      // Secondary contrasting liquid blob pop
-      ctx.fillStyle = brightAccent;
-      ctx.globalAlpha = 0.2;
-      ctx.beginPath();
-      const popX = 200 + ((hash * 13) % 680);
-      const popY = 200 + ((hash * 19) % 680);
-      ctx.arc(popX, popY, 150 + (hash % 60), 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      // C. Line-Art & Botanicals (Drawn ON TOP of Blobs)
-      ctx.save();
-      const graphicId = (hash * cardNum * 17) % 6;
-      const randX = 180 + (hash % 720);
-      const randY = 180 + ((hash * 3) % 720);
-      const randRot = ((hash % 360) * Math.PI) / 180;
-
-      ctx.translate(randX, randY);
-      ctx.rotate(randRot);
-
-      if (graphicId === 0 || graphicId === 1) {
-        drawRandomizedVine(ctx, accent);
-      } else if (graphicId === 2) {
-        ctx.font = "bold 58px sans-serif";
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.45;
-        ctx.fillText("✨", -20, 0);
-        ctx.fillText("🌿", 40, 50);
-      } else if (graphicId === 3) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 2.5;
-        ctx.beginPath(); ctx.arc(0, 0, 180, 0, Math.PI * 2); ctx.stroke();
-      } else if (graphicId === 4) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(-70, 0); ctx.bezierCurveTo(-30, -70, 30, 70, 70, 0); ctx.stroke();
-      } else {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
-        ctx.beginPath(); ctx.ellipse(0, 0, 70, 35, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
-      }
-      ctx.restore();
-
-      // Vignette Depth Shadow
-      const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
-      vGrad.addColorStop(0, "transparent");
-      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.25)");
-      ctx.fillStyle = vGrad;
+      const vignetteGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
+      vignetteGrad.addColorStop(0, "transparent");
+      vignetteGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.25)");
+      ctx.fillStyle = vignetteGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
       // LAYER 1: PROPORTIONAL PRODUCT STAGING (PREVENTS SQUISHING/COMPRESSION)
