@@ -1287,9 +1287,37 @@
       );
       dynamicBgGrad.addColorStop(0, "#FFFFFF");
       dynamicBgGrad.addColorStop(0.5, vibrantBaseBg);
-      dynamicBgGrad.addColorStop(1, accentColor);
+      dynamicBgGrad.addColorStop(1, "#FAF6F5");
       ctx.fillStyle = dynamicBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
+
+      // 2. TRUE RANDOM BOTTOM-LAYER ORGANIC WASH (Appears strictly on a random ~50% chance per card)
+      // Uses a dedicated pseudo-random check so it's never uniform across 4 cards
+      const randomChance = Math.abs(Math.sin(hash * 93.17));
+      if (randomChance > 0.45) { 
+        ctx.save();
+        const randX = 150 + ((hash * 41) % 780);
+        const randY = 150 + ((hash * 53) % 780);
+        const randRot = (((hash * 19) % 360) * Math.PI) / 180;
+
+        ctx.translate(randX, randY);
+        ctx.rotate(randRot);
+
+        const blobGrad = ctx.createRadialGradient(0, 0, 30, 0, 0, 450);
+        blobGrad.addColorStop(0, accentColor);
+        blobGrad.addColorStop(1, "transparent");
+        ctx.fillStyle = blobGrad;
+        ctx.globalAlpha = 0.18; // Soft, artistic depth at the very bottom
+
+        ctx.beginPath();
+        ctx.moveTo(0, -100);
+        ctx.bezierCurveTo(120, -140, 180, -20, 150, 100);
+        ctx.bezierCurveTo(120, 180, -30, 150, -120, 120);
+        ctx.bezierCurveTo(-180, 90, -140, -70, 0, -100);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
 
       // 2. TRULY RANDOM FREE-FLOATING ORGANIC BLOB SHAPES (Appears randomly on ~65% of cards)
       if (hash % 3 !== 0) {
