@@ -1074,9 +1074,6 @@
     // ==========================================
     // VIBRANT MULTI-LAYER BOUTIQUE GENERATIVE ENGINE
     // ==========================================
-    // ==========================================
-    // VIBRANT MULTI-LAYER BOUTIQUE GENERATIVE ENGINE
-    // ==========================================
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
@@ -1086,27 +1083,37 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. DYNAMIC PHOTO-DEPENDENT VIBRANT COLOR HARMONY
-      const accentColor = pal.accent || "#3C2A21";
-      const baseProductBg = pal.bg || "#F5EFE6";
-      const secondBrightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
-      
-      const gradAngle = (hash % 360) * (Math.PI / 180);
-      const canvasBgGrad = ctx.createLinearGradient(
-        540 + Math.cos(gradAngle) * 700, 540 + Math.sin(gradAngle) * 700, 
-        540 - Math.cos(gradAngle) * 700, 540 - Math.sin(gradAngle) * 700
-      );
-      canvasBgGrad.addColorStop(0, "#FFFFFF");
-      canvasBgGrad.addColorStop(0.5, baseProductBg);
-      canvasBgGrad.addColorStop(1, accentColor);
-      ctx.fillStyle = canvasBgGrad;
+      // 1. CANVA-STYLE 30% MUTED ORGANIC COLOR HARMONY
+      const primaryColor = pal.accent || "#4A5D4E"; // Photo-dependent accent
+      const baseCream = "#FAF6F5"; // Airy luminous cream paper base
+
+      // Clean luminous paper background
+      ctx.fillStyle = baseCream;
       ctx.fillRect(0, 0, 1080, 1080);
-      // Photo-dependent gradient wash (Luminous highlight transitioning directly into product tone)
-      canvasBgGrad.addColorStop(0, "#FFFFFF");
-      canvasBgGrad.addColorStop(0.5, baseProductBg);
-      canvasBgGrad.addColorStop(1, accentColor);
-      ctx.fillStyle = canvasBgGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
+
+      // 2. MUTED 30% OPACITY ORGANIC LIQUID BLOB WASHES (Spilling from random corners)
+      ctx.save();
+      const cornerX = (hash % 2 === 0) ? 0 : 1080;
+      const cornerY = ((hash * 7) % 2 === 0) ? 0 : 1080;
+      const organicGrad = ctx.createRadialGradient(cornerX, cornerY, 80, cornerX, cornerY, 850);
+      organicGrad.addColorStop(0, primaryColor);
+      organicGrad.addColorStop(1, "transparent");
+      ctx.fillStyle = organicGrad;
+      ctx.globalAlpha = 0.30; // Exactly 30% muted opacity like your Canva samples
+      ctx.beginPath();
+      ctx.arc(cornerX, cornerY, 580 + (hash % 120), 0, Math.PI * 2);
+      ctx.fill();
+
+      // Secondary soft pastel blob
+      const secondaryPastel = (hash % 3 === 0) ? "#D8C5B2" : ((hash % 3 === 1) ? "#C2D4C8" : "#D4C2C8");
+      ctx.fillStyle = secondaryPastel;
+      ctx.globalAlpha = 0.25;
+      ctx.beginPath();
+      const secX = 200 + ((hash * 11) % 680);
+      const secY = 200 + ((hash * 17) % 680);
+      ctx.arc(secX, secY, 180 + (hash % 80), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
 
       // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES
       ctx.save();
