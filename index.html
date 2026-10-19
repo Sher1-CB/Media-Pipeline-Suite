@@ -1072,10 +1072,7 @@
     }
 
     // ==========================================
-    // TACTILE & GENERATIVE BACKGROUND ENGINE (ADDITIVE VARIETY)
-    // ==========================================
-    // ==========================================
-    // VIBRANT LUMINOUS & MULTI-ELEMENT GENERATIVE ENGINE
+    // VIBRANT MULTI-LAYER BOUTIQUE GENERATIVE ENGINE
     // ==========================================
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
@@ -1086,13 +1083,53 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. HIGH-CONTRAST BOUTIQUE MULTI-LAYER ENGINE
-      const baseBg = "#FAF6F5"; // Clean luminous cream base
-      const accent = pal.accent || "#3C2A21"; // Rich espresso/chocolate contrast tone
-      const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68"; // Warm contrast pop
+      // 1. VIBRANT PRODUCT-SAMPLED COLOR HARMONY & LUSTROUS BASE
+      const accent = pal.accent || "#3C2A21";
+      const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
+      
+      const angle = (hash % 360) * (Math.PI / 180);
+      const bgGrad = ctx.createLinearGradient(
+        540 + Math.cos(angle) * 700, 540 + Math.sin(angle) * 700, 
+        540 - Math.cos(angle) * 700, 540 - Math.sin(angle) * 700
+      );
+      bgGrad.addColorStop(0, "#FFFFFF");
+      bgGrad.addColorStop(0.4, pal.bg || "#F5EFE6");
+      bgGrad.addColorStop(1, "#EAE0D5");
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 1080, 1080);
 
-      // A. Base Canvas Fill
-      ctx.fillStyle = baseBg;
+      // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES (Spilling across random canvas edges)
+      ctx.save();
+      const blobX = (hash % 2 === 0) ? 0 : 1080;
+      const blobY = ((hash * 7) % 2 === 0) ? 0 : 1080;
+      const blobGrad = ctx.createRadialGradient(blobX, blobY, 50, blobX, blobY, 750);
+      blobGrad.addColorStop(0, accent);
+      blobGrad.addColorStop(1, "transparent");
+      ctx.fillStyle = blobGrad;
+      ctx.globalAlpha = 0.28;
+      ctx.beginPath();
+      ctx.arc(blobX, blobY, 540 + (hash % 100), 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = brightAccent;
+      ctx.globalAlpha = 0.2;
+      ctx.beginPath();
+      const popX = 200 + ((hash * 13) % 680);
+      const popY = 200 + ((hash * 19) % 680);
+      ctx.arc(popX, popY, 150 + (hash % 60), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // 3. ACTIVATING THE MULTI-ELEMENT SCATTER ENGINE (Draws 3+ rich elements per card)
+      ctx.save();
+      renderMultiCardGraphics(ctx, hash, accent, brightAccent, pal.text);
+      ctx.restore();
+
+      // Vignette Depth Shadow
+      const vGrad = ctx.createRadialGradient(540, 540, 200, 540, 540, 780);
+      vGrad.addColorStop(0, "transparent");
+      vGrad.addColorStop(1, pal.vignette || "rgba(40, 25, 15, 0.25)");
+      ctx.fillStyle = vGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
       // B. Organic Liquid Blobs (Deep Contrast Shapes)
