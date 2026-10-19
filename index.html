@@ -511,40 +511,47 @@
     function sampleColorsFromCanvas(canvas) {
       try {
         if (!canvas || !canvas.width || canvas.width === 0) {
-          return { bg: "#FAF6F5", polaroid: "#FAF8F5", accent: "#3C2A21", text: "#1E293B", vignette: "rgba(60, 42, 33, 0.18)" };
+          return { bg: "#FAF6F5", polaroid: "#FAF8F5", accent: "#2563EB", text: "#1E293B", vignette: "rgba(30, 40, 60, 0.2)" };
         }
-        const s = document.createElement("canvas"); s.width = 32; s.height = 32;
-        const sCtx = s.getContext("2d"); sCtx.drawImage(canvas, 0, 0, 32, 32);
-        const data = sCtx.getImageData(0, 0, 32, 32).data;
+        const s = document.createElement("canvas"); s.width = 48; s.height = 48;
+        const sCtx = s.getContext("2d"); sCtx.drawImage(canvas, 0, 0, 48, 48);
+        const data = sCtx.getImageData(0, 0, 48, 48).data;
 
-        let maxSat = 0;
-        let vibrantR = 60, vibrantG = 42, vibrantB = 33;
+        let maxScore = 0;
+        let bestR = 37, bestG = 99, bestB = 235; // Vibrant royal blue fallback
 
         for (let i = 0; i < data.length; i += 4) {
           const red = data[i], green = data[i+1], blue = data[i+2];
           const brightness = (red + green + blue) / 3;
-          if (brightness > 15 && brightness < 240) {
-            const sat = Math.max(red, green, blue) - Math.min(red, green, blue);
-            if (sat > maxSat) { maxSat = sat; vibrantR = red; vibrantG = green; vibrantB = blue; }
+          // Ignore pure white/black borders and transparent pixels
+          if (brightness > 20 && brightness < 235) {
+            const max = Math.max(red, green, blue);
+            const min = Math.min(red, green, blue);
+            const saturation = max - min;
+            // Score rewards high saturation so vibrant colors are chosen over greys/browns
+            const score = saturation * 2 + (255 - Math.abs(brightness - 128));
+            if (score > maxScore) {
+              maxScore = score;
+              bestR = red; bestG = green; bestB = blue;
+            }
           }
         }
 
-        // Automatically derive a rich, high-contrast dark accent from the photo's hue
-        const accentR = Math.max(20, Math.round(vibrantR * 0.45));
-        const accentG = Math.max(20, Math.round(vibrantG * 0.45));
-        const accentB = Math.max(20, Math.round(vibrantB * 0.45));
-        const accent = `rgb(${accentR}, ${accentG}, ${accentB})`;
+        // Boost vibrancy and richness of the sampled color
+        const boostR = Math.min(240, Math.max(40, Math.round(bestR * 0.85 + 20)));
+        const boostG = Math.min(240, Math.max(40, Math.round(bestG * 0.85 + 20)));
+        const boostB = Math.min(240, Math.max(40, Math.round(bestB * 0.85 + 20)));
+        const vibrantAccent = `rgb(${boostR}, ${boostG}, ${boostB})`;
 
-        // Always maintain a clean, luminous light cream base for high contrast
         return { 
           bg: "#FAF6F5", 
           polaroid: "#FAF8F5", 
-          accent: accent, 
+          accent: vibrantAccent, 
           text: "#1E293B", 
-          vignette: "rgba(60, 42, 33, 0.18)" 
+          vignette: "rgba(30, 40, 60, 0.2)" 
         };
       } catch (e) {}
-      return { bg: "#FAF6F5", polaroid: "#FAF8F5", accent: "#3C2A21", text: "#1E293B", vignette: "rgba(60, 42, 33, 0.18)" };
+      return { bg: "#FAF6F5", polaroid: "#FAF8F5", accent: "#2563EB", text: "#1E293B", vignette: "rgba(30, 40, 60, 0.2)" };
     }
 
     document.addEventListener("DOMContentLoaded", () => {
