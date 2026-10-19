@@ -1079,7 +1079,7 @@
     }
 
 
-// ==========================================
+    // ==========================================
     // MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
     // ==========================================
     function drawDetailedWildflower(ctx, color) {
@@ -1133,7 +1133,7 @@
     }
 
     // ==========================================
-    // ULTIMATE CANVA-STYLE MULTI-SCALE SCATTER ENGINE
+    // ULTIMATE CANVA-STYLE SCATTER ENGINE HELPER FUNCTIONS
     // ==========================================
     function drawDetailedWildflower(ctx, color) {
       ctx.save();
@@ -1161,7 +1161,6 @@
         ctx.arc(0, 0, r, 0, Math.PI * 0.5, false);
         ctx.stroke();
       }
-      // Add tiny node dots along waves
       ctx.fillStyle = color;
       [40, 80, 120].forEach(rad => {
         ctx.beginPath(); ctx.arc(rad, 0, 3, 0, Math.PI * 2); ctx.fill();
@@ -1177,7 +1176,6 @@
       ctx.fillRect(-120, -120, 240, 240);
       ctx.strokeRect(-120, -120, 240, 240);
       
-      // Grid lines
       ctx.globalAlpha = 0.2;
       for (let x = -120; x <= 120; x += 24) {
         ctx.beginPath(); ctx.moveTo(x, -120); ctx.lineTo(x, 120); ctx.stroke();
@@ -1186,46 +1184,40 @@
         ctx.beginPath(); ctx.moveTo(-120, y); ctx.lineTo(120, y); ctx.stroke();
       }
       
-      // Washi tape on top of grid patch
       ctx.fillStyle = "rgba(200, 175, 150, 0.75)";
       ctx.fillRect(-50, -135, 100, 25);
       ctx.restore();
     }
 
-    function renderMultiScaleScatterEngine(ctx, hash, accent, brightAccent) {
+    function renderUltimateCanvaScatterEngine(ctx, hash, accent, brightAccent) {
       ctx.save();
-
-      // --- 3 TO 5 UNIFIED RANDOM ELEMENTS WITH DYNAMIC MULTI-SCALE SIZING ---
-      const totalElements = 3 + (hash % 3); // Randomly 3, 4, or 5 total elements per card
+      const totalElements = 3 + (hash % 3); // Randomly 3, 4, or 5 elements per card
 
       for (let i = 0; i < totalElements; i++) {
         ctx.save();
-        const eHash = hash * (i + 19);
-        const ex = 100 + (eHash % 880);
-        const ey = 100 + ((eHash * 3) % 880);
-        const eRot = (((eHash * 7) % 360) * Math.PI) / 180;
-        
-        // Random scale: some elements will be large (1.4x), some medium (1.0x), some small (0.5x)
-        const eScale = 0.4 + ((eHash % 110) / 100); 
+        const subHash = Math.abs(Math.sin(hash * (i + 17)) * 100000);
+        const ex = 100 + (subHash % 880);
+        const ey = 100 + ((subHash * 3) % 880);
+        const eRot = (((subHash * 7) % 360) * Math.PI) / 180;
+        const eScale = 0.3 + ((subHash % 190) / 100); // 0.3x to 2.2x scale
 
         ctx.translate(ex, ey);
         ctx.rotate(eRot);
         ctx.scale(eScale, eScale);
 
-        // Unified element pool (Blobs, Wildflowers, Waves, Grids, Stars, Paperclips, Seed Dots, Swirls)
-        const elementId = (eHash + i) % 10;
+        const elementId = Math.floor((subHash % 1) * 10);
 
         if (elementId === 0) {
           // Organic Liquid Blob
-          const blobGrad = ctx.createRadialGradient(0, 0, 20, 0, 0, 280);
+          const blobGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, 240);
           blobGrad.addColorStop(0, accent);
           blobGrad.addColorStop(1, "transparent");
-          ctx.fillStyle = blobGrad; ctx.globalAlpha = 0.32;
+          ctx.fillStyle = blobGrad; ctx.globalAlpha = 0.35;
           ctx.beginPath();
-          ctx.moveTo(0, -120);
-          ctx.bezierCurveTo(140, -150, 200, -20, 170, 120);
-          ctx.bezierCurveTo(140, 210, -40, 180, -140, 140);
-          ctx.bezierCurveTo(-210, 100, -160, -80, 0, -120);
+          ctx.moveTo(0, -100);
+          ctx.bezierCurveTo(120, -140, 180, -20, 150, 100);
+          ctx.bezierCurveTo(120, 180, -30, 150, -120, 120);
+          ctx.bezierCurveTo(-180, 90, -140, -70, 0, -100);
           ctx.closePath(); ctx.fill();
         } else if (elementId === 1) {
           drawDetailedWildflower(ctx, accent);
@@ -1234,40 +1226,39 @@
         } else if (elementId === 3) {
           drawGridNotebookPatch(ctx, accent);
         } else if (elementId === 4) {
-          // Mid-Century 4-Point Starburst
-          ctx.strokeStyle = brightAccent; ctx.fillStyle = brightAccent; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.65;
+          // Mid-Century Starburst
+          ctx.strokeStyle = brightAccent; ctx.fillStyle = brightAccent; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.7;
           ctx.beginPath();
-          ctx.moveTo(0, -40); ctx.quadraticCurveTo(0, 0, 40, 0);
-          ctx.quadraticCurveTo(0, 0, 0, 40); ctx.quadraticCurveTo(0, 0, -40, 0);
-          ctx.quadraticCurveTo(0, 0, 0, -40); ctx.fill();
+          ctx.moveTo(0, -45); ctx.quadraticCurveTo(0, 0, 45, 0);
+          ctx.quadraticCurveTo(0, 0, 0, 45); ctx.quadraticCurveTo(0, 0, -45, 0);
+          ctx.quadraticCurveTo(0, 0, 0, -45); ctx.fill();
         } else if (elementId === 5) {
-          // Stippled Seed Dots Cluster
-          ctx.fillStyle = accent; ctx.globalAlpha = 0.55;
+          // Stippled Seed Dots
+          ctx.fillStyle = accent; ctx.globalAlpha = 0.6;
           for (let d = 0; d < 6; d++) {
-            ctx.beginPath(); ctx.arc((d * 12) - 30, (d % 3) * 10 - 5, 3.5, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc((d * 12) - 30, (d % 3) * 10 - 5, 4, 0, Math.PI * 2); ctx.fill();
           }
         } else if (elementId === 6) {
-          // Calligraphy Swirl Doodle
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2;
+          // Calligraphy Swirl
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.55; ctx.lineWidth = 2;
           ctx.beginPath(); ctx.moveTo(-50, 0);
           ctx.bezierCurveTo(-20, -40, 20, 40, 50, 0); ctx.stroke();
         } else if (elementId === 7) {
           // Brass Paperclip
-          ctx.strokeStyle = "#C5A059"; ctx.globalAlpha = 0.8; ctx.lineWidth = 3;
+          ctx.strokeStyle = "#C5A059"; ctx.globalAlpha = 0.85; ctx.lineWidth = 3;
           ctx.beginPath(); ctx.roundRect(-10, -20, 20, 40, 10); ctx.stroke();
         } else if (elementId === 8) {
           // Minimalist Arch Frame
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 2.5;
-          ctx.beginPath(); ctx.arc(0, 0, 140, Math.PI, 0, false); ctx.stroke();
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.45; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(0, 0, 120, Math.PI, 0, false); ctx.stroke();
         } else {
           // Hand-Drawn Arrow
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 2;
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 2;
           ctx.beginPath(); ctx.moveTo(-25, 0); ctx.lineTo(25, 0);
           ctx.moveTo(12, -10); ctx.lineTo(25, 0); ctx.lineTo(12, 10); ctx.stroke();
         }
         ctx.restore();
       }
-
       ctx.restore();
     }
     
