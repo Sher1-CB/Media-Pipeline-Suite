@@ -1279,34 +1279,32 @@
       const vibrantBaseBg = pal.bg || "#F5EFE6";
       const brightPopColor = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
 
-      // Dynamic background gradient fully driven by the product photo's palette
+      // 1. DYNAMIC PHOTO-DEPENDENT BACKGROUND GRADIENT
       const bgAngle = (hash % 360) * (Math.PI / 180);
       const dynamicBgGrad = ctx.createLinearGradient(
         540 + Math.cos(bgAngle) * 700, 540 + Math.sin(bgAngle) * 700, 
         540 - Math.cos(bgAngle) * 700, 540 - Math.sin(bgAngle) * 700
       );
       dynamicBgGrad.addColorStop(0, "#FFFFFF");
-      dynamicBgGrad.addColorStop(0.4, vibrantBaseBg);
+      dynamicBgGrad.addColorStop(0.5, vibrantBaseBg);
       dynamicBgGrad.addColorStop(1, accentColor);
       ctx.fillStyle = dynamicBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. TRULY RANDOM FREE-FLOATING ORGANIC BLOB SHAPES (Asymmetric & Unconstrained)
-      if (hash % 3 !== 0) { // Appears on ~65% of cards for natural variety
+      // 2. TRULY RANDOM FREE-FLOATING ORGANIC BLOB SHAPES (Appears randomly on ~65% of cards)
+      if (hash % 3 !== 0) {
         ctx.save();
-        // Fully random coordinates anywhere on the canvas (no more half-cards pinned to corners)
-        const freeX = 200 + ((hash * 37) % 680);
-        const freeY = 200 + ((hash * 43) % 680);
+        const freeX = 180 + ((hash * 37) % 720);
+        const freeY = 180 + ((hash * 43) % 720);
         const freeRot = (((hash * 17) % 360) * Math.PI) / 180;
 
         ctx.translate(freeX, freeY);
         ctx.rotate(freeRot);
 
-        const blobColor = (hash % 2 === 0) ? accentColor : ((hash % 3 === 0) ? "#E0A96D" : "#D48C68");
+        const blobColor = (hash % 2 === 0) ? accentColor : "#E0A96D";
         ctx.fillStyle = blobColor;
-        ctx.globalAlpha = 0.22; // Soft, beautiful watercolor depth
+        ctx.globalAlpha = 0.22;
 
-        // Draw an organic, free-form amoeba blob path instead of a clipped circle
         ctx.beginPath();
         ctx.moveTo(0, -120);
         ctx.bezierCurveTo(140, -160, 220, -20, 180, 120);
@@ -1317,9 +1315,9 @@
         ctx.restore();
       }
 
-      // 3. ACTIVATING THE MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
+      // 3. ACTIVATING THE ULTIMATE CANVA SCATTER ENGINE (Renders 3-5 random elements with varying sizes and rotations)
       ctx.save();
-      renderMultiScaleScatterEngine(ctx, hash, accentColor, (hash % 2 === 0) ? "#E0A96D" : "#D48C68");
+      renderUltimateCanvaScatterEngine(ctx, hash, accentColor, brightPopColor);
       ctx.restore();
 
       // Vignette Depth Shadow
