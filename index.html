@@ -1093,7 +1093,7 @@
       ctx.fillStyle = baseCream;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. MUTED 30% OPACITY ORGANIC LIQUID BLOB WASHES (Spilling from random corners)
+      // 2. AIRY 10% SOFT MUTED ORGANIC LIQUID BLOB WASHES
       ctx.save();
       const cornerX = (hash % 2 === 0) ? 0 : 1080;
       const cornerY = ((hash * 7) % 2 === 0) ? 0 : 1080;
@@ -1101,15 +1101,15 @@
       organicGrad.addColorStop(0, primaryColor);
       organicGrad.addColorStop(1, "transparent");
       ctx.fillStyle = organicGrad;
-      ctx.globalAlpha = 0.30; // Exactly 30% muted opacity like your Canva samples
+      ctx.globalAlpha = 0.10; // Soft 10% airy opacity
       ctx.beginPath();
       ctx.arc(cornerX, cornerY, 580 + (hash % 120), 0, Math.PI * 2);
       ctx.fill();
 
-      // Secondary soft pastel blob
+      // Secondary soft pastel blob at 8%
       const secondaryPastel = (hash % 3 === 0) ? "#D8C5B2" : ((hash % 3 === 1) ? "#C2D4C8" : "#D4C2C8");
       ctx.fillStyle = secondaryPastel;
-      ctx.globalAlpha = 0.25;
+      ctx.globalAlpha = 0.08;
       ctx.beginPath();
       const secX = 200 + ((hash * 11) % 680);
       const secY = 200 + ((hash * 17) % 680);
