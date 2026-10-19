@@ -1082,6 +1082,9 @@
     // ==========================================
     // TACTILE & GENERATIVE BACKGROUND ENGINE (ADDITIVE VARIETY)
     // ==========================================
+    // ==========================================
+    // VIBRANT LUMINOUS & MULTI-ELEMENT GENERATIVE ENGINE
+    // ==========================================
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
       const font = getFontFamily(conf.font);
@@ -1091,85 +1094,55 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. 4-CARD DISTINCT BOUTIQUE VARIETY (Matches your reference sample exactly)
-      // Card 1: Wood Grain + Polaroid Mat | Card 2: Linen Fabric + Arched Ribbon | Card 3: Travertine Stone + Rounded Box | Card 4: Craft Paper + Botanical Doodles
-      const accent = pal.accent || "#A66E38";
+      // 1. 20% LIGHTER LUMINANCE & TACTILE SURFACE TEXTURE
+      const surfaceStyle = (cardNum - 1 + (hash % 3)) % 4; 
+      const accent = pal.accent || "#B4845C";
 
-      if (cardNum === 1) {
-        // CARD 1: Realistic Wood-Grain Table Texture
-        ctx.fillStyle = "#F5EADF";
+      if (surfaceStyle === 0) {
+        // Ultra-Luminous Gradient Wash (20% Brighter Highlights)
+        const angle = (hash % 360) * (Math.PI / 180);
+        const bgGrad = ctx.createLinearGradient(
+          540 + Math.cos(angle) * 700, 540 + Math.sin(angle) * 700, 
+          540 - Math.cos(angle) * 700, 540 - Math.sin(angle) * 700
+        );
+        bgGrad.addColorStop(0, "#FFFFFF");
+        bgGrad.addColorStop(0.3, "#FFFEFC");
+        bgGrad.addColorStop(1, "#FAF5F0");
+        ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.28; ctx.lineWidth = 3;
-        for (let y = 0; y < 1080; y += 32) {
+      } else if (surfaceStyle === 1) {
+        // Lighter Tactile Wood Grain Slats
+        ctx.fillStyle = "#FFFEFD";
+        ctx.fillRect(0, 0, 1080, 1080);
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.14; ctx.lineWidth = 2;
+        for (let y = 0; y < 1080; y += 42) {
           ctx.beginPath(); ctx.moveTo(0, y);
-          for (let x = 0; x < 1080; x += 100) {
-            ctx.quadraticCurveTo(x + 50, y + ((hash + x) % 16 - 8), x + 100, y);
+          for (let x = 0; x < 1080; x += 140) {
+            ctx.quadraticCurveTo(x + 70, y + ((hash + x) % 12 - 6), x + 140, y);
           }
           ctx.stroke();
         }
-      } else if (cardNum === 2) {
-        // CARD 2: Clean Linen Fabric Texture + Curved Arch Ribbon
-        ctx.fillStyle = "#FAF6F0";
+      } else if (surfaceStyle === 2) {
+        // Luminous Airy Linen Weave
+        ctx.fillStyle = "#FFFEFC";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.14; ctx.lineWidth = 1;
-        for (let x = 0; x < 1080; x += 12) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 12) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
-        
-        // Curved Arched Ribbon Banner across top
-        ctx.save();
-        ctx.fillStyle = "#FAF8F5";
-        ctx.shadowColor = "rgba(0,0,0,0.15)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 4;
-        ctx.beginPath();
-        ctx.moveTo(180, 140);
-        ctx.quadraticCurveTo(540, 70, 900, 140);
-        ctx.lineTo(900, 220);
-        ctx.quadraticCurveTo(540, 150, 180, 220);
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      } else if (cardNum === 3) {
-        // CARD 3: Warm Travertine Stone Wash + Soft Rounded Container Box
-        const sGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
-        sGrad.addColorStop(0, "#F7F2EC");
-        sGrad.addColorStop(0.5, "#EFE4D6");
-        sGrad.addColorStop(1, "#DFC9B4");
-        ctx.fillStyle = sGrad; ctx.fillRect(0, 0, 1080, 1080);
-
-        ctx.save();
-        ctx.fillStyle = "#FAF8F5";
-        ctx.shadowColor = "rgba(0,0,0,0.2)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 10;
-        ctx.beginPath(); ctx.roundRect(140, 140, 800, 800, 48); ctx.fill();
-        ctx.restore();
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 16) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 16) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
       } else {
-        // CARD 4: Speckled Craft Paper + Hand-Drawn Botanical Doodles & Hearts
-        ctx.fillStyle = "#F3E7DC";
+        // Soft Luminous Craft Paper
+        ctx.fillStyle = "#FEFCFA";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.16;
-        for (let i = 0; i < 300; i++) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.08;
+        for (let i = 0; i < 200; i++) {
           ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
         }
-
-        // Hand-drawn botanical doodle accents & hearts
-        ctx.save();
-        ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2.5;
-        // Botanical Leaf Branch on left
-        ctx.beginPath(); ctx.moveTo(180, 800); ctx.quadraticCurveTo(240, 700, 200, 600); ctx.stroke();
-        [[-15, -40, -0.4], [15, -90, 0.3], [-10, -140, -0.2]].forEach(([lx, ly, rot]) => {
-          ctx.save(); ctx.translate(220 + lx, 720 + ly); ctx.rotate(rot);
-          ctx.beginPath(); ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2); ctx.fill();
-          ctx.restore();
-        });
-        // Scattered heart doodle
-        ctx.font = "bold 42px sans-serif";
-        ctx.fillText("🧡", 840, 220);
-        ctx.fillText("🌿", 800, 780);
-        ctx.restore();
       }
 
       ctx.globalAlpha = 1.0;
       ctx.save();
 
-      // 2. ASYMMETRIC ORGANIC BLOB WASHES (Spilling across random corners)
+      // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES (Spilling across random canvas edges)
       const blobX = (hash % 2 === 0) ? 0 : 1080;
       const blobY = ((hash * 7) % 2 === 0) ? 0 : 1080;
       const blobGrad = ctx.createRadialGradient(blobX, blobY, 50, blobX, blobY, 700);
@@ -1181,7 +1154,7 @@
       ctx.arc(blobX, blobY, 520 + (hash % 100), 0, Math.PI * 2);
       ctx.fill();
 
-      // 3. BRIGHT SECONDARY ACCENT POP
+      // 3. BRIGHT SECONDARY ACCENT POP (Vibrant contrast color)
       const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
       ctx.fillStyle = brightAccent;
       ctx.globalAlpha = 0.18;
@@ -1191,7 +1164,8 @@
       ctx.arc(popX, popY, 130 + (hash % 60), 0, Math.PI * 2);
       ctx.fill();
 
-      // 4. TRULY FREE-FLOATING GRAPHIC PLACEMENT (Random X, Y, and Rotation anywhere on card)
+      // 4. TRULY FREE-FLOATING MULTI-ELEMENT GRAPHIC SCATTER ENGINE
+      // Randomly places botanical branches, line-art swirls, and geometric shapes anywhere on the card
       const graphicVarietyId = (hash * cardNum * 19) % 13;
       const randX = 180 + (hash % 720);
       const randY = 180 + ((hash * 3) % 720);
@@ -1202,147 +1176,58 @@
       ctx.rotate(randRot);
 
       if (graphicVarietyId === 0 || graphicVarietyId === 1) {
-        // 🌿 Free-Floating Botanical Vine Branch (Centered at 0,0)
         drawRandomizedVine(ctx, accent);
       } else if (graphicVarietyId === 2) {
-        // ✨ Sparkle Burst Dust
         ctx.font = "bold 64px sans-serif";
         ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.4;
         ctx.fillText("✨", -30, -20);
         ctx.fillText("⭐", 40, 50);
       } else if (graphicVarietyId === 3) {
-        // 🔵 Modern Memphis Floating Duo-Circles
         ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
         ctx.beginPath(); ctx.arc(0, 0, 140, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.15;
         ctx.beginPath(); ctx.arc(70, 70, 80, 0, Math.PI * 2); ctx.fill();
       } else if (graphicVarietyId === 4) {
-        // 🏛️ Minimalist Arch Frame
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3;
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.32; ctx.lineWidth = 3;
         ctx.beginPath(); ctx.arc(0, 0, 260, Math.PI, 0, false); ctx.stroke();
       } else if (graphicVarietyId === 5) {
-        // 📐 Blueprint Crosshair
         ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 1.5;
         ctx.beginPath(); ctx.moveTo(-80, 0); ctx.lineTo(80, 0); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(0, -80); ctx.lineTo(0, 80); ctx.stroke();
         ctx.beginPath(); ctx.arc(0, 0, 60, 0, Math.PI * 2); ctx.stroke();
       } else if (graphicVarietyId === 6) {
-        // 🎨 Concentric Accent Rings
         ctx.strokeStyle = brightAccent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3.5;
         ctx.beginPath(); ctx.arc(0, 0, 120, 0, Math.PI * 2); ctx.stroke();
         ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, 0, 150, 0, Math.PI * 2); ctx.stroke();
       } else if (graphicVarietyId === 7) {
-        // 🍂 Outline Floral Leaf
         ctx.fillStyle = accent; ctx.globalAlpha = 0.2;
         ctx.beginPath(); ctx.ellipse(0, 0, 80, 40, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = pal.text || "#1E293B"; ctx.lineWidth = 1.5;
         ctx.beginPath(); ctx.moveTo(-50, -25); ctx.lineTo(50, 25); ctx.stroke();
       } else if (graphicVarietyId === 8) {
-        // 🔲 Bauhaus Offset Block
         ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.22;
         ctx.beginPath(); ctx.roundRect(-160, -100, 320, 200, 24); ctx.fill();
       } else if (graphicVarietyId === 9) {
-        // 💫 Calligraphy Swirl Doodle
         ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2.5;
         ctx.beginPath(); ctx.moveTo(-70, 0);
         ctx.bezierCurveTo(-30, -70, 30, 70, 70, 0);
         ctx.stroke();
       } else if (graphicVarietyId === 10) {
-        // 🤎 Soft Floating Watercolor Pebble
         ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.2;
         ctx.beginPath(); ctx.moveTo(-80, -30);
         ctx.bezierCurveTo(-100, 50, 30, 90, 80, 30);
         ctx.closePath(); ctx.fill();
       } else if (graphicVarietyId === 11) {
-        // 🧵 Dashed Framing Stamp
         ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
         ctx.setLineDash([6, 6]);
         ctx.strokeRect(-150, -150, 300, 300);
         ctx.setLineDash([]);
       } else {
-        // 🌿 Double Leaf Cluster
         ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
         ctx.beginPath(); ctx.ellipse(-25, 0, 50, 25, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
         ctx.beginPath(); ctx.ellipse(25, 0, 50, 25, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
       }
       ctx.restore();
-      ctx.restore();
-
-      ctx.globalAlpha = 1.0;
-      ctx.save();
-      // GUARANTEED MULTI-ELEMENT BOUTIQUE GRAPHICS (Renders multiple randomized elements per card)
-      ctx.save();
-      const rx1 = 120 + (hash % 780);
-      const ry1 = 120 + ((hash * 5) % 780);
-      ctx.save();
-      ctx.translate(rx1, ry1);
-      ctx.rotate(((hash % 360) * Math.PI) / 180);
-      drawRandomizedVine(ctx, accent);
-      ctx.restore();
-
-      const rx2 = 150 + ((hash * 11) % 720);
-      const ry2 = 150 + ((hash * 13) % 720);
-      ctx.font = "bold 52px sans-serif";
-      ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
-      ctx.fillText("✨", rx2, ry2);
-      ctx.fillText("🌿", rx2 + 80, ry2 + 60);
-      ctx.restore();
-
-      ctx.save();
-      const layoutType = hash % 8;
-
-      if (layoutType === 0) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.42;
-        ctx.beginPath(); ctx.roundRect((hash % 160) + 50, (hash % 120) + 50, 750, 750, 48); ctx.fill();
-      } else if (layoutType === 1) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.38;
-        ctx.beginPath(); ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(380, (hash % 420) + 60, 700, 1080 - (hash % 280), 1080, 420);
-        ctx.lineTo(1080, 0); ctx.closePath(); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 6;
-        ctx.beginPath(); ctx.arc(820, 260, 130, 0, Math.PI * 2); ctx.stroke();
-      } else if (layoutType === 2) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
-        ctx.beginPath(); ctx.arc(540, 410, 370, Math.PI, 0, false);
-        ctx.lineTo(910, 1080); ctx.lineTo(170, 1080); ctx.closePath(); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 4;
-        ctx.strokeRect(50, 50, 980, 980);
-      } else if (layoutType === 3) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
-        ctx.fillRect(0, 0, 420 + (hash % 180), 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.7; ctx.lineWidth = 5;
-        ctx.strokeRect(60, 60, 960, 960);
-      } else if (layoutType === 4) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 4;
-        for (let i = -1000; i < 2000; i += 85) {
-          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + 1080, 1080); ctx.stroke();
-        }
-      } else if (layoutType === 5) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
-        ctx.beginPath(); ctx.arc(200, 200, 260, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(880, 880, 220, 0, Math.PI * 2); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 5;
-        ctx.beginPath(); ctx.arc(880, 880, 240, 0, Math.PI * 2); ctx.stroke();
-      } else if (layoutType === 6) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
-        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(600, 0); ctx.lineTo(0, 600); ctx.closePath(); ctx.fill();
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 3;
-        ctx.strokeRect(70, 70, 940, 940);
-      } else {
-        const rad = ctx.createRadialGradient(540, 540, 50, 540, 540, 600);
-        rad.addColorStop(0, accent); rad.addColorStop(1, "transparent");
-        ctx.fillStyle = rad; ctx.globalAlpha = 0.25; ctx.fillRect(0, 0, 1080, 1080);
-
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 1.5;
-        for (let i = 0; i < 1080; i += 90) {
-          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
-        }
-      }
       ctx.restore();
 
       // Vignette Depth Shadow
@@ -1357,7 +1242,6 @@
       const px = conf.productPos ? conf.productPos.x : 540;
       const py = conf.productPos ? conf.productPos.y : 485;
 
-      // Calculate natural aspect ratio to prevent any image compression
       const imgW = srcCanvas.width || srcCanvas.naturalWidth || 800;
       const imgH = srcCanvas.height || srcCanvas.naturalHeight || 800;
       const maxBox = Math.round(720 * pScale);
@@ -1378,12 +1262,10 @@
       ctx.rotate(frameRot);
 
       if (conf.removeMat) {
-        // FULL-BLEED FLOAT WITH PROPORTIONAL DIMENSIONS
         ctx.shadowColor = "rgba(0, 0, 0, 0.38)"; ctx.shadowBlur = 48; ctx.shadowOffsetY = 22;
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
         ctx.shadowColor = "transparent";
       } else {
-        // FRAMED POLAROID MAT (Dynamically adapts to image proportions)
         const matW = Math.max(820, drawW + 90);
         const matH = Math.max(860, drawH + 150);
         ctx.fillStyle = "#FAF8F5";
@@ -1395,7 +1277,7 @@
       }
       ctx.restore();
 
-      // LAYER 2: MAIN AFFIRMATION NOTE (AUTOMATIC MULTI-LINE TEXT WRAPPING)
+      // LAYER 2: MAIN AFFIRMATION NOTE (MULTI-LINE WRAPPING)
       if (note) {
         ctx.save();
         const nx = conf.notePos ? conf.notePos.x : 540;
@@ -1408,7 +1290,6 @@
         const fontSize = Math.round(32 * nScale);
         ctx.font = `800 ${fontSize}px 'Plus Jakarta Sans', sans-serif`;
 
-        // Word-wrap algorithm to fit comfortably within 900px card width
         const maxLineWidth = 900;
         const words = note.split(" ");
         let lines = [];
@@ -1445,7 +1326,6 @@
         ctx.textAlign = "center";
         ctx.fillStyle = pal.text || "#1E293B";
 
-        // Render each wrapped line cleanly stacked
         const startY = -totalTextHeight / 2 + fontSize * 0.8;
         lines.forEach((line, idx) => {
           ctx.fillText(line, 0, startY + (idx * lineHeight));
@@ -1699,7 +1579,7 @@ Return ONLY valid JSON:
 
    
     // MULTI-ELEMENT BOUTIQUE GRAPHIC SCATTER ENGINE (Ensures 3+ rich overlapping elements per card)
-    function drawRandomizedVine(ctx, color) {
+   function drawRandomizedVine(ctx, color) {
       ctx.save();
       ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
       ctx.beginPath(); ctx.moveTo(-100, 0); ctx.quadraticCurveTo(0, 40, 100, 0); ctx.stroke();
