@@ -1091,46 +1091,79 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. 20% LIGHTER LUMINANCE & FREELY SCATTERED GRAPHIC VARIETY ENGINE
-      const surfaceStyle = (cardNum - 1) % 4; 
-      const accent = pal.accent || "#B4845C";
+      // 1. 4-CARD DISTINCT BOUTIQUE VARIETY (Matches your reference sample exactly)
+      // Card 1: Wood Grain + Polaroid Mat | Card 2: Linen Fabric + Arched Ribbon | Card 3: Travertine Stone + Rounded Box | Card 4: Craft Paper + Botanical Doodles
+      const accent = pal.accent || "#A66E38";
 
-      // 20% lighter highlight base wash
-      if (surfaceStyle === 0) {
-        const angle = (hash % 360) * (Math.PI / 180);
-        const bgGrad = ctx.createLinearGradient(
-          540 + Math.cos(angle) * 700, 540 + Math.sin(angle) * 700, 
-          540 - Math.cos(angle) * 700, 540 - Math.sin(angle) * 700
-        );
-        bgGrad.addColorStop(0, "#FFFFFF");
-        bgGrad.addColorStop(0.3, "#FFFEFC");
-        bgGrad.addColorStop(1, "#FAF5F0"); // 20% lighter
-        ctx.fillStyle = bgGrad;
+      if (cardNum === 1) {
+        // CARD 1: Realistic Wood-Grain Table Texture
+        ctx.fillStyle = "#F5EADF";
         ctx.fillRect(0, 0, 1080, 1080);
-      } else if (surfaceStyle === 1) {
-        ctx.fillStyle = "#FFFEFD"; // 20% lighter wood base
-        ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.14; ctx.lineWidth = 2;
-        for (let y = 0; y < 1080; y += 42) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.28; ctx.lineWidth = 3;
+        for (let y = 0; y < 1080; y += 32) {
           ctx.beginPath(); ctx.moveTo(0, y);
-          for (let x = 0; x < 1080; x += 140) {
-            ctx.quadraticCurveTo(x + 70, y + ((hash + x) % 12 - 6), x + 140, y);
+          for (let x = 0; x < 1080; x += 100) {
+            ctx.quadraticCurveTo(x + 50, y + ((hash + x) % 16 - 8), x + 100, y);
           }
           ctx.stroke();
         }
-      } else if (surfaceStyle === 2) {
-        ctx.fillStyle = "#FFFEFC"; // 20% lighter linen base
+      } else if (cardNum === 2) {
+        // CARD 2: Clean Linen Fabric Texture + Curved Arch Ribbon
+        ctx.fillStyle = "#FAF6F0";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
-        for (let x = 0; x < 1080; x += 16) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 16) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.14; ctx.lineWidth = 1;
+        for (let x = 0; x < 1080; x += 12) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
+        for (let y = 0; y < 1080; y += 12) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
+        
+        // Curved Arched Ribbon Banner across top
+        ctx.save();
+        ctx.fillStyle = "#FAF8F5";
+        ctx.shadowColor = "rgba(0,0,0,0.15)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 4;
+        ctx.beginPath();
+        ctx.moveTo(180, 140);
+        ctx.quadraticCurveTo(540, 70, 900, 140);
+        ctx.lineTo(900, 220);
+        ctx.quadraticCurveTo(540, 150, 180, 220);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      } else if (cardNum === 3) {
+        // CARD 3: Warm Travertine Stone Wash + Soft Rounded Container Box
+        const sGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
+        sGrad.addColorStop(0, "#F7F2EC");
+        sGrad.addColorStop(0.5, "#EFE4D6");
+        sGrad.addColorStop(1, "#DFC9B4");
+        ctx.fillStyle = sGrad; ctx.fillRect(0, 0, 1080, 1080);
+
+        ctx.save();
+        ctx.fillStyle = "#FAF8F5";
+        ctx.shadowColor = "rgba(0,0,0,0.2)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 10;
+        ctx.beginPath(); ctx.roundRect(140, 140, 800, 800, 48); ctx.fill();
+        ctx.restore();
       } else {
-        ctx.fillStyle = "#FEFCFA"; // 20% lighter craft base
+        // CARD 4: Speckled Craft Paper + Hand-Drawn Botanical Doodles & Hearts
+        ctx.fillStyle = "#F3E7DC";
         ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.08;
-        for (let i = 0; i < 200; i++) {
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.16;
+        for (let i = 0; i < 300; i++) {
           ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 3, 3);
         }
+
+        // Hand-drawn botanical doodle accents & hearts
+        ctx.save();
+        ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2.5;
+        // Botanical Leaf Branch on left
+        ctx.beginPath(); ctx.moveTo(180, 800); ctx.quadraticCurveTo(240, 700, 200, 600); ctx.stroke();
+        [[-15, -40, -0.4], [15, -90, 0.3], [-10, -140, -0.2]].forEach(([lx, ly, rot]) => {
+          ctx.save(); ctx.translate(220 + lx, 720 + ly); ctx.rotate(rot);
+          ctx.beginPath(); ctx.ellipse(0, 0, 24, 12, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+        });
+        // Scattered heart doodle
+        ctx.font = "bold 42px sans-serif";
+        ctx.fillText("🧡", 840, 220);
+        ctx.fillText("🌿", 800, 780);
+        ctx.restore();
       }
 
       ctx.globalAlpha = 1.0;
