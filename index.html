@@ -1195,93 +1195,75 @@
     function renderMultiScaleScatterEngine(ctx, hash, accent, brightAccent) {
       ctx.save();
 
-      // --- 3 TO 5 BIG STRUCTURAL ELEMENTS (Randomly appearing with true independent randomness)
-      const bigCount = 3 + (hash % 3); 
-      for (let i = 0; i < bigCount; i++) {
-        // Only render if random chance permits (prevents crowding every single card identically)
-        if (((hash * (i + 5)) % 100) > 85) continue;
+      // --- 3 TO 5 UNIFIED RANDOM ELEMENTS WITH DYNAMIC MULTI-SCALE SIZING ---
+      const totalElements = 3 + (hash % 3); // Randomly 3, 4, or 5 total elements per card
 
+      for (let i = 0; i < totalElements; i++) {
         ctx.save();
-        const bHash = hash * (i + 17);
-        const bx = 120 + (bHash % 840);
-        const by = 120 + ((bHash * 3) % 840);
-        const bRot = (((bHash * 7) % 360) * Math.PI) / 180;
-        const bScale = 0.75 + ((bHash % 50) / 100);
+        const eHash = hash * (i + 19);
+        const ex = 100 + (eHash % 880);
+        const ey = 100 + ((eHash * 3) % 880);
+        const eRot = (((eHash * 7) % 360) * Math.PI) / 180;
+        
+        // Random scale: some elements will be large (1.4x), some medium (1.0x), some small (0.5x)
+        const eScale = 0.4 + ((eHash % 110) / 100); 
 
-        ctx.translate(bx, by);
-        ctx.rotate(bRot);
-        ctx.scale(bScale, bScale);
+        ctx.translate(ex, ey);
+        ctx.rotate(eRot);
+        ctx.scale(eScale, eScale);
 
-        const bigTypeId = (bHash + i) % 5;
-        if (bigTypeId === 0) {
-          // Asymmetric Organic Liquid Blob (Free-floating anywhere)
-          const blobGrad = ctx.createRadialGradient(0, 0, 20, 0, 0, 320);
+        // Unified element pool (Blobs, Wildflowers, Waves, Grids, Stars, Paperclips, Seed Dots, Swirls)
+        const elementId = (eHash + i) % 10;
+
+        if (elementId === 0) {
+          // Organic Liquid Blob
+          const blobGrad = ctx.createRadialGradient(0, 0, 20, 0, 0, 280);
           blobGrad.addColorStop(0, accent);
           blobGrad.addColorStop(1, "transparent");
           ctx.fillStyle = blobGrad; ctx.globalAlpha = 0.32;
           ctx.beginPath();
-          ctx.moveTo(0, -140);
-          ctx.bezierCurveTo(160, -180, 240, -20, 200, 140);
-          ctx.bezierCurveTo(160, 240, -40, 200, -160, 160);
-          ctx.bezierCurveTo(-240, 120, -180, -90, 0, -140);
+          ctx.moveTo(0, -120);
+          ctx.bezierCurveTo(140, -150, 200, -20, 170, 120);
+          ctx.bezierCurveTo(140, 210, -40, 180, -140, 140);
+          ctx.bezierCurveTo(-210, 100, -160, -80, 0, -120);
           ctx.closePath(); ctx.fill();
-        } else if (bigTypeId === 1) {
+        } else if (elementId === 1) {
           drawDetailedWildflower(ctx, accent);
-        } else if (bigTypeId === 2) {
+        } else if (elementId === 2) {
           drawTopographicWaves(ctx, accent);
-        } else if (bigTypeId === 3) {
+        } else if (elementId === 3) {
           drawGridNotebookPatch(ctx, accent);
-        } else {
-          // Minimalist Arch Frame
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 2.5;
-          ctx.beginPath(); ctx.arc(0, 0, 180, Math.PI, 0, false); ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      // --- 3 TO 5 SMALL ACCENT ELEMENTS (Mid-Century Stars, Seed Dots, Paperclips, Swirls)
-      const smallCount = 3 + ((hash >> 3) % 3);
-      for (let j = 0; j < smallCount; j++) {
-        ctx.save();
-        const sHash = hash * (j + 29);
-        const sx = 80 + (sHash % 920);
-        const sy = 80 + ((sHash * 5) % 920);
-        const sRot = (((sHash * 11) % 360) * Math.PI) / 180;
-
-        ctx.translate(sx, sy);
-        ctx.rotate(sRot);
-
-        const smallTypeId = (sHash + j) % 6;
-        if (smallTypeId === 0) {
+        } else if (elementId === 4) {
           // Mid-Century 4-Point Starburst
-          ctx.strokeStyle = accent; ctx.fillStyle = accent; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.6;
+          ctx.strokeStyle = brightAccent; ctx.fillStyle = brightAccent; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.65;
           ctx.beginPath();
-          ctx.moveTo(0, -50); ctx.quadraticCurveTo(0, 0, 50, 0);
-          ctx.quadraticCurveTo(0, 0, 0, 50); ctx.quadraticCurveTo(0, 0, -50, 0);
-          ctx.quadraticCurveTo(0, 0, 0, -50); ctx.fill();
-        } else if (smallTypeId === 1) {
+          ctx.moveTo(0, -40); ctx.quadraticCurveTo(0, 0, 40, 0);
+          ctx.quadraticCurveTo(0, 0, 0, 40); ctx.quadraticCurveTo(0, 0, -40, 0);
+          ctx.quadraticCurveTo(0, 0, 0, -40); ctx.fill();
+        } else if (elementId === 5) {
           // Stippled Seed Dots Cluster
-          ctx.fillStyle = accent; ctx.globalAlpha = 0.5;
-          for (let d = 0; d < 7; d++) {
-            ctx.beginPath(); ctx.arc((d * 10) - 30, (d % 3) * 12 - 6, 3, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = accent; ctx.globalAlpha = 0.55;
+          for (let d = 0; d < 6; d++) {
+            ctx.beginPath(); ctx.arc((d * 12) - 30, (d % 3) * 10 - 5, 3.5, 0, Math.PI * 2); ctx.fill();
           }
-        } else if (smallTypeId === 2) {
+        } else if (elementId === 6) {
           // Calligraphy Swirl Doodle
           ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.moveTo(-60, 0);
-          ctx.bezierCurveTo(-20, -50, 20, 50, 60, 0); ctx.stroke();
-        } else if (smallTypeId === 3) {
+          ctx.beginPath(); ctx.moveTo(-50, 0);
+          ctx.bezierCurveTo(-20, -40, 20, 40, 50, 0); ctx.stroke();
+        } else if (elementId === 7) {
           // Brass Paperclip
           ctx.strokeStyle = "#C5A059"; ctx.globalAlpha = 0.8; ctx.lineWidth = 3;
-          ctx.beginPath(); ctx.roundRect(-12, -24, 24, 48, 12); ctx.stroke();
-        } else if (smallTypeId === 4) {
-          // Pushpin Stud
-          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.8;
-          ctx.beginPath(); ctx.arc(0, 0, 10, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.roundRect(-10, -20, 20, 40, 10); ctx.stroke();
+        } else if (elementId === 8) {
+          // Minimalist Arch Frame
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(0, 0, 140, Math.PI, 0, false); ctx.stroke();
         } else {
-          // Tiny Leaf Tendril
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.moveTo(-30, 0); ctx.quadraticCurveTo(0, 20, 30, 0); ctx.stroke();
+          // Hand-Drawn Arrow
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.6; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(-25, 0); ctx.lineTo(25, 0);
+          ctx.moveTo(12, -10); ctx.lineTo(25, 0); ctx.lineTo(12, 10); ctx.stroke();
         }
         ctx.restore();
       }
