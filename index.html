@@ -1078,6 +1078,156 @@
       }
     }
 
+
+// ==========================================
+    // MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
+    // ==========================================
+    function drawDetailedWildflower(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
+      // Stem
+      ctx.beginPath(); ctx.moveTo(0, 80); ctx.quadraticCurveTo(10, 20, 0, -40); ctx.stroke();
+      // Leaves
+      [[-25, 20, -0.5], [20, 0, 0.4]].forEach(([lx, ly, rot]) => {
+        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
+        ctx.beginPath(); ctx.ellipse(0, 0, 18, 9, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      });
+      // Petals
+      for (let i = 0; i < 5; i++) {
+        ctx.save();
+        ctx.rotate((i * Math.PI * 2) / 5);
+        ctx.beginPath(); ctx.ellipse(0, -55, 14, 22, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      }
+      ctx.fillStyle = "#FAF8F5";
+      ctx.beginPath(); ctx.arc(0, -40, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+
+    function drawFluidWaveRibbon(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.lineWidth = 4; ctx.globalAlpha = 0.35;
+      ctx.beginPath();
+      ctx.moveTo(-200, 0);
+      ctx.bezierCurveTo(-100, -80, 100, 80, 200, 0);
+      ctx.stroke();
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-180, 25);
+      ctx.bezierCurveTo(-90, -55, 90, 105, 180, 25);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawNoteGridPattern(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.15;
+      for (let x = -150; x <= 150; x += 30) {
+        ctx.beginPath(); ctx.moveTo(x, -150); ctx.lineTo(x, 150); ctx.stroke();
+      }
+      for (let y = -150; y <= 150; y += 30) {
+        ctx.beginPath(); ctx.moveTo(-150, y); ctx.lineTo(150, y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function renderMultiScaleScatterEngine(ctx, hash, accent, brightAccent) {
+      ctx.save();
+
+      // --- 3 TO 5 BIG STRUCTURAL ELEMENTS ---
+      const bigCount = 3 + (hash % 3); // Randomly 3, 4, or 5 big elements
+      for (let i = 0; i < bigCount; i++) {
+        ctx.save();
+        const bHash = hash * (i + 13);
+        const bx = 180 + (bHash % 720);
+        const by = 180 + ((bHash * 3) % 720);
+        const bRot = (((bHash * 7) % 360) * Math.PI) / 180;
+        const bScale = 0.7 + ((bHash % 60) / 100); // 0.7 to 1.3 scale
+
+        ctx.translate(bx, by);
+        ctx.rotate(bRot);
+        ctx.scale(bScale, bScale);
+
+        const bigTypeId = (bHash + i) % 6;
+        if (bigTypeId === 0) {
+          // Organic Liquid Blob
+          const blobGrad = ctx.createRadialGradient(0, 0, 20, 0, 0, 300);
+          blobGrad.addColorStop(0, accent);
+          blobGrad.addColorStop(1, "transparent");
+          ctx.fillStyle = blobGrad; ctx.globalAlpha = 0.28;
+          ctx.beginPath(); ctx.arc(0, 0, 250, 0, Math.PI * 2); ctx.fill();
+        } else if (bigTypeId === 1) {
+          // Detailed Wildfloral Branch
+          drawDetailedWildflower(ctx, accent);
+        } else if (bigTypeId === 2) {
+          // Fluid Wave Ribbons
+          drawFluidWaveRibbon(ctx, brightAccent);
+        } else if (bigTypeId === 3) {
+          // Note Grid Patch
+          drawNoteGridPattern(ctx, accent);
+        } else if (bigTypeId === 4) {
+          // Minimalist Corner Border Frame
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 3;
+          ctx.strokeRect(-160, -160, 320, 320);
+        } else {
+          // Concentric Accent Rings
+          ctx.strokeStyle = brightAccent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3.5;
+          ctx.beginPath(); ctx.arc(0, 0, 140, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // --- 3 TO 5 SMALL ACCENT ELEMENTS ---
+      const smallCount = 3 + ((hash >> 3) % 3); // Randomly 3, 4, or 5 small elements
+      for (let j = 0; j < smallCount; j++) {
+        ctx.save();
+        const sHash = hash * (j + 31);
+        const sx = 100 + (sHash % 880);
+        const sy = 100 + ((sHash * 5) % 880);
+        const sRot = (((sHash * 11) % 360) * Math.PI) / 180;
+
+        ctx.translate(sx, sy);
+        ctx.rotate(sRot);
+
+        const smallTypeId = (sHash + j) % 6;
+        if (smallTypeId === 0) {
+          // Metallic Pushpin / Stud
+          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.7;
+          ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#1E293B"; ctx.beginPath(); ctx.arc(0, -3, 3, 0, Math.PI * 2); ctx.fill();
+        } else if (smallTypeId === 1) {
+          // Sparkle Dust / Star
+          ctx.font = "bold 42px sans-serif";
+          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.55;
+          ctx.fillText("✨", -15, 10);
+        } else if (smallTypeId === 2) {
+          // Hand-Drawn Arrow
+          ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.moveTo(-30, 0); ctx.lineTo(30, 0);
+          ctx.moveTo(15, -12); ctx.lineTo(30, 0); ctx.lineTo(15, 12); ctx.stroke();
+        } else if (smallTypeId === 3) {
+          // Seed Pods / Scatter Dots
+          ctx.fillStyle = accent; ctx.globalAlpha = 0.45;
+          for (let d = 0; d < 5; d++) {
+            ctx.beginPath(); ctx.arc((d * 12) - 24, (d % 2) * 10 - 5, 4, 0, Math.PI * 2); ctx.fill();
+          }
+        } else if (smallTypeId === 4) {
+          // Brass Paperclip Outline
+          ctx.strokeStyle = "#C5A059"; ctx.globalAlpha = 0.6; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.roundRect(-12 - (sHash%5), -24, 24, 48, 12); ctx.stroke();
+        } else {
+          // Tiny Leaf Cluster
+          ctx.fillStyle = accent; ctx.globalAlpha = 0.4;
+          ctx.beginPath(); ctx.ellipse(-10, 0, 20, 10, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.ellipse(10, 0, 20, 10, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+    
     // ==========================================
     // VIBRANT MULTI-LAYER BOUTIQUE GENERATIVE ENGINE
     // ==========================================
