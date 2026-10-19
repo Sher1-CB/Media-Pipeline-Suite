@@ -1237,23 +1237,22 @@
 
       ctx.globalAlpha = 1.0;
       ctx.save();
-      // Optional Botanical Doodles & Sparkle Accents (Freely Randomized Placement & Rotation)
-      const decoType = hash % 3;
-      if (decoType === 0) {
-        ctx.save();
-        const rx = 180 + ((hash * 13) % 720);
-        const ry = 180 + ((hash * 17) % 720);
-        const rRot = (((hash * 23) % 360) * Math.PI) / 180;
-        ctx.translate(rx, ry);
-        ctx.rotate(rRot);
-        drawRandomizedVine(ctx, accent);
-        ctx.restore();
-      } else if (decoType === 1) {
-        ctx.font = "bold 48px sans-serif";
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
-        ctx.fillText("✨", 140, 160);
-        ctx.fillText("🌿", 900, 920);
-      }
+      // GUARANTEED MULTI-ELEMENT BOUTIQUE GRAPHICS (Renders multiple randomized elements per card)
+      ctx.save();
+      const rx1 = 120 + (hash % 780);
+      const ry1 = 120 + ((hash * 5) % 780);
+      ctx.save();
+      ctx.translate(rx1, ry1);
+      ctx.rotate(((hash % 360) * Math.PI) / 180);
+      drawRandomizedVine(ctx, accent);
+      ctx.restore();
+
+      const rx2 = 150 + ((hash * 11) % 720);
+      const ry2 = 150 + ((hash * 13) % 720);
+      ctx.font = "bold 52px sans-serif";
+      ctx.fillStyle = accent; ctx.globalAlpha = 0.35;
+      ctx.fillText("✨", rx2, ry2);
+      ctx.fillText("🌿", rx2 + 80, ry2 + 60);
       ctx.restore();
 
       ctx.save();
@@ -1653,18 +1652,7 @@ Return ONLY valid JSON:
       }
     }
 
-    function drawRandomizedVine(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.moveTo(-100, 0); ctx.quadraticCurveTo(0, 40, 100, 0); ctx.stroke();
-      [[-50, 15, -0.4], [0, 30, 0.2], [50, 15, 0.5]].forEach(([lx, ly, rot]) => {
-        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 22, 11, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-      });
-      ctx.restore();
-    }
-    
+   
     // MULTI-ELEMENT BOUTIQUE GRAPHIC SCATTER ENGINE (Ensures 3+ rich overlapping elements per card)
     function drawRandomizedVine(ctx, color) {
       ctx.save();
