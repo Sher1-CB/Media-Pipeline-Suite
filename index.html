@@ -1087,16 +1087,20 @@
       ctx.globalAlpha = 1.0;
 
       // 1. DYNAMIC PHOTO-DEPENDENT VIBRANT COLOR HARMONY
-      // Automatically adapts gradient and blob colors to match the product photo's exact hue
       const accentColor = pal.accent || "#3C2A21";
       const baseProductBg = pal.bg || "#F5EFE6";
       const secondBrightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
       
       const gradAngle = (hash % 360) * (Math.PI / 180);
       const canvasBgGrad = ctx.createLinearGradient(
-        540 + Math.cos(gradAngle) * 700, 540 + Math.sin(angle) * 700, 
+        540 + Math.cos(gradAngle) * 700, 540 + Math.sin(gradAngle) * 700, 
         540 - Math.cos(gradAngle) * 700, 540 - Math.sin(gradAngle) * 700
       );
+      canvasBgGrad.addColorStop(0, "#FFFFFF");
+      canvasBgGrad.addColorStop(0.5, baseProductBg);
+      canvasBgGrad.addColorStop(1, accentColor);
+      ctx.fillStyle = canvasBgGrad;
+      ctx.fillRect(0, 0, 1080, 1080);
       // Photo-dependent gradient wash (Luminous highlight transitioning directly into product tone)
       canvasBgGrad.addColorStop(0, "#FFFFFF");
       canvasBgGrad.addColorStop(0.5, baseProductBg);
