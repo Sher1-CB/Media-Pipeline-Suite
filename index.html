@@ -1094,141 +1094,65 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. VIBRANT PRODUCT-SAMPLED COLOR HARMONY & LUSTROUS WASH
-      const surfaceStyle = (cardNum - 1 + (hash % 3)) % 4; 
-      const accent = pal.accent || "#B4845C";
-      const baseBg = pal.bg || "#F5EFE6";
+      // 1. HIGH-CONTRAST BOUTIQUE MULTI-LAYER ENGINE
+      const baseBg = "#FAF6F5"; // Clean luminous cream base
+      const accent = pal.accent || "#3C2A21"; // Rich espresso/chocolate contrast tone
+      const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68"; // Warm contrast pop
 
-      if (surfaceStyle === 0) {
-        // Rich Product-Sampled Dual-Tone Gradient Wash (Vibrant & Colorful)
-        const angle = (hash % 360) * (Math.PI / 180);
-        const bgGrad = ctx.createLinearGradient(
-          540 + Math.cos(angle) * 700, 540 + Math.sin(angle) * 700, 
-          540 - Math.cos(angle) * 700, 540 - Math.sin(angle) * 700
-        );
-        bgGrad.addColorStop(0, "#FFFFFF");
-        bgGrad.addColorStop(0.4, baseBg);
-        bgGrad.addColorStop(1, accent);
-        ctx.fillStyle = bgGrad;
-        ctx.fillRect(0, 0, 1080, 1080);
-      } else if (surfaceStyle === 1) {
-        // Product-Tinted Tactile Wood Grain Slats
-        ctx.fillStyle = baseBg;
-        ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.28; ctx.lineWidth = 2.5;
-        for (let y = 0; y < 1080; y += 38) {
-          ctx.beginPath(); ctx.moveTo(0, y);
-          for (let x = 0; x < 1080; x += 120) {
-            ctx.quadraticCurveTo(x + 60, y + ((hash + x) % 14 - 7), x + 120, y);
-          }
-          ctx.stroke();
-        }
-      } else if (surfaceStyle === 2) {
-        // Product-Tinted Airy Linen Weave
-        ctx.fillStyle = baseBg;
-        ctx.fillRect(0, 0, 1080, 1080);
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.18; ctx.lineWidth = 1.5;
-        for (let x = 0; x < 1080; x += 12) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke(); }
-        for (let y = 0; y < 1080; y += 12) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke(); }
-      } else {
-        // Product-Tinted Speckled Craft Paper
-        ctx.fillStyle = baseBg;
-        ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.16;
-        for (let i = 0; i < 250; i++) {
-          ctx.fillRect((hash * i * 3) % 1080, (hash * i * 7) % 1080, 4, 4);
-        }
-      }
+      // A. Base Canvas Fill
+      ctx.fillStyle = baseBg;
+      ctx.fillRect(0, 0, 1080, 1080);
 
-      ctx.globalAlpha = 1.0;
+      // B. Organic Liquid Blobs (Deep Contrast Shapes)
       ctx.save();
-
-      // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES (Spilling across random canvas edges)
       const blobX = (hash % 2 === 0) ? 0 : 1080;
       const blobY = ((hash * 7) % 2 === 0) ? 0 : 1080;
-      const blobGrad = ctx.createRadialGradient(blobX, blobY, 50, blobX, blobY, 700);
+      const blobGrad = ctx.createRadialGradient(blobX, blobY, 50, blobX, blobY, 750);
       blobGrad.addColorStop(0, accent);
       blobGrad.addColorStop(1, "transparent");
       ctx.fillStyle = blobGrad;
-      ctx.globalAlpha = 0.22;
+      ctx.globalAlpha = 0.28;
       ctx.beginPath();
-      ctx.arc(blobX, blobY, 520 + (hash % 100), 0, Math.PI * 2);
+      ctx.arc(blobX, blobY, 540 + (hash % 100), 0, Math.PI * 2);
       ctx.fill();
 
-      // 3. BRIGHT SECONDARY ACCENT POP (Vibrant contrast color)
-      const brightAccent = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
+      // Secondary contrasting liquid blob pop
       ctx.fillStyle = brightAccent;
-      ctx.globalAlpha = 0.18;
+      ctx.globalAlpha = 0.2;
       ctx.beginPath();
-      const popX = 150 + ((hash * 13) % 780);
-      const popY = 150 + ((hash * 19) % 780);
-      ctx.arc(popX, popY, 130 + (hash % 60), 0, Math.PI * 2);
+      const popX = 200 + ((hash * 13) % 680);
+      const popY = 200 + ((hash * 19) % 680);
+      ctx.arc(popX, popY, 150 + (hash % 60), 0, Math.PI * 2);
       ctx.fill();
+      ctx.restore();
 
-      // 4. TRULY FREE-FLOATING MULTI-ELEMENT GRAPHIC SCATTER ENGINE
-      // Randomly places botanical branches, line-art swirls, and geometric shapes anywhere on the card
-      const graphicVarietyId = (hash * cardNum * 19) % 13;
+      // C. Line-Art & Botanicals (Drawn ON TOP of Blobs)
+      ctx.save();
+      const graphicId = (hash * cardNum * 17) % 6;
       const randX = 180 + (hash % 720);
       const randY = 180 + ((hash * 3) % 720);
       const randRot = ((hash % 360) * Math.PI) / 180;
 
-      ctx.save();
       ctx.translate(randX, randY);
       ctx.rotate(randRot);
 
-      if (graphicVarietyId === 0 || graphicVarietyId === 1) {
+      if (graphicId === 0 || graphicId === 1) {
         drawRandomizedVine(ctx, accent);
-      } else if (graphicVarietyId === 2) {
-        ctx.font = "bold 64px sans-serif";
-        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.4;
-        ctx.fillText("✨", -30, -20);
-        ctx.fillText("⭐", 40, 50);
-      } else if (graphicVarietyId === 3) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-        ctx.beginPath(); ctx.arc(0, 0, 140, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.15;
-        ctx.beginPath(); ctx.arc(70, 70, 80, 0, Math.PI * 2); ctx.fill();
-      } else if (graphicVarietyId === 4) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.32; ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.arc(0, 0, 260, Math.PI, 0, false); ctx.stroke();
-      } else if (graphicVarietyId === 5) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(-80, 0); ctx.lineTo(80, 0); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, -80); ctx.lineTo(0, 80); ctx.stroke();
-        ctx.beginPath(); ctx.arc(0, 0, 60, 0, Math.PI * 2); ctx.stroke();
-      } else if (graphicVarietyId === 6) {
-        ctx.strokeStyle = brightAccent; ctx.globalAlpha = 0.3; ctx.lineWidth = 3.5;
-        ctx.beginPath(); ctx.arc(0, 0, 120, 0, Math.PI * 2); ctx.stroke();
-        ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, 0, 150, 0, Math.PI * 2); ctx.stroke();
-      } else if (graphicVarietyId === 7) {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.2;
-        ctx.beginPath(); ctx.ellipse(0, 0, 80, 40, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = pal.text || "#1E293B"; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(-50, -25); ctx.lineTo(50, 25); ctx.stroke();
-      } else if (graphicVarietyId === 8) {
-        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.22;
-        ctx.beginPath(); ctx.roundRect(-160, -100, 320, 200, 24); ctx.fill();
-      } else if (graphicVarietyId === 9) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2.5;
-        ctx.beginPath(); ctx.moveTo(-70, 0);
-        ctx.bezierCurveTo(-30, -70, 30, 70, 70, 0);
-        ctx.stroke();
-      } else if (graphicVarietyId === 10) {
-        ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.2;
-        ctx.beginPath(); ctx.moveTo(-80, -30);
-        ctx.bezierCurveTo(-100, 50, 30, 90, 80, 30);
-        ctx.closePath(); ctx.fill();
-      } else if (graphicVarietyId === 11) {
-        ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
-        ctx.setLineDash([6, 6]);
-        ctx.strokeRect(-150, -150, 300, 300);
-        ctx.setLineDash([]);
+      } else if (graphicId === 2) {
+        ctx.font = "bold 58px sans-serif";
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.45;
+        ctx.fillText("✨", -20, 0);
+        ctx.fillText("🌿", 40, 50);
+      } else if (graphicId === 3) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.4; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.arc(0, 0, 180, 0, Math.PI * 2); ctx.stroke();
+      } else if (graphicId === 4) {
+        ctx.strokeStyle = accent; ctx.globalAlpha = 0.35; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(-70, 0); ctx.bezierCurveTo(-30, -70, 30, 70, 70, 0); ctx.stroke();
       } else {
-        ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-        ctx.beginPath(); ctx.ellipse(-25, 0, 50, 25, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.ellipse(25, 0, 50, 25, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = accent; ctx.globalAlpha = 0.25;
+        ctx.beginPath(); ctx.ellipse(0, 0, 70, 35, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
       }
-      ctx.restore();
       ctx.restore();
 
       // Vignette Depth Shadow
