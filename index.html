@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v11.2.00 - Infinite Generative Studio</title>
+  <title>CB Media Pipeline Suite v11.3.00 - Infinite Generative Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Editorial Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,7 +81,7 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.2.00</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v11.3.00</span>
         </h1>
         <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">True Generative Backgrounds ➔ Infinite Deal Variety ➔ Free Tier AI</p>
       </div>
@@ -518,17 +518,15 @@
         const data = sCtx.getImageData(0, 0, 48, 48).data;
 
         let maxScore = 0;
-        let bestR = 37, bestG = 99, bestB = 235; // Vibrant royal blue fallback
+        let bestR = 37, bestG = 99, bestB = 235;
 
         for (let i = 0; i < data.length; i += 4) {
           const red = data[i], green = data[i+1], blue = data[i+2];
           const brightness = (red + green + blue) / 3;
-          // Ignore pure white/black borders and transparent pixels
           if (brightness > 20 && brightness < 235) {
             const max = Math.max(red, green, blue);
             const min = Math.min(red, green, blue);
             const saturation = max - min;
-            // Score rewards high saturation so vibrant colors are chosen over greys/browns
             const score = saturation * 2 + (255 - Math.abs(brightness - 128));
             if (score > maxScore) {
               maxScore = score;
@@ -537,7 +535,6 @@
           }
         }
 
-        // Boost vibrancy and richness of the sampled color
         const boostR = Math.min(240, Math.max(40, Math.round(bestR * 0.85 + 20)));
         const boostG = Math.min(240, Math.max(40, Math.round(bestG * 0.85 + 20)));
         const boostB = Math.min(240, Math.max(40, Math.round(bestB * 0.85 + 20)));
@@ -808,7 +805,6 @@
         const x2 = Math.max(patchStartX, endX);
         const y2 = Math.max(patchStartY, endY);
 
-        // Lower minimum threshold from 4px to 2px so small logo selections register instantly
         if (x2 - x1 > 2 && y2 - y1 > 2) {
           const ymin = Math.round((y1 / outputCanvas.height) * 1000);
           const xmin = Math.round((x1 / outputCanvas.width) * 1000);
@@ -1080,116 +1076,6 @@
 
 
     // ==========================================
-    // MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
-    // ==========================================
-    function drawDetailedWildflower(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2;
-      // Stem
-      ctx.beginPath(); ctx.moveTo(0, 80); ctx.quadraticCurveTo(10, 20, 0, -40); ctx.stroke();
-      // Leaves
-      [[-25, 20, -0.5], [20, 0, 0.4]].forEach(([lx, ly, rot]) => {
-        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 18, 9, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-      });
-      // Petals
-      for (let i = 0; i < 5; i++) {
-        ctx.save();
-        ctx.rotate((i * Math.PI * 2) / 5);
-        ctx.beginPath(); ctx.ellipse(0, -55, 14, 22, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-      }
-      ctx.fillStyle = "#FAF8F5";
-      ctx.beginPath(); ctx.arc(0, -40, 8, 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    }
-
-    function drawFluidWaveRibbon(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.lineWidth = 4; ctx.globalAlpha = 0.35;
-      ctx.beginPath();
-      ctx.moveTo(-200, 0);
-      ctx.bezierCurveTo(-100, -80, 100, 80, 200, 0);
-      ctx.stroke();
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(-180, 25);
-      ctx.bezierCurveTo(-90, -55, 90, 105, 180, 25);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    function drawNoteGridPattern(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.15;
-      for (let x = -150; x <= 150; x += 30) {
-        ctx.beginPath(); ctx.moveTo(x, -150); ctx.lineTo(x, 150); ctx.stroke();
-      }
-      for (let y = -150; y <= 150; y += 30) {
-        ctx.beginPath(); ctx.moveTo(-150, y); ctx.lineTo(150, y); ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    // ==========================================
-    // ULTIMATE CANVA-STYLE SCATTER ENGINE HELPER FUNCTIONS
-    // ==========================================
-    function drawDetailedWildflower(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.8;
-      ctx.beginPath(); ctx.moveTo(0, 90); ctx.quadraticCurveTo(12, 30, 0, -40); ctx.stroke();
-      [[-22, 25, -0.5], [18, 5, 0.4], [-15, -20, -0.3]].forEach(([lx, ly, rot]) => {
-        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 15, 7, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-      });
-      for (let i = 0; i < 3; i++) {
-        ctx.save();
-        ctx.translate((i - 1) * 15, -50 - (i % 2) * 10);
-        ctx.beginPath(); ctx.arc(0, 0, 10, 0, Math.PI * 2); ctx.stroke();
-        ctx.restore();
-      }
-      ctx.restore();
-    }
-
-    function drawTopographicWaves(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.45;
-      for (let r = 20; r <= 160; r += 20) {
-        ctx.beginPath();
-        ctx.arc(0, 0, r, 0, Math.PI * 0.5, false);
-        ctx.stroke();
-      }
-      ctx.fillStyle = color;
-      [40, 80, 120].forEach(rad => {
-        ctx.beginPath(); ctx.arc(rad, 0, 3, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(0, rad, 3, 0, Math.PI * 2); ctx.fill();
-      });
-      ctx.restore();
-    }
-
-    function drawGridNotebookPatch(ctx, color) {
-      ctx.save();
-      ctx.fillStyle = "#FAF8F5";
-      ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.85;
-      ctx.fillRect(-120, -120, 240, 240);
-      ctx.strokeRect(-120, -120, 240, 240);
-      
-      ctx.globalAlpha = 0.2;
-      for (let x = -120; x <= 120; x += 24) {
-        ctx.beginPath(); ctx.moveTo(x, -120); ctx.lineTo(x, 120); ctx.stroke();
-      }
-      for (let y = -120; y <= 120; y += 24) {
-        ctx.beginPath(); ctx.moveTo(-120, y); ctx.lineTo(120, y); ctx.stroke();
-      }
-      
-      ctx.fillStyle = "rgba(200, 175, 150, 0.75)";
-      ctx.fillRect(-50, -135, 100, 25);
-      ctx.restore();
-    }
-
-    // ==========================================
     // ULTIMATE CANVA-STYLE SCATTER ENGINE HELPER FUNCTIONS
     // ==========================================
     function drawDetailedWildflower(ctx, color) {
@@ -1248,8 +1134,7 @@
 
     function renderUltimateCanvaScatterEngine(ctx, hash, accent, brightAccent, cardNum) {
       ctx.save();
-      // True independent randomness per card using cardNum salt
-      const totalElements = 3 + ((hash * cardNum) % 3); // 3, 4, or 5 elements per card
+      const totalElements = 3 + ((hash * cardNum) % 3); // 3 to 5 elements per card
 
       for (let i = 0; i < totalElements; i++) {
         ctx.save();
@@ -1257,7 +1142,6 @@
         const ex = 100 + (subHash % 880);
         const ey = 100 + ((subHash * 3) % 880);
         const eRot = (((subHash * 7) % 360) * Math.PI) / 180;
-        // Rich multi-scale sizing: tiny details to massive structural elements (0.3x to 2.2x)
         const eScale = 0.3 + ((subHash % 190) / 100); 
 
         ctx.translate(ex, ey);
@@ -1267,7 +1151,6 @@
         const elementId = Math.floor((subHash % 1) * 10);
 
         if (elementId === 0) {
-          // Asymmetric Organic Liquid Blob
           const blobGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, 240);
           blobGrad.addColorStop(0, accent);
           blobGrad.addColorStop(1, "transparent");
@@ -1285,33 +1168,27 @@
         } else if (elementId === 3) {
           drawGridNotebookPatch(ctx, accent);
         } else if (elementId === 4) {
-          // Mid-Century Starburst
           ctx.strokeStyle = brightAccent; ctx.fillStyle = brightAccent; ctx.lineWidth = 1.8; ctx.globalAlpha = 0.8;
           ctx.beginPath();
           ctx.moveTo(0, -45); ctx.quadraticCurveTo(0, 0, 45, 0);
           ctx.quadraticCurveTo(0, 0, 0, 45); ctx.quadraticCurveTo(0, 0, -45, 0);
           ctx.quadraticCurveTo(0, 0, 0, -45); ctx.fill();
         } else if (elementId === 5) {
-          // Stippled Seed Dots Cluster
           ctx.fillStyle = accent; ctx.globalAlpha = 0.7;
           for (let d = 0; d < 6; d++) {
             ctx.beginPath(); ctx.arc((d * 12) - 30, (d % 3) * 10 - 5, 4.5, 0, Math.PI * 2); ctx.fill();
           }
         } else if (elementId === 6) {
-          // Calligraphy Swirl Doodle
           ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 2.2;
           ctx.beginPath(); ctx.moveTo(-50, 0);
           ctx.bezierCurveTo(-20, -40, 20, 40, 50, 0); ctx.stroke();
         } else if (elementId === 7) {
-          // Brass Paperclip
           ctx.strokeStyle = "#C5A059"; ctx.globalAlpha = 0.9; ctx.lineWidth = 3.5;
           ctx.beginPath(); ctx.roundRect(-10, -20, 20, 40, 10); ctx.stroke();
         } else if (elementId === 8) {
-          // Minimalist Arch Frame
           ctx.strokeStyle = accent; ctx.globalAlpha = 0.5; ctx.lineWidth = 2.5;
           ctx.beginPath(); ctx.arc(0, 0, 120, Math.PI, 0, false); ctx.stroke();
         } else {
-          // Hand-Drawn Arrow
           ctx.strokeStyle = accent; ctx.globalAlpha = 0.75; ctx.lineWidth = 2.2;
           ctx.beginPath(); ctx.moveTo(-25, 0); ctx.lineTo(25, 0);
           ctx.moveTo(12, -10); ctx.lineTo(25, 0); ctx.lineTo(12, 10); ctx.stroke();
@@ -1338,7 +1215,6 @@
       const vibrantBaseBg = pal.bg || "#F5EFE6";
       const brightPopColor = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
 
-      // Luminous, clean background gradient driven by product color with zero muddy bottom-right fade
       const bgAngle = (hash % 360) * (Math.PI / 180);
       const dynamicBgGrad = ctx.createLinearGradient(
         540 + Math.cos(bgAngle) * 700, 540 + Math.sin(bgAngle) * 700, 
@@ -1346,7 +1222,7 @@
       );
       dynamicBgGrad.addColorStop(0, "#FFFFFF");
       dynamicBgGrad.addColorStop(0.5, vibrantBaseBg);
-      dynamicBgGrad.addColorStop(1, "#FAF6F5"); // Airy, clean luminous finish
+      dynamicBgGrad.addColorStop(1, "#FAF6F5");
       ctx.fillStyle = dynamicBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
@@ -1363,7 +1239,7 @@
 
         const blobColor = (hash % 2 === 0) ? accentColor : brightPopColor;
         ctx.fillStyle = blobColor;
-        ctx.globalAlpha = 0.30; // Rich, vibrant watercolor depth
+        ctx.globalAlpha = 0.30;
 
         ctx.beginPath();
         ctx.moveTo(0, -120);
@@ -1375,7 +1251,7 @@
         ctx.restore();
       }
 
-      // 3. ACTIVATING THE ULTIMATE CANVA SCATTER ENGINE (Passed cardNum for true card-by-card variety)
+      // 3. ACTIVATING THE ULTIMATE CANVA SCATTER ENGINE
       ctx.save();
       renderUltimateCanvaScatterEngine(ctx, hash, accentColor, brightPopColor, cardNum);
       ctx.restore();
@@ -1566,140 +1442,6 @@
       }
     }
 
-    // ==========================================
-    // ULTIMATE CANVA-STYLE SCATTER ENGINE HELPER FUNCTIONS
-    // ==========================================
-    function drawDetailedWildflower(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.8;
-      ctx.beginPath(); ctx.moveTo(0, 90); ctx.quadraticCurveTo(12, 30, 0, -40); ctx.stroke();
-      [[-22, 25, -0.5], [18, 5, 0.4], [-15, -20, -0.3]].forEach(([lx, ly, rot]) => {
-        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 15, 7, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-      });
-      for (let i = 0; i < 3; i++) {
-        ctx.save();
-        ctx.translate((i - 1) * 15, -50 - (i % 2) * 10);
-        ctx.beginPath(); ctx.arc(0, 0, 10, 0, Math.PI * 2); ctx.stroke();
-        ctx.restore();
-      }
-      ctx.restore();
-    }
-
-    function drawTopographicWaves(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.45;
-      for (let r = 20; r <= 160; r += 20) {
-        ctx.beginPath();
-        ctx.arc(0, 0, r, 0, Math.PI * 0.5, false);
-        ctx.stroke();
-      }
-      ctx.fillStyle = color;
-      [40, 80, 120].forEach(rad => {
-        ctx.beginPath(); ctx.arc(rad, 0, 3, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(0, rad, 3, 0, Math.PI * 2); ctx.fill();
-      });
-      ctx.restore();
-    }
-
-    function drawGridNotebookPatch(ctx, color) {
-      ctx.save();
-      ctx.fillStyle = "#FAF8F5";
-      ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.85;
-      ctx.fillRect(-120, -120, 240, 240);
-      ctx.strokeRect(-120, -120, 240, 240);
-      
-      ctx.globalAlpha = 0.2;
-      for (let x = -120; x <= 120; x += 24) {
-        ctx.beginPath(); ctx.moveTo(x, -120); ctx.lineTo(x, 120); ctx.stroke();
-      }
-      for (let y = -120; y <= 120; y += 24) {
-        ctx.beginPath(); ctx.moveTo(-120, y); ctx.lineTo(120, y); ctx.stroke();
-      }
-      
-      ctx.fillStyle = "rgba(200, 175, 150, 0.75)";
-      ctx.fillRect(-50, -135, 100, 25);
-      ctx.restore();
-    }
-
-    function renderMultiScaleScatterEngine(ctx, hash, accent, brightAccent) {
-      ctx.save();
-      const totalElements = 3 + (hash % 3); // 3 to 5 elements per card
-
-      for (let i = 0; i < totalElements; i++) {
-        ctx.save();
-        const subHash = Math.abs(Math.sin(hash * (i + 17)) * 100000);
-        const ex = 120 + (subHash % 840);
-        const ey = 120 + ((subHash * 3) % 840);
-        const eRot = (((subHash * 7) % 360) * Math.PI) / 180;
-        const eScale = 0.3 + ((subHash % 190) / 100); // 0.3x to 2.2x scale
-
-        ctx.translate(ex, ey);
-        ctx.rotate(eRot);
-        ctx.scale(eScale, eScale);
-
-        const elementId = Math.floor((subHash % 1) * 10);
-
-        if (elementId === 0) {
-          // Organic Liquid Blob
-          const blobGrad = ctx.createRadialGradient(0, 0, 10, 0, 0, 240);
-          blobGrad.addColorStop(0, accent);
-          blobGrad.addColorStop(1, "transparent");
-          ctx.fillStyle = blobGrad; ctx.globalAlpha = 0.35;
-          ctx.beginPath();
-          ctx.moveTo(0, -100);
-          ctx.bezierCurveTo(120, -140, 180, -20, 150, 100);
-          ctx.bezierCurveTo(120, 180, -30, 150, -120, 120);
-          ctx.bezierCurveTo(-180, 90, -140, -70, 0, -100);
-          ctx.closePath(); ctx.fill();
-        } else if (elementId === 1) {
-          drawDetailedWildflower(ctx, accent);
-        } else if (elementId === 2) {
-          drawTopographicWaves(ctx, accent);
-        } else if (elementId === 3) {
-          drawGridNotebookPatch(ctx, accent);
-        } else if (elementId === 4) {
-          // Mid-Century Starburst
-          ctx.strokeStyle = brightAccent; ctx.fillStyle = brightAccent; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.7;
-          ctx.beginPath();
-          ctx.moveTo(0, -45); ctx.quadraticCurveTo(0, 0, 45, 0);
-          ctx.quadraticCurveTo(0, 0, 0, 45); ctx.quadraticCurveTo(0, 0, -45, 0);
-          ctx.quadraticCurveTo(0, 0, 0, -45); ctx.fill();
-        } else if (elementId === 5) {
-          // Stippled Seed Dots
-          ctx.fillStyle = accent; ctx.globalAlpha = 0.6;
-          for (let d = 0; d < 6; d++) {
-            ctx.beginPath(); ctx.arc((d * 12) - 30, (d % 3) * 10 - 5, 4, 0, Math.PI * 2); ctx.fill();
-          }
-        } else if (elementId === 6) {
-          // Calligraphy Swirl
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.55; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.moveTo(-50, 0);
-          ctx.bezierCurveTo(-20, -40, 20, 40, 50, 0); ctx.stroke();
-        } else if (elementId === 7) {
-          // Brass Paperclip
-          ctx.strokeStyle = "#C5A059"; ctx.globalAlpha = 0.85; ctx.lineWidth = 3;
-          ctx.beginPath(); ctx.roundRect(-10, -20, 20, 40, 10); ctx.stroke();
-        } else if (elementId === 8) {
-          // Minimalist Arch Frame
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.45; ctx.lineWidth = 2.5;
-          ctx.beginPath(); ctx.arc(0, 0, 120, Math.PI, 0, false); ctx.stroke();
-        } else {
-          // Hand-Drawn Arrow
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.65; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.moveTo(-25, 0); ctx.lineTo(25, 0);
-          ctx.moveTo(12, -10); ctx.lineTo(25, 0); ctx.lineTo(12, 10); ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      ctx.restore();
-    }
-
-
-
-    
     function masterResetDeal() {
       if (!confirm("Start brand new deal? All current edits will be cleared.")) return;
       rawLoadedImage = null; base64ApiPayload = ""; detectedBoxes = []; manualBoxes = [];
@@ -1731,7 +1473,6 @@
     }
 
     function shuffleNote() {
-      // Collect all currently visible AI affirmation chip buttons
       const chipButtons = document.querySelectorAll('#aiChipsContainer button');
       if (chipButtons.length > 0) {
         const texts = Array.from(chipButtons).map(b => b.innerText);
@@ -1812,7 +1553,7 @@
 Generate incredibly inviting, scroll-stopping, and positive social media community copy.
 CRITICAL RULES:
 1. POSITIVE WORDS ONLY: Focus entirely on luxury, elevated daily living, beauty, convenience, and joy (e.g., "The ultimate upgrade for your routine ✨", "Your new daily favorite", "Salon results at home", "Effortless everyday luxury"). Never use negative words like "struggle", "tired", or "pain".
-2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or platform/checkout terms ("Amazon", "deal", "price", "save", "shipped", "sale", "discount", "free", "hurry").
+​2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or platform/checkout terms ("Amazon", "deal", "price", "save", "shipped", "sale", "discount", "free", "hurry").
 3. SHORT & PUNCHY: Keep affirmations under 6-8 words so they fit cleanly as card headlines.
 4. SPEC TAGS: Provide bold, uppercase product curation specs (e.g., "MEDICAL GRADE LED", "12-PACK BUNDLE", "STAINLESS STEEL").
 
@@ -1832,7 +1573,6 @@ Return ONLY valid JSON:
             for (let i = 1; i <= 4; i++) cardCustoms[i].font = parsed.suggested_font;
           }
 
-          // STRICT CLIENT-SIDE FIREWALL SCRUBBER
           const safeAffirmations = (parsed.affirmations || []).filter(item => {
             const lower = item.toLowerCase();
             return !FB_BLACKLIST.some(b => lower.includes(b));
@@ -1843,7 +1583,6 @@ Return ONLY valid JSON:
             return !FB_BLACKLIST.some(b => lower.includes(b));
           });
 
-          // AUTO-INJECT FIRST AI RESULT INTO INPUT BOXES
           if (safeAffirmations.length > 0) {
             document.getElementById('mainNoteInput').value = safeAffirmations[0];
           }
@@ -1861,77 +1600,6 @@ Return ONLY valid JSON:
       }
     }
 
-   
-    // MULTI-ELEMENT BOUTIQUE GRAPHIC SCATTER ENGINE (Ensures 3+ rich overlapping elements per card)
-   function drawRandomizedVine(ctx, color) {
-      ctx.save();
-      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.moveTo(-100, 0); ctx.quadraticCurveTo(0, 40, 100, 0); ctx.stroke();
-      [[-50, 15, -0.4], [0, 30, 0.2], [50, 15, 0.5]].forEach(([lx, ly, rot]) => {
-        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 22, 11, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-      });
-      ctx.restore();
-    }
-
-    function renderMultiCardGraphics(ctx, hash, accent, brightAccent, textCol) {
-      const seed1 = hash % 13;
-      const seed2 = (hash * 7) % 13;
-      const seed3 = (hash * 13) % 13;
-
-      [seed1, seed2, seed3].forEach((id, idx) => {
-        ctx.save();
-        const rx = 150 + ((hash * (idx + 3)) % 780);
-        const ry = 150 + ((hash * (idx + 7)) % 780);
-        const rRot = (((hash * (idx + 1)) % 360) * Math.PI) / 180;
-
-        ctx.translate(rx, ry);
-        ctx.rotate(rRot);
-
-        if (id === 0 || id === 1) {
-          drawRandomizedVine(ctx, accent);
-        } else if (id === 2) {
-          ctx.font = "bold 56px sans-serif";
-          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.4;
-          ctx.fillText("✨", -20, -10);
-          ctx.fillText("⭐", 30, 40);
-        } else if (id === 3) {
-          ctx.fillStyle = accent; ctx.globalAlpha = 0.22;
-          ctx.beginPath(); ctx.arc(0, 0, 120, 0, Math.PI * 2); ctx.fill();
-          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.15;
-          ctx.beginPath(); ctx.arc(50, 50, 70, 0, Math.PI * 2); ctx.fill();
-        } else if (id === 4) {
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2.5;
-          ctx.beginPath(); ctx.arc(0, 0, 200, Math.PI, 0, false); ctx.stroke();
-        } else if (id === 5) {
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.25; ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.moveTo(-60, 0); ctx.lineTo(60, 0); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(0, -60); ctx.lineTo(0, 60); ctx.stroke();
-          ctx.beginPath(); ctx.arc(0, 0, 40, 0, Math.PI * 2); ctx.stroke();
-        } else if (id === 6) {
-          ctx.strokeStyle = brightAccent; ctx.globalAlpha = 0.35; ctx.lineWidth = 3;
-          ctx.beginPath(); ctx.arc(0, 0, 90, 0, Math.PI * 2); ctx.stroke();
-        } else if (id === 7) {
-          ctx.fillStyle = accent; ctx.globalAlpha = 0.18;
-          ctx.beginPath(); ctx.ellipse(0, 0, 70, 35, Math.PI / 4, 0, Math.PI * 2); ctx.fill();
-        } else if (id === 8) {
-          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.2;
-          ctx.beginPath(); ctx.roundRect(-120, -80, 240, 160, 20); ctx.fill();
-        } else if (id === 9) {
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.moveTo(-50, 0); ctx.bezierCurveTo(-20, -50, 20, 50, 50, 0); ctx.stroke();
-        } else if (id === 10) {
-          ctx.fillStyle = brightAccent; ctx.globalAlpha = 0.18;
-          ctx.beginPath(); ctx.moveTo(-60, -20); ctx.bezierCurveTo(-80, 40, 20, 70, 60, 20); ctx.closePath(); ctx.fill();
-        } else {
-          ctx.strokeStyle = accent; ctx.globalAlpha = 0.3; ctx.lineWidth = 2;
-          ctx.setLineDash([5, 5]); ctx.strokeRect(-100, -100, 200, 200); ctx.setLineDash([]);
-        }
-        ctx.restore();
-      });
-    }
-
     function drawWashiTape(ctx, cx, cy, w, h) {
       ctx.save(); ctx.translate(cx, cy); ctx.rotate(0.015);
       ctx.fillStyle = "rgba(235, 222, 204, 0.85)"; ctx.fillRect(-w/2, -h/2, w, h);
@@ -1940,11 +1608,9 @@ Return ONLY valid JSON:
       ctx.restore();
     }
 
-    
     function shiftActiveCardPalette() {
       const conf = cardCustoms[activeCardIndex];
       if (!conf.procedural) conf.procedural = {};
-      // Mutate the hash to force a completely new generative background layout & color shift
       conf.procedural.bgPatternSeed = Math.floor(Math.random() * 999999);
       conf.procedural.seedRotation = (Math.random() * 12 - 6);
       renderAll4CreatorCards();
