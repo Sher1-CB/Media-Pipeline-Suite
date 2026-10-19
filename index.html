@@ -501,12 +501,12 @@
       "proven", "100% effective", "shipped", "total", "reg", "was"
     ];
 
-    // Every card maintains its own independent text and visual attributes
+    // Every card maintains its own independent text and visual attributes (Starts 100% Blank)
     let cardCustoms = {
-      1: { note: "Stocked up on daily hydration ✨", val: "$13.80", subNote: "", pScale: 1.0, bScale: 1.0, bRot: -4, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "polaroid", bgWorld: "wood", badgeBg: "scribble", font: "handwritten", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
-      2: { note: "Daily routine essential 🧴", val: "HOME STAPLE", subNote: "all 3 included", pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "floating", bgWorld: "linen", badgeBg: "pill", font: "editorial", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
-      3: { note: "Moisture reset goals 🍂", val: "POINT DROP", subNote: "", pScale: 1.0, bScale: 1.0, bRot: 3, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "squircle", bgWorld: "waves", badgeBg: "ribbon", font: "playful", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
-      4: { note: "So cozy for the season 🧡", val: "3-PACK BUNDLE", subNote: "", pScale: 1.0, bScale: 1.0, bRot: -3, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "notebook", bgWorld: "kraft", badgeBg: "sticky", font: "modern_sans", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null }
+      1: { note: "", val: "", subNote: "", pScale: 1.0, bScale: 1.0, bRot: -4, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "polaroid", bgWorld: "wood", badgeBg: "scribble", font: "handwritten", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
+      2: { note: "", val: "", subNote: "", pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "floating", bgWorld: "linen", badgeBg: "pill", font: "editorial", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
+      3: { note: "", val: "", subNote: "", pScale: 1.0, bScale: 1.0, bRot: 3, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "squircle", bgWorld: "waves", badgeBg: "ribbon", font: "playful", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
+      4: { note: "", val: "", subNote: "", pScale: 1.0, bScale: 1.0, bRot: -3, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "notebook", bgWorld: "kraft", badgeBg: "sticky", font: "modern_sans", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null }
     };
 
     let draggingState = { active: false, cardNum: null, target: null, startX: 0, startY: 0 };
@@ -516,26 +516,27 @@
     const outputCanvas = document.getElementById('outputCanvas');
     const oCtx = outputCanvas.getContext('2d');
 
+    // Compliant, clean non-commercial fallback defaults (Zero blacklist words)
     const DEFAULT_AFFIRMATIONS = [
-      "Stocked up on daily hydration ✨",
-      "Daily shower & body favorite 🧴",
-      "Shea & almond moisture reset 🍂",
-      "So cozy for fall! 🧡",
       "Your new everyday ritual ✨",
       "The ultimate upgrade for your routine",
+      "Elevated living made simple",
+      "Everyday home favorite ✨",
       "Always handy to keep nearby",
-      "Pure everyday luxury at home"
+      "Pure everyday luxury at home",
+      "Thoughtfully curated for you",
+      "A timeless daily staple"
     ];
 
     const DEFAULT_SPECS = [
-      "$13.80",
-      "POINT DROP",
       "SOLID CHOICE",
       "HOME STAPLE",
-      "3 BIG BOTTLES",
       "VERIFIED FAVORITE",
       "CURATED FIND",
-      "LIMITED DROP"
+      "MULTI-PIECE SET",
+      "SIGNATURE EDITION",
+      "PREMIUM FINISH",
+      "TOP SELECTION"
     ];
 
     let cachedExtractedAffirmations = [];
@@ -650,11 +651,6 @@
       const shuffledBadges = shuffleArray(badgeCatalog);
       const shuffledFonts = shuffleArray(fontCatalog);
 
-      const affs = cachedExtractedAffirmations.length >= 4 ? cachedExtractedAffirmations : DEFAULT_AFFIRMATIONS;
-      const specs = cachedExtractedSpecs.length >= 4 ? cachedExtractedSpecs : DEFAULT_SPECS;
-      const shuffledAffs = shuffleArray(affs);
-      const shuffledSpecs = shuffleArray(specs);
-
       for (let i = 1; i <= 4; i++) {
         const c = cardCustoms[i];
         c.archetype = shuffledMats[i - 1];
@@ -662,9 +658,13 @@
         c.badgeBg = shuffledBadges[i - 1];
         c.font = shuffledFonts[i - 1];
         
-        // Assign distinct text strings across the deck
-        c.note = shuffledAffs[i - 1] || DEFAULT_AFFIRMATIONS[(i - 1) % DEFAULT_AFFIRMATIONS.length];
-        c.val = shuffledSpecs[i - 1] || DEFAULT_SPECS[(i - 1) % DEFAULT_SPECS.length];
+        // Only assign text if AI chips or extractions exist; otherwise start blank
+        if (cachedExtractedAffirmations.length >= 4) {
+          c.note = cachedExtractedAffirmations[i - 1] || "";
+        }
+        if (cachedExtractedSpecs.length >= 4) {
+          c.val = cachedExtractedSpecs[i - 1] || "";
+        }
 
         // Random subtle tilts
         c.bRot = (Math.random() * 12 - 6);
@@ -1219,7 +1219,66 @@
 
     function handleNoteInput(val) { cardCustoms[activeCardIndex].note = val; auditOcrSafety(); renderAll4CreatorCards(); }
     function handleSpecInput(val) { cardCustoms[activeCardIndex].val = val; auditOcrSafety(); renderAll4CreatorCards(); }
-    function handleSubNoteInput(val) { cardCustoms[activeCardIndex].subNote = val; auditOcrSafety(); renderAll4CreatorCards(); }
+
+    // Automatic 4-Way Semantic Rephraser for Sub-Notes
+    function generateSubNoteVariations(raw) {
+      if (!raw || !raw.trim()) return ["", "", "", ""];
+      const t = raw.trim();
+      const lower = t.toLowerCase();
+
+      // Bundle / Count / Set detection (e.g., "pack of 3", "set of 2", "12-pack")
+      const numMatch = lower.match(/\b(\d+)\b/);
+      if (numMatch && (lower.includes("pack") || lower.includes("set") || lower.includes("piece") || lower.includes("included") || lower.includes("count") || lower.includes("bottle"))) {
+        const n = numMatch[1];
+        return [
+          t,
+          `${n}-piece collection`,
+          `includes all ${n}`,
+          `${n}-pack bundle`
+        ];
+      }
+
+      // Quality / Verification / Routine
+      if (lower.includes("favorite") || lower.includes("staple") || lower.includes("pick") || lower.includes("choice") || lower.includes("essential")) {
+        return [
+          t,
+          "top community choice",
+          "verified routine staple",
+          "everyday customer favorite"
+        ];
+      }
+
+      // Material / Craftsmanship
+      if (lower.includes("wood") || lower.includes("finish") || lower.includes("steel") || lower.includes("design") || lower.includes("grade") || lower.includes("craft")) {
+        return [
+          t,
+          "premium construction detail",
+          "solid craftsmanship",
+          "elevated living accent"
+        ];
+      }
+
+      // General lifestyle variation
+      return [
+        t,
+        "verified community find",
+        "thoughtfully curated pick",
+        "signature home favorite"
+      ];
+    }
+
+    function handleSubNoteInput(val) { 
+      cardCustoms[activeCardIndex].subNote = val; 
+      // Auto-rephrase across the other 3 cards using common boutique terminology
+      const variations = generateSubNoteVariations(val);
+      for (let i = 1; i <= 4; i++) {
+        if (i !== activeCardIndex) {
+          cardCustoms[i].subNote = variations[i - 1];
+        }
+      }
+      auditOcrSafety(); 
+      renderAll4CreatorCards(); 
+    }
 
     function updateActiveMatArchetype(val) { cardCustoms[activeCardIndex].archetype = val; renderAll4CreatorCards(); }
     function updateActiveBgWorld(val) { cardCustoms[activeCardIndex].bgWorld = val; renderAll4CreatorCards(); }
@@ -1381,7 +1440,8 @@
     }
 
     function drawSplitTwoToneBackground(ctx, pal) {
-      // Minimalist Split Two-Tone Gallery (Sample 4)
+      // Minimalist Split Two-Tone Gallery (Sample 4 - Strict Save/Restore to Prevent Leaks)
+      ctx.save();
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
@@ -1392,6 +1452,7 @@
       ctx.lineWidth = 2;
       ctx.globalAlpha = 0.5;
       ctx.beginPath(); ctx.moveTo(0, 680); ctx.lineTo(1080, 680); ctx.stroke();
+      ctx.restore();
     }
 
     function drawWatercolorBloomBackground(ctx, pal) {
@@ -1617,20 +1678,26 @@
       // 2. SCATTER DECORATORS (3 to 4 elements, strictly max 2 of same)
       renderScatterDecorators(ctx, hash, pal.accent, pal.brightPop, cardNum);
 
-      // 3. PRODUCT STAGING & PROPORTIONAL MAT SIZING (Leaves breathing room for text!)
+      // 3. PRODUCT STAGING & PROPORTIONAL HERO SIZING (75% - 85% Scale)
       const pScale = conf.pScale || 1.0;
       const px = conf.productPos ? conf.productPos.x : 540;
-      const py = conf.productPos ? conf.productPos.y : 470;
+      const py = conf.productPos ? conf.productPos.y : 455;
 
       const imgW = srcCanvas.width || srcCanvas.naturalWidth || 800;
       const imgH = srcCanvas.height || srcCanvas.naturalHeight || 800;
-      // Proportional hero sizing: max 560px (prevents crushing the headline)
-      const maxBox = Math.round(540 * pScale);
       const ratio = imgW / imgH;
-      
-      let drawW = maxBox, drawH = maxBox;
-      if (ratio > 1) drawH = Math.round(maxBox / ratio);
-      else drawW = Math.round(maxBox * ratio);
+
+      // Prominent, confident product sizing (75% to 85% of canvas area)
+      const maxW = 750 * pScale, maxH = 680 * pScale;
+      let drawW, drawH;
+
+      if (ratio > (maxW / maxH)) {
+        drawW = Math.round(maxW);
+        drawH = Math.round(maxW / ratio);
+      } else {
+        drawH = Math.round(maxH);
+        drawW = Math.round(maxH * ratio);
+      }
 
       conf._activeProductBox = { x: px - drawW/2, y: py - drawH/2, w: drawW, h: drawH };
 
@@ -1641,77 +1708,77 @@
       ctx.translate(px, py);
       ctx.rotate(frameRot);
 
-      // A: POLAROID PHOTO MAT (Sample 1 Card 1)
+      // A: POLAROID PHOTO MAT (Sample 1 Card 1 - Snug 35px borders, 70px bottom lip)
       if (archetype === "polaroid") {
-        const matW = Math.max(620, drawW + 70);
-        const matH = Math.max(660, drawH + 110);
+        const matW = drawW + 50;
+        const matH = drawH + 85;
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.25)"; ctx.shadowBlur = 32; ctx.shadowOffsetY = 14;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 32; ctx.shadowOffsetY = 14;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
-        drawWashiTape(ctx, proc.washiOffset, -matH/2, 180, 38, 0.02);
+        drawWashiTape(ctx, proc.washiOffset, -matH/2, 170, 36, 0.02);
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2 - 16, drawW, drawH);
       }
       // B: DOTTED NOTEBOOK SHEET (Sample 3)
       else if (archetype === "notebook") {
-        const matW = Math.max(620, drawW + 80);
-        const matH = Math.max(660, drawH + 100);
+        const matW = drawW + 52;
+        const matH = drawH + 64;
         ctx.fillStyle = "#FCFAF7";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.20)"; ctx.shadowBlur = 30; ctx.shadowOffsetY = 12;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.18)"; ctx.shadowBlur = 28; ctx.shadowOffsetY = 12;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
 
         // Ruled dotted lines
         ctx.strokeStyle = "rgba(180, 160, 140, 0.4)"; ctx.lineWidth = 1.2; ctx.setLineDash([4, 4]);
-        for (let ly = -matH/2 + 35; ly < matH/2 - 15; ly += 34) {
-          ctx.beginPath(); ctx.moveTo(-matW/2 + 20, ly); ctx.lineTo(matW/2 - 20, ly); ctx.stroke();
+        for (let ly = -matH/2 + 28; ly < matH/2 - 10; ly += 32) {
+          ctx.beginPath(); ctx.moveTo(-matW/2 + 16, ly); ctx.lineTo(matW/2 - 16, ly); ctx.stroke();
         }
         ctx.setLineDash([]);
-        drawWashiTape(ctx, -matW/2 + 50, -matH/2 + 20, 120, 32, -0.65, "rgba(240, 200, 205, 0.88)");
-        drawWashiTape(ctx, matW/2 - 50, matH/2 - 20, 120, 32, -0.65, "rgba(240, 200, 205, 0.88)");
+        drawWashiTape(ctx, -matW/2 + 45, -matH/2 + 15, 110, 30, -0.65, "rgba(240, 200, 205, 0.88)");
+        drawWashiTape(ctx, matW/2 - 45, matH/2 - 15, 110, 30, -0.65, "rgba(240, 200, 205, 0.88)");
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
       }
       // C: DOUBLE-STACKED OFFSET CARDS + 3D PUSHPIN (Sample 5)
       else if (archetype === "stacked_pin") {
-        const matW = Math.max(600, drawW + 65);
-        const matH = Math.max(640, drawH + 90);
+        const matW = drawW + 48;
+        const matH = drawH + 60;
 
         ctx.save();
-        ctx.rotate(-0.06);
+        ctx.rotate(-0.05);
         ctx.fillStyle = pal.bgSecondary;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.16)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 10;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.15)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 10;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.restore();
 
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 30; ctx.shadowOffsetY = 14;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.20)"; ctx.shadowBlur = 28; ctx.shadowOffsetY = 12;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
 
-        if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2 + 10, drawW, drawH);
-        drawPushpin(ctx, 0, -matH/2 + 15, "#E11D48");
+        if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2 + 8, drawW, drawH);
+        drawPushpin(ctx, 0, -matH/2 + 14, "#E11D48");
       }
       // D: ROUNDED SQUIRCLE TRAY (Sample 1 Card 3)
       else if (archetype === "squircle") {
-        const matW = Math.max(620, drawW + 70);
-        const matH = Math.max(660, drawH + 90);
+        const matW = drawW + 48;
+        const matH = drawH + 58;
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 36; ctx.shadowOffsetY = 16;
-        ctx.beginPath(); ctx.roundRect(-matW/2, -matH/2, matW, matH, 32); ctx.fill();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.20)"; ctx.shadowBlur = 32; ctx.shadowOffsetY = 14;
+        ctx.beginPath(); ctx.roundRect(-matW/2, -matH/2, matW, matH, 28); ctx.fill();
         ctx.shadowColor = "transparent";
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
       }
       // E: EDITORIAL GALLERY DOUBLE-FRAME (Sample 4)
       else if (archetype === "gallery") {
-        const matW = Math.max(620, drawW + 70);
-        const matH = Math.max(660, drawH + 90);
+        const matW = drawW + 48;
+        const matH = drawH + 58;
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.24)"; ctx.shadowBlur = 34; ctx.shadowOffsetY = 14;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 30; ctx.shadowOffsetY = 12;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
 
         ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.2; ctx.globalAlpha = 0.65;
-        ctx.strokeRect(-matW/2 + 14, -matH/2 + 14, matW - 28, matH - 28);
+        ctx.strokeRect(-matW/2 + 12, -matH/2 + 12, matW - 24, matH - 24);
         ctx.globalAlpha = 1.0;
 
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
@@ -1719,10 +1786,10 @@
       // F: CLEAN FLOATING / MAT-FREE (Sample 1 Card 2)
       else {
         ctx.save();
-        ctx.fillStyle = "rgba(0, 0, 0, 0.28)";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.26)";
         ctx.filter = "blur(18px)";
         ctx.beginPath();
-        ctx.ellipse(0, drawH/2 - 8, drawW * 0.42, 22, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, drawH/2 - 6, drawW * 0.44, 22, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
@@ -2061,12 +2128,29 @@
 
     function auditOcrSafety() {
       const allText = Object.values(cardCustoms).map(c => [c.note, c.val, c.subNote].join(' ')).join(' ').toLowerCase();
-      const hits = FB_BLACKLIST.filter(b => allText.includes(b));
+      const hits = [];
+
+      FB_BLACKLIST.forEach(term => {
+        // Direct symbol matches for $ or %
+        if (term === '$' || term === '%') {
+          if (allText.includes(term)) hits.push(term);
+        } else {
+          // Whole-word boundary regex stops "staple" from triggering "tap"
+          const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp(`(^|[^a-zA-Z0-9])${escaped}([^a-zA-Z0-9]|$)`, 'i');
+          if (regex.test(allText)) {
+            hits.push(term);
+          }
+        }
+      });
+
       const banner = document.getElementById('ocrWarningBanner');
       if (hits.length > 0) {
         document.getElementById('ocrWarningText').innerText = `Banned terms detected: "${hits.slice(0, 5).join(', ')}". Pure non-commercial curation specs only!`;
         banner.classList.remove('hidden');
-      } else { banner.classList.add('hidden'); }
+      } else { 
+        banner.classList.add('hidden'); 
+      }
     }
 
     async function extractDealInfo() {
@@ -2075,7 +2159,7 @@
 
       const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?))\b/i);
       const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : "HOME STAPLE";
-      cachedExtractedSpecs = [unitClean, "POINT DROP", "$13.80", "SOLID CHOICE", "VERIFIED FAVORITE", "3-PACK BUNDLE"];
+      cachedExtractedSpecs = [unitClean, "COMMUNITY PICK", "SOLID CHOICE", "VERIFIED FAVORITE", "SIGNATURE FIND", "MULTI-PIECE SET"];
 
       // Fan out default distinct text across all 4 cards immediately
       generateProceduralDeck();
