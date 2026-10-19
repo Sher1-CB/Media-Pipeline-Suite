@@ -1093,7 +1093,7 @@
       const gradAngle = (hash % 360) * (Math.PI / 180);
       const canvasBgGrad = ctx.createLinearGradient(
         540 + Math.cos(gradAngle) * 700, 540 + Math.sin(gradAngle) * 700, 
-        540 - Math.cos(gradAngle) * 700, 540 - Math.sin(angle) * 700
+        540 - Math.cos(gradAngle) * 700, 540 - Math.sin(gradAngle) * 700
       );
       canvasBgGrad.addColorStop(0, "#FFFFFF");
       canvasBgGrad.addColorStop(0.4, pal.bg || "#F5EFE6");
