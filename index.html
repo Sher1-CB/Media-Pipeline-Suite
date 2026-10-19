@@ -1102,10 +1102,10 @@
       ctx.save();
       const blobX = (hash % 2 === 0) ? 0 : 1080;
       const blobY = ((hash * 7) % 2 === 0) ? 0 : 1080;
-      const blobGrad = ctx.createRadialGradient(blobX, blobY, 50, blobX, blobY, 750);
-      blobGrad.addColorStop(0, accent);
-      blobGrad.addColorStop(1, "transparent");
-      ctx.fillStyle = blobGrad;
+      const customBlobGrad = ctx.createRadialGradient(bX, bY, 50, bX, bY, 750);
+      customBlobGrad.addColorStop(0, accent);
+      customBlobGrad.addColorStop(1, "transparent");
+      ctx.fillStyle = customBlobGrad;
       ctx.globalAlpha = 0.28;
       ctx.beginPath();
       ctx.arc(blobX, blobY, 540 + (hash % 100), 0, Math.PI * 2);
