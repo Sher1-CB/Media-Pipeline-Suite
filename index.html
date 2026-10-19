@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CB Media Pipeline Suite v12.0 - Boutique Generative Studio</title>
+  <title>CB Media Pipeline Suite v12.5 - Infinite Boutique Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts for Editorial Typographies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,9 +81,9 @@
     <header class="card-dark p-5 flex flex-wrap justify-between items-center gap-4 shadow-xl">
       <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v12.0 Boutique</span>
+          <span>⚡</span> CB Media Pipeline Suite <span class="text-xs bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-mono">v12.5 Infinite Boutique</span>
         </h1>
-        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Authentic Staging Mats ➔ Multi-Scale Scatter ➔ Free Tier AI</p>
+        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Zero-Overlap Staging ➔ Photo Color Harmonies ➔ Free Tier AI</p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3 bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/70 w-full sm:w-auto">
@@ -234,8 +234,8 @@
       <div class="card-dark p-5 space-y-4">
         <div class="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Boutique Coverflow Creator Studio</h2>
-            <p class="text-xs text-slate-400">💡 <strong>Infinite Possibilities:</strong> Photo-harmonized palettes, authentic paper mats, pushpins & 3–5 multi-scale scatter art.</p>
+            <h2 class="text-base font-bold uppercase tracking-wider text-white">Step 3: Infinite Boutique Studio</h2>
+            <p class="text-xs text-slate-400">💡 <strong>Zero-Overlap Guarantee:</strong> Every card in the deck rolls a completely distinct mat, background world, badge, font, and headline.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-700">
@@ -254,41 +254,41 @@
         <!-- RAW DEAL PARSER -->
         <div class="flex gap-2">
           <textarea id="rawDealPaste" placeholder="Paste raw deal text or product notes here..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-16"></textarea>
-          <button type="button" onclick="extractDealInfo()" class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider cursor-pointer">⚡ Extract Info</button>
+          <button type="button" onclick="extractDealInfo()" class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider cursor-pointer">⚡ Extract Info & Fan Out</button>
         </div>
 
         <!-- AI CHIPS CONTAINER -->
         <div id="aiChipsWrapper" class="hidden space-y-2 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-sky-400 px-1"><span>💡 Click an AI Affirmation to apply:</span></div>
+          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-sky-400 px-1"><span>💡 Click an AI Affirmation to apply to ACTIVE card:</span></div>
           <div id="aiChipsContainer" class="flex flex-wrap gap-2"></div>
-          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-emerald-400 px-1 pt-1 border-t border-slate-800/60"><span>🏷️ Click an AI Curation Spec to apply:</span></div>
+          <div class="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-emerald-400 px-1 pt-1 border-t border-slate-800/60"><span>🏷️ Click an AI Curation Spec to apply to ACTIVE card:</span></div>
           <div id="aiSpecChipsContainer" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <!-- GLOBAL TEXT INPUTS (STARTS BLANK) -->
+        <!-- ACTIVE CARD TEXT INPUTS (SYNCED PER CARD) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Affirmation Note</label>
-              <button type="button" onclick="shuffleNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase cursor-pointer">🎲 Shuffle Note</button>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-sky-400"><span id="activeNoteLabel">Card 1</span> Headline Note</label>
+              <button type="button" onclick="shuffleActiveCardNote()" class="text-[10px] text-sky-400 hover:text-sky-300 font-bold uppercase cursor-pointer">🎲 Shuffle Note</button>
             </div>
-            <input type="text" id="mainNoteInput" placeholder="Enter affirmation or click AI chip..." oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
+            <input type="text" id="mainNoteInput" placeholder="Enter affirmation note..." oninput="handleNoteInput(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
           </div>
 
           <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Curation Spec Tag (Zero Pricing)</label>
-              <button type="button" onclick="shuffleValueTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase cursor-pointer">🎲 Shuffle Tag</button>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-emerald-400"><span id="activeSpecLabel">Card 1</span> Curation Spec Tag</label>
+              <button type="button" onclick="shuffleActiveCardTag()" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold uppercase cursor-pointer">🎲 Shuffle Tag</button>
             </div>
-            <input type="text" id="simpleValueInput" placeholder="e.g. 20oz · 12-PACK, SOLID CHOICE" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
+            <input type="text" id="simpleValueInput" placeholder="e.g. SOLID CHOICE, 12-PACK..." oninput="handleSpecInput(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500">
           </div>
 
           <div>
             <div class="flex justify-between items-center">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Extra Line / Sub-Note (Optional)</label>
-              <button type="button" onclick="clearSubNote()" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase cursor-pointer">✕ Clear</button>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400"><span id="activeSubLabel">Card 1</span> Sub-Note (Optional)</label>
+              <button type="button" onclick="clearActiveSubNote()" class="text-[10px] text-rose-400 hover:text-rose-300 font-bold uppercase cursor-pointer">✕ Clear</button>
             </div>
-            <input type="text" id="subNoteInput" placeholder="e.g. verified favorite, limited restock" oninput="auditOcrSafety(); renderAll4CreatorCards();" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500 shadow-inner">
+            <input type="text" id="subNoteInput" placeholder="e.g. verified favorite, limited restock" oninput="handleSubNoteInput(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white placeholder-slate-500 font-medium mt-1 focus:outline-none focus:border-sky-500 shadow-inner">
           </div>
         </div>
       </div>
@@ -298,7 +298,7 @@
         <div class="w-full flex justify-between items-center mb-4 z-40">
           <div class="flex items-center gap-3">
             <span id="activeCardIndicator" class="px-3 py-1 bg-sky-500/20 text-sky-400 border border-sky-500/40 rounded-full text-xs font-bold uppercase tracking-wider">Active Focus: Card 1 of 4</span>
-            <button type="button" onclick="reRollProceduralDeck()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer" title="Generate brand new layouts, mats & scatter graphics"><span>🎲</span> Re-Generate Design Deck</button>
+            <button type="button" onclick="reRollProceduralDeck()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold rounded-lg uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer" title="Generate brand new non-overlapping layouts, mats & scatter graphics"><span>🎲</span> Re-Roll 4 Unique Styles</button>
           </div>
           <div class="flex items-center gap-2">
             <button type="button" onclick="resetActiveCard()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold rounded-lg uppercase tracking-wider cursor-pointer">🔄 Reset Card</button>
@@ -323,7 +323,7 @@
         <div class="border-b border-slate-800 pb-3 flex flex-wrap justify-between items-center gap-2">
           <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2"><span>🎨</span> Active Card Studio Console (<span id="consoleCardName">Card 1</span>)</h3>
           <div class="flex items-center gap-2">
-            <button type="button" onclick="shiftActiveCardPalette()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-[11px] font-bold rounded-lg uppercase tracking-wider transition-all cursor-pointer" title="Shift accent colors and generative shapes instantly">🎨 Shift Palette & Accents</button>
+            <button type="button" onclick="shiftActiveCardPalette()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-[11px] font-bold rounded-lg uppercase tracking-wider transition-all cursor-pointer" title="Shift accent colors and generative shapes instantly">🎨 Mutate Active Card</button>
             <span class="text-[11px] text-slate-400 hidden sm:inline">· Drag objects directly on canvas</span>
           </div>
         </div>
@@ -358,7 +358,7 @@
 
           <!-- HEADLINE & SUB-NOTE CONTROLS -->
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
-            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>✍️ Main Note & Sub-Note:</span></div>
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>✍️ Typography & Note:</span></div>
             <select id="activeFontSelect" onchange="updateActiveFont(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-1.5 rounded-lg focus:outline-none">
               <option value="handwritten">✍️ Casual Script (Caveat)</option>
               <option value="typewriter">📠 Typewriter Mono (Courier)</option>
@@ -397,9 +397,9 @@
             </label>
           </div>
 
-          <!-- PRODUCT SIZING, MAT ARCHETYPE & RE-CENTER -->
+          <!-- PRODUCT SIZING & STAGING MAT -->
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2.5">
-            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>📦 Product Staging & Mat:</span></div>
+            <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>📦 Product & Staging Mat:</span></div>
             <div class="space-y-1">
               <div class="flex justify-between text-[11px] text-slate-400"><span>Hero Scale:</span><span id="activeProductSizeVal" class="text-emerald-400 font-mono">100%</span></div>
               <input type="range" id="activeProductSize" min="60" max="150" value="100" class="w-full h-1 bg-slate-700 rounded-lg cursor-pointer" oninput="updateActiveProductSize(this.value)">
@@ -417,6 +417,19 @@
               </select>
             </div>
 
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Background World:</label>
+              <select id="activeBgWorld" onchange="updateActiveBgWorld(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-1.5 rounded-lg focus:outline-none">
+                <option value="wood">🪵 Wood Plank Board</option>
+                <option value="linen">🧵 Woven Studio Linen</option>
+                <option value="kraft">📦 Oatmeal Kraft Paper</option>
+                <option value="waves">🌊 70s Fluid Organic Waves</option>
+                <option value="grid">📐 Bullet Journal Grid</option>
+                <option value="splittone">🎨 Two-Tone Split</option>
+                <option value="watercolor">🌸 Watercolor Bloom Parchment</option>
+              </select>
+            </div>
+
             <div class="pt-1">
               <button type="button" onclick="centerActiveElements()" class="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg text-slate-300 uppercase tracking-wider cursor-pointer">🎯 Re-Center All</button>
             </div>
@@ -426,7 +439,7 @@
           <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
             <div class="flex justify-between items-center text-xs font-bold uppercase text-slate-300"><span>✨ Mix & Match Layers:</span></div>
             <div class="grid grid-cols-2 gap-1.5 text-[11px] text-slate-300">
-              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_arrow" onchange="toggleActiveDecorator('arrow')"> 🎯 Sketched Arrow</label>
+              <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_arrow" onchange="toggleActiveDecorator('arrow')"> 🎯 Red Arrow</label>
               <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_loop" onchange="toggleActiveDecorator('loop')"> ⭕ Sharpie Loop</label>
               <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_dbl" onchange="toggleActiveDecorator('dbl')"> ═ Underline Bar</label>
               <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="dec_eye" onchange="toggleActiveDecorator('eye')"> 👀 Eye Stamp</label>
@@ -488,11 +501,12 @@
       "proven", "100% effective", "shipped", "total", "reg", "was"
     ];
 
+    // Every card maintains its own independent text and visual attributes
     let cardCustoms = {
-      1: { pScale: 1.0, bScale: 1.0, bRot: -4, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "polaroid", badgeBg: "sticky", font: "handwritten", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
-      2: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "floating", badgeBg: "pill", font: "typewriter", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
-      3: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "squircle", badgeBg: "scribble", font: "playful", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
-      4: { pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "notebook", badgeBg: "kraft", font: "editorial", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null }
+      1: { note: "Stocked up on daily hydration ✨", val: "$13.80", subNote: "", pScale: 1.0, bScale: 1.0, bRot: -4, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "polaroid", bgWorld: "wood", badgeBg: "scribble", font: "handwritten", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
+      2: { note: "Daily routine essential 🧴", val: "HOME STAPLE", subNote: "all 3 included", pScale: 1.0, bScale: 1.0, bRot: 0, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "floating", bgWorld: "linen", badgeBg: "pill", font: "editorial", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
+      3: { note: "Moisture reset goals 🍂", val: "POINT DROP", subNote: "", pScale: 1.0, bScale: 1.0, bRot: 3, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "squircle", bgWorld: "waves", badgeBg: "ribbon", font: "playful", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null },
+      4: { note: "So cozy for the season 🧡", val: "3-PACK BUNDLE", subNote: "", pScale: 1.0, bScale: 1.0, bRot: -3, nRot: 0, nScale: 1.0, subRot: 0, subScale: 1.0, hasNoteBg: false, archetype: "notebook", bgWorld: "kraft", badgeBg: "sticky", font: "modern_sans", productPos: null, badgePos: null, notePos: null, subPos: null, accents: { arrow: false, loop: false, dbl: false, eye: false, heart: false, clip: false, pin: false, vines: false }, procedural: null }
     };
 
     let draggingState = { active: false, cardNum: null, target: null, startX: 0, startY: 0 };
@@ -502,16 +516,30 @@
     const outputCanvas = document.getElementById('outputCanvas');
     const oCtx = outputCanvas.getContext('2d');
 
-    const AFFIRMATIONS = {
-      lawn_garden: ["Yard project ready 🌾", "Fall lawn prep sorted 🍂", "Weekend outdoor project ✨", "Ready for greener grass 🌱"],
-      home_kitchen: ["Kitchen routine staple ✨", "Pantry backup done ✅", "Stocked up for months", "Dinner prep made simple"],
-      beauty_personal: ["Glowing skin routine unlocked ✨", "Spa luxury at home 🧴", "Radiant complexion goals 🌸", "Daily routine reset"],
-      general: ["Such a great find ✨", "Always handy to keep nearby", "Daily routine staple", "Everyday home favorite"]
-    };
+    const DEFAULT_AFFIRMATIONS = [
+      "Stocked up on daily hydration ✨",
+      "Daily shower & body favorite 🧴",
+      "Shea & almond moisture reset 🍂",
+      "So cozy for fall! 🧡",
+      "Your new everyday ritual ✨",
+      "The ultimate upgrade for your routine",
+      "Always handy to keep nearby",
+      "Pure everyday luxury at home"
+    ];
 
-    let activeCategory = "general";
-    let valueTagOptions = [];
-    let valueTagIndex = 0;
+    const DEFAULT_SPECS = [
+      "$13.80",
+      "POINT DROP",
+      "SOLID CHOICE",
+      "HOME STAPLE",
+      "3 BIG BOTTLES",
+      "VERIFIED FAVORITE",
+      "CURATED FIND",
+      "LIMITED DROP"
+    ];
+
+    let cachedExtractedAffirmations = [];
+    let cachedExtractedSpecs = [];
 
     /* ==========================================================================
        PHOTO-DRIVEN HSL COLOR HARMONY ENGINE
@@ -522,7 +550,7 @@
       let h, s, l = (max + min) / 2;
 
       if (max === min) {
-        h = s = 0; // achromatic
+        h = s = 0;
       } else {
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -538,15 +566,13 @@
 
     function sampleColorsFromCanvas(canvas) {
       try {
-        if (!canvas || !canvas.width || canvas.width === 0) {
-          return getDefaultPalette();
-        }
+        if (!canvas || !canvas.width || canvas.width === 0) return getDefaultPalette();
         const s = document.createElement("canvas"); s.width = 48; s.height = 48;
         const sCtx = s.getContext("2d"); sCtx.drawImage(canvas, 0, 0, 48, 48);
         const data = sCtx.getImageData(0, 0, 48, 48).data;
 
         let maxScore = 0;
-        let bestR = 196, bestG = 138, bestB = 92; // Warm caramel default
+        let bestR = 196, bestG = 138, bestB = 92;
 
         for (let i = 0; i < data.length; i += 4) {
           const red = data[i], green = data[i+1], blue = data[i+2], alpha = data[i+3];
@@ -566,19 +592,19 @@
 
         const hsl = rgbToHsl(bestR, bestG, bestB);
         const baseHue = hsl.h;
-        const baseSat = Math.max(30, Math.min(85, hsl.s));
+        const baseSat = Math.max(35, Math.min(85, hsl.s));
 
         return {
           h: baseHue,
-          // Airy, luminous high-key pastel wash background
+          // Airy, high-key pastel wash
           bg: `hsl(${baseHue}, ${Math.min(baseSat, 28)}%, 96%)`,
-          bgSecondary: `hsl(${baseHue}, ${Math.min(baseSat, 38)}%, 91%)`,
+          bgSecondary: `hsl(${baseHue}, ${Math.min(baseSat, 42)}%, 91%)`,
           // Punchy primary accent matching product tone
-          accent: `hsl(${baseHue}, ${Math.max(baseSat, 65)}%, ${Math.min(Math.max(hsl.l, 36), 48)}%)`,
-          // Warm bright pop (analogous or golden)
+          accent: `hsl(${baseHue}, ${Math.max(baseSat, 70)}%, ${Math.min(Math.max(hsl.l, 36), 46)}%)`,
+          // Warm bright pop (analogous shift)
           brightPop: `hsl(${(baseHue + 25) % 360}, ${Math.max(baseSat, 75)}%, 52%)`,
-          // Luxury dark espresso/charcoal text tinted with the product hue
-          text: `hsl(${baseHue}, 28%, 14%)`,
+          // Luxury dark charcoal tinted with product hue
+          text: `hsl(${baseHue}, 30%, 14%)`,
           paper: "#FAF8F5",
           vignette: `hsla(${baseHue}, 35%, 15%, 0.16)`
         };
@@ -601,12 +627,77 @@
     }
 
     /* ==========================================================================
-       INITIALIZATION & EVENT LISTENERS
+       INITIALIZATION & ZERO-OVERLAP PROCEDURAL SHUFFLE ENGINE
        ========================================================================== */
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // STRICT NON-REPEATING PERMUTATION GENERATOR (Zero Overlap Across the 4 Cards)
+    function generateProceduralDeck() {
+      const matCatalog = ["polaroid", "notebook", "stacked_pin", "squircle", "gallery", "floating"];
+      const bgCatalog = ["wood", "linen", "waves", "kraft", "grid", "splittone", "watercolor"];
+      const badgeCatalog = ["sticky", "pill", "kraft", "ticket", "scribble", "ribbon", "scallop", "highlighter", "dark_pill", "hairline"];
+      const fontCatalog = ["handwritten", "editorial", "playful", "modern_sans", "typewriter"];
+
+      const shuffledMats = shuffleArray(matCatalog);
+      const shuffledBgs = shuffleArray(bgCatalog);
+      const shuffledBadges = shuffleArray(badgeCatalog);
+      const shuffledFonts = shuffleArray(fontCatalog);
+
+      const affs = cachedExtractedAffirmations.length >= 4 ? cachedExtractedAffirmations : DEFAULT_AFFIRMATIONS;
+      const specs = cachedExtractedSpecs.length >= 4 ? cachedExtractedSpecs : DEFAULT_SPECS;
+      const shuffledAffs = shuffleArray(affs);
+      const shuffledSpecs = shuffleArray(specs);
+
+      for (let i = 1; i <= 4; i++) {
+        const c = cardCustoms[i];
+        c.archetype = shuffledMats[i - 1];
+        c.bgWorld = shuffledBgs[i - 1];
+        c.badgeBg = shuffledBadges[i - 1];
+        c.font = shuffledFonts[i - 1];
+        
+        // Assign distinct text strings across the deck
+        c.note = shuffledAffs[i - 1] || DEFAULT_AFFIRMATIONS[(i - 1) % DEFAULT_AFFIRMATIONS.length];
+        c.val = shuffledSpecs[i - 1] || DEFAULT_SPECS[(i - 1) % DEFAULT_SPECS.length];
+
+        // Random subtle tilts
+        c.bRot = (Math.random() * 12 - 6);
+        c.nRot = (Math.random() * 4 - 2);
+
+        c.procedural = {
+          seedRotation: (Math.random() * 6 - 3),
+          washiOffset: Math.random() * 40 - 20,
+          bgPatternSeed: Math.floor(Math.random() * 1000000)
+        };
+      }
+    }
+
+    function reRollProceduralDeck() {
+      generateProceduralDeck();
+      syncConsoleControls();
+      renderAll4CreatorCards();
+    }
+
+    function shiftActiveCardPalette() {
+      const conf = cardCustoms[activeCardIndex];
+      if (!conf.procedural) conf.procedural = {};
+      conf.procedural.bgPatternSeed = Math.floor(Math.random() * 999999);
+      conf.procedural.seedRotation = (Math.random() * 8 - 4);
+      conf.bRot = (Math.random() * 14 - 7);
+      renderAll4CreatorCards();
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       setupCanvasDragListeners();
       setupManualPatchListeners();
       generateProceduralDeck();
+      syncConsoleControls();
 
       const savedKey = localStorage.getItem('deal_gemini_key') || localStorage.getItem('cb_suite_gemini_key');
       const keyInput = document.getElementById('apiKeyInput');
@@ -700,9 +791,8 @@
           outputCanvas.width = img.naturalWidth; outputCanvas.height = img.naturalHeight;
           detectedBoxes = []; manualBoxes = [];
 
-          document.getElementById('mainNoteInput').value = "";
-          document.getElementById('simpleValueInput').value = "";
-          document.getElementById('subNoteInput').value = "";
+          cachedExtractedAffirmations = [];
+          cachedExtractedSpecs = [];
           document.getElementById('rawDealPaste').value = "";
           document.getElementById('suggestedTitleInput').value = "";
           document.getElementById('aiChipsWrapper').classList.add('hidden');
@@ -724,6 +814,7 @@
 
           renderTargetCanvas();
           renderOutputCanvas();
+          syncConsoleControls();
         };
         img.src = evt.target.result;
       };
@@ -946,9 +1037,6 @@
           directCanvas.width = directImg.naturalWidth; directCanvas.height = directImg.naturalHeight;
           directCanvas.getContext('2d').drawImage(directImg, 0, 0);
           sanitizedCanvasSnapshot = directCanvas;
-          document.getElementById('mainNoteInput').value = "";
-          document.getElementById('simpleValueInput').value = "";
-          document.getElementById('subNoteInput').value = "";
           generateProceduralDeck();
           sampleColorsFromCanvas(directCanvas);
           runVariantLensEngine(sanitizedCanvasSnapshot);
@@ -1014,9 +1102,9 @@
         const item = document.createElement('div');
         item.className = "bg-slate-900 border border-slate-800 p-2 rounded-xl text-center cursor-pointer hover:border-sky-500 transition-all";
         item.onclick = () => {
-          chosen4Variants[0] = v;
+          chosen4Variants[activeCardIndex - 1] = v;
           renderAll4CreatorCards();
-          alert(`Variant ${v.id} set as primary card 1!`);
+          alert(`Variant ${v.id} assigned to Card ${activeCardIndex}!`);
         };
         item.innerHTML = `
           <div class="aspect-square bg-slate-950 rounded-lg overflow-hidden mb-1 flex items-center justify-center">
@@ -1061,15 +1149,23 @@
     }
 
     /* ==========================================================================
-       STEP 3: COVERFLOW & PROCEDURAL DECK
+       STEP 3: COVERFLOW & ACTIVE CARD INPUT SYNCHRONIZATION
        ========================================================================== */
-    function selectCardIndex(idx) { activeCardIndex = idx; updateCoverflowPositions(); syncConsoleControls(); }
+    function selectCardIndex(idx) { 
+      activeCardIndex = idx; 
+      updateCoverflowPositions(); 
+      syncConsoleControls(); 
+    }
     function prevCard() { activeCardIndex = activeCardIndex > 1 ? activeCardIndex - 1 : 4; selectCardIndex(activeCardIndex); }
     function nextCard() { activeCardIndex = activeCardIndex < 4 ? activeCardIndex + 1 : 1; selectCardIndex(activeCardIndex); }
 
     function updateCoverflowPositions() {
       document.getElementById('activeCardIndicator').innerText = `Active Focus: Card ${activeCardIndex} of 4`;
       document.getElementById('consoleCardName').innerText = `Card ${activeCardIndex}`;
+      document.getElementById('activeNoteLabel').innerText = `Card ${activeCardIndex}`;
+      document.getElementById('activeSpecLabel').innerText = `Card ${activeCardIndex}`;
+      document.getElementById('activeSubLabel').innerText = `Card ${activeCardIndex}`;
+
       for (let i = 1; i <= 4; i++) {
         const el = document.getElementById(`cCard${i}`);
         if (!el) continue;
@@ -1084,30 +1180,52 @@
 
     function syncConsoleControls() {
       const conf = cardCustoms[activeCardIndex];
+      // Sync text inputs to currently active card
+      document.getElementById('mainNoteInput').value = conf.note || "";
+      document.getElementById('simpleValueInput').value = conf.val || "";
+      document.getElementById('subNoteInput').value = conf.subNote || "";
+
       document.getElementById('activeBadgeStyle').value = conf.badgeBg || "sticky";
       document.getElementById('activeFontSelect').value = conf.font || "handwritten";
-      document.getElementById('activeBadgeTilt').value = conf.bRot || 0;
-      document.getElementById('activeBadgeTiltVal').innerText = `${conf.bRot || 0}°`;
+      document.getElementById('activeMatArchetype').value = conf.archetype || "polaroid";
+      document.getElementById('activeBgWorld').value = conf.bgWorld || "wood";
+
+      document.getElementById('activeBadgeTilt').value = Math.round(conf.bRot || 0);
+      document.getElementById('activeBadgeTiltVal').innerText = `${Math.round(conf.bRot || 0)}°`;
       document.getElementById('activeBadgeSize').value = Math.round((conf.bScale || 1.0) * 100);
       document.getElementById('activeBadgeSizeVal').innerText = `${Math.round((conf.bScale || 1.0) * 100)}%`;
-      document.getElementById('activeNoteTilt').value = conf.nRot || 0;
-      document.getElementById('activeNoteTiltVal').innerText = `${conf.nRot || 0}°`;
+
+      document.getElementById('activeNoteTilt').value = Math.round(conf.nRot || 0);
+      document.getElementById('activeNoteTiltVal').innerText = `${Math.round(conf.nRot || 0)}°`;
       document.getElementById('activeNoteSize').value = Math.round((conf.nScale || 1.0) * 100);
       document.getElementById('activeNoteSizeVal').innerText = `${Math.round((conf.nScale || 1.0) * 100)}%`;
+
+      document.getElementById('activeSubTilt').value = Math.round(conf.subRot || 0);
+      document.getElementById('activeSubTiltVal').innerText = `${Math.round(conf.subRot || 0)}°`;
+      document.getElementById('activeSubSize').value = Math.round((conf.subScale || 1.0) * 100);
+      document.getElementById('activeSubSizeVal').innerText = `${Math.round((conf.subScale || 1.0) * 100)}%`;
+
       document.getElementById('activeProductSize').value = Math.round((conf.pScale || 1.0) * 100);
       document.getElementById('activeProductSizeVal').innerText = `${Math.round((conf.pScale || 1.0) * 100)}%`;
       document.getElementById('activeNoteBgBox').checked = !!conf.hasNoteBg;
-      document.getElementById('activeMatArchetype').value = conf.archetype || "polaroid";
 
       ['arrow', 'loop', 'dbl', 'eye', 'heart', 'clip', 'pin', 'vines'].forEach(acc => {
         const el = document.getElementById(`dec_${acc}`);
         if (el) el.checked = !!(conf.accents && conf.accents[acc]);
       });
+
+      auditOcrSafety();
     }
 
+    function handleNoteInput(val) { cardCustoms[activeCardIndex].note = val; auditOcrSafety(); renderAll4CreatorCards(); }
+    function handleSpecInput(val) { cardCustoms[activeCardIndex].val = val; auditOcrSafety(); renderAll4CreatorCards(); }
+    function handleSubNoteInput(val) { cardCustoms[activeCardIndex].subNote = val; auditOcrSafety(); renderAll4CreatorCards(); }
+
     function updateActiveMatArchetype(val) { cardCustoms[activeCardIndex].archetype = val; renderAll4CreatorCards(); }
+    function updateActiveBgWorld(val) { cardCustoms[activeCardIndex].bgWorld = val; renderAll4CreatorCards(); }
     function updateActiveBadgeStyle(val) { cardCustoms[activeCardIndex].badgeBg = val; renderAll4CreatorCards(); }
     function updateActiveFont(val) { cardCustoms[activeCardIndex].font = val; renderAll4CreatorCards(); }
+
     function updateActiveBadgeTilt(val) { cardCustoms[activeCardIndex].bRot = parseInt(val); document.getElementById('activeBadgeTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
     function updateActiveBadgeSize(val) { cardCustoms[activeCardIndex].bScale = parseFloat(val) / 100.0; document.getElementById('activeBadgeSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
     function updateActiveNoteTilt(val) { cardCustoms[activeCardIndex].nRot = parseInt(val); document.getElementById('activeNoteTiltVal').innerText = `${val}°`; renderAll4CreatorCards(); }
@@ -1117,9 +1235,16 @@
     function updateActiveProductSize(val) { cardCustoms[activeCardIndex].pScale = parseFloat(val) / 100.0; document.getElementById('activeProductSizeVal').innerText = `${val}%`; renderAll4CreatorCards(); }
     function updateActiveNoteBg(checked) { cardCustoms[activeCardIndex].hasNoteBg = checked; renderAll4CreatorCards(); }
     function toggleActiveDecorator(acc) { cardCustoms[activeCardIndex].accents[acc] = document.getElementById(`dec_${acc}`).checked; renderAll4CreatorCards(); }
-    function centerActiveElements() { cardCustoms[activeCardIndex].productPos = null; cardCustoms[activeCardIndex].badgePos = null; cardCustoms[activeCardIndex].notePos = null; cardCustoms[activeCardIndex].subPos = null; renderAll4CreatorCards(); }
+
+    function centerActiveElements() { 
+      cardCustoms[activeCardIndex].productPos = null; 
+      cardCustoms[activeCardIndex].badgePos = null; 
+      cardCustoms[activeCardIndex].notePos = null; 
+      cardCustoms[activeCardIndex].subPos = null; 
+      renderAll4CreatorCards(); 
+    }
     function centerSubNote() { cardCustoms[activeCardIndex].subPos = null; renderAll4CreatorCards(); }
-    function clearSubNote() { document.getElementById('subNoteInput').value = ""; auditOcrSafety(); renderAll4CreatorCards(); }
+    function clearActiveSubNote() { cardCustoms[activeCardIndex].subNote = ""; document.getElementById('subNoteInput').value = ""; auditOcrSafety(); renderAll4CreatorCards(); }
 
     function resetActiveCard() {
       const c = cardCustoms[activeCardIndex];
@@ -1128,63 +1253,173 @@
       syncConsoleControls(); renderAll4CreatorCards();
     }
 
-    // PROCEDURAL ENGINE (Guarantees infinite varieties of mats, scatter art, and layouts)
-    function generateProceduralDeck() {
-      const defaultArchetypes = ["polaroid", "floating", "squircle", "notebook"];
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].archetype = defaultArchetypes[i - 1];
-        cardCustoms[i].procedural = {
-          seedRotation: (Math.random() * 6 - 3),
-          washiOffset: Math.random() * 30 - 15,
-          bgPatternSeed: Math.floor(Math.random() * 1000000)
-        };
-      }
-    }
-
-    function reRollProceduralDeck() { 
-      const allArchetypes = ["polaroid", "notebook", "stacked_pin", "squircle", "gallery", "floating"];
-      for (let i = 1; i <= 4; i++) {
-        cardCustoms[i].archetype = allArchetypes[Math.floor(Math.random() * allArchetypes.length)];
-        cardCustoms[i].procedural = {
-          seedRotation: (Math.random() * 8 - 4),
-          washiOffset: Math.random() * 40 - 20,
-          bgPatternSeed: Math.floor(Math.random() * 1000000)
-        };
-      }
-      renderAll4CreatorCards(); 
-    }
-
-    function shiftActiveCardPalette() {
-      const conf = cardCustoms[activeCardIndex];
-      if (!conf.procedural) conf.procedural = {};
-      conf.procedural.bgPatternSeed = Math.floor(Math.random() * 999999);
-      conf.procedural.seedRotation = (Math.random() * 8 - 4);
+    function shuffleActiveCardNote() {
+      const pool = cachedExtractedAffirmations.length > 0 ? cachedExtractedAffirmations : DEFAULT_AFFIRMATIONS;
+      cardCustoms[activeCardIndex].note = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('mainNoteInput').value = cardCustoms[activeCardIndex].note;
       renderAll4CreatorCards();
     }
 
-    function renderAll4CreatorCards() {
-      const fallbackImg = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : (rawLoadedImage || targetCanvas);
-      if (!chosen4Variants || chosen4Variants.length < 4) {
-        chosen4Variants = [{ id: 1, canvas: fallbackImg }, { id: 2, canvas: fallbackImg }, { id: 3, canvas: fallbackImg }, { id: 4, canvas: fallbackImg }];
-      }
-
-      const note = (document.getElementById('mainNoteInput')?.value || "").trim();
-      const val = (document.getElementById('simpleValueInput')?.value || "").trim();
-      const sampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
-
-      for (let i = 1; i <= 4; i++) {
-        const c = document.getElementById(`cardCanvas${i}`);
-        if (!c) continue;
-        let src = chosen4Variants[i - 1]?.canvas;
-        if (!src || !src.width) src = fallbackImg;
-        renderCardWithStyle(c, src, note, val, sampledPal, cardCustoms[i], i);
-      }
+    function shuffleActiveCardTag() {
+      const pool = cachedExtractedSpecs.length > 0 ? cachedExtractedSpecs : DEFAULT_SPECS;
+      cardCustoms[activeCardIndex].val = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('simpleValueInput').value = cardCustoms[activeCardIndex].val;
+      renderAll4CreatorCards();
     }
 
     /* ==========================================================================
-       VECTOR STAMP & ACCENT PROCEDURAL DRAWING HELPERS
+       CANVAS BACKGROUND WORLD RENDERERS (MATCHING CANVA SAMPLES)
        ========================================================================== */
-    function drawWashiTape(ctx, cx, cy, w, h, angle = 0, color = "rgba(240, 230, 215, 0.85)") {
+    function drawWoodBackground(ctx, pal, hash) {
+      // Warm oak wood plank background (Sample 1 Card 1)
+      const woodBase = `hsl(${pal.h > 15 && pal.h < 45 ? pal.h : 28}, 42%, 48%)`;
+      const plankColor1 = `hsl(${pal.h > 15 && pal.h < 45 ? pal.h : 28}, 44%, 44%)`;
+      const plankColor2 = `hsl(${pal.h > 15 && pal.h < 45 ? pal.h : 28}, 38%, 52%)`;
+
+      ctx.fillStyle = woodBase;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Vertical Wood Planks
+      const plankWidth = 270;
+      for (let p = 0; p < 4; p++) {
+        ctx.fillStyle = p % 2 === 0 ? plankColor1 : plankColor2;
+        ctx.fillRect(p * plankWidth, 0, plankWidth - 4, 1080);
+
+        // Plank joint shadow
+        ctx.fillStyle = "rgba(0, 0, 0, 0.28)";
+        ctx.fillRect(p * plankWidth + plankWidth - 4, 0, 4, 1080);
+      }
+
+      // Wavy wood grain lines
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.12)";
+      ctx.lineWidth = 1.8;
+      for (let i = 0; i < 40; i++) {
+        const y = (i * 28 + (hash % 100)) % 1080;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.bezierCurveTo(360, y + 15, 720, y - 15, 1080, y);
+        ctx.stroke();
+      }
+    }
+
+    function drawLinenBackground(ctx, pal) {
+      // Warm woven linen studio texture (Sample 1 Card 2)
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Fine woven fabric cross-hatch
+      ctx.save();
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.04)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x < 1080; x += 6) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
+      }
+      for (let y = 0; y < 1080; y += 6) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawKraftBackground(ctx, pal) {
+      // Warm oatmeal kraft paper (Sample 1 Card 3 & 4)
+      ctx.fillStyle = "#EAE0D2";
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Organic recycled kraft specks & fibers
+      ctx.save();
+      ctx.fillStyle = "rgba(70, 50, 30, 0.18)";
+      for (let i = 0; i < 80; i++) {
+        const x = (i * 127) % 1080, y = (i * 311) % 1080;
+        ctx.fillRect(x, y, 2.5, 1.5);
+      }
+      ctx.restore();
+    }
+
+    function drawOrganicWavesBackground(ctx, pal, hash) {
+      // 70s Retro Fluid Curved Color Bands (Sample 2 & Sample 5)
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      ctx.save();
+      // Wave 1: Saturated corner organic shape
+      ctx.fillStyle = pal.accent;
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(460, 0);
+      ctx.bezierCurveTo(420, 260, 200, 420, 0, 480);
+      ctx.closePath();
+      ctx.fill();
+
+      // Wave 2: Opposing bright pop wave
+      ctx.fillStyle = pal.brightPop;
+      ctx.globalAlpha = 0.75;
+      ctx.beginPath();
+      ctx.moveTo(1080, 1080);
+      ctx.lineTo(680, 1080);
+      ctx.bezierCurveTo(720, 840, 900, 680, 1080, 620);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawGridJournalBackground(ctx, pal) {
+      // Bullet Journal Grid Background (Sample 6)
+      ctx.fillStyle = pal.bgSecondary;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.08)";
+      ctx.lineWidth = 1.2;
+      for (let x = 0; x < 1080; x += 32) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1080); ctx.stroke();
+      }
+      for (let y = 0; y < 1080; y += 32) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1080, y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawSplitTwoToneBackground(ctx, pal) {
+      // Minimalist Split Two-Tone Gallery (Sample 4)
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      ctx.fillStyle = pal.bgSecondary;
+      ctx.fillRect(0, 680, 1080, 400);
+
+      ctx.strokeStyle = pal.accent;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath(); ctx.moveTo(0, 680); ctx.lineTo(1080, 680); ctx.stroke();
+    }
+
+    function drawWatercolorBloomBackground(ctx, pal) {
+      // Watercolor Parchment with Coffee Stain Rings (Sample 1 Card 4)
+      ctx.fillStyle = "#FDFBF7";
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      ctx.save();
+      // Soft translucent watercolor puddle
+      const grad = ctx.createRadialGradient(280, 240, 30, 280, 240, 360);
+      grad.addColorStop(0, pal.bgSecondary);
+      grad.addColorStop(1, "transparent");
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = 0.8;
+      ctx.beginPath(); ctx.arc(280, 240, 360, 0, Math.PI * 2); ctx.fill();
+
+      // Translucent coffee / watercolor ring
+      ctx.strokeStyle = pal.accent;
+      ctx.lineWidth = 2.5;
+      ctx.globalAlpha = 0.22;
+      ctx.beginPath(); ctx.arc(840, 780, 140, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+    }
+
+    /* ==========================================================================
+       FASTENERS & VECTOR STAMP DRAWING HELPERS
+       ========================================================================== */
+    function drawWashiTape(ctx, cx, cy, w, h, angle = 0, color = "rgba(240, 230, 215, 0.88)") {
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(angle);
@@ -1209,9 +1444,9 @@
       ctx.closePath();
       ctx.fill();
 
-      // Translucent crinkle fibers
+      // Translucent fibers
       ctx.shadowColor = "transparent";
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
       ctx.lineWidth = 1.5;
       for (let x = -w/2 + 12; x < w/2 - 8; x += 14) {
         ctx.beginPath();
@@ -1234,42 +1469,28 @@
       ctx.fill();
       ctx.restore();
 
-      // Pin needle base
+      // Needle base
       ctx.fillStyle = "#94A3B8";
       ctx.beginPath();
-      ctx.moveTo(-2, 0);
-      ctx.lineTo(2, 0);
-      ctx.lineTo(1, 14);
-      ctx.lineTo(-1, 14);
-      ctx.closePath();
-      ctx.fill();
+      ctx.moveTo(-2, 0); ctx.lineTo(2, 0); ctx.lineTo(1, 14); ctx.lineTo(-1, 14);
+      ctx.closePath(); ctx.fill();
 
       // Pushpin cylindrical collar
       const gradBase = ctx.createLinearGradient(-10, 0, 10, 0);
-      gradBase.addColorStop(0, "#991B1B");
-      gradBase.addColorStop(0.5, color);
-      gradBase.addColorStop(1, "#7F1D1D");
+      gradBase.addColorStop(0, "#991B1B"); gradBase.addColorStop(0.5, color); gradBase.addColorStop(1, "#7F1D1D");
       ctx.fillStyle = gradBase;
-      ctx.beginPath();
-      ctx.roundRect(-10, -6, 20, 10, 3);
-      ctx.fill();
+      ctx.beginPath(); ctx.roundRect(-10, -6, 20, 10, 3); ctx.fill();
 
       // Spherical 3D head with specular shine
       const gradHead = ctx.createRadialGradient(-4, -14, 2, 0, -12, 18);
-      gradHead.addColorStop(0, "#FFFFFF");
-      gradHead.addColorStop(0.35, color);
-      gradHead.addColorStop(0.85, "#991B1B");
-      gradHead.addColorStop(1, "#450A0A");
+      gradHead.addColorStop(0, "#FFFFFF"); gradHead.addColorStop(0.35, color);
+      gradHead.addColorStop(0.85, "#991B1B"); gradHead.addColorStop(1, "#450A0A");
       ctx.fillStyle = gradHead;
-      ctx.beginPath();
-      ctx.arc(0, -12, 14, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(0, -12, 14, 0, Math.PI * 2); ctx.fill();
 
       // Glossy highlight glint
       ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
-      ctx.beginPath();
-      ctx.ellipse(-5, -16, 4, 2.5, -0.4, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.ellipse(-5, -16, 4, 2.5, -0.4, 0, Math.PI * 2); ctx.fill();
 
       ctx.restore();
     }
@@ -1289,10 +1510,7 @@
     function drawWireSquiggle(ctx, color) {
       ctx.save();
       ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.globalAlpha = 0.55;
-      ctx.beginPath();
-      ctx.moveTo(-70, 0);
-      ctx.bezierCurveTo(-35, -45, 35, 45, 70, 0);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-70, 0); ctx.bezierCurveTo(-35, -45, 35, 45, 70, 0); ctx.stroke();
       ctx.restore();
     }
 
@@ -1300,9 +1518,7 @@
       ctx.save();
       ctx.fillStyle = color; ctx.globalAlpha = 0.65;
       const positions = [[-20, -10], [-5, 8], [12, -6], [25, 14], [-12, 22], [8, 30]];
-      positions.forEach(([dx, dy]) => {
-        ctx.beginPath(); ctx.arc(dx, dy, 3.5, 0, Math.PI * 2); ctx.fill();
-      });
+      positions.forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(dx, dy, 3.5, 0, Math.PI * 2); ctx.fill(); });
       ctx.restore();
     }
 
@@ -1316,41 +1532,6 @@
       ctx.restore();
     }
 
-    function drawGridSwatch(ctx, color) {
-      ctx.save();
-      ctx.fillStyle = "#FAF8F5"; ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.85;
-      ctx.fillRect(-60, -60, 120, 120);
-      ctx.strokeRect(-60, -60, 120, 120);
-      ctx.globalAlpha = 0.22;
-      for (let x = -60; x <= 60; x += 20) { ctx.beginPath(); ctx.moveTo(x, -60); ctx.lineTo(x, 60); ctx.stroke(); }
-      for (let y = -60; y <= 60; y += 20) { ctx.beginPath(); ctx.moveTo(-60, y); ctx.lineTo(60, y); ctx.stroke(); }
-      ctx.restore();
-    }
-
-    function drawOrganicBlob(ctx, color) {
-      ctx.save();
-      ctx.fillStyle = color; ctx.globalAlpha = 0.35;
-      ctx.beginPath();
-      ctx.moveTo(0, -110);
-      ctx.bezierCurveTo(130, -150, 190, -20, 160, 110);
-      ctx.bezierCurveTo(130, 190, -40, 160, -130, 130);
-      ctx.bezierCurveTo(-200, 90, -150, -80, 0, -110);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawWatercolorWash(ctx, color) {
-      ctx.save();
-      const grad = ctx.createRadialGradient(0, 0, 15, 0, 0, 140);
-      grad.addColorStop(0, color);
-      grad.addColorStop(1, "transparent");
-      ctx.fillStyle = grad;
-      ctx.globalAlpha = 0.45;
-      ctx.beginPath(); ctx.arc(0, 0, 140, 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-    }
-
     function drawBrassClip(ctx) {
       ctx.save();
       ctx.strokeStyle = "#C5A059"; ctx.lineWidth = 4; ctx.globalAlpha = 0.95;
@@ -1358,61 +1539,46 @@
       ctx.restore();
     }
 
-    /* ==========================================================================
-       SCATTER ENGINE: 3 TO 5 ELEMENTS, MAX 2 OF SAME TYPE
-       ========================================================================== */
     function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
-      const stampTypes = [
-        'botanical', 'blob', 'wire_loop', 'stipple', 
-        'starburst', 'grid_patch', 'watercolor_wash', 'brass_clip'
-      ];
-      
-      // Seeded random helper based on card hash
+      const stampTypes = ['botanical', 'wire_loop', 'stipple', 'starburst', 'brass_clip'];
       let seed = hash + cardNum * 8371;
       function nextRandom() {
         seed = (seed * 9301 + 49297) % 233280;
         return seed / 233280;
       }
 
-      // Pick 3, 4, or 5 elements strictly
-      const targetCount = 3 + Math.floor(nextRandom() * 3);
+      // Pick 3 or 4 elements strictly
+      const targetCount = 3 + Math.floor(nextRandom() * 2);
       const chosen = [];
       const counts = {};
 
       while (chosen.length < targetCount) {
         const type = stampTypes[Math.floor(nextRandom() * stampTypes.length)];
         counts[type] = counts[type] || 0;
-        // Strictly max 2 of the same element
         if (counts[type] < 2) {
           counts[type]++;
           chosen.push(type);
         }
       }
 
-      // Render each chosen element around the canvas perimeter
       chosen.forEach((type, idx) => {
         ctx.save();
         const quadrant = idx % 4;
         let ex = 140, ey = 140;
-        if (quadrant === 0) { ex = 140 + nextRandom() * 220; ey = 140 + nextRandom() * 220; }
-        else if (quadrant === 1) { ex = 720 + nextRandom() * 220; ey = 140 + nextRandom() * 220; }
-        else if (quadrant === 2) { ex = 140 + nextRandom() * 220; ey = 720 + nextRandom() * 220; }
-        else { ex = 720 + nextRandom() * 220; ey = 720 + nextRandom() * 220; }
+        if (quadrant === 0) { ex = 140 + nextRandom() * 160; ey = 140 + nextRandom() * 160; }
+        else if (quadrant === 1) { ex = 780 + nextRandom() * 160; ey = 140 + nextRandom() * 160; }
+        else if (quadrant === 2) { ex = 140 + nextRandom() * 160; ey = 780 + nextRandom() * 160; }
+        else { ex = 780 + nextRandom() * 160; ey = 780 + nextRandom() * 160; }
 
         const rot = (nextRandom() * 360 * Math.PI) / 180;
-        const scale = 0.55 + nextRandom() * 0.95;
+        const scale = 0.6 + nextRandom() * 0.7;
 
-        ctx.translate(ex, ey);
-        ctx.rotate(rot);
-        ctx.scale(scale, scale);
+        ctx.translate(ex, ey); ctx.rotate(rot); ctx.scale(scale, scale);
 
         if (type === 'botanical') drawBotanicalSprig(ctx, accent);
-        else if (type === 'blob') drawOrganicBlob(ctx, (idx % 2 === 0 ? accent : brightPop));
         else if (type === 'wire_loop') drawWireSquiggle(ctx, accent);
         else if (type === 'stipple') drawStippleDots(ctx, accent);
         else if (type === 'starburst') drawStarburst(ctx, brightPop);
-        else if (type === 'grid_patch') drawGridSwatch(ctx, accent);
-        else if (type === 'watercolor_wash') drawWatercolorWash(ctx, accent);
         else if (type === 'brass_clip') drawBrassClip(ctx);
 
         ctx.restore();
@@ -1420,7 +1586,7 @@
     }
 
     /* ==========================================================================
-       MAIN CARD COMPOSITOR: AUTHENTIC MAT ARCHETYPES & BADGES
+       MAIN CARD COMPOSITOR: AUTHENTIC CANVA STAGING & SAFE PADDING
        ========================================================================== */
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
@@ -1431,32 +1597,35 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. BASE BACKGROUND: Airy, Luminous High-Key Gradient
-      const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
-      bgGrad.addColorStop(0, "#FFFFFF");
-      bgGrad.addColorStop(0.55, pal.bg);
-      bgGrad.addColorStop(1, pal.bgSecondary);
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, 1080, 1080);
+      // 1. RENDER DISTINCT BACKGROUND WORLD
+      const world = conf.bgWorld || "wood";
+      if (world === "wood") drawWoodBackground(ctx, pal, hash);
+      else if (world === "linen") drawLinenBackground(ctx, pal);
+      else if (world === "kraft") drawKraftBackground(ctx, pal);
+      else if (world === "waves") drawOrganicWavesBackground(ctx, pal, hash);
+      else if (world === "grid") drawGridJournalBackground(ctx, pal);
+      else if (world === "splittone") drawSplitTwoToneBackground(ctx, pal);
+      else drawWatercolorBloomBackground(ctx, pal);
 
       // Subtle editorial vignette
-      const vigGrad = ctx.createRadialGradient(540, 540, 240, 540, 540, 780);
+      const vigGrad = ctx.createRadialGradient(540, 540, 280, 540, 540, 780);
       vigGrad.addColorStop(0, "transparent");
       vigGrad.addColorStop(1, pal.vignette);
       ctx.fillStyle = vigGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. SCATTER DECORATOR ENGINE (3 to 5 elements, max 2 of same)
+      // 2. SCATTER DECORATORS (3 to 4 elements, strictly max 2 of same)
       renderScatterDecorators(ctx, hash, pal.accent, pal.brightPop, cardNum);
 
-      // 3. PRODUCT STAGING & MAT ARCHETYPE LAYER
+      // 3. PRODUCT STAGING & PROPORTIONAL MAT SIZING (Leaves breathing room for text!)
       const pScale = conf.pScale || 1.0;
       const px = conf.productPos ? conf.productPos.x : 540;
-      const py = conf.productPos ? conf.productPos.y : 485;
+      const py = conf.productPos ? conf.productPos.y : 470;
 
       const imgW = srcCanvas.width || srcCanvas.naturalWidth || 800;
       const imgH = srcCanvas.height || srcCanvas.naturalHeight || 800;
-      const maxBox = Math.round(720 * pScale);
+      // Proportional hero sizing: max 560px (prevents crushing the headline)
+      const maxBox = Math.round(540 * pScale);
       const ratio = imgW / imgH;
       
       let drawW = maxBox, drawH = maxBox;
@@ -1472,94 +1641,88 @@
       ctx.translate(px, py);
       ctx.rotate(frameRot);
 
-      // A: POLAROID PHOTO MAT (Sample 1 & 6)
+      // A: POLAROID PHOTO MAT (Sample 1 Card 1)
       if (archetype === "polaroid") {
-        const matW = Math.max(820, drawW + 90);
-        const matH = Math.max(860, drawH + 150);
+        const matW = Math.max(620, drawW + 70);
+        const matH = Math.max(660, drawH + 110);
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 36; ctx.shadowOffsetY = 16;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.25)"; ctx.shadowBlur = 32; ctx.shadowOffsetY = 14;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
-        drawWashiTape(ctx, proc.washiOffset, -matH/2, 200, 42, 0.02);
-        if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2 - 20, drawW, drawH);
+        drawWashiTape(ctx, proc.washiOffset, -matH/2, 180, 38, 0.02);
+        if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2 - 16, drawW, drawH);
       }
       // B: DOTTED NOTEBOOK SHEET (Sample 3)
       else if (archetype === "notebook") {
-        const matW = Math.max(820, drawW + 100);
-        const matH = Math.max(860, drawH + 130);
+        const matW = Math.max(620, drawW + 80);
+        const matH = Math.max(660, drawH + 100);
         ctx.fillStyle = "#FCFAF7";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.20)"; ctx.shadowBlur = 32; ctx.shadowOffsetY = 14;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.20)"; ctx.shadowBlur = 30; ctx.shadowOffsetY = 12;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
 
         // Ruled dotted lines
-        ctx.strokeStyle = "rgba(180, 160, 140, 0.35)"; ctx.lineWidth = 1.2; ctx.setLineDash([4, 4]);
-        for (let ly = -matH/2 + 40; ly < matH/2 - 20; ly += 38) {
-          ctx.beginPath(); ctx.moveTo(-matW/2 + 25, ly); ctx.lineTo(matW/2 - 25, ly); ctx.stroke();
+        ctx.strokeStyle = "rgba(180, 160, 140, 0.4)"; ctx.lineWidth = 1.2; ctx.setLineDash([4, 4]);
+        for (let ly = -matH/2 + 35; ly < matH/2 - 15; ly += 34) {
+          ctx.beginPath(); ctx.moveTo(-matW/2 + 20, ly); ctx.lineTo(matW/2 - 20, ly); ctx.stroke();
         }
         ctx.setLineDash([]);
-        // Two corner washi strips
-        drawWashiTape(ctx, -matW/2 + 60, -matH/2 + 25, 140, 36, -0.65, "rgba(240, 200, 205, 0.85)");
-        drawWashiTape(ctx, matW/2 - 60, matH/2 - 25, 140, 36, -0.65, "rgba(240, 200, 205, 0.85)");
+        drawWashiTape(ctx, -matW/2 + 50, -matH/2 + 20, 120, 32, -0.65, "rgba(240, 200, 205, 0.88)");
+        drawWashiTape(ctx, matW/2 - 50, matH/2 - 20, 120, 32, -0.65, "rgba(240, 200, 205, 0.88)");
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
       }
       // C: DOUBLE-STACKED OFFSET CARDS + 3D PUSHPIN (Sample 5)
       else if (archetype === "stacked_pin") {
-        const matW = Math.max(800, drawW + 80);
-        const matH = Math.max(840, drawH + 120);
+        const matW = Math.max(600, drawW + 65);
+        const matH = Math.max(640, drawH + 90);
 
-        // Under-card (offset slightly)
         ctx.save();
         ctx.rotate(-0.06);
         ctx.fillStyle = pal.bgSecondary;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.16)"; ctx.shadowBlur = 28; ctx.shadowOffsetY = 12;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.16)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 10;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.restore();
 
-        // Top-card
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 34; ctx.shadowOffsetY = 16;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 30; ctx.shadowOffsetY = 14;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
 
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2 + 10, drawW, drawH);
-        // Glossy red pushpin pinning the cards at the top
         drawPushpin(ctx, 0, -matH/2 + 15, "#E11D48");
       }
-      // D: ROUNDED SQUIRCLE TRAY (Sample 1 & 4)
+      // D: ROUNDED SQUIRCLE TRAY (Sample 1 Card 3)
       else if (archetype === "squircle") {
-        const matW = Math.max(820, drawW + 90);
-        const matH = Math.max(860, drawH + 120);
+        const matW = Math.max(620, drawW + 70);
+        const matH = Math.max(660, drawH + 90);
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.20)"; ctx.shadowBlur = 40; ctx.shadowOffsetY = 18;
-        ctx.beginPath(); ctx.roundRect(-matW/2, -matH/2, matW, matH, 38); ctx.fill();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.22)"; ctx.shadowBlur = 36; ctx.shadowOffsetY = 16;
+        ctx.beginPath(); ctx.roundRect(-matW/2, -matH/2, matW, matH, 32); ctx.fill();
         ctx.shadowColor = "transparent";
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
       }
       // E: EDITORIAL GALLERY DOUBLE-FRAME (Sample 4)
       else if (archetype === "gallery") {
-        const matW = Math.max(820, drawW + 90);
-        const matH = Math.max(860, drawH + 120);
+        const matW = Math.max(620, drawW + 70);
+        const matH = Math.max(660, drawH + 90);
         ctx.fillStyle = pal.paper;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.24)"; ctx.shadowBlur = 38; ctx.shadowOffsetY = 16;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.24)"; ctx.shadowBlur = 34; ctx.shadowOffsetY = 14;
         ctx.fillRect(-matW/2, -matH/2, matW, matH);
         ctx.shadowColor = "transparent";
 
-        // Thin elegant hairline inset frame
-        ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.65;
-        ctx.strokeRect(-matW/2 + 18, -matH/2 + 18, matW - 36, matH - 36);
+        ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.2; ctx.globalAlpha = 0.65;
+        ctx.strokeRect(-matW/2 + 14, -matH/2 + 14, matW - 28, matH - 28);
         ctx.globalAlpha = 1.0;
 
         if (srcCanvas) ctx.drawImage(srcCanvas, -drawW/2, -drawH/2, drawW, drawH);
       }
-      // F: CLEAN FLOATING / MAT-FREE (Sample 1 Card 2 & Sample 2)
+      // F: CLEAN FLOATING / MAT-FREE (Sample 1 Card 2)
       else {
-        // Grounded contact shadow
         ctx.save();
-        ctx.fillStyle = "rgba(0, 0, 0, 0.26)";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.28)";
         ctx.filter = "blur(18px)";
         ctx.beginPath();
-        ctx.ellipse(0, drawH/2 - 10, drawW * 0.42, 24, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, drawH/2 - 8, drawW * 0.42, 22, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
@@ -1568,11 +1731,11 @@
 
       ctx.restore();
 
-      // 4. MAIN AFFIRMATION NOTE LAYER (MULTI-LINE WRAPPING)
+      // 4. MAIN AFFIRMATION HEADLINE (PLENTY OF SAFE BOTTOM PADDING)
       if (note) {
         ctx.save();
         const nx = conf.notePos ? conf.notePos.x : 540;
-        const ny = conf.notePos ? conf.notePos.y : 940;
+        const ny = conf.notePos ? conf.notePos.y : 915;
         const nScale = conf.nScale || 1.0;
 
         ctx.translate(nx, ny);
@@ -1581,7 +1744,7 @@
         const fontSize = Math.round(34 * nScale);
         ctx.font = `800 ${fontSize}px ${font}`;
 
-        const maxLineWidth = 900;
+        const maxLineWidth = 880;
         const words = note.split(" ");
         let lines = [];
         let currentLine = words[0] || "";
@@ -1593,17 +1756,17 @@
         }
         lines.push(currentLine);
 
-        const lineHeight = Math.round(fontSize * 1.35);
+        const lineHeight = Math.round(fontSize * 1.32);
         const totalTextHeight = lines.length * lineHeight;
-        const boxW = Math.min(960, Math.max(...lines.map(l => ctx.measureText(l).width)) + 64);
-        const boxH = totalTextHeight + 36;
+        const boxW = Math.min(940, Math.max(...lines.map(l => ctx.measureText(l).width)) + 56);
+        const boxH = totalTextHeight + 30;
 
         conf._activeNoteBox = { x: nx - boxW/2, y: ny - boxH/2, w: boxW, h: boxH };
 
         if (conf.hasNoteBg) {
           ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
           ctx.shadowColor = "rgba(0, 0, 0, 0.16)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 4;
-          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 14); ctx.fill();
+          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 12); ctx.fill();
           ctx.shadowColor = "transparent";
         }
 
@@ -1615,7 +1778,6 @@
           ctx.fillText(line, 0, startY + (idx * lineHeight));
         });
 
-        // Underline Emphasis Accent
         if (conf.accents && conf.accents.dbl) {
           ctx.strokeStyle = pal.accent; ctx.lineWidth = 3.5;
           ctx.beginPath();
@@ -1628,32 +1790,32 @@
       }
 
       // 5. INDEPENDENT SUB-NOTE LAYER
-      const subNote = (document.getElementById('subNoteInput')?.value || "").trim();
+      const subNote = (conf.subNote || "").trim();
       if (subNote) {
         ctx.save();
         const subScale = conf.subScale || 1.0, subRot = conf.subRot || 0;
-        const sx = conf.subPos ? conf.subPos.x : 540, sy = conf.subPos ? conf.subPos.y : 900;
-        ctx.font = `italic 700 ${Math.round(24 * subScale)}px 'Caveat', cursive, sans-serif`;
+        const sx = conf.subPos ? conf.subPos.x : 540, sy = conf.subPos ? conf.subPos.y : 865;
+        ctx.font = `italic 700 ${Math.round(23 * subScale)}px 'Caveat', cursive, sans-serif`;
         const subMetrics = ctx.measureText(subNote);
-        const sw = subMetrics.width + 36, sh = 42 * subScale;
+        const sw = subMetrics.width + 34, sh = 38 * subScale;
         conf._activeSubBox = { x: sx - sw/2, y: sy - sh/2, w: sw, h: sh };
 
         ctx.translate(sx, sy); ctx.rotate((subRot * Math.PI) / 180);
         ctx.fillStyle = "rgba(255, 255, 255, 0.96)"; ctx.shadowColor = "rgba(0, 0, 0, 0.16)"; ctx.shadowBlur = 10;
         ctx.beginPath(); ctx.roundRect(-sw/2, -sh/2, sw, sh, 8); ctx.fill(); ctx.shadowColor = "transparent";
         ctx.textAlign = "center"; ctx.fillStyle = pal.text;
-        ctx.fillText(subNote, 0, 6 * subScale);
+        ctx.fillText(subNote, 0, 5 * subScale);
         ctx.restore();
       }
 
-      // 6. VALUE / SPEC BADGE (ALL 10+ STYLES IMPLEMENTED)
+      // 6. CURATION SPEC & PRICE BADGES (10 DISTINCT SHAPES)
       if (val) {
         ctx.save();
         const bScale = conf.bScale || 1.0;
         ctx.font = `bold ${Math.round(25 * bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48), boxH = Math.round(58 * bScale);
+        const boxW = Math.min(680, textW + 48), boxH = Math.round(56 * bScale);
         const bx = conf.badgePos ? conf.badgePos.x : 240, by = conf.badgePos ? conf.badgePos.y : 150;
         conf._activeBadgeBox = { x: bx - boxW/2, y: by - boxH/2, w: boxW, h: boxH };
 
@@ -1662,7 +1824,6 @@
 
         const bStyle = conf.badgeBg || "sticky";
 
-        // Render chosen badge style
         if (bStyle === "sticky") {
           ctx.fillStyle = "#FEF08A"; ctx.shadowColor = "rgba(0,0,0,0.22)"; ctx.shadowBlur = 16; ctx.shadowOffsetY = 6;
           ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 8); ctx.fill();
@@ -1682,7 +1843,6 @@
         else if (bStyle === "ticket") {
           ctx.fillStyle = "#FAF8F5"; ctx.shadowColor = "rgba(0,0,0,0.18)"; ctx.shadowBlur = 14; ctx.shadowOffsetY = 4;
           ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 8); ctx.fill();
-          // Ticket notches
           ctx.fillStyle = pal.bg;
           ctx.beginPath(); ctx.arc(-boxW/2, 0, 8, -Math.PI/2, Math.PI/2); ctx.fill();
           ctx.beginPath(); ctx.arc(boxW/2, 0, 8, Math.PI/2, -Math.PI/2); ctx.fill();
@@ -1715,10 +1875,10 @@
           ctx.fillStyle = "#F8FAFC"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
         }
         else if (bStyle === "scribble") {
-          // Sharpie Scribble Loop (Sample 1 Card 3)
-          ctx.strokeStyle = pal.text; ctx.lineWidth = 3;
+          // Sharpie Scribble Loop with Underline (Sample 1 Card 3)
+          ctx.strokeStyle = pal.text; ctx.lineWidth = 3.2;
           ctx.beginPath(); ctx.ellipse(0, 0, boxW * 0.48, boxH * 0.44, -0.05, 0, Math.PI * 2); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(-boxW * 0.35, boxH * 0.5); ctx.lineTo(boxW * 0.38, boxH * 0.46); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(-boxW * 0.35, boxH * 0.52); ctx.lineTo(boxW * 0.38, boxH * 0.48); ctx.stroke();
           ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
         }
         else if (bStyle === "ribbon") {
@@ -1731,7 +1891,6 @@
           ctx.fillStyle = "#991B1B"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
         }
         else {
-          // Transparent (Text Only)
           ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
         }
 
@@ -1752,7 +1911,7 @@
         if (conf.accents.loop) {
           ctx.save();
           ctx.strokeStyle = "#EF4444"; ctx.lineWidth = 3;
-          ctx.beginPath(); ctx.ellipse(540, 480, 360, 360, 0, 0, Math.PI * 2); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(540, 470, 340, 340, 0, 0, Math.PI * 2); ctx.stroke();
           ctx.restore();
         }
         if (conf.accents.heart) {
@@ -1779,6 +1938,23 @@
       if (fontKey === "playful") return "'Fredoka', sans-serif";
       if (fontKey === "editorial") return "'Playfair Display', serif";
       return "'Plus Jakarta Sans', sans-serif";
+    }
+
+    function renderAll4CreatorCards() {
+      const fallbackImg = (outputCanvas && outputCanvas.width > 0) ? outputCanvas : (rawLoadedImage || targetCanvas);
+      if (!chosen4Variants || chosen4Variants.length < 4) {
+        chosen4Variants = [{ id: 1, canvas: fallbackImg }, { id: 2, canvas: fallbackImg }, { id: 3, canvas: fallbackImg }, { id: 4, canvas: fallbackImg }];
+      }
+
+      const sampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
+
+      for (let i = 1; i <= 4; i++) {
+        const c = document.getElementById(`cardCanvas${i}`);
+        if (!c) continue;
+        let src = chosen4Variants[i - 1]?.canvas;
+        if (!src || !src.width) src = fallbackImg;
+        renderCardWithStyle(c, src, cardCustoms[i].note, cardCustoms[i].val, sampledPal, cardCustoms[i], i);
+      }
     }
 
     /* ==========================================================================
@@ -1830,12 +2006,13 @@
       sanitizedCanvasSnapshot = null; all15Variants = []; chosen4Variants = [];
       tCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+      cachedExtractedAffirmations = [];
+      cachedExtractedSpecs = [];
       document.getElementById('rawDealPaste').value = "";
       document.getElementById('suggestedTitleInput').value = "";
-      document.getElementById('mainNoteInput').value = "";
-      document.getElementById('simpleValueInput').value = "";
-      document.getElementById('subNoteInput').value = "";
       document.getElementById('aiChipsWrapper').classList.add('hidden');
+      generateProceduralDeck();
+      syncConsoleControls();
       navToStep(1);
     }
 
@@ -1845,32 +2022,16 @@
       if (mode === 'run') {
         runBtn.className = "px-3 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all flex items-center gap-1 shadow-md cursor-pointer";
         regBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all cursor-pointer";
-        document.getElementById('mainNoteInput').value = "Look at this one 👀";
+        cardCustoms[1].note = "Look at this one 👀";
+        cardCustoms[2].note = "Run, don't walk ✨";
+        cardCustoms[3].note = "Major restock drop!";
+        cardCustoms[4].note = "Such a solid find 👀";
       } else {
         regBtn.className = "px-3 py-1.5 bg-sky-600 text-white text-xs font-bold rounded-lg transition-all shadow-md cursor-pointer";
         runBtn.className = "px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold rounded-lg transition-all cursor-pointer";
-        document.getElementById('mainNoteInput').value = "";
+        generateProceduralDeck();
       }
-      renderAll4CreatorCards();
-    }
-
-    function shuffleNote() {
-      const chipButtons = document.querySelectorAll('#aiChipsContainer button');
-      if (chipButtons.length > 0) {
-        const texts = Array.from(chipButtons).map(b => b.innerText);
-        const randomText = texts[Math.floor(Math.random() * texts.length)];
-        document.getElementById('mainNoteInput').value = randomText;
-      } else {
-        const pool = AFFIRMATIONS[activeCategory] || AFFIRMATIONS.general;
-        document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
-      }
-      renderAll4CreatorCards();
-    }
-
-    function shuffleValueTag() {
-      if (!valueTagOptions || valueTagOptions.length === 0) return;
-      valueTagIndex = (valueTagIndex + 1) % valueTagOptions.length;
-      document.getElementById('simpleValueInput').value = valueTagOptions[valueTagIndex];
+      syncConsoleControls();
       renderAll4CreatorCards();
     }
 
@@ -1884,7 +2045,7 @@
       affirmations.forEach(note => {
         const btn = document.createElement('button');
         btn.type = "button"; btn.className = "text-[11px] bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
-        btn.innerText = note; btn.onclick = () => { document.getElementById('mainNoteInput').value = note; renderAll4CreatorCards(); };
+        btn.innerText = note; btn.onclick = () => { handleNoteInput(note); document.getElementById('mainNoteInput').value = note; };
         affContainer.appendChild(btn);
       });
 
@@ -1892,18 +2053,18 @@
       specTags.forEach(spec => {
         const btn = document.createElement('button');
         btn.type = "button"; btn.className = "text-[11px] bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 transition-all font-medium cursor-pointer";
-        btn.innerText = spec; btn.onclick = () => { document.getElementById('simpleValueInput').value = spec; renderAll4CreatorCards(); };
+        btn.innerText = spec; btn.onclick = () => { handleSpecInput(spec); document.getElementById('simpleValueInput').value = spec; };
         specContainer.appendChild(btn);
       });
       wrapper.classList.remove('hidden');
     }
 
     function auditOcrSafety() {
-      const textToScan = [document.getElementById('mainNoteInput').value, document.getElementById('simpleValueInput').value, document.getElementById('subNoteInput').value].join(' ').toLowerCase();
-      const hits = FB_BLACKLIST.filter(b => textToScan.includes(b));
+      const allText = Object.values(cardCustoms).map(c => [c.note, c.val, c.subNote].join(' ')).join(' ').toLowerCase();
+      const hits = FB_BLACKLIST.filter(b => allText.includes(b));
       const banner = document.getElementById('ocrWarningBanner');
       if (hits.length > 0) {
-        document.getElementById('ocrWarningText').innerText = `Banned terms detected: "${hits.join(', ')}". Pure non-commercial curation specs only!`;
+        document.getElementById('ocrWarningText').innerText = `Banned terms detected: "${hits.slice(0, 5).join(', ')}". Pure non-commercial curation specs only!`;
         banner.classList.remove('hidden');
       } else { banner.classList.add('hidden'); }
     }
@@ -1911,20 +2072,14 @@
     async function extractDealInfo() {
       const raw = document.getElementById('rawDealPaste').value;
       if (!raw) return;
-      const rLower = raw.toLowerCase();
-
-      if (rLower.includes('lawn') || rLower.includes('yard') || rLower.includes('grass')) activeCategory = "lawn_garden";
-      else if (rLower.includes('lotion') || rLower.includes('beauty') || rLower.includes('skin')) activeCategory = "beauty_personal";
-      else if (rLower.includes('clean') || rLower.includes('kitchen')) activeCategory = "home_kitchen";
-      else activeCategory = "general";
-
-      const pool = AFFIRMATIONS[activeCategory];
-      document.getElementById('mainNoteInput').value = pool[Math.floor(Math.random() * pool.length)];
 
       const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?))\b/i);
       const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : "HOME STAPLE";
-      valueTagOptions = [unitClean, "VERIFIED QUALITY", "DAILY PICK", "CURATED FIND", "SOLID CHOICE"];
-      document.getElementById('simpleValueInput').value = valueTagOptions[0];
+      cachedExtractedSpecs = [unitClean, "POINT DROP", "$13.80", "SOLID CHOICE", "VERIFIED FAVORITE", "3-PACK BUNDLE"];
+
+      // Fan out default distinct text across all 4 cards immediately
+      generateProceduralDeck();
+      syncConsoleControls();
       renderAll4CreatorCards();
 
       const key = document.getElementById('apiKeyInput').value.trim();
@@ -1942,18 +2097,12 @@ CRITICAL RULES:
 Return ONLY valid JSON:
 {
   "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6"],
-  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"],
-  "suggested_font": "editorial"
+  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"]
 }`;
           const payload = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, responseMimeType: "application/json" } };
           const aiData = await callGeminiLeapingMesh(key, payload);
           let rawTxt = (aiData.candidates[0]?.content?.parts[0]?.text || "{}").replace(/```json/gi, '').replace(/```/g, '').trim();
           const parsed = JSON.parse(rawTxt);
-
-          if (parsed.suggested_font) {
-            document.getElementById('activeFontSelect').value = parsed.suggested_font;
-            for (let i = 1; i <= 4; i++) cardCustoms[i].font = parsed.suggested_font;
-          }
 
           const safeAffirmations = (parsed.affirmations || []).filter(item => {
             const lower = item.toLowerCase();
@@ -1965,14 +2114,17 @@ Return ONLY valid JSON:
             return !FB_BLACKLIST.some(b => lower.includes(b));
           });
 
-          if (safeAffirmations.length > 0) document.getElementById('mainNoteInput').value = safeAffirmations[0];
-          if (safeSpecs.length > 0) {
-            document.getElementById('simpleValueInput').value = safeSpecs[0];
-            valueTagOptions = safeSpecs;
-            valueTagIndex = 0;
+          if (safeAffirmations.length > 0) cachedExtractedAffirmations = safeAffirmations;
+          if (safeSpecs.length > 0) cachedExtractedSpecs = safeSpecs;
+
+          // Fan out unique AI headlines and specs across Card 1 - 4
+          for (let i = 1; i <= 4; i++) {
+            if (safeAffirmations[i - 1]) cardCustoms[i].note = safeAffirmations[i - 1];
+            if (safeSpecs[i - 1]) cardCustoms[i].val = safeSpecs[i - 1];
           }
 
           renderAiChips(safeAffirmations, safeSpecs);
+          syncConsoleControls();
           renderAll4CreatorCards();
         } catch (e) {
           console.warn("AI extraction notice:", e);
