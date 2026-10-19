@@ -684,12 +684,17 @@
       const shuffledBadges = shuffleArray(badgeCatalog);
       const shuffledFonts = shuffleArray(fontCatalog);
 
+      // Dynamic Visual Composition Modes (Shuffled per deal to prevent any repeatable pattern)
+      const layoutModes = ["top_badge_bottom_note", "top_note_bottom_badge", "corner_tag_grounded", "polaroid_caption"];
+      const shuffledLayouts = shuffleArray(layoutModes);
+
       for (let i = 1; i <= 4; i++) {
         const c = cardCustoms[i];
         c.archetype = shuffledMats[i - 1];
         c.bgWorld = shuffledBgs[i - 1];
         c.badgeBg = shuffledBadges[i - 1];
         c.font = shuffledFonts[i - 1];
+        c.layoutMode = shuffledLayouts[i - 1];
         
         // Only assign text if AI chips or extractions exist; otherwise start blank
         if (cachedExtractedAffirmations.length >= 4) {
@@ -699,13 +704,13 @@
           c.val = cachedExtractedSpecs[i - 1] || "";
         }
 
-        // Random subtle tilts
-        c.bRot = (Math.random() * 12 - 6);
-        c.nRot = (Math.random() * 4 - 2);
+        // Subtle organic tilts (-5° to +5°)
+        c.bRot = (Math.random() * 10 - 5);
+        c.nRot = (Math.random() * 3 - 1.5);
 
         c.procedural = {
-          seedRotation: (Math.random() * 6 - 3),
-          washiOffset: Math.random() * 40 - 20,
+          seedRotation: (Math.random() * 5 - 2.5),
+          washiOffset: Math.random() * 30 - 15,
           bgPatternSeed: Math.floor(Math.random() * 1000000)
         };
       }
@@ -1634,49 +1639,47 @@
     }
 
     function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
-      const stampTypes = ['botanical', 'wire_loop', 'stipple', 'starburst', 'brass_clip'];
       let seed = hash + cardNum * 8371;
       function nextRandom() {
         seed = (seed * 9301 + 49297) % 233280;
         return seed / 233280;
       }
 
-      // Pick 3 or 4 elements strictly
-      const targetCount = 3 + Math.floor(nextRandom() * 2);
-      const chosen = [];
-      const counts = {};
-
-      while (chosen.length < targetCount) {
-        const type = stampTypes[Math.floor(nextRandom() * stampTypes.length)];
-        counts[type] = counts[type] || 0;
-        if (counts[type] < 2) {
-          counts[type]++;
-          chosen.push(type);
-        }
+      // Decorator 1: Anchored Botanical Corner Sprig (Frames the product naturally)
+      ctx.save();
+      const botCorner = Math.floor(nextRandom() * 2);
+      if (botCorner === 0) {
+        // Bottom Right Corner pointing upward
+        ctx.translate(930, 890);
+        ctx.rotate(-0.45);
+      } else {
+        // Bottom Left Corner pointing upward
+        ctx.translate(150, 890);
+        ctx.rotate(0.45);
       }
+      ctx.scale(0.85, 0.85);
+      drawBotanicalSprig(ctx, accent);
+      ctx.restore();
 
-      chosen.forEach((type, idx) => {
-        ctx.save();
-        const quadrant = idx % 4;
-        let ex = 140, ey = 140;
-        if (quadrant === 0) { ex = 140 + nextRandom() * 160; ey = 140 + nextRandom() * 160; }
-        else if (quadrant === 1) { ex = 780 + nextRandom() * 160; ey = 140 + nextRandom() * 160; }
-        else if (quadrant === 2) { ex = 140 + nextRandom() * 160; ey = 780 + nextRandom() * 160; }
-        else { ex = 780 + nextRandom() * 160; ey = 780 + nextRandom() * 160; }
+      // Decorator 2: Starburst / Sparkle near the card header or badge
+      ctx.save();
+      const sbX = 200 + nextRandom() * 680;
+      const sbY = 120 + nextRandom() * 80;
+      ctx.translate(sbX, sbY);
+      ctx.scale(0.75, 0.75);
+      drawStarburst(ctx, brightPop);
+      ctx.restore();
 
-        const rot = (nextRandom() * 360 * Math.PI) / 180;
-        const scale = 0.6 + nextRandom() * 0.7;
-
-        ctx.translate(ex, ey); ctx.rotate(rot); ctx.scale(scale, scale);
-
-        if (type === 'botanical') drawBotanicalSprig(ctx, accent);
-        else if (type === 'wire_loop') drawWireSquiggle(ctx, accent);
-        else if (type === 'stipple') drawStippleDots(ctx, accent);
-        else if (type === 'starburst') drawStarburst(ctx, brightPop);
-        else if (type === 'brass_clip') drawBrassClip(ctx);
-
-        ctx.restore();
-      });
+      // Decorator 3: Delicate Stipple Dots or Wire Loop (Subtle textural depth)
+      ctx.save();
+      const decType = nextRandom() > 0.5 ? 'stipple' : 'wire';
+      ctx.translate(860, 220);
+      if (decType === 'stipple') {
+        drawStippleDots(ctx, accent);
+      } else {
+        drawWireSquiggle(ctx, accent);
+      }
+      ctx.restore();
     }
 
     /* ==========================================================================
@@ -1831,37 +1834,52 @@
 
       ctx.restore();
 
-      // 4. MAIN AFFIRMATION HEADLINE (PLENTY OF SAFE BOTTOM PADDING)
+      // 4. MAIN AFFIRMATION HEADLINE (EDGE-AWARE & AUTO-BALANCING)
       if (note) {
         ctx.save();
         const nx = conf.notePos ? conf.notePos.x : 540;
-        const ny = conf.notePos ? conf.notePos.y : 915;
+        
+        // Counterweight Placement based on Card's Layout Mode
+        let ny = conf.notePos ? conf.notePos.y : 920;
+        if (conf.layoutMode === "top_note_bottom_badge") {
+          ny = conf.notePos ? conf.notePos.y : 125;
+        }
+
         const nScale = conf.nScale || 1.0;
+        
+        // Auto-scale font down if title is long (strictly prevents clipping off canvas edges)
+        let fontSize = Math.round(33 * nScale);
+        if (note.length > 40) fontSize = Math.round(27 * nScale);
+        if (note.length > 55) fontSize = Math.round(23 * nScale);
 
-        ctx.translate(nx, ny);
-        ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
-
-        const fontSize = Math.round(34 * nScale);
         ctx.font = `800 ${fontSize}px ${font}`;
 
-        const maxLineWidth = 880;
+        const safeMaxWidth = 840;
         const words = note.split(" ");
         let lines = [];
         let currentLine = words[0] || "";
 
         for (let i = 1; i < words.length; i++) {
           const testLine = currentLine + " " + words[i];
-          if (ctx.measureText(testLine).width < maxLineWidth) currentLine = testLine;
-          else { lines.push(currentLine); currentLine = words[i]; }
+          if (ctx.measureText(testLine).width < safeMaxWidth) {
+            currentLine = testLine;
+          } else {
+            lines.push(currentLine);
+            currentLine = words[i];
+          }
         }
         lines.push(currentLine);
 
-        const lineHeight = Math.round(fontSize * 1.32);
+        const lineHeight = Math.round(fontSize * 1.34);
         const totalTextHeight = lines.length * lineHeight;
-        const boxW = Math.min(940, Math.max(...lines.map(l => ctx.measureText(l).width)) + 56);
-        const boxH = totalTextHeight + 30;
+        const maxMeasuredWidth = Math.max(...lines.map(l => ctx.measureText(l).width));
+        const boxW = Math.min(880, maxMeasuredWidth + 52);
+        const boxH = totalTextHeight + 28;
 
         conf._activeNoteBox = { x: nx - boxW/2, y: ny - boxH/2, w: boxW, h: boxH };
+
+        ctx.translate(nx, ny);
+        ctx.rotate(((conf.nRot || 0) * Math.PI) / 180);
 
         if (conf.hasNoteBg) {
           ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
@@ -1873,7 +1891,7 @@
         ctx.textAlign = "center";
         ctx.fillStyle = pal.text;
 
-        const startY = -totalTextHeight / 2 + fontSize * 0.8;
+        const startY = -totalTextHeight / 2 + fontSize * 0.82;
         lines.forEach((line, idx) => {
           ctx.fillText(line, 0, startY + (idx * lineHeight));
         });
@@ -1908,90 +1926,104 @@
         ctx.restore();
       }
 
-      // 6. CURATION SPEC & PRICE BADGES (10 DISTINCT SHAPES)
+      // 6. CURATION SPEC & PRICE BADGES (SMART CONTEXT-AWARE RULES)
       if (val) {
         ctx.save();
         const bScale = conf.bScale || 1.0;
-        ctx.font = `bold ${Math.round(25 * bScale)}px ${font}`;
+        const isShortText = val.length <= 8;
+
+        // Smart Shape Adaptation: Long strings can NEVER be circular dinner plates!
+        let bStyle = conf.badgeBg || "sticky";
+        if (!isShortText && (bStyle === "scallop" || bStyle === "scribble")) {
+          bStyle = (conf.archetype === "polaroid") ? "sticky" : "pill";
+        }
+
+        // Layout Counterweight Placement
+        let bx = conf.badgePos ? conf.badgePos.x : 230;
+        let by = conf.badgePos ? conf.badgePos.y : 140;
+
+        if (conf.layoutMode === "top_note_bottom_badge") {
+          // If headline is across the top, drop badge to bottom right
+          bx = conf.badgePos ? conf.badgePos.x : 840;
+          by = conf.badgePos ? conf.badgePos.y : 880;
+        }
+
+        ctx.font = `bold ${Math.round(23 * bScale)}px ${font}`;
         const valMetrics = ctx.measureText(val);
         const textW = valMetrics.width;
-        const boxW = Math.min(680, textW + 48), boxH = Math.round(56 * bScale);
-        const bx = conf.badgePos ? conf.badgePos.x : 240, by = conf.badgePos ? conf.badgePos.y : 150;
+
+        // Strict Clamping: Badge can NEVER exceed 380px wide or 54px high!
+        const boxW = Math.min(380, Math.max(90, textW + 36));
+        const boxH = Math.round(50 * bScale);
+
         conf._activeBadgeBox = { x: bx - boxW/2, y: by - boxH/2, w: boxW, h: boxH };
 
         ctx.translate(bx, by);
         ctx.rotate(((conf.bRot || 0) * Math.PI) / 180);
 
-        const bStyle = conf.badgeBg || "sticky";
-
-        if (bStyle === "sticky") {
-          ctx.fillStyle = "#FEF08A"; ctx.shadowColor = "rgba(0,0,0,0.22)"; ctx.shadowBlur = 16; ctx.shadowOffsetY = 6;
-          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 8); ctx.fill();
-          ctx.fillStyle = "#1E293B"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "pill") {
-          ctx.fillStyle = pal.paper; ctx.shadowColor = "rgba(0,0,0,0.18)"; ctx.shadowBlur = 20; ctx.shadowOffsetY = 6;
-          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, boxH/2); ctx.fill();
-          ctx.strokeStyle = "rgba(0,0,0,0.08)"; ctx.lineWidth = 1.5; ctx.stroke();
-          ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "kraft") {
-          ctx.fillStyle = "#D6C7B2"; ctx.shadowColor = "rgba(0,0,0,0.22)"; ctx.shadowBlur = 14; ctx.shadowOffsetY = 5;
-          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 6); ctx.fill();
-          ctx.fillStyle = "#422817"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "ticket") {
-          ctx.fillStyle = "#FAF8F5"; ctx.shadowColor = "rgba(0,0,0,0.18)"; ctx.shadowBlur = 14; ctx.shadowOffsetY = 4;
-          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 8); ctx.fill();
-          ctx.fillStyle = pal.bg;
-          ctx.beginPath(); ctx.arc(-boxW/2, 0, 8, -Math.PI/2, Math.PI/2); ctx.fill();
-          ctx.beginPath(); ctx.arc(boxW/2, 0, 8, Math.PI/2, -Math.PI/2); ctx.fill();
-          ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "scallop") {
-          const r = Math.max(boxW, boxH) / 2 + 10;
-          ctx.fillStyle = pal.accent; ctx.shadowColor = "rgba(0,0,0,0.24)"; ctx.shadowBlur = 16;
+        if (bStyle === "scallop" && isShortText) {
+          // Compact circular stamp (strict max 65px radius)
+          const r = Math.min(65, Math.max(boxW, boxH) / 2 + 4);
+          ctx.fillStyle = pal.accent; ctx.shadowColor = "rgba(0,0,0,0.22)"; ctx.shadowBlur = 14;
           ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
-          ctx.fillStyle = "#FFFFFF"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
+          ctx.fillStyle = "#FFFFFF"; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
         }
-        else if (bStyle === "gingham") {
-          ctx.fillStyle = "#FCE7F3"; ctx.shadowColor = "rgba(0,0,0,0.16)"; ctx.shadowBlur = 10;
-          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 6); ctx.fill();
-          ctx.fillStyle = "#9D174D"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "hairline") {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.85)"; ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 6); ctx.fill();
-          ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.5; ctx.stroke();
-          ctx.fillStyle = pal.accent; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "highlighter") {
-          ctx.fillStyle = "rgba(254, 240, 138, 0.85)";
-          ctx.fillRect(-boxW/2 - 8, -boxH/2 + 4, boxW + 16, boxH - 8);
-          ctx.fillStyle = "#1E293B"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "dark_pill") {
-          ctx.fillStyle = "#0F172A"; ctx.shadowColor = "rgba(0,0,0,0.3)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 6;
-          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, boxH/2); ctx.fill();
-          ctx.fillStyle = "#F8FAFC"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
-        }
-        else if (bStyle === "scribble") {
-          // Sharpie Scribble Loop with Underline (Sample 1 Card 3)
-          ctx.strokeStyle = pal.text; ctx.lineWidth = 3.2;
-          ctx.beginPath(); ctx.ellipse(0, 0, boxW * 0.48, boxH * 0.44, -0.05, 0, Math.PI * 2); ctx.stroke();
+        else if (bStyle === "scribble" && isShortText) {
+          // Compact Sharpie Loop (Sample 1 Card 3)
+          ctx.strokeStyle = pal.text; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.ellipse(0, 0, boxW * 0.46, boxH * 0.44, -0.05, 0, Math.PI * 2); ctx.stroke();
           ctx.beginPath(); ctx.moveTo(-boxW * 0.35, boxH * 0.52); ctx.lineTo(boxW * 0.38, boxH * 0.48); ctx.stroke();
-          ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
+          ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
         }
         else if (bStyle === "ribbon") {
-          // Folded 3D Ribbon Banner (Sample 2 "POINT DROP")
-          ctx.fillStyle = "#FEF9C3"; ctx.shadowColor = "rgba(0,0,0,0.2)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 4;
+          // 3D Folded Ribbon Banner (Uses photo's secondary accent)
+          ctx.fillStyle = pal.accent2 || pal.accent;
+          ctx.shadowColor = "rgba(0,0,0,0.2)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 4;
           ctx.beginPath();
           ctx.moveTo(-boxW/2 - 12, -boxH/2); ctx.lineTo(boxW/2 + 12, -boxH/2);
           ctx.lineTo(boxW/2, boxH/2); ctx.lineTo(-boxW/2, boxH/2);
           ctx.closePath(); ctx.fill();
-          ctx.fillStyle = "#991B1B"; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
+          ctx.fillStyle = "#FFFFFF"; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
+        }
+        else if (bStyle === "pill") {
+          ctx.fillStyle = pal.paper; ctx.shadowColor = "rgba(0,0,0,0.18)"; ctx.shadowBlur = 16; ctx.shadowOffsetY = 5;
+          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, boxH/2); ctx.fill();
+          ctx.strokeStyle = "rgba(0,0,0,0.08)"; ctx.lineWidth = 1.5; ctx.stroke();
+          ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
+        }
+        else if (bStyle === "kraft") {
+          ctx.fillStyle = "#D6C7B2"; ctx.shadowColor = "rgba(0,0,0,0.22)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 4;
+          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 6); ctx.fill();
+          ctx.fillStyle = "#422817"; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
+        }
+        else if (bStyle === "ticket") {
+          ctx.fillStyle = "#FAF8F5"; ctx.shadowColor = "rgba(0,0,0,0.18)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 4;
+          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 8); ctx.fill();
+          ctx.fillStyle = pal.bg;
+          ctx.beginPath(); ctx.arc(-boxW/2, 0, 7, -Math.PI/2, Math.PI/2); ctx.fill();
+          ctx.beginPath(); ctx.arc(boxW/2, 0, 7, Math.PI/2, -Math.PI/2); ctx.fill();
+          ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
+        }
+        else if (bStyle === "hairline") {
+          ctx.fillStyle = "rgba(255, 255, 255, 0.9)"; ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 6); ctx.fill();
+          ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.2; ctx.stroke();
+          ctx.fillStyle = pal.accent; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
+        }
+        else if (bStyle === "highlighter") {
+          ctx.fillStyle = "rgba(254, 240, 138, 0.88)";
+          ctx.fillRect(-boxW/2 - 6, -boxH/2 + 3, boxW + 12, boxH - 6);
+          ctx.fillStyle = "#1E293B"; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
+        }
+        else if (bStyle === "dark_pill") {
+          ctx.fillStyle = "#0F172A"; ctx.shadowColor = "rgba(0,0,0,0.28)"; ctx.shadowBlur = 16; ctx.shadowOffsetY = 5;
+          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, boxH/2); ctx.fill();
+          ctx.fillStyle = "#F8FAFC"; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
         }
         else {
-          ctx.fillStyle = pal.text; ctx.textAlign = "center"; ctx.fillText(val, 0, 8 * bScale);
+          // Neon Post-it default
+          ctx.fillStyle = "#FEF08A"; ctx.shadowColor = "rgba(0,0,0,0.20)"; ctx.shadowBlur = 14; ctx.shadowOffsetY = 5;
+          ctx.beginPath(); ctx.roundRect(-boxW/2, -boxH/2, boxW, boxH, 8); ctx.fill();
+          ctx.fillStyle = "#1E293B"; ctx.textAlign = "center"; ctx.fillText(val, 0, 7 * bScale);
         }
 
         ctx.restore();
