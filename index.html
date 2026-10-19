@@ -1240,107 +1240,48 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
 
-      // 1. VIBRANT PHOTO-DEPENDENT CANVA COLOR HARMONY
-      const accentColor = pal.accent || "#3C2A21"; // Rich sampled accent
-      const primaryColor = accentColor;
-      // Uses the rich photo-sampled background tint instead of a flat grey/cream
-      const vibrantBaseBg = pal.bg || "#EBF3F9"; 
-      const secondBrightAccent = (hash % 2 === 0) ? "#93C5FD" : "#60A5FA";
+      // 1. TRUE PHOTO-DEPENDENT VIBRANT COLOR HARMONY
+      const accentColor = pal.accent || "#3C2A21";
+      const vibrantBaseBg = pal.bg || "#F5EFE6";
+      const brightPopColor = (hash % 2 === 0) ? "#E0A96D" : "#D48C68";
 
-      // Vibrant tinted background wash based on the product photo
+      // Dynamic background gradient fully driven by the product photo's palette
       const bgAngle = (hash % 360) * (Math.PI / 180);
       const dynamicBgGrad = ctx.createLinearGradient(
         540 + Math.cos(bgAngle) * 700, 540 + Math.sin(bgAngle) * 700, 
         540 - Math.cos(bgAngle) * 700, 540 - Math.sin(bgAngle) * 700
       );
       dynamicBgGrad.addColorStop(0, "#FFFFFF");
-      dynamicBgGrad.addColorStop(0.5, vibrantBaseBg);
-      dynamicBgGrad.addColorStop(1, "#D6E4EF");
+      dynamicBgGrad.addColorStop(0.4, vibrantBaseBg);
+      dynamicBgGrad.addColorStop(1, accentColor);
       ctx.fillStyle = dynamicBgGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. RICH 40% VIBRANT ORGANIC LIQUID BLOB WASHES (Spilling from random corners)
+      // 2. VIBRANT ASYMMETRIC ORGANIC LIQUID BLOB WASHES
       ctx.save();
       const cornerX = (hash % 2 === 0) ? 0 : 1080;
       const cornerY = ((hash * 7) % 2 === 0) ? 0 : 1080;
       const organicGrad = ctx.createRadialGradient(cornerX, cornerY, 60, cornerX, cornerY, 800);
-      organicGrad.addColorStop(0, primaryColor);
+      organicGrad.addColorStop(0, accentColor);
       organicGrad.addColorStop(1, "transparent");
       ctx.fillStyle = organicGrad;
-      ctx.globalAlpha = 0.40; // Rich, vibrant color presence matching your Canva samples
+      ctx.globalAlpha = 0.50; // Rich, vibrant color presence matching your Canva samples
       ctx.beginPath();
       ctx.arc(cornerX, cornerY, 540 + (hash % 100), 0, Math.PI * 2);
       ctx.fill();
 
-      // Secondary vibrant color accent blob
-      const secondaryPop = secondBrightAccent;
-      ctx.fillStyle = secondaryPop;
-      ctx.globalAlpha = 0.3;
+      ctx.fillStyle = brightPopColor;
+      ctx.globalAlpha = 0.40;
       ctx.beginPath();
-      const secX = 200 + ((hash * 11) % 680);
-      const secY = 200 + ((hash * 17) % 680);
-      ctx.arc(secX, secY, 160 + (hash % 70), 0, Math.PI * 2);
+      const popX = 200 + ((hash * 13) % 680);
+      const popY = 200 + ((hash * 19) % 680);
+      ctx.arc(popX, popY, 150 + (hash % 60), 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // 3. EXPLICITLY RENDER BOTANICAL BRANCHES & LINE-ART ON EVERY CARD
+      // 3. ACTIVATING THE MULTI-SCALE SCATTER ENGINE (3-5 Big + 3-5 Small Random Elements)
       ctx.save();
-      const lineArtId = (hash * cardNum * 17) % 4;
-      const artX = 160 + (hash % 760);
-      const artY = 160 + ((hash * 5) % 760);
-      const artRot = ((hash % 360) * Math.PI) / 180;
-
-      ctx.translate(artX, artY);
-      ctx.rotate(artRot);
-
-      if (lineArtId === 0) {
-        // 🌿 Botanical Line-Art Branch
-        drawRandomizedVine(ctx, primaryColor);
-      } else if (lineArtId === 1) {
-        // ✨ Sparkle Burst Dust
-        ctx.font = "bold 60px sans-serif";
-        ctx.fillStyle = primaryColor; ctx.globalAlpha = 0.55;
-        ctx.fillText("✨", -20, 0);
-        ctx.fillText("⭐", 40, 50);
-      } else if (lineArtId === 2) {
-        // 💫 Calligraphy Swirl Doodle
-        ctx.strokeStyle = primaryColor; ctx.globalAlpha = 0.45; ctx.lineWidth = 2.5;
-        ctx.beginPath(); ctx.moveTo(-70, 0);
-        ctx.bezierCurveTo(-30, -70, 30, 70, 70, 0);
-        ctx.stroke();
-      } else {
-        // 🌿 Minimalist Leaf Cluster
-        ctx.fillStyle = primaryColor; ctx.globalAlpha = 0.4;
-        ctx.beginPath(); ctx.ellipse(-25, 0, 50, 25, -Math.PI / 6, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.ellipse(25, 0, 50, 25, Math.PI / 6, 0, Math.PI * 2); ctx.fill();
-      }
-      ctx.restore();
-
-      // 2. ASYMMETRIC ORGANIC LIQUID BLOB WASHES
-      ctx.save();
-      const liquidX = (hash % 2 === 0) ? 0 : 1080;
-      const liquidY = ((hash * 7) % 2 === 0) ? 0 : 1080;
-      const liquidGrad = ctx.createRadialGradient(liquidX, liquidY, 50, liquidX, liquidY, 750);
-      liquidGrad.addColorStop(0, accentColor);
-      liquidGrad.addColorStop(1, "transparent");
-      ctx.fillStyle = liquidGrad;
-      ctx.globalAlpha = 0.28;
-      ctx.beginPath();
-      ctx.arc(liquidX, liquidY, 540 + (hash % 100), 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = secondBrightAccent;
-      ctx.globalAlpha = 0.2;
-      ctx.beginPath();
-      const circleX = 200 + ((hash * 13) % 680);
-      const circleY = 200 + ((hash * 19) % 680);
-      ctx.arc(circleX, circleY, 150 + (hash % 60), 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      // 3. ACTIVATING MULTI-ELEMENT SCATTER ENGINE
-      ctx.save();
-      renderMultiCardGraphics(ctx, hash, accentColor, secondBrightAccent, pal.text);
+      renderMultiScaleScatterEngine(ctx, hash, accentColor, brightPopColor);
       ctx.restore();
 
       // Vignette Depth Shadow
