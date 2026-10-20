@@ -2195,37 +2195,101 @@
         ctx.restore();
       }
 
-      // 7. MIX & MATCH EXTRA DECORATORS
+      // =========================================================================
+      // 7. INTERACTIVE MIX & MATCH LAYERS (FULLY WIRED TO ALL 8 CHECKBOXES)
+      // =========================================================================
       if (conf.accents) {
+        // 1. Red Hand-Drawn Arrow (Points dynamically at product)
         if (conf.accents.arrow) {
           ctx.save();
-          ctx.strokeStyle = "#EF4444"; ctx.lineWidth = 3.5;
+          ctx.strokeStyle = "#EF4444"; ctx.fillStyle = "#EF4444"; ctx.lineWidth = 4; ctx.lineCap = "round";
+          ctx.translate(px - drawW/2 - 20, py - drawH/4);
+          ctx.rotate(-0.35);
           ctx.beginPath();
-          ctx.moveTo(180, 260); ctx.quadraticCurveTo(240, 240, 310, 280);
-          ctx.lineTo(295, 265); ctx.moveTo(310, 280); ctx.lineTo(290, 290);
+          ctx.moveTo(-60, -40); ctx.quadraticCurveTo(-10, -30, 40, 10); ctx.stroke();
+          // Arrowhead
+          ctx.beginPath();
+          ctx.moveTo(40, 10); ctx.lineTo(15, -5); ctx.lineTo(25, 25); ctx.closePath(); ctx.fill();
+          ctx.restore();
+        }
+
+        // 2. Sharpie Scribble Loop (Wraps around the hero product)
+        if (conf.accents.loop) {
+          ctx.save();
+          ctx.strokeStyle = "#EF4444"; ctx.lineWidth = 3.8; ctx.globalAlpha = 0.85;
+          ctx.translate(px, py);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, drawW * 0.54, drawH * 0.54, -0.06, 0, Math.PI * 2);
+          ctx.stroke();
+          // Double sketchy loop
+          ctx.beginPath();
+          ctx.ellipse(4, 2, drawW * 0.52, drawH * 0.52, 0.04, 0, Math.PI * 2);
           ctx.stroke();
           ctx.restore();
         }
-        if (conf.accents.loop) {
+
+        // 3. Double Underline Emphasis Bar (Beneath headline)
+        if (conf.accents.dbl) {
           ctx.save();
-          ctx.strokeStyle = "#EF4444"; ctx.lineWidth = 3;
-          ctx.beginPath(); ctx.ellipse(540, 470, 340, 340, 0, 0, Math.PI * 2); ctx.stroke();
+          ctx.strokeStyle = pal.accent || "#EF4444"; ctx.lineWidth = 4; ctx.lineCap = "round";
+          const ny = (conf.layoutMode === "top_note_bottom_badge") ? 165 : 970;
+          ctx.beginPath();
+          ctx.moveTo(px - 180, ny); ctx.lineTo(px + 180, ny);
+          ctx.moveTo(px - 140, ny + 8); ctx.lineTo(px + 140, ny + 8);
+          ctx.stroke();
           ctx.restore();
         }
+
+        // 4. Eye Stamp ("👀" Trendy Curator Stamp)
+        if (conf.accents.eye) {
+          ctx.save();
+          ctx.translate(px + drawW/2 - 30, py - drawH/2 + 30);
+          ctx.fillStyle = "#FFFFFF"; ctx.shadowColor = "rgba(0,0,0,0.2)"; ctx.shadowBlur = 10;
+          ctx.beginPath(); ctx.arc(0, 0, 32, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.5; ctx.stroke();
+          ctx.font = "30px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillText("👀", 0, 2);
+          ctx.restore();
+        }
+
+        // 5. Heart Doodle (➳♡ Sketched Arrow Heart)
         if (conf.accents.heart) {
           ctx.save();
-          ctx.fillStyle = "#F43F5E"; ctx.translate(880, 240);
+          ctx.translate(px + drawW/2 + 25, py + drawH/3);
+          ctx.strokeStyle = "#F43F5E"; ctx.fillStyle = "#F43F5E"; ctx.lineWidth = 3;
           ctx.beginPath();
-          ctx.moveTo(0, 0); ctx.bezierCurveTo(-15, -20, -35, 5, 0, 30);
-          ctx.bezierCurveTo(35, 5, 15, -20, 0, 0);
-          ctx.fill();
+          ctx.moveTo(0, 0); ctx.bezierCurveTo(-14, -18, -32, 6, 0, 28);
+          ctx.bezierCurveTo(32, 6, 14, -18, 0, 0); ctx.fill();
+          // Arrow stroke passing through heart
+          ctx.beginPath();
+          ctx.moveTo(-35, -10); ctx.lineTo(35, 35); ctx.stroke();
           ctx.restore();
         }
-        if (conf.accents.pin) {
-          drawPushpin(ctx, 540, 140, "#DC2626");
+
+        // 6. Metallic Brass Paperclip (Clipped onto top border of the mat)
+        if (conf.accents.clip) {
+          ctx.save();
+          ctx.translate(px - drawW/4, py - drawH/2 - 10);
+          ctx.strokeStyle = "#C5A059"; ctx.lineWidth = 4.5; ctx.lineCap = "round";
+          ctx.shadowColor = "rgba(0,0,0,0.25)"; ctx.shadowBlur = 8; ctx.shadowOffsetY = 4;
+          ctx.beginPath();
+          ctx.roundRect(-12, -24, 24, 56, 10);
+          ctx.stroke();
+          ctx.restore();
         }
+
+        // 7. 3D Pushpin (Pinned directly into top center of mat)
+        if (conf.accents.pin) {
+          drawPushpin(ctx, px, py - drawH/2 - 14, "#DC2626");
+        }
+
+        // 8. Botanical Leaf Sprig (Curling over side of mat)
         if (conf.accents.vines) {
-          ctx.save(); ctx.translate(920, 160); drawBotanicalSprig(ctx, pal.accent); ctx.restore();
+          ctx.save();
+          ctx.translate(px + drawW/2 + 10, py - drawH/3);
+          ctx.scale(0.85, 0.85);
+          drawBotanicalSprig(ctx, pal.accent);
+          ctx.restore();
         }
       }
     }
@@ -2385,60 +2449,87 @@
     }
 
     async function extractDealInfo() {
-      const raw = document.getElementById('rawDealPaste').value;
-      if (!raw) return;
+      const raw = document.getElementById('rawDealPaste').value.trim();
+      if (!raw) return alert("Please paste product notes or deal text first!");
 
-      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?))\b/i);
-      const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : "HOME STAPLE";
-      cachedExtractedSpecs = [unitClean, "COMMUNITY PICK", "SOLID CHOICE", "VERIFIED FAVORITE", "SIGNATURE FIND", "MULTI-PIECE SET"];
-
-      // Fan out default distinct text across all 4 cards immediately
-      generateProceduralDeck();
-      syncConsoleControls();
-      renderAll4CreatorCards();
+      // Visual button loading feedback
+      const extractBtn = document.querySelector("button[onclick='extractDealInfo()']");
+      const originalBtnText = extractBtn ? extractBtn.innerText : "⚡ Extract Info & Fan Out";
+      if (extractBtn) {
+        extractBtn.innerText = "⏳ Curating Angles...";
+        extractBtn.disabled = true;
+      }
 
       const key = document.getElementById('apiKeyInput').value.trim();
+
+      // Quick local regex check for units/packs (used strictly if API is offline or unavailable)
+      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?))\b/i);
+      const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : null;
+
       if (key) {
         try {
-          const prompt = `You are the lead curator for a top lifestyle deal community. Analyze this product info: "${raw.slice(0, 300)}"
+          // Dynamic session seed forces Gemini to invent completely fresh angles on every click
+          const sessionEntropy = Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
 
-Generate scroll-stopping, highly authentic community copy tailored to this EXACT product type.
+          const prompt = `You are a world-class lifestyle deal community curator. Analyze this product info: "${raw.slice(0, 320)}"
+(Unique Exploration Seed: ${sessionEntropy})
+
+Generate fresh, non-repetitive, scroll-stopping social media copy tailored specifically to this product.
 CRITICAL RULES:
-1. CATEGORY-ADAPTIVE COPY (NEVER USE GENERIC BUZZWORDS):
-   - Food / Snacks / Groceries: Focus on crunch, delicious flavor, freshness, grab-and-go convenience, pantry staples (e.g., "Pantry snack stash sorted 🥜", "Lightly salted & perfectly crunchy", "Grab-and-go snack favorite", "Crisp refreshment in every pack"). NEVER call food, snacks, or groceries "luxury" or "elegance".
-   - Games / Gadgets / Appliances: Focus on game night fun, family hosting, smooth operation, entertainment (e.g., "Game night just got an upgrade ♠️", "Effortless shuffling in seconds", "The ultimate hosting essential", "Party setup made simple"). NEVER call plastic gadgets or shufflers "luxury".
-   - Home / Storage / Organizing: Focus on clean organization, cozy spaces, decluttered living (e.g., "Bookshelf styling sorted 📚", "Cozy reading corner complete", "Decluttered living made simple", "Smart storage for your space").
-   - Beauty / Self-Care: Focus on daily routine, glowing skin, gentle self-care (e.g., "Daily hydration reset ✨", "Radiant skin routine").
-2. FACTUAL SPECS ONLY (NO HALLUCINATIONS):
+1. CATEGORY-ADAPTIVE COPY (EXPLORE FRESH PERSPECTIVES ON EVERY RUN):
+   - Food / Snacks / Groceries: Focus on crunch, taste, pantry organization, grab-and-go convenience (e.g. "Pantry snack stash sorted 🥜", "Lightly salted & perfectly crunchy", "Grab-and-go snack favorite", "Crisp refreshment in every pack"). NEVER use words like "luxury" or "elegance".
+   - Games / Gadgets / Appliances: Focus on game night fun, family hosting, smooth operation, party essentials (e.g. "Game night just got an upgrade ♠️", "Effortless shuffling in seconds", "The ultimate hosting essential", "Party setup made simple").
+   - Home / Storage / Organizing: Focus on clean spaces, decluttered living, aesthetic display (e.g. "Bookshelf styling sorted 📚", "Cozy reading corner complete", "Decluttered living made simple", "Smart storage for your space").
+   - Beauty / Self-Care: Focus on daily routine, radiant complexion, gentle refresh (e.g. "Daily hydration reset ✨", "Radiant skin routine").
+2. ANGLE DIVERSITY: Avoid repeating phrasing you used recently. Explore different hooks (e.g. one card focuses on convenience, another on taste/function, another on hosting, another on daily routine).
+3. FACTUAL SPECS ONLY (NO HALLUCINATIONS):
    - Never invent certifications or materials not in the input (NEVER say "organic", "artisan", "medical grade", "non-gmo", "handcrafted" unless explicitly present in the input text).
-   - Use bold, uppercase factual specs from the text (e.g., "32-PACK BUNDLE", "10 OZ BOTTLES", "2-DECK CAPACITY", "ELECTRIC POWERED", "SOLID CHOICE").
-3. ZERO BLACKLIST: NEVER include prices, dollar signs ($), urgency words ("hurry", "drop", "sale", "discount", "free", "save", "price", "amazon", "shipped").
-4. SHORT & PUNCHY: Keep affirmations under 5-8 words.
+   - Use bold, uppercase factual specs (e.g. "32-PACK BUNDLE", "10 OZ BOTTLES", "2-DECK CAPACITY", "ELECTRIC POWERED", "SOLID CHOICE").
+4. ZERO BLACKLIST: NEVER include prices, dollar signs ($), urgency words ("hurry", "drop", "sale", "discount", "free", "save", "price", "amazon", "shipped").
+5. SHORT & PUNCHY: Keep affirmations under 5-8 words.
 
 Return ONLY valid JSON:
 {
   "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6"],
   "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"]
 }`;
-          const payload = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, responseMimeType: "application/json" } };
+
+          // Temperature set to 0.95 for maximum creativity and angle variety
+          const payload = { 
+            contents: [{ parts: [{ text: prompt }] }], 
+            generationConfig: { 
+              temperature: 0.95, 
+              responseMimeType: "application/json" 
+            } 
+          };
+
           const aiData = await callGeminiLeapingMesh(key, payload);
           let rawTxt = (aiData.candidates[0]?.content?.parts[0]?.text || "{}").replace(/```json/gi, '').replace(/```/g, '').trim();
           const parsed = JSON.parse(rawTxt);
 
+          // Blacklist filter with whole-word boundary regex
           const safeAffirmations = (parsed.affirmations || []).filter(item => {
             const lower = item.toLowerCase();
-            return !FB_BLACKLIST.some(b => lower.includes(b));
+            return !FB_BLACKLIST.some(b => {
+              if (b === '$' || b === '%') return lower.includes(b);
+              const reg = new RegExp(`(^|[^a-zA-Z0-9])${b}([^a-zA-Z0-9]|$)`, 'i');
+              return reg.test(lower);
+            });
           });
 
           const safeSpecs = (parsed.spec_tags || []).filter(item => {
             const lower = item.toLowerCase();
-            return !FB_BLACKLIST.some(b => lower.includes(b));
+            return !FB_BLACKLIST.some(b => {
+              if (b === '$' || b === '%') return lower.includes(b);
+              const reg = new RegExp(`(^|[^a-zA-Z0-9])${b}([^a-zA-Z0-9]|$)`, 'i');
+              return reg.test(lower);
+            });
           });
 
           if (safeAffirmations.length > 0) cachedExtractedAffirmations = safeAffirmations;
           if (safeSpecs.length > 0) cachedExtractedSpecs = safeSpecs;
 
-          // Fan out unique AI headlines and specs across Card 1 - 4
+          // Fan out unique, fresh AI copy across Cards 1 through 4
           for (let i = 1; i <= 4; i++) {
             if (safeAffirmations[i - 1]) cardCustoms[i].note = safeAffirmations[i - 1];
             if (safeSpecs[i - 1]) cardCustoms[i].val = safeSpecs[i - 1];
@@ -2449,8 +2540,34 @@ Return ONLY valid JSON:
           renderAll4CreatorCards();
         } catch (e) {
           console.warn("AI extraction notice:", e);
+          // Clean fallback if API fails (NO "HOME STAPLE" flash)
+          applyFallbackSpecs(unitClean);
+        } finally {
+          if (extractBtn) {
+            extractBtn.innerText = originalBtnText;
+            extractBtn.disabled = false;
+          }
+        }
+      } else {
+        // If no API key entered, apply clean factual fallback
+        applyFallbackSpecs(unitClean);
+        if (extractBtn) {
+          extractBtn.innerText = originalBtnText;
+          extractBtn.disabled = false;
         }
       }
+    }
+
+    // Clean neutral fallback helper that never flashes "HOME STAPLE"
+    function applyFallbackSpecs(unitClean) {
+      const primarySpec = unitClean || "SPECIAL SELECTION";
+      cachedExtractedSpecs = [primarySpec, "VERIFIED PICK", "SOLID CHOICE", "DAILY STAPLE", "CURATED SELECTION", "FEATURED BUNDLE"];
+      for (let i = 1; i <= 4; i++) {
+        if (!cardCustoms[i].val) cardCustoms[i].val = cachedExtractedSpecs[i - 1];
+        if (!cardCustoms[i].note) cardCustoms[i].note = DEFAULT_AFFIRMATIONS[(i - 1) % DEFAULT_AFFIRMATIONS.length];
+      }
+      syncConsoleControls();
+      renderAll4CreatorCards();
     }
 
     function downloadCanvasData(dataUrl, filename) {
