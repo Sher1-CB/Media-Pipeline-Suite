@@ -2023,41 +2023,54 @@
     }
 
     // =========================================================================
-    // 16. COMPLETE CANVA SCATTER ENGINE (STRICT 70% CENTER EXCLUSION ZONE)
+    // 16. CONTINUOUS 360° PERIMETER SCATTER ENGINE (INFINITE POSITIONS - FROZEN ON DRAG)
     // =========================================================================
+    function createSeededPRNG(s) {
+      let seed = Math.abs(s) % 2147483647;
+      if (seed <= 0) seed += 2147483646;
+      return function() {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+      };
+    }
+
     function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
-      let seed = hash + cardNum * 9187;
-      function nextRandom() {
-        seed = (seed * 9301 + 49297) % 233280;
-        return seed / 233280;
+      // Deterministic PRNG ensures elements NEVER jump or move while dragging the photo
+      const prng = createSeededPRNG((hash || 12345) + cardNum * 83711);
+
+      // Helper function: Calculates an infinite coordinate along the outer 30% collar at ANY 360° angle
+      function getPerimeterPoint(angleRad, distanceOffset) {
+        const cx = 540, cy = 460; // Center of canvas
+        const dist = 430 + distanceOffset; // Outside the 70% center exclusion zone
+        let px = cx + Math.cos(angleRad) * dist;
+        let py = cy + Math.sin(angleRad) * dist;
+        // Clamp strictly inside canvas visible safe area
+        px = Math.max(70, Math.min(1010, px));
+        py = Math.max(70, Math.min(1010, py));
+        return { x: px, y: py };
       }
 
-      // Outer 30% Perimeter Collar Anchors (Center 70% is strictly protected!)
-      const cornerZones = [
-        { x: 75 + nextRandom() * 55,   y: 80 + nextRandom() * 55,   rot: 0 },
-        { x: 1005 - nextRandom() * 55, y: 80 + nextRandom() * 55,   rot: Math.PI / 2 },
-        { x: 75 + nextRandom() * 55,   y: 995 - nextRandom() * 55,  rot: -Math.PI / 2 },
-        { x: 1005 - nextRandom() * 55, y: 995 - nextRandom() * 55,  rot: Math.PI }
-      ];
+      // Pick 3 completely random, well-spaced angles around the 360° circle (e.g. 42°, 175°, 290°)
+      const baseAngle = prng() * Math.PI * 2;
+      const angle1 = baseAngle;
+      const angle2 = (baseAngle + Math.PI * 0.75 + prng() * 0.4) % (Math.PI * 2);
+      const angle3 = (baseAngle + Math.PI * 1.45 + prng() * 0.4) % (Math.PI * 2);
 
-      const flankZones = [
-        { x: 60 + nextRandom() * 35,   y: 430 + nextRandom() * 160, rot: -0.15 },
-        { x: 1020 - nextRandom() * 35, y: 430 + nextRandom() * 160, rot: 0.15 }
-      ];
+      const pos1 = getPerimeterPoint(angle1, prng() * 70);
+      const pos2 = getPerimeterPoint(angle2, prng() * 60);
+      const pos3 = getPerimeterPoint(angle3, prng() * 60);
 
-      const shuffledCorners = shuffleArray(cornerZones);
-      const shuffledFlanks = shuffleArray(flankZones);
-
-      // TIER 2: PRIMARY FRAMING ASSET (Rotates across the full 15-item Canva moodboard)
+      // =========================================================================
+      // ASSET 1: PRIMARY FRAMING STAMP (Infinite 360° Position around perimeter)
+      // =========================================================================
       ctx.save();
-      const pos1 = shuffledCorners[0];
-      const stampPick = Math.floor(nextRandom() * 7);
-
+      const stampPick = Math.floor(prng() * 7);
       ctx.translate(pos1.x, pos1.y);
-      ctx.rotate(pos1.rot + (nextRandom() * 0.3 - 0.15));
+      // Angle points inward toward product
+      ctx.rotate(angle1 + Math.PI + (prng() * 0.4 - 0.2));
 
       if (stampPick === 0) {
-        ctx.scale(1.15, 1.15);
+        ctx.scale(1.1, 1.1);
         drawCornerFoliageVine(ctx, accent);
       } else if (stampPick === 1) {
         drawTornGinghamPatch(ctx, { accent: accent });
@@ -2074,36 +2087,37 @@
       }
       ctx.restore();
 
-      // TIER 2B: SECONDARY FLANK RUNNER (Along outer margin)
-      if (nextRandom() > 0.3) {
-        ctx.save();
-        const posFlank = shuffledFlanks[0];
-        const flankPick = Math.floor(nextRandom() * 4);
-        ctx.translate(posFlank.x, posFlank.y);
-        ctx.rotate(posFlank.rot);
-
-        if (flankPick === 0) drawFrequencyWaveRibbon(ctx, brightPop || accent);
-        else if (flankPick === 1) drawTopographicContour(ctx, brightPop || accent);
-        else if (flankPick === 2) drawParallelBrushStrokes(ctx, accent);
-        else drawMinimalistWildflower(ctx, accent);
-        ctx.restore();
-      }
-
-      // TIER 3: MICRO FINISHING ACCENTS (Corner Starburst or Constellation Field)
+      // =========================================================================
+      // ASSET 2: SECONDARY PERIMETER RUNNER (Infinite position on opposite flank)
+      // =========================================================================
       ctx.save();
-      const posStar = shuffledCorners[1];
-      ctx.translate(posStar.x, posStar.y);
-      if (nextRandom() > 0.5) {
+      const runnerPick = Math.floor(prng() * 4);
+      ctx.translate(pos2.x, pos2.y);
+      ctx.rotate(angle2 + (prng() * 0.5 - 0.25));
+
+      if (runnerPick === 0) drawFrequencyWaveRibbon(ctx, brightPop || accent);
+      else if (runnerPick === 1) drawTopographicContour(ctx, brightPop || accent);
+      else if (runnerPick === 2) drawParallelBrushStrokes(ctx, accent);
+      else drawMinimalistWildflower(ctx, accent);
+      ctx.restore();
+
+      // =========================================================================
+      // ASSET 3: FINISHING ACCENTS (Infinite position along remaining collar)
+      // =========================================================================
+      ctx.save();
+      ctx.translate(pos3.x, pos3.y);
+      if (prng() > 0.5) {
         drawStarConstellation(ctx, brightPop || accent);
       } else {
         drawElongatedStarburst(ctx, brightPop || accent);
       }
       ctx.restore();
 
-      // Corner Stipple Dots
+      // Delicate stipple dots near an edge
       ctx.save();
-      const posDot = shuffledCorners[2];
-      ctx.translate(posDot.x, posDot.y);
+      const stippleAngle = (baseAngle + Math.PI * 0.35) % (Math.PI * 2);
+      const posStipple = getPerimeterPoint(stippleAngle, prng() * 40);
+      ctx.translate(posStipple.x, posStipple.y);
       drawStippleClusters(ctx, accent);
       ctx.restore();
     }
