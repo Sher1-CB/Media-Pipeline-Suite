@@ -97,7 +97,8 @@
 
         <div class="flex items-center gap-2">
           <label class="text-xs font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap"><span>🔑</span> Key:</label>
-          <input type="password" id="apiKeyInput" placeholder="AIzaSy... key" class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-32 sm:w-44 focus:outline-none focus:border-sky-500">
+          <input type="password" id="apiKeyInput" placeholder="AIzaSy... key" class="bg-slate-950 border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-white w-32 sm:w-44 focus:outline-none focus:border-sky-500 transition-all">
+          <span id="keyStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-rose-500/20 text-rose-400 border border-rose-500/30 whitespace-nowrap">🔴 Key Required</span>
         </div>
 
         <div class="flex items-center gap-2">
@@ -121,6 +122,17 @@
         <a href="https://sher1-cb.github.io/deal-sanitizer/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">🧼 Deal Sanitizer ↗</a>
         <a href="https://sher1-cb.github.io/Variant-Lens/" target="_blank" class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-xs font-bold rounded-lg text-sky-400 hover:bg-slate-800">🔍 Variant Lens ↗</a>
       </div>
+    </div>
+
+    <!-- AUTO-UPDATE NOTIFICATION BANNER -->
+    <div id="updateAvailableBanner" class="hidden bg-emerald-950/90 border border-emerald-500/80 p-3 rounded-xl text-emerald-200 text-xs flex flex-wrap justify-between items-center gap-2 shadow-2xl shadow-emerald-500/10">
+      <div class="flex items-center gap-2.5">
+        <span class="text-base animate-bounce">🚀</span>
+        <span><strong>New Studio Update Deployed!</strong> A fresh version with improved layouts and features is live.</span>
+      </div>
+      <button type="button" onclick="window.location.reload(true)" class="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg uppercase tracking-wider text-[11px] shadow cursor-pointer transition-all active:scale-95">
+        Update Now 🔄
+      </button>
     </div>
 
     <!-- STEP PROGRESSION BAR -->
@@ -457,6 +469,43 @@
 
   <script>
     /* ==========================================================================
+       APP BUILD VERSION & SILENT AUTO-UPDATE DETECTOR
+       ========================================================================== */
+    // Bump this ID whenever you push updates; all open tabs will detect it!
+    const APP_BUILD_ID = "v12.6.0-20261020";
+
+    async function checkForAppUpdates() {
+      // Don't poll if testing offline or running directly from local file://
+      if (window.location.protocol === "file:") return;
+
+      try {
+        const checkUrl = window.location.pathname + "?_t=" + Date.now();
+        const res = await fetch(checkUrl, { cache: "no-store", headers: { "Cache-Control": "no-cache" } });
+        if (!res.ok) return;
+
+        const html = await res.text();
+        const match = html.match(/APP_BUILD_ID\s*=\s*["']([^"']+)["']/);
+        
+        if (match && match[1] && match[1] !== APP_BUILD_ID) {
+          // If the user has no photo loaded on Step 1, auto-reload cleanly
+          if (!rawLoadedImage && activeStep === 1) {
+            window.location.reload(true);
+          } else {
+            // If they are in the middle of a deal, show the top banner so work isn't lost
+            const banner = document.getElementById("updateAvailableBanner");
+            if (banner) banner.classList.remove("hidden");
+          }
+        }
+      } catch (err) {
+        // Silent fail if network drops
+      }
+    }
+
+    // Check 30 seconds after opening, then poll every 3 minutes silently
+    setTimeout(checkForAppUpdates, 30000);
+    setInterval(checkForAppUpdates, 3 * 60 * 1000);
+
+    /* ==========================================================================
        GLOBAL STATE & ARCHITECTURE
        ========================================================================== */
     let activeStep = 1;
@@ -736,6 +785,20 @@
       renderAll4CreatorCards();
     }
 
+    function updateKeyStatusBadge(key) {
+      const badge = document.getElementById('keyStatusBadge');
+      const input = document.getElementById('apiKeyInput');
+      if (!badge) return;
+      if (key && key.trim().length > 15) {
+        badge.className = "text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 whitespace-nowrap";
+        badge.innerText = "🟢 AI Ready";
+        if (input) input.classList.remove('border-rose-500', 'ring-2', 'ring-rose-500', 'animate-pulse');
+      } else {
+        badge.className = "text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-rose-500/20 text-rose-400 border border-rose-500/30 whitespace-nowrap";
+        badge.innerText = "🔴 Key Required";
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       setupCanvasDragListeners();
       setupManualPatchListeners();
@@ -746,12 +809,16 @@
       const keyInput = document.getElementById('apiKeyInput');
       if (savedKey && keyInput) {
         keyInput.value = savedKey;
+        updateKeyStatusBadge(savedKey);
         autoDetectModels(savedKey);
+      } else {
+        updateKeyStatusBadge("");
       }
       if (keyInput) {
         keyInput.addEventListener('input', (e) => {
           const val = e.target.value.trim();
           localStorage.setItem('deal_gemini_key', val);
+          updateKeyStatusBadge(val);
           if (val) autoDetectModels(val);
         });
       }
@@ -2450,43 +2517,59 @@
 
     async function extractDealInfo() {
       const raw = document.getElementById('rawDealPaste').value.trim();
-      if (!raw) return alert("Please paste product notes or deal text first!");
+      if (!raw) return alert("Please paste the raw product text or deal notes first!");
 
-      // Visual button loading feedback
+      const keyInput = document.getElementById('apiKeyInput');
+      const key = (keyInput ? keyInput.value : "").trim();
+
+      // =========================================================================
+      // 🔒 HARD GATEKEEPER: STRICT API KEY REQUIREMENT (ZERO DUMMY FALLBACKS)
+      // =========================================================================
+      if (!key || key.length < 15) {
+        alert("🔑 Gemini API Key Required!\n\nYou must enter your free Gemini API key in the 'Key:' box at the top to extract custom shopper copy and generate AI cards.\n\nWithout an API key, deal extraction is locked to prevent posting generic placeholder copy.");
+        if (keyInput) {
+          keyInput.classList.add('border-rose-500', 'ring-2', 'ring-rose-500', 'animate-pulse');
+          keyInput.focus();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      // Visual button loading indicator
       const extractBtn = document.querySelector("button[onclick='extractDealInfo()']");
       const originalBtnText = extractBtn ? extractBtn.innerText : "⚡ Extract Info & Fan Out";
       if (extractBtn) {
-        extractBtn.innerText = "⏳ Curating Angles...";
+        extractBtn.innerText = "⏳ Curating Shopper Angles...";
         extractBtn.disabled = true;
       }
 
-      const key = document.getElementById('apiKeyInput').value.trim();
+      try {
+        // Dynamic entropy seed forces Gemini to explore fresh shopper angles on every click
+        const sessionEntropy = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
 
-      // Quick local regex check for units/packs (used strictly if API is offline or unavailable)
-      const unitMatch = raw.match(/\b(\d+[\s-]pack|\d+\s*(?:count|ct|oz|fl\s*oz|sheets|pk|bottles|lbs?))\b/i);
-      const unitClean = unitMatch ? unitMatch[0].toUpperCase().trim() : null;
+        const prompt = `You are an authentic, enthusiastic community deal curator writing for real shoppers. Analyze this product info: "${raw.slice(0, 320)}"
+(Entropy Seed: ${sessionEntropy})
 
-      if (key) {
-        try {
-          // Dynamic session seed forces Gemini to invent completely fresh angles on every click
-          const sessionEntropy = Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
+Write scroll-stopping, natural shopper community copy that sounds like a real person sharing their favorite find.
 
-          const prompt = `You are a world-class lifestyle deal community curator. Analyze this product info: "${raw.slice(0, 320)}"
-(Unique Exploration Seed: ${sessionEntropy})
-
-Generate fresh, non-repetitive, scroll-stopping social media copy tailored specifically to this product.
 CRITICAL RULES:
-1. CATEGORY-ADAPTIVE COPY (EXPLORE FRESH PERSPECTIVES ON EVERY RUN):
-   - Food / Snacks / Groceries: Focus on crunch, taste, pantry organization, grab-and-go convenience (e.g. "Pantry snack stash sorted 🥜", "Lightly salted & perfectly crunchy", "Grab-and-go snack favorite", "Crisp refreshment in every pack"). NEVER use words like "luxury" or "elegance".
-   - Games / Gadgets / Appliances: Focus on game night fun, family hosting, smooth operation, party essentials (e.g. "Game night just got an upgrade ♠️", "Effortless shuffling in seconds", "The ultimate hosting essential", "Party setup made simple").
-   - Home / Storage / Organizing: Focus on clean spaces, decluttered living, aesthetic display (e.g. "Bookshelf styling sorted 📚", "Cozy reading corner complete", "Decluttered living made simple", "Smart storage for your space").
-   - Beauty / Self-Care: Focus on daily routine, radiant complexion, gentle refresh (e.g. "Daily hydration reset ✨", "Radiant skin routine").
-2. ANGLE DIVERSITY: Avoid repeating phrasing you used recently. Explore different hooks (e.g. one card focuses on convenience, another on taste/function, another on hosting, another on daily routine).
-3. FACTUAL SPECS ONLY (NO HALLUCINATIONS):
-   - Never invent certifications or materials not in the input (NEVER say "organic", "artisan", "medical grade", "non-gmo", "handcrafted" unless explicitly present in the input text).
-   - Use bold, uppercase factual specs (e.g. "32-PACK BUNDLE", "10 OZ BOTTLES", "2-DECK CAPACITY", "ELECTRIC POWERED", "SOLID CHOICE").
-4. ZERO BLACKLIST: NEVER include prices, dollar signs ($), urgency words ("hurry", "drop", "sale", "discount", "free", "save", "price", "amazon", "shipped").
-5. SHORT & PUNCHY: Keep affirmations under 5-8 words.
+1. NATURAL SHOPPER LANGUAGE (NO GENERIC MARKETING SLOGANS):
+   - Women's Apparel / Loungewear: Sound like an excited friend sharing cozy wardrobe essentials (e.g., "Pajama drawer upgrade ☁️", "Cozy weekend comfort on repeat", "Cannot stop wearing this set", "The softest loungewear favorite", "Lazy afternoon essential", "Instant bedtime favorite"). NEVER call clothing "elevated living" or "interior design".
+   - Food / Snacks / Groceries: Focus on delicious flavor, crunch, pantry convenience (e.g., "Pantry snack stash sorted 🥜", "Lightly salted & perfectly crunchy", "Grab-and-go snack favorite", "Afternoon snack craving sorted").
+   - Games / Appliances / Gadgets: Focus on game night fun, hosting friends, effortless setup (e.g., "Game night just got an upgrade ♠️", "Effortless shuffling in seconds", "The ultimate hosting essential", "Party setup made simple").
+   - Home / Storage / Organizing: Focus on clean organization, aesthetic storage (e.g., "Bookshelf styling sorted 📚", "Cozy reading corner complete", "Decluttered living made simple").
+   - Beauty / Skincare: Focus on glowing skin, daily refresh (e.g., "Daily hydration reset ✨", "Radiant skin routine goals", "Gentle everyday refresh").
+
+2. STRICT ABSOLUTE ZERO BLACKLIST (INSTANT REJECTION IF VIOLATED):
+   - NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or commercial checkout terms:
+   - FORBIDDEN TOKENS: "buy", "order", "price", "prices", "sale", "sales", "deal", "deals", "save", "savings", "discount", "cheap", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "was", "reg", "link", "cart".
+
+3. FACTUAL SPEC TAGS ONLY (NO HALLUCINATIONS):
+   - Provide bold, uppercase factual curation specs based strictly on counts, sizes, pack quantities, or materials from the text (e.g., "SIZES S - XXL", "BUTTON DOWN SET", "32-PACK BUNDLE", "1.35 QUART CAPACITY", "2-DECK CAPACITY").
+   - If no specific numbers exist, use neutral community curation tags (e.g., "COMMUNITY FAVORITE", "WEEKEND STAPLE", "SOLID CHOICE").
+   - NEVER invent unverified certifications (NEVER assume "organic", "artisan", "medical grade", "non-gmo", "handcrafted").
+
+4. SHORT & PUNCHY: Keep affirmations under 5-8 words so they fit cleanly as card headlines.
 
 Return ONLY valid JSON:
 {
@@ -2494,80 +2577,61 @@ Return ONLY valid JSON:
   "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"]
 }`;
 
-          // Temperature set to 0.95 for maximum creativity and angle variety
-          const payload = { 
-            contents: [{ parts: [{ text: prompt }] }], 
-            generationConfig: { 
-              temperature: 0.95, 
-              responseMimeType: "application/json" 
-            } 
-          };
+        const payload = { 
+          contents: [{ parts: [{ text: prompt }] }], 
+          generationConfig: { 
+            temperature: 0.95, // High entropy for maximum angle variety
+            responseMimeType: "application/json" 
+          } 
+        };
 
-          const aiData = await callGeminiLeapingMesh(key, payload);
-          let rawTxt = (aiData.candidates[0]?.content?.parts[0]?.text || "{}").replace(/```json/gi, '').replace(/```/g, '').trim();
-          const parsed = JSON.parse(rawTxt);
+        const aiData = await callGeminiLeapingMesh(key, payload);
+        let rawTxt = (aiData.candidates[0]?.content?.parts[0]?.text || "{}").replace(/```json/gi, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(rawTxt);
 
-          // Blacklist filter with whole-word boundary regex
-          const safeAffirmations = (parsed.affirmations || []).filter(item => {
-            const lower = item.toLowerCase();
-            return !FB_BLACKLIST.some(b => {
-              if (b === '$' || b === '%') return lower.includes(b);
-              const reg = new RegExp(`(^|[^a-zA-Z0-9])${b}([^a-zA-Z0-9]|$)`, 'i');
-              return reg.test(lower);
-            });
+        // Strict client-side regex firewall (whole-word boundary check)
+        const safeAffirmations = (parsed.affirmations || []).filter(item => {
+          const lower = item.toLowerCase();
+          return !FB_BLACKLIST.some(b => {
+            if (b === '$' || b === '%') return lower.includes(b);
+            const reg = new RegExp(`(^|[^a-zA-Z0-9])${b}([^a-zA-Z0-9]|$)`, 'i');
+            return reg.test(lower);
           });
+        });
 
-          const safeSpecs = (parsed.spec_tags || []).filter(item => {
-            const lower = item.toLowerCase();
-            return !FB_BLACKLIST.some(b => {
-              if (b === '$' || b === '%') return lower.includes(b);
-              const reg = new RegExp(`(^|[^a-zA-Z0-9])${b}([^a-zA-Z0-9]|$)`, 'i');
-              return reg.test(lower);
-            });
+        const safeSpecs = (parsed.spec_tags || []).filter(item => {
+          const lower = item.toLowerCase();
+          return !FB_BLACKLIST.some(b => {
+            if (b === '$' || b === '%') return lower.includes(b);
+            const reg = new RegExp(`(^|[^a-zA-Z0-9])${b}([^a-zA-Z0-9]|$)`, 'i');
+            return reg.test(lower);
           });
+        });
 
-          if (safeAffirmations.length > 0) cachedExtractedAffirmations = safeAffirmations;
-          if (safeSpecs.length > 0) cachedExtractedSpecs = safeSpecs;
-
-          // Fan out unique, fresh AI copy across Cards 1 through 4
-          for (let i = 1; i <= 4; i++) {
-            if (safeAffirmations[i - 1]) cardCustoms[i].note = safeAffirmations[i - 1];
-            if (safeSpecs[i - 1]) cardCustoms[i].val = safeSpecs[i - 1];
-          }
-
-          renderAiChips(safeAffirmations, safeSpecs);
-          syncConsoleControls();
-          renderAll4CreatorCards();
-        } catch (e) {
-          console.warn("AI extraction notice:", e);
-          // Clean fallback if API fails (NO "HOME STAPLE" flash)
-          applyFallbackSpecs(unitClean);
-        } finally {
-          if (extractBtn) {
-            extractBtn.innerText = originalBtnText;
-            extractBtn.disabled = false;
-          }
+        if (safeAffirmations.length === 0 || safeSpecs.length === 0) {
+          throw new Error("AI output contained blacklisted tokens or empty results. Please try again.");
         }
-      } else {
-        // If no API key entered, apply clean factual fallback
-        applyFallbackSpecs(unitClean);
+
+        cachedExtractedAffirmations = safeAffirmations;
+        cachedExtractedSpecs = safeSpecs;
+
+        // Fan out authentic shopper copy across Cards 1 through 4
+        for (let i = 1; i <= 4; i++) {
+          cardCustoms[i].note = safeAffirmations[i - 1] || safeAffirmations[0];
+          cardCustoms[i].val = safeSpecs[i - 1] || safeSpecs[0];
+        }
+
+        renderAiChips(safeAffirmations, safeSpecs);
+        syncConsoleControls();
+        renderAll4CreatorCards();
+      } catch (err) {
+        alert("Curator Notice: " + err.message);
+      } finally {
         if (extractBtn) {
           extractBtn.innerText = originalBtnText;
           extractBtn.disabled = false;
         }
       }
-    }
-
-    // Clean neutral fallback helper that never flashes "HOME STAPLE"
-    function applyFallbackSpecs(unitClean) {
-      const primarySpec = unitClean || "SPECIAL SELECTION";
-      cachedExtractedSpecs = [primarySpec, "VERIFIED PICK", "SOLID CHOICE", "DAILY STAPLE", "CURATED SELECTION", "FEATURED BUNDLE"];
-      for (let i = 1; i <= 4; i++) {
-        if (!cardCustoms[i].val) cardCustoms[i].val = cachedExtractedSpecs[i - 1];
-        if (!cardCustoms[i].note) cardCustoms[i].note = DEFAULT_AFFIRMATIONS[(i - 1) % DEFAULT_AFFIRMATIONS.length];
-      }
-      syncConsoleControls();
-      renderAll4CreatorCards();
     }
 
     function downloadCanvasData(dataUrl, filename) {
