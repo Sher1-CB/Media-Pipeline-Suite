@@ -1685,6 +1685,48 @@
       ctx.restore();
     }
 
+    // 9. Botanical Leaf Sprig (Screenshots 2 & 3)
+    function drawBotanicalSprig(ctx, color) {
+      ctx.save();
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(0, 80); ctx.quadraticCurveTo(12, 20, 0, -40); ctx.stroke();
+      [[-22, 20, -0.5], [18, 2, 0.4], [-14, -16, -0.3], [12, -30, 0.3]].forEach(([lx, ly, rot]) => {
+        ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
+        ctx.beginPath(); ctx.ellipse(0, 0, 16, 7, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      });
+      ctx.restore();
+    }
+
+    // 10. Scatter Decorator Orchestrator (Framing elements from Screenshots 2 & 3)
+    function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
+      let seed = hash + cardNum * 8371;
+      function nextRandom() {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      }
+
+      // Accent 1: Mid-Century Elongated Starburst near header
+      ctx.save();
+      const sbX = 220 + nextRandom() * 640;
+      const sbY = 110 + nextRandom() * 70;
+      ctx.translate(sbX, sbY);
+      drawElongatedStarburst(ctx, brightPop);
+      ctx.restore();
+
+      // Accent 2: Stipple dots or parallel brush strokes framing the card
+      ctx.save();
+      const pick = nextRandom();
+      if (pick > 0.5) {
+        ctx.translate(880, 210);
+        drawStippleClusters(ctx, accent);
+      } else {
+        ctx.translate(220, 860);
+        drawParallelBrushStrokes(ctx, accent);
+      }
+      ctx.restore();
+    }
+
     /* ==========================================================================
        MAIN CARD COMPOSITOR: AUTHENTIC CANVA STAGING & SAFE PADDING
        ========================================================================== */
