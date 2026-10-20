@@ -679,7 +679,8 @@
     // STRICT NON-REPEATING PERMUTATION GENERATOR (Zero Overlap Across the 4 Cards)
     function generateProceduralDeck() {
       const matCatalog = ["polaroid", "notebook", "stacked_pin", "squircle", "gallery", "floating"];
-      const bgCatalog = ["wood", "linen", "waves", "kraft", "grid", "splittone", "watercolor"];
+      // 100% Photo-Derived Backgrounds (Brown Wood permanently retired)
+      const bgCatalog = ["waves", "linen", "grid", "watercolor", "splittone", "kraft"];
       const badgeCatalog = ["sticky", "pill", "kraft", "ticket", "scribble", "ribbon", "scallop", "highlighter", "dark_pill", "hairline"];
       const fontCatalog = ["handwritten", "editorial", "playful", "modern_sans", "typewriter"];
 
@@ -1488,26 +1489,18 @@
       ctx.restore();
     }
 
-    // ARCHETYPE 4: WARM BOTANICAL KRAFT PARCHMENT (Lotion Sample 4)
+    // ARCHETYPE 4: WARM MUTED KRAFT PARCHMENT (Photo-Harmonized & Decorators Controlled by Engine)
     function drawKraftBackground(ctx, pal) {
       ctx.save();
-      ctx.fillStyle = "#E5D8C4";
+      ctx.fillStyle = pal.bgSecondary || "#E6DDD0";
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Recycled kraft fibers
-      ctx.fillStyle = "rgba(60, 40, 20, 0.22)";
+      // Natural recycled kraft fibers
+      ctx.fillStyle = "rgba(60, 40, 20, 0.18)";
       for (let i = 0; i < 90; i++) {
         const x = (i * 137) % 1080, y = (i * 283) % 1080;
         ctx.fillRect(x, y, 3, 1.8);
       }
-
-      // Corner Foliage Vine framing the border (Screenshot 3)
-      ctx.translate(140, 140);
-      drawCornerFoliageVine(ctx, pal.accent);
-
-      // Concentric Boho Arches in bottom corner (Screenshot 2)
-      ctx.translate(820, 780);
-      drawConcentricArches(ctx, pal.accent2 || pal.accent);
       ctx.restore();
     }
 
@@ -1739,35 +1732,48 @@
       ctx.restore();
     }
 
-    // 10. Scatter Decorator Orchestrator (Framing elements from Screenshots 2 & 3)
+    // 10. Dynamic Perimeter Anchor Engine (Screenshots 2 & 3 - ZERO Hardcoded Coordinates)
     function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
-      let seed = hash + cardNum * 8371;
+      let seed = hash + cardNum * 9187;
       function nextRandom() {
         seed = (seed * 9301 + 49297) % 233280;
         return seed / 233280;
       }
 
-      // Accent 1: Mid-Century Elongated Starburst near header
-      ctx.save();
-      const sbX = 220 + nextRandom() * 640;
-      const sbY = 110 + nextRandom() * 70;
-      ctx.translate(sbX, sbY);
-      drawElongatedStarburst(ctx, brightPop);
-      ctx.restore();
+      const stamps = ['vine', 'brush_lines', 'starburst', 'stipple', 'arches', 'wildflower'];
+      const count = 2 + Math.floor(nextRandom() * 2); // 2 to 3 dynamic accents
 
-      // Accent 2: Stipple dots or parallel brush strokes framing the card
-      ctx.save();
-      const pick = nextRandom();
-      if (pick > 0.5) {
-        ctx.translate(880, 210);
-        drawStippleClusters(ctx, accent);
-      } else {
-        ctx.translate(220, 860);
-        drawParallelBrushStrokes(ctx, accent);
+      // 4 Dynamic perimeter zones with organic position jitter (+/- 80px)
+      const zones = [
+        { x: 130 + nextRandom() * 80, y: 130 + nextRandom() * 80 },  // Top-Left Zone
+        { x: 910 - nextRandom() * 80, y: 130 + nextRandom() * 80 },  // Top-Right Zone
+        { x: 130 + nextRandom() * 80, y: 910 - nextRandom() * 80 },  // Bottom-Left Zone
+        { x: 910 - nextRandom() * 80, y: 910 - nextRandom() * 80 }   // Bottom-Right Zone
+      ];
+      const shuffledZones = shuffleArray(zones);
+
+      for (let i = 0; i < count; i++) {
+        ctx.save();
+        const pos = shuffledZones[i];
+        const type = stamps[Math.floor(nextRandom() * stamps.length)];
+        const rot = (nextRandom() * 1.2 - 0.6); // Randomized tilt (-35° to +35°)
+        const scale = 0.75 + nextRandom() * 0.35; // Randomized scale (0.75x to 1.1x)
+        const col = (i % 2 === 0) ? accent : brightPop;
+
+        ctx.translate(pos.x, pos.y);
+        ctx.rotate(rot);
+        ctx.scale(scale, scale);
+
+        if (type === 'vine') drawCornerFoliageVine(ctx, col);
+        else if (type === 'brush_lines') drawParallelBrushStrokes(ctx, col);
+        else if (type === 'starburst') drawElongatedStarburst(ctx, col);
+        else if (type === 'stipple') drawStippleClusters(ctx, col);
+        else if (type === 'arches') drawConcentricArches(ctx, col);
+        else drawMinimalistWildflower(ctx, col);
+
+        ctx.restore();
       }
-      ctx.restore();
     }
-
     /* ==========================================================================
        MAIN CARD COMPOSITOR: AUTHENTIC CANVA STAGING & SAFE PADDING
        ========================================================================== */
@@ -2334,15 +2340,20 @@
       const key = document.getElementById('apiKeyInput').value.trim();
       if (key) {
         try {
-          const prompt = `You are the lead boutique curator for a high-end lifestyle community. Analyze this product info: "${raw.slice(0, 300)}"
+          const prompt = `You are the lead curator for a top lifestyle deal community. Analyze this product info: "${raw.slice(0, 300)}"
 
-Generate incredibly inviting, scroll-stopping, and positive social media community copy.
+Generate scroll-stopping, highly authentic community copy tailored to this EXACT product type.
 CRITICAL RULES:
-1. POSITIVE WORDS ONLY: Focus entirely on elevated daily living, beauty, convenience, and joy (e.g., "The ultimate upgrade for your routine ✨", "Your new daily favorite", "Effortless everyday luxury").
-2. ABSOLUTE ZERO BLACKLIST: NEVER include prices, dollar signs ($), numbers, urgency, or platform/checkout terms ("Amazon", "deal", "price", "save", "shipped", "sale", "discount", "free", "hurry", "drop").
-3. FACTUAL SPECS ONLY (NO HALLUCINATIONS): Never invent certifications, materials, or claims not explicitly written in the input text. NEVER assume words like "organic", "artisan", "medical grade", "non-gmo", "handcrafted", "wooden", or "cotton" unless explicitly present in the input.
-4. SPEC TAGS: Provide bold, uppercase product curation specs based strictly on factual counts, sizes, pack quantities, or safe neutral lifestyle curation terms (e.g., "24 COUNT", "10 OZ BOTTLES", "DUAL PACK BUNDLE", "PANTRY STAPLE", "SOLID CHOICE", "HOME ESSENTIAL").
-5. SHORT & PUNCHY: Keep affirmations under 6-8 words so they fit cleanly as card headlines.
+1. CATEGORY-ADAPTIVE COPY (NEVER USE GENERIC BUZZWORDS):
+   - Food / Snacks / Groceries: Focus on crunch, delicious flavor, freshness, grab-and-go convenience, pantry staples (e.g., "Pantry snack stash sorted 🥜", "Lightly salted & perfectly crunchy", "Grab-and-go snack favorite", "Crisp refreshment in every pack"). NEVER call food, snacks, or groceries "luxury" or "elegance".
+   - Games / Gadgets / Appliances: Focus on game night fun, family hosting, smooth operation, entertainment (e.g., "Game night just got an upgrade ♠️", "Effortless shuffling in seconds", "The ultimate hosting essential", "Party setup made simple"). NEVER call plastic gadgets or shufflers "luxury".
+   - Home / Storage / Organizing: Focus on clean organization, cozy spaces, decluttered living (e.g., "Bookshelf styling sorted 📚", "Cozy reading corner complete", "Decluttered living made simple", "Smart storage for your space").
+   - Beauty / Self-Care: Focus on daily routine, glowing skin, gentle self-care (e.g., "Daily hydration reset ✨", "Radiant skin routine").
+2. FACTUAL SPECS ONLY (NO HALLUCINATIONS):
+   - Never invent certifications or materials not in the input (NEVER say "organic", "artisan", "medical grade", "non-gmo", "handcrafted" unless explicitly present in the input text).
+   - Use bold, uppercase factual specs from the text (e.g., "32-PACK BUNDLE", "10 OZ BOTTLES", "2-DECK CAPACITY", "ELECTRIC POWERED", "SOLID CHOICE").
+3. ZERO BLACKLIST: NEVER include prices, dollar signs ($), urgency words ("hurry", "drop", "sale", "discount", "free", "save", "price", "amazon", "shipped").
+4. SHORT & PUNCHY: Keep affirmations under 5-8 words.
 
 Return ONLY valid JSON:
 {
