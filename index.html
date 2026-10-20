@@ -1468,79 +1468,76 @@
        CANVA BACKGROUND ARCHITECTURES (RECREATED FROM SCREENSHOT 1)
        ========================================================================== */
 
-    // ARCHETYPE 1: PROCEDURAL FLUID WAVES (Randomized Styles on Every Roll - No Fixed Coordinates)
+    // ARCHETYPE 1: MACRO FLUID CORNER BLOCKS (Big 380px - 520px Shapes like Freezer Bags & Dresses)
     function drawOrganicWavesBackground(ctx, pal, hash) {
       ctx.save();
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Randomly choose 1 of 4 distinct fluid wave architectures based on hash
-      const waveStyle = (hash % 4);
+      // Randomize which corner anchors the macro shape
+      const cornerPick = (hash % 4);
 
-      if (waveStyle === 0) {
-        // Style A: Sweeping Bottom Wave Band (Community Coffee Style)
+      if (cornerPick === 0) {
+        // Style A: Giant Top-Right Macro Wave (Sweater Dresses Style)
+        ctx.fillStyle = pal.accent;
+        ctx.beginPath();
+        ctx.moveTo(1080, 0); ctx.lineTo(520, 0);
+        ctx.bezierCurveTo(620, 380, 840, 580, 1080, 540);
+        ctx.closePath(); ctx.fill();
+
+        // Opposing Bottom-Left Wave
+        ctx.fillStyle = pal.accent2 || pal.brightPop;
+        ctx.globalAlpha = 0.70;
+        ctx.beginPath();
+        ctx.moveTo(0, 1080); ctx.lineTo(0, 700);
+        ctx.bezierCurveTo(300, 760, 460, 980, 420, 1080);
+        ctx.closePath(); ctx.fill();
+      }
+      else if (cornerPick === 1) {
+        // Style B: Giant Top-Left Macro Wave (Freezer Bags Style)
+        ctx.fillStyle = pal.accent;
+        ctx.beginPath();
+        ctx.moveTo(0, 0); ctx.lineTo(540, 0);
+        ctx.bezierCurveTo(480, 340, 240, 500, 0, 560);
+        ctx.closePath(); ctx.fill();
+
+        ctx.fillStyle = pal.accent2 || pal.brightPop;
+        ctx.globalAlpha = 0.68;
+        ctx.beginPath();
+        ctx.moveTo(1080, 1080); ctx.lineTo(580, 1080);
+        ctx.bezierCurveTo(650, 800, 880, 640, 1080, 580);
+        ctx.closePath(); ctx.fill();
+      }
+      else if (cornerPick === 2) {
+        // Style C: Sweeping Full Bottom Dune Wave (Community Coffee Style)
         ctx.fillStyle = pal.accent;
         ctx.beginPath();
         ctx.moveTo(0, 1080); ctx.lineTo(0, 720);
-        ctx.bezierCurveTo(340, 620, 720, 960, 1080, 780);
+        ctx.bezierCurveTo(320, 620, 720, 940, 1080, 740);
         ctx.lineTo(1080, 1080);
         ctx.closePath(); ctx.fill();
 
-        // Secondary offset ripple
         ctx.fillStyle = pal.accent2 || pal.brightPop;
-        ctx.globalAlpha = 0.72;
+        ctx.globalAlpha = 0.62;
         ctx.beginPath();
-        ctx.moveTo(0, 1080); ctx.lineTo(0, 840);
-        ctx.bezierCurveTo(380, 780, 740, 1020, 1080, 900);
+        ctx.moveTo(0, 1080); ctx.lineTo(0, 850);
+        ctx.bezierCurveTo(360, 780, 750, 1010, 1080, 870);
         ctx.lineTo(1080, 1080);
         ctx.closePath(); ctx.fill();
       }
-      else if (waveStyle === 1) {
-        // Style B: Asymmetric Side Fluid Puddle (Sweater Dresses Style)
+      else {
+        // Style D: Asymmetric Dual Diagonal Arch Waves
         ctx.fillStyle = pal.accent;
         ctx.beginPath();
-        ctx.moveTo(1080, 0); ctx.lineTo(600, 0);
-        ctx.bezierCurveTo(680, 360, 880, 540, 1080, 480);
+        ctx.moveTo(0, 0); ctx.lineTo(0, 540);
+        ctx.bezierCurveTo(360, 480, 600, 220, 700, 0);
         ctx.closePath(); ctx.fill();
 
         ctx.fillStyle = pal.accent2 || pal.brightPop;
         ctx.globalAlpha = 0.65;
         ctx.beginPath();
-        ctx.moveTo(0, 1080); ctx.lineTo(0, 740);
-        ctx.bezierCurveTo(240, 780, 420, 960, 380, 1080);
-        ctx.closePath(); ctx.fill();
-      }
-      else if (waveStyle === 2) {
-        // Style C: Multi-Layered Undulating Dune Bands (Screenshot 2, bottom-right)
-        const col1 = pal.accent, col2 = pal.accent2 || pal.brightPop;
-        ctx.fillStyle = col1;
-        ctx.beginPath();
-        ctx.moveTo(0, 1080); ctx.lineTo(0, 820);
-        ctx.bezierCurveTo(280, 740, 620, 920, 1080, 800);
-        ctx.lineTo(1080, 1080);
-        ctx.closePath(); ctx.fill();
-
-        ctx.fillStyle = col2;
-        ctx.globalAlpha = 0.55;
-        ctx.beginPath();
-        ctx.moveTo(0, 1080); ctx.lineTo(0, 910);
-        ctx.bezierCurveTo(340, 860, 720, 980, 1080, 890);
-        ctx.lineTo(1080, 1080);
-        ctx.closePath(); ctx.fill();
-      }
-      else {
-        // Style D: Top Arching Color Flow
-        ctx.fillStyle = pal.accent;
-        ctx.beginPath();
-        ctx.moveTo(0, 0); ctx.lineTo(0, 480);
-        ctx.bezierCurveTo(320, 420, 580, 180, 680, 0);
-        ctx.closePath(); ctx.fill();
-
-        ctx.fillStyle = pal.accent2 || pal.brightPop;
-        ctx.globalAlpha = 0.60;
-        ctx.beginPath();
-        ctx.moveTo(1080, 1080); ctx.lineTo(760, 1080);
-        ctx.bezierCurveTo(790, 860, 940, 740, 1080, 720);
+        ctx.moveTo(1080, 1080); ctx.lineTo(680, 1080);
+        ctx.bezierCurveTo(740, 840, 930, 700, 1080, 680);
         ctx.closePath(); ctx.fill();
       }
 
@@ -1741,19 +1738,19 @@
       ctx.restore();
     }
 
-    // 1. Corner Framing Botanical Vine (Screenshot 3, top-right)
+    // 1. Tall Framing Botanical Leaf Runner (Mid-Scale: 180px - 260px, wrapping margin naturally)
     function drawCornerFoliageVine(ctx, color) {
       ctx.save();
-      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.4;
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 2.6;
       ctx.beginPath();
-      ctx.moveTo(-100, 0);
-      ctx.quadraticCurveTo(0, 45, 90, 90);
+      ctx.moveTo(-130, 0);
+      ctx.quadraticCurveTo(-10, 60, 120, 130);
       ctx.stroke();
 
-      // Delicate leaves along the curved branch
-      [[-80, 5, -0.6], [-40, 20, -0.3], [0, 42, 0.2], [45, 68, 0.6], [85, 95, 0.9]].forEach(([lx, ly, rot]) => {
+      // Generous, prominent leaves curling along the margin
+      [[-110, 8, -0.65], [-70, 26, -0.35], [-25, 52, 0.15], [25, 82, 0.55], [75, 115, 0.85], [115, 135, 1.1]].forEach(([lx, ly, rot]) => {
         ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
-        ctx.beginPath(); ctx.ellipse(0, 0, 18, 8, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(0, 0, 22, 9, 0, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
       });
       ctx.restore();
@@ -1873,7 +1870,7 @@
       drawWashiTape(ctx, 6, 4, 130, 30, 0.32, color2 || "rgba(240, 225, 205, 0.78)");
     }
 
-    // 10. Complete Canva Vector Engine (Screenshots 2 & 3 - Framing Mat Borders Visibly)
+    // 10. MULTI-SCALE SCATTER ENGINE (STRICT 70% CENTER EXCLUSION ZONE)
     function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
       let seed = hash + cardNum * 9187;
       function nextRandom() {
@@ -1881,42 +1878,70 @@
         return seed / 233280;
       }
 
-      // Catalog of 8 distinct visual assets directly from Screenshots 2 & 3
-      const stamps = ['arches', 'brush_lines', 'starburst', 'vine', 'crossed_tape', 'wildflower', 'stipple', 'topographic'];
-      const count = 2 + Math.floor(nextRandom() * 2); // 2 to 3 prominent elements per card
-
-      // Framing anchor positions that wrap visibly around the outside edges of the product mat
-      const zones = [
-        { x: 120 + nextRandom() * 90, y: 130 + nextRandom() * 90 },  // Top-Left Outer Corner
-        { x: 920 - nextRandom() * 90, y: 130 + nextRandom() * 90 },  // Top-Right Outer Corner
-        { x: 120 + nextRandom() * 90, y: 840 + nextRandom() * 80 },  // Bottom-Left Outer Flank
-        { x: 920 - nextRandom() * 90, y: 840 + nextRandom() * 80 }   // Bottom-Right Outer Flank
+      // Outer 30% Perimeter Collar Anchors (Center 70% [x: 180-900, y: 150-880] is strictly forbidden!)
+      const cornerZones = [
+        { x: 75 + nextRandom() * 55,   y: 80 + nextRandom() * 55,   rot: 0 },             // Top-Left Corner
+        { x: 1005 - nextRandom() * 55, y: 80 + nextRandom() * 55,   rot: Math.PI / 2 },   // Top-Right Corner
+        { x: 75 + nextRandom() * 55,   y: 995 - nextRandom() * 55,  rot: -Math.PI / 2 },  // Bottom-Left Corner
+        { x: 1005 - nextRandom() * 55, y: 995 - nextRandom() * 55,  rot: Math.PI }        // Bottom-Right Corner
       ];
-      const shuffledZones = shuffleArray(zones);
 
-      for (let i = 0; i < count; i++) {
+      const flankZones = [
+        { x: 60 + nextRandom() * 35,   y: 430 + nextRandom() * 160, rot: -0.15 }, // Outer Left Flank
+        { x: 1020 - nextRandom() * 35, y: 430 + nextRandom() * 160, rot: 0.15 }   // Outer Right Flank
+      ];
+
+      const shuffledCorners = shuffleArray(cornerZones);
+      const shuffledFlanks = shuffleArray(flankZones);
+
+      // =========================================================================
+      // TIER 2: MID-SCALE FRAMING RUNNER (150px - 260px) - Bold leaf vine or boho arch
+      // =========================================================================
+      ctx.save();
+      const runnerPos = shuffledCorners[0];
+      const runnerPick = nextRandom();
+      const colPrimary = accent;
+
+      ctx.translate(runnerPos.x, runnerPos.y);
+      ctx.rotate(runnerPos.rot + (nextRandom() * 0.3 - 0.15));
+      ctx.scale(1.15, 1.15); // Large, proud framing scale
+
+      if (runnerPick > 0.40) {
+        drawCornerFoliageVine(ctx, colPrimary);
+      } else if (runnerPick > 0.20) {
+        drawConcentricArches(ctx, colPrimary);
+      } else {
+        drawParallelBrushStrokes(ctx, colPrimary);
+      }
+      ctx.restore();
+
+      // =========================================================================
+      // TIER 2B: SECONDARY FLANK RUNNER (Optional tall line art along outer margin)
+      // =========================================================================
+      if (nextRandom() > 0.35) {
         ctx.save();
-        const pos = shuffledZones[i];
-        const type = stamps[(Math.floor(nextRandom() * stamps.length) + i) % stamps.length];
-        const rot = (nextRandom() * 1.1 - 0.55); // Organic tilt (-30° to +30°)
-        const scale = 0.82 + nextRandom() * 0.38; // Clean, visible scale (0.82x to 1.2x)
-        const col = (i % 2 === 0) ? accent : (brightPop || accent);
-
-        ctx.translate(pos.x, pos.y);
-        ctx.rotate(rot);
-        ctx.scale(scale, scale);
-
-        if (type === 'arches') drawConcentricArches(ctx, col);
-        else if (type === 'brush_lines') drawParallelBrushStrokes(ctx, col);
-        else if (type === 'starburst') drawElongatedStarburst(ctx, col);
-        else if (type === 'vine') drawCornerFoliageVine(ctx, col);
-        else if (type === 'crossed_tape') drawCrossedWashiTape(ctx, accent, brightPop);
-        else if (type === 'wildflower') drawMinimalistWildflower(ctx, col);
-        else if (type === 'stipple') drawStippleClusters(ctx, col);
-        else drawTopographicContour(ctx, col);
-
+        const flankPos = shuffledFlanks[0];
+        ctx.translate(flankPos.x, flankPos.y);
+        ctx.rotate(flankPos.rot);
+        if (nextRandom() > 0.5) drawTopographicContour(ctx, brightPop || accent);
+        else drawMinimalistWildflower(ctx, accent);
         ctx.restore();
       }
+
+      // =========================================================================
+      // TIER 3: MICRO FINISHING ACCENTS (25px - 55px) - Starbursts & Stipple Dots
+      // =========================================================================
+      ctx.save();
+      const starPos = shuffledCorners[1];
+      ctx.translate(starPos.x, starPos.y);
+      drawElongatedStarburst(ctx, brightPop || accent);
+      ctx.restore();
+
+      ctx.save();
+      const dotPos = shuffledCorners[2];
+      ctx.translate(dotPos.x, dotPos.y);
+      drawStippleClusters(ctx, accent);
+      ctx.restore();
     }
     /* ==========================================================================
        MAIN CARD COMPOSITOR: AUTHENTIC CANVA STAGING & SAFE PADDING
