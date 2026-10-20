@@ -623,22 +623,26 @@
         let hsl2 = (maxScore2 > 0) ? rgbToHsl(r2, g2, b2) : { h: (h1 + 160) % 360, s: 65, l: 45 };
         const h2 = hsl2.h;
 
+        // Sophisticated Muted Boutique Calibration (No harsh neon saturation)
+        const mutedSat1 = Math.min(hsl1.s, 48); // Clamped to max 48% saturation
+        const mutedSat2 = Math.min(hsl2.s, 44); // Clamped to max 44% saturation
+
         return {
           h: h1,
           h2: h2,
-          // Airy, high-key pastel wash
-          bg: `hsl(${h1}, 24%, 96%)`,
-          bgSecondary: `hsl(${h2}, 28%, 92%)`,
-          // Primary Hero Accent (e.g. Burnt Orange)
-          accent: `hsl(${h1}, 75%, 44%)`,
-          // Secondary Contrasting Accent (e.g. Deep Teal)
-          accent2: `hsl(${h2}, 70%, 38%)`,
-          // Warm bright pop
-          brightPop: `hsl(${(h1 + 25) % 360}, 80%, 54%)`,
-          // Deep tinted charcoal
-          text: `hsl(${h1}, 32%, 14%)`,
+          // Airy, soft muted wash
+          bg: `hsl(${h1}, 18%, 96%)`,
+          bgSecondary: `hsl(${h2}, 22%, 92%)`,
+          // Primary Muted Accent (e.g. Soft Terracotta, Dusty Navy, Muted Sage)
+          accent: `hsl(${h1}, ${mutedSat1}%, 42%)`,
+          // Secondary Muted Accent (e.g. Slate Teal, Dusty Olive, Warm Clay)
+          accent2: `hsl(${h2}, ${mutedSat2}%, 38%)`,
+          // Warm Softened Glow (Soft Butter/Amber)
+          brightPop: `hsl(${(h1 + 20) % 360}, ${Math.min(mutedSat1 + 10, 56)}%, 52%)`,
+          // Muted Charcoal Ink (Tinted with product tone)
+          text: `hsl(${h1}, 24%, 16%)`,
           paper: "#FAF8F5",
-          vignette: `hsla(${h1}, 35%, 15%, 0.16)`
+          vignette: `hsla(${h1}, 25%, 15%, 0.14)`
         };
       } catch (e) {
         return getDefaultPalette();
@@ -649,14 +653,14 @@
       return {
         h: 28,
         h2: 175,
-        bg: "#FAF6F5",
-        bgSecondary: "#EBF3F2",
-        accent: "#C27847",
-        accent2: "#1F7A7A",
-        brightPop: "#E09852",
-        text: "#241D1A",
+        bg: "#FAF7F5",
+        bgSecondary: "#ECF1F0",
+        accent: "#A86D48",
+        accent2: "#336B6B",
+        brightPop: "#C98E58",
+        text: "#2B2320",
         paper: "#FAF8F5",
-        vignette: "rgba(40, 25, 15, 0.16)"
+        vignette: "rgba(40, 25, 15, 0.14)"
       };
     }
 
@@ -835,10 +839,21 @@
           document.getElementById('suggestedTitleInput').value = "";
           document.getElementById('aiChipsWrapper').classList.add('hidden');
 
-          generateProceduralDeck();
+          // Hard State Wipe: Immediately clear previous deal text on all 4 cards
           for (let i = 1; i <= 4; i++) {
-            cardCustoms[i].badgePos = null; cardCustoms[i].notePos = null; cardCustoms[i].subPos = null; cardCustoms[i].productPos = null;
+            cardCustoms[i].note = "";
+            cardCustoms[i].val = "";
+            cardCustoms[i].subNote = "";
+            cardCustoms[i].badgePos = null; 
+            cardCustoms[i].notePos = null; 
+            cardCustoms[i].subPos = null; 
+            cardCustoms[i].productPos = null;
           }
+          document.getElementById('mainNoteInput').value = "";
+          document.getElementById('simpleValueInput').value = "";
+          document.getElementById('subNoteInput').value = "";
+
+          generateProceduralDeck();
 
           try {
             const maxDim = 1024;
@@ -1421,29 +1436,55 @@
       ctx.restore();
     }
 
-    // ARCHETYPE 3: PASTEL TOPOGRAPHIC & STIPPLE CONFETTI (Nature Made Vitamins)
-    function drawWatercolorBloomBackground(ctx, pal) {
+    // Procedural Asymmetric Fluid Amoeba Puddle (Screenshots 2 & 3)
+    function drawFluidOrganicBlob(ctx, cx, cy, r, color, alpha) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      // Organic undulating bezier perimeter (not a rigid mathematical circle)
+      ctx.moveTo(cx, cy - r);
+      ctx.bezierCurveTo(cx + r * 1.15, cy - r * 1.25, cx + r * 1.35, cy + r * 0.15, cx + r * 0.9, cy + r * 0.85);
+      ctx.bezierCurveTo(cx + r * 0.55, cy + r * 1.25, cx - r * 0.65, cy + r * 1.15, cx - r * 0.95, cy + r * 0.6);
+      ctx.bezierCurveTo(cx - r * 1.35, cy - r * 0.15, cx - r * 1.05, cy - r * 0.9, cx, cy - r);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // ARCHETYPE 3: DYNAMIC PASTEL TOPOGRAPHIC & FLUID BLOBS (Absolute Variety)
+    function drawWatercolorBloomBackground(ctx, pal, hash) {
       ctx.save();
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Large organic fluid watercolor puddles in photo colors
-      ctx.fillStyle = pal.brightPop || pal.accent; ctx.globalAlpha = 0.32;
-      ctx.beginPath();
-      ctx.arc(880, 220, 240, 0, Math.PI * 2);
-      ctx.fill();
+      // Procedural Coordinates & Radii (Dynamically moving and morphing on every roll)
+      const blob1X = 200 + (hash % 640);
+      const blob1Y = 160 + ((hash * 3) % 260);
+      const blob1R = 190 + (hash % 90);
 
-      ctx.fillStyle = pal.accent2 || pal.bgSecondary; ctx.globalAlpha = 0.28;
-      ctx.beginPath();
-      ctx.arc(180, 860, 260, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalAlpha = 1.0;
+      const blob2X = 180 + ((hash * 7) % 680);
+      const blob2Y = 680 + ((hash * 11) % 240);
+      const blob2R = 210 + ((hash * 5) % 90);
 
-      // Topographic contour lines with nodes (Screenshot 2)
-      ctx.translate(220, 240);
+      // Morphing Fluid Blobs in Muted Photo Tones
+      drawFluidOrganicBlob(ctx, blob1X, blob1Y, blob1R, pal.brightPop || pal.accent, 0.28);
+      drawFluidOrganicBlob(ctx, blob2X, blob2Y, blob2R, pal.accent2 || pal.bgSecondary, 0.25);
+
+      // Topographic contour lines with nodes (Screenshots 2 & 3)
+      ctx.save();
+      const topoX = 180 + ((hash * 13) % 400);
+      const topoY = 220 + ((hash * 17) % 300);
+      ctx.translate(topoX, topoY);
       drawTopographicContour(ctx, pal.accent);
-      ctx.translate(620, 520);
+      ctx.restore();
+
+      // Stipple speckle cluster framing
+      ctx.save();
+      ctx.translate(860, 780);
       drawStippleClusters(ctx, pal.accent2 || pal.accent);
+      ctx.restore();
+
       ctx.restore();
     }
 
@@ -1759,17 +1800,18 @@
       // 2. SCATTER DECORATORS (3 to 4 elements, strictly max 2 of same)
       renderScatterDecorators(ctx, hash, pal.accent, pal.brightPop, cardNum);
 
-      // 3. PRODUCT STAGING & PROPORTIONAL HERO SIZING (75% - 85% Scale)
+      // 3. PRODUCT STAGING: EXACT 70% – 80% CANVAS SCALE
       const pScale = conf.pScale || 1.0;
       const px = conf.productPos ? conf.productPos.x : 540;
-      const py = conf.productPos ? conf.productPos.y : 455;
+      // Positioned slightly higher (438px) to give the larger headline room across the bottom
+      const py = conf.productPos ? conf.productPos.y : (conf.layoutMode === "top_note_bottom_badge" ? 485 : 438);
 
       const imgW = srcCanvas.width || srcCanvas.naturalWidth || 800;
       const imgH = srcCanvas.height || srcCanvas.naturalHeight || 800;
       const ratio = imgW / imgH;
 
-      // Prominent, confident product sizing (75% to 85% of canvas area)
-      const maxW = 750 * pScale, maxH = 680 * pScale;
+      // Calibrated: 760px height (70.4%) up to 820px width (75.9%)
+      const maxW = 820 * pScale, maxH = 760 * pScale;
       let drawW, drawH;
 
       if (ratio > (maxW / maxH)) {
@@ -1891,25 +1933,28 @@
 
       ctx.restore();
 
-      // 4. MAIN AFFIRMATION HEADLINE (EDGE-AWARE & AUTO-BALANCING)
+      // 4. MAIN AFFIRMATION HEADLINE (BOOSTED 45px–52px FOR MOBILE IMPACT)
       if (note && !(conf.archetype === "polaroid" && conf.layoutMode === "polaroid_caption")) {
         ctx.save();
         const nx = conf.notePos ? conf.notePos.x : 540;
         
-        // Counterweight Placement based on Card's Layout Mode
-        let ny = conf.notePos ? conf.notePos.y : 920;
+        // Positioned with safe vertical padding
+        let ny = conf.notePos ? conf.notePos.y : 935;
         if (conf.layoutMode === "top_note_bottom_badge") {
-          ny = conf.notePos ? conf.notePos.y : 125;
+          ny = conf.notePos ? conf.notePos.y : 120;
         }
 
         const nScale = conf.nScale || 1.0;
-        let fontSize = Math.round(33 * nScale);
-        if (note.length > 40) fontSize = Math.round(27 * nScale);
-        if (note.length > 55) fontSize = Math.round(23 * nScale);
+        
+        // Boosted base size: 46px for standard fonts, 52px for script (Caveat) so cursive looks bold
+        const isScript = conf.font === "handwritten";
+        let fontSize = Math.round((isScript ? 52 : 46) * nScale);
+        if (note.length > 35) fontSize = Math.round((isScript ? 44 : 38) * nScale);
+        if (note.length > 50) fontSize = Math.round((isScript ? 38 : 32) * nScale);
 
         ctx.font = `800 ${fontSize}px ${font}`;
 
-        const safeMaxWidth = 840;
+        const safeMaxWidth = 860;
         const words = note.split(" ");
         let lines = [];
         let currentLine = words[0] || "";
@@ -1925,10 +1970,10 @@
         }
         lines.push(currentLine);
 
-        const lineHeight = Math.round(fontSize * 1.34);
+        const lineHeight = Math.round(fontSize * 1.30);
         const totalTextHeight = lines.length * lineHeight;
         const maxMeasuredWidth = Math.max(...lines.map(l => ctx.measureText(l).width));
-        const boxW = Math.min(880, maxMeasuredWidth + 52);
+        const boxW = Math.min(900, maxMeasuredWidth + 56);
         const boxH = totalTextHeight + 28;
 
         conf._activeNoteBox = { x: nx - boxW/2, y: ny - boxH/2, w: boxW, h: boxH };
