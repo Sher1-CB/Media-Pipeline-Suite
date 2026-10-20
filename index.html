@@ -1384,31 +1384,82 @@
        CANVA BACKGROUND ARCHITECTURES (RECREATED FROM SCREENSHOT 1)
        ========================================================================== */
 
-    // ARCHETYPE 1: THE RETRO 70s FLUID WAVES (Community Coffee & Freezer Bags)
+    // ARCHETYPE 1: PROCEDURAL FLUID WAVES (Randomized Styles on Every Roll - No Fixed Coordinates)
     function drawOrganicWavesBackground(ctx, pal, hash) {
       ctx.save();
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Sweeping Curved Color Block Wave 1 (Photo Primary Accent)
-      ctx.fillStyle = pal.accent;
-      ctx.beginPath();
-      ctx.moveTo(0, 0); ctx.lineTo(540, 0);
-      ctx.bezierCurveTo(480, 300, 240, 480, 0, 560);
-      ctx.closePath();
-      ctx.fill();
+      // Randomly choose 1 of 4 distinct fluid wave architectures based on hash
+      const waveStyle = (hash % 4);
 
-      // Sweeping Curved Color Block Wave 2 (Photo Contrasting Secondary Accent)
-      ctx.fillStyle = pal.accent2 || pal.brightPop;
-      ctx.beginPath();
-      ctx.moveTo(1080, 1080); ctx.lineTo(580, 1080);
-      ctx.bezierCurveTo(640, 780, 860, 620, 1080, 540);
-      ctx.closePath();
-      ctx.fill();
+      if (waveStyle === 0) {
+        // Style A: Sweeping Bottom Wave Band (Community Coffee Style)
+        ctx.fillStyle = pal.accent;
+        ctx.beginPath();
+        ctx.moveTo(0, 1080); ctx.lineTo(0, 720);
+        ctx.bezierCurveTo(340, 620, 720, 960, 1080, 780);
+        ctx.lineTo(1080, 1080);
+        ctx.closePath(); ctx.fill();
 
-      // Framing Botanical Vine in top-right corner
-      ctx.translate(980, 90);
-      drawCornerFoliageVine(ctx, pal.accent2 || pal.accent);
+        // Secondary offset ripple
+        ctx.fillStyle = pal.accent2 || pal.brightPop;
+        ctx.globalAlpha = 0.72;
+        ctx.beginPath();
+        ctx.moveTo(0, 1080); ctx.lineTo(0, 840);
+        ctx.bezierCurveTo(380, 780, 740, 1020, 1080, 900);
+        ctx.lineTo(1080, 1080);
+        ctx.closePath(); ctx.fill();
+      }
+      else if (waveStyle === 1) {
+        // Style B: Asymmetric Side Fluid Puddle (Sweater Dresses Style)
+        ctx.fillStyle = pal.accent;
+        ctx.beginPath();
+        ctx.moveTo(1080, 0); ctx.lineTo(600, 0);
+        ctx.bezierCurveTo(680, 360, 880, 540, 1080, 480);
+        ctx.closePath(); ctx.fill();
+
+        ctx.fillStyle = pal.accent2 || pal.brightPop;
+        ctx.globalAlpha = 0.65;
+        ctx.beginPath();
+        ctx.moveTo(0, 1080); ctx.lineTo(0, 740);
+        ctx.bezierCurveTo(240, 780, 420, 960, 380, 1080);
+        ctx.closePath(); ctx.fill();
+      }
+      else if (waveStyle === 2) {
+        // Style C: Multi-Layered Undulating Dune Bands (Screenshot 2, bottom-right)
+        const col1 = pal.accent, col2 = pal.accent2 || pal.brightPop;
+        ctx.fillStyle = col1;
+        ctx.beginPath();
+        ctx.moveTo(0, 1080); ctx.lineTo(0, 820);
+        ctx.bezierCurveTo(280, 740, 620, 920, 1080, 800);
+        ctx.lineTo(1080, 1080);
+        ctx.closePath(); ctx.fill();
+
+        ctx.fillStyle = col2;
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath();
+        ctx.moveTo(0, 1080); ctx.lineTo(0, 910);
+        ctx.bezierCurveTo(340, 860, 720, 980, 1080, 890);
+        ctx.lineTo(1080, 1080);
+        ctx.closePath(); ctx.fill();
+      }
+      else {
+        // Style D: Top Arching Color Flow
+        ctx.fillStyle = pal.accent;
+        ctx.beginPath();
+        ctx.moveTo(0, 0); ctx.lineTo(0, 480);
+        ctx.bezierCurveTo(320, 420, 580, 180, 680, 0);
+        ctx.closePath(); ctx.fill();
+
+        ctx.fillStyle = pal.accent2 || pal.brightPop;
+        ctx.globalAlpha = 0.60;
+        ctx.beginPath();
+        ctx.moveTo(1080, 1080); ctx.lineTo(760, 1080);
+        ctx.bezierCurveTo(790, 860, 940, 740, 1080, 720);
+        ctx.closePath(); ctx.fill();
+      }
+
       ctx.restore();
     }
 
@@ -1732,7 +1783,13 @@
       ctx.restore();
     }
 
-    // 10. Dynamic Perimeter Anchor Engine (Screenshots 2 & 3 - ZERO Hardcoded Coordinates)
+    // 9. Crossed Layered Translucent Washi Strips (Screenshot 3, center)
+    function drawCrossedWashiTape(ctx, color1, color2) {
+      drawWashiTape(ctx, 0, -4, 140, 32, -0.38, color1 || "rgba(225, 210, 190, 0.88)");
+      drawWashiTape(ctx, 6, 4, 130, 30, 0.32, color2 || "rgba(240, 225, 205, 0.78)");
+    }
+
+    // 10. Complete Canva Vector Engine (Screenshots 2 & 3 - Framing Mat Borders Visibly)
     function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
       let seed = hash + cardNum * 9187;
       function nextRandom() {
@@ -1740,36 +1797,39 @@
         return seed / 233280;
       }
 
-      const stamps = ['vine', 'brush_lines', 'starburst', 'stipple', 'arches', 'wildflower'];
-      const count = 2 + Math.floor(nextRandom() * 2); // 2 to 3 dynamic accents
+      // Catalog of 8 distinct visual assets directly from Screenshots 2 & 3
+      const stamps = ['arches', 'brush_lines', 'starburst', 'vine', 'crossed_tape', 'wildflower', 'stipple', 'topographic'];
+      const count = 2 + Math.floor(nextRandom() * 2); // 2 to 3 prominent elements per card
 
-      // 4 Dynamic perimeter zones with organic position jitter (+/- 80px)
+      // Framing anchor positions that wrap visibly around the outside edges of the product mat
       const zones = [
-        { x: 130 + nextRandom() * 80, y: 130 + nextRandom() * 80 },  // Top-Left Zone
-        { x: 910 - nextRandom() * 80, y: 130 + nextRandom() * 80 },  // Top-Right Zone
-        { x: 130 + nextRandom() * 80, y: 910 - nextRandom() * 80 },  // Bottom-Left Zone
-        { x: 910 - nextRandom() * 80, y: 910 - nextRandom() * 80 }   // Bottom-Right Zone
+        { x: 120 + nextRandom() * 90, y: 130 + nextRandom() * 90 },  // Top-Left Outer Corner
+        { x: 920 - nextRandom() * 90, y: 130 + nextRandom() * 90 },  // Top-Right Outer Corner
+        { x: 120 + nextRandom() * 90, y: 840 + nextRandom() * 80 },  // Bottom-Left Outer Flank
+        { x: 920 - nextRandom() * 90, y: 840 + nextRandom() * 80 }   // Bottom-Right Outer Flank
       ];
       const shuffledZones = shuffleArray(zones);
 
       for (let i = 0; i < count; i++) {
         ctx.save();
         const pos = shuffledZones[i];
-        const type = stamps[Math.floor(nextRandom() * stamps.length)];
-        const rot = (nextRandom() * 1.2 - 0.6); // Randomized tilt (-35° to +35°)
-        const scale = 0.75 + nextRandom() * 0.35; // Randomized scale (0.75x to 1.1x)
-        const col = (i % 2 === 0) ? accent : brightPop;
+        const type = stamps[(Math.floor(nextRandom() * stamps.length) + i) % stamps.length];
+        const rot = (nextRandom() * 1.1 - 0.55); // Organic tilt (-30° to +30°)
+        const scale = 0.82 + nextRandom() * 0.38; // Clean, visible scale (0.82x to 1.2x)
+        const col = (i % 2 === 0) ? accent : (brightPop || accent);
 
         ctx.translate(pos.x, pos.y);
         ctx.rotate(rot);
         ctx.scale(scale, scale);
 
-        if (type === 'vine') drawCornerFoliageVine(ctx, col);
+        if (type === 'arches') drawConcentricArches(ctx, col);
         else if (type === 'brush_lines') drawParallelBrushStrokes(ctx, col);
         else if (type === 'starburst') drawElongatedStarburst(ctx, col);
+        else if (type === 'vine') drawCornerFoliageVine(ctx, col);
+        else if (type === 'crossed_tape') drawCrossedWashiTape(ctx, accent, brightPop);
+        else if (type === 'wildflower') drawMinimalistWildflower(ctx, col);
         else if (type === 'stipple') drawStippleClusters(ctx, col);
-        else if (type === 'arches') drawConcentricArches(ctx, col);
-        else drawMinimalistWildflower(ctx, col);
+        else drawTopographicContour(ctx, col);
 
         ctx.restore();
       }
@@ -1803,10 +1863,7 @@
       ctx.fillStyle = vigGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // 2. SCATTER DECORATORS (3 to 4 elements, strictly max 2 of same)
-      renderScatterDecorators(ctx, hash, pal.accent, pal.brightPop, cardNum);
-
-      // 3. PRODUCT STAGING: EXACT 70% – 80% CANVAS SCALE
+      // 2. PRODUCT STAGING: EXACT 70% – 80% CANVAS SCALE
       const pScale = conf.pScale || 1.0;
       const px = conf.productPos ? conf.productPos.x : 540;
       // Positioned slightly higher (438px) to give the larger headline room across the bottom
@@ -1938,6 +1995,9 @@
       }
 
       ctx.restore();
+
+      // 3. SCATTER DECORATORS (DRAWN OVER & AROUND MAT BORDERS - NEVER BURIED)
+      renderScatterDecorators(ctx, hash, pal.accent, pal.brightPop, cardNum);
 
       // 4. MAIN AFFIRMATION HEADLINE (BOOSTED 45px–52px FOR MOBILE IMPACT)
       if (note && !(conf.archetype === "polaroid" && conf.layoutMode === "polaroid_caption")) {
