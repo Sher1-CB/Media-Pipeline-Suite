@@ -3011,12 +3011,12 @@ Execute this 2-step curation process:
 STEP 1: PRODUCT CLASSIFICATION
 Identify what this product actually is (e.g. Women's Pajamas/Apparel, Car Detailing, Kitchenware, Snack, Tech Gadget, Hair Care).
 
-STEP 2: COMPOSE 6 FRESH, 100% ORIGINAL SHOPPER HEADLINES
+STEP 2: COMPOSE 8 FRESH, 100% ORIGINAL SHOPPER HEADLINES
 Every headline must be crafted from scratch using the product's actual function, nouns, and verbs.
 
 ${tenseGuidance}
 
-Distribute these 4 distinct psychological angles across the 6 headlines:
+Distribute these 4 distinct psychological angles across the 8 headlines (produce 2 variations of each angle):
 - Angle 1 (Tense-Specific Hook): Follow the Voice & Tense guidance above.
 - Angle 2 (Sensory Experience): Describe the physical texture, crunch, finish, or mechanism of THIS exact item.
 - Angle 3 (Household Routine): Where this item actually lives in a real routine (e.g. bedside nightstand, pantry snack stash, shower rack, glove box).
@@ -3025,26 +3025,17 @@ Distribute these 4 distinct psychological angles across the 6 headlines:
 CRITICAL RULES:
 1. NO BORING CLICHÉS: Do NOT repeat the exact phrase "on repeat" or "living in this". Write original, conversational copy for this specific item.
 2. CATEGORY INTEGRITY: Never mix categories (never mention food for clothes; never mention hair for kitchenware; never mention bedrooms for tools).
-3. ZERO BLACKLIST: NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or checkout terms ("buy", "bought", "order", "ordered", "purchase", "purchased", "price", "sale", "discount", "save", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "cart", "link").
-4. FACTUAL SPEC TAGS ONLY: Provide 6 bold, uppercase specs derived ONLY from counts, sizes, pack quantities, or materials in the text (e.g. "SIZES S - XXL", "BUTTON DOWN SET", "32-PACK BUNDLE"). NEVER invent unverified claims ("organic", "medical grade", "artisan", "handcrafted").
-5. SHORT & PUNCHY: Keep headlines under 5 to 8 words. 1 natural emoji per headline is allowed.
-
-2. CATEGORY INTEGRITY:
-   - Stay strictly inside the product's actual domain. Never mention food/pantry for car kits, never mention hair/skin for snacks, never mention bedrooms for tools.
-
-3. STRICT ZERO BLACKLIST:
-   - NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or commercial checkout terms ("buy", "bought", "order", "ordered", "purchase", "purchased", "price", "sale", "discount", "save", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "cart", "link").
-
-4. FACTUAL SPEC TAGS ONLY:
-   - Provide 6 bold, uppercase specs derived ONLY from counts, sizes, pack quantities, or materials in the text (e.g. "17-PIECE SET", "28 FL OZ", "SIZES S - XXL", "32-PACK BUNDLE"). NEVER invent unverified claims ("organic", "medical grade", "artisan", "handcrafted").
-
+3. STRICT ZERO BLACKLIST: NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or checkout terms ("buy", "bought", "order", "ordered", "purchase", "purchased", "price", "sale", "discount", "save", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "cart", "link").
+4. FACTUAL SPEC TAGS ONLY (UNIFIED SIZE RANGES):
+   - KEEP SIZE RANGES TOGETHER: When size ranges are given (e.g. "XS - 3XL" or "S - XXL"), ALWAYS keep the full range intact (e.g. "SIZES XS - 3XL", "XS THROUGH 3XL", "FULL SIZE RUN"). NEVER break a range down into individual single sizes like "SMALL", "MEDIUM", or "XS", as shoppers will assume the deal is only for that one size!
+   - Provide 8 bold, uppercase specs derived strictly from counts, sizes, pack quantities, color options, or materials in the text (e.g. "SIZES XS - 3XL", "SEVERAL COLORS", "COLOR CHOICES", "FULL SIZE RUN", "2-PIECE SET", "MULTIPLE COLORS", "WARDROBE STAPLE", "COMMUNITY FAVORITE"). NEVER invent unverified claims ("organic", "medical grade", "artisan", "handcrafted").
 5. SHORT & PUNCHY: Keep headlines under 5 to 8 words. 1 natural emoji per headline is allowed.
 
 Return ONLY valid JSON:
 {
-  "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6"],
-  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6"]
-}`;
+  "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6", "SPEC 7", "SPEC 8"],
+  "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6", "Note 7", "Note 8"]
+}
 
         const payload = { 
           contents: [{ parts: [{ text: prompt }] }], 
