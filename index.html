@@ -816,10 +816,12 @@
         c.pScale = shuffledScales[i - 1];
 
         if (cachedExtractedAffirmations.length >= 4) {
-          c.note = cachedExtractedAffirmations[i - 1] || "";
+          const reShuffledAffs = shuffleArray(cachedExtractedAffirmations);
+          c.note = reShuffledAffs[i - 1] || "";
         }
         if (cachedExtractedSpecs.length >= 4) {
-          c.val = cachedExtractedSpecs[i - 1] || "";
+          const reShuffledSpecs = shuffleArray(cachedExtractedSpecs);
+          c.val = reShuffledSpecs[i - 1] || "";
         }
 
         c.bRot = (Math.random() * 10 - 5);
@@ -3081,10 +3083,13 @@ Return ONLY valid JSON:
         cachedExtractedAffirmations = safeAffirmations;
         cachedExtractedSpecs = safeSpecs;
 
-        // Fan out authentic shopper copy across Cards 1 through 4
+        // Fan out 4 RANDOM options out of the 8 across Cards 1 through 4
+        const random4Affs = shuffleArray(safeAffirmations);
+        const random4Specs = shuffleArray(safeSpecs);
+
         for (let i = 1; i <= 4; i++) {
-          cardCustoms[i].note = safeAffirmations[i - 1] || safeAffirmations[0];
-          cardCustoms[i].val = safeSpecs[i - 1] || safeSpecs[0];
+          cardCustoms[i].note = random4Affs[i - 1] || safeAffirmations[0];
+          cardCustoms[i].val = random4Specs[i - 1] || safeSpecs[0];
         }
 
         renderAiChips(safeAffirmations, safeSpecs);
