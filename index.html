@@ -3003,40 +3003,44 @@ Sound like an excited shopper who just spotted this item today, snagged it, and 
 - Express personal excitement about unpacking and using it soon (e.g. heading my way for the weekend 📦, so excited to test this out soon, counting down until it gets here, unboxing plans ready).
 - NEVER use banned transactional words: DO NOT say "buy", "bought", "order", "ordered", "purchased", or "shipped".`;
 
-        const prompt = `You are a real community deal curator writing authentic shopper copy. Analyze this product info: "${raw.slice(0, 320)}"
+        const prompt = `You are a real community deal curator writing authentic, compelling copy for social media. Analyze this product info: "${raw.slice(0, 320)}"
 (Unique Session Seed: ${sessionEntropy})
 
 Execute this 2-step curation process:
 
 STEP 1: PRODUCT CLASSIFICATION
-Identify what this product actually is (e.g. Women's Pajamas/Apparel, Car Detailing, Kitchenware, Snack, Tech Gadget, Hair Care).
+Identify what this product actually is and what makes it appealing (e.g. Jewelry Armoire Mirror, Women's Loungewear, Kitchen Cookware, Snack Food, Tech Accessory).
 
-STEP 2: COMPOSE 8 FRESH, 100% ORIGINAL SHOPPER HEADLINES
-Every headline must be crafted from scratch using the product's actual function, nouns, and verbs.
+STEP 2: COMPOSE 8 POSITIVE, PRODUCT-FOCUSED HEADLINES
+Focus primarily on genuine compliments, aesthetic praise, and functional benefits of THIS specific item:
+
+DISTRIBUTE THE 8 HEADLINES AS FOLLOWS:
+- 6 HEADLINES (75% - PRODUCT & BENEFIT PRAISE): 
+  Compliment the actual design, utility, finish, or problem it solves. Talk about what makes it beautiful or practical (e.g. glowing lighting, spacious organization, sleek finish, flattering cut, delicious flavor, seamless setup).
+- 2 HEADLINES (25% - ANTICIPATION / ARRIVAL HOOK):
+  Express excitement about unpacking, receiving, or testing it soon (e.g. so excited to set this up soon, counting down until this arrives).
 
 ${tenseGuidance}
 
-Distribute these 4 distinct psychological angles across the 8 headlines (produce 2 variations of each angle):
-- Angle 1 (Tense-Specific Hook): Follow the Voice & Tense guidance above.
-- Angle 2 (Sensory Experience): Describe the physical texture, crunch, finish, or mechanism of THIS exact item.
-- Angle 3 (Household Routine): Where this item actually lives in a real routine (e.g. bedside nightstand, pantry snack stash, shower rack, glove box).
-- Angle 4 (Personal Delight): An authentic reaction to the color, design, or practical convenience.
-
 CRITICAL RULES:
-1. NO BORING CLICHÉS: Do NOT repeat the exact phrase "on repeat" or "living in this". Write original, conversational copy for this specific item.
-2. CATEGORY INTEGRITY: Never mix categories (never mention food for clothes; never mention hair for kitchenware; never mention bedrooms for tools).
-3. STRICT ZERO BLACKLIST: NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or checkout terms ("buy", "bought", "order", "ordered", "purchase", "purchased", "price", "sale", "discount", "save", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "cart", "link").
-4. FACTUAL SPEC TAGS ONLY (UNIFIED SIZE RANGES):
-   - KEEP SIZE RANGES TOGETHER: When size ranges are given (e.g. "XS - 3XL" or "S - XXL"), ALWAYS keep the full range intact (e.g. "SIZES XS - 3XL", "XS THROUGH 3XL", "FULL SIZE RUN"). NEVER break a range down into individual single sizes like "SMALL", "MEDIUM", or "XS", as shoppers will assume the deal is only for that one size!
-   - Provide 8 bold, uppercase specs derived strictly from counts, sizes, pack quantities, color options, or materials in the text (e.g. "SIZES XS - 3XL", "SEVERAL COLORS", "COLOR CHOICES", "FULL SIZE RUN", "2-PIECE SET", "MULTIPLE COLORS", "WARDROBE STAPLE", "COMMUNITY FAVORITE"). NEVER invent unverified claims ("organic", "medical grade", "artisan", "handcrafted").
-5. SHORT & PUNCHY: Keep headlines under 5 to 8 words. 1 natural emoji per headline is allowed.
+1. STRICT ANTI-MISINFORMATION FOR SPECS (NO GUESSING UNSTATED MATERIALS):
+   - NEVER assume or invent unstated materials, internal linings, or hidden mechanisms. (NEVER assume "velvet lined", "genuine leather", "solid wood", "waterproof", or "organic" unless explicitly stated in the input text!).
+   - Provide 8 bold, uppercase specs derived ONLY from verified facts in the text (e.g. "SPACIOUS STORAGE", "LOCKABLE DOOR", "JEWELRY ARMOIRE", "FULL LENGTH MIRROR", "RGB LIGHTING", "SIZES XS - 3XL").
+   - If raw text is brief, fill remaining slots with safe, verified curation tags (e.g. "BEDROOM ESSENTIAL", "COMMUNITY FAVORITE", "FEATURED FIND", "FUNCTIONAL STAPLE").
+
+2. KEEP SIZE RANGES TOGETHER: 
+   - Never break size runs into single isolated sizes (use "SIZES XS - 3XL", not "SMALL" or "XS").
+
+3. STRICT ZERO BLACKLIST: 
+   - NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or checkout terms ("buy", "bought", "order", "ordered", "purchase", "purchased", "price", "sale", "discount", "save", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "cart", "link").
+
+4. SHORT & PUNCHY: Keep headlines under 5 to 8 words with 1 natural emoji.
 
 Return ONLY valid JSON:
 {
   "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6", "SPEC 7", "SPEC 8"],
   "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6", "Note 7", "Note 8"]
 }`;
-
         const payload = { 
           contents: [{ parts: [{ text: prompt }] }], 
           generationConfig: { 
