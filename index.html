@@ -472,7 +472,7 @@
        APP BUILD VERSION & SILENT AUTO-UPDATE DETECTOR
        ========================================================================== */
     // Bump this ID whenever you push updates; all open tabs will detect it!
-    const APP_BUILD_ID = "v12.6.0-20261020";
+    const APP_BUILD_ID = "v12.7.0-20261021";
 
     async function checkForAppUpdates() {
       // Don't poll if testing offline or running directly from local file://
@@ -640,8 +640,20 @@
           }
         }
 
-        const hsl1 = rgbToHsl(r1, g1, b1);
-        const h1 = hsl1.h;
+        let hsl1 = rgbToHsl(r1, g1, b1);
+        let h1 = hsl1.h;
+
+        // =========================================================================
+        // GOLDEN-ANGLE CONTINUOUS SPECTRUM (FOR 2,100 DEALS / WEEK)
+        // If an item is neutral (black/grey/white, S < 14%), step continuously across 360°
+        // =========================================================================
+        const isNeutralItem = hsl1.s < 14 || maxScore1 < 40;
+        if (isNeutralItem) {
+          // Golden Angle stepping (137.5°) ensures every neutral deal lands on a completely unique hue
+          const goldenSeed = Math.round((Date.now() / 15000 * 137.5 + (cardNum || 1) * 47) % 360);
+          h1 = goldenSeed;
+          hsl1.s = 38;
+        }
 
         // Pass 2: Find contrasting secondary accent (at least 45 degrees away in Hue, e.g. Teal vs Orange)
         let maxScore2 = 0;
@@ -658,8 +670,7 @@
             const hueDiff = Math.abs(curHsl.h - h1);
             const dist = Math.min(hueDiff, 360 - hueDiff);
 
-            // Reward colors that are noticeably different in hue from primary
-            if (dist > 45 && sat > 25) {
+            if (dist > 45 && sat > 20) {
               const score2 = sat * 2.0 + dist * 1.5;
               if (score2 > maxScore2) {
                 maxScore2 = score2;
@@ -669,12 +680,12 @@
           }
         }
 
-        let hsl2 = (maxScore2 > 0) ? rgbToHsl(r2, g2, b2) : { h: (h1 + 160) % 360, s: 65, l: 45 };
+        let hsl2 = (maxScore2 > 0 && !isNeutralItem) ? rgbToHsl(r2, g2, b2) : { h: (h1 + 150) % 360, s: 42, l: 45 };
         const h2 = hsl2.h;
 
         // Sophisticated Muted Boutique Calibration (No harsh neon saturation)
-        const mutedSat1 = Math.min(hsl1.s, 48); // Clamped to max 48% saturation
-        const mutedSat2 = Math.min(hsl2.s, 44); // Clamped to max 44% saturation
+        const mutedSat1 = Math.min(Math.max(hsl1.s, 28), 48);
+        const mutedSat2 = Math.min(Math.max(hsl2.s, 26), 44);
 
         return {
           h: h1,
@@ -686,10 +697,10 @@
           accent: `hsl(${h1}, ${mutedSat1}%, 42%)`,
           // Secondary Muted Accent (e.g. Slate Teal, Dusty Olive, Warm Clay)
           accent2: `hsl(${h2}, ${mutedSat2}%, 38%)`,
-          // Warm Softened Glow (Soft Butter/Amber)
-          brightPop: `hsl(${(h1 + 20) % 360}, ${Math.min(mutedSat1 + 10, 56)}%, 52%)`,
-          // Muted Charcoal Ink (Tinted with product tone)
-          text: `hsl(${h1}, 24%, 16%)`,
+          // Warm Softened Glow
+          brightPop: `hsl(${(h1 + 22) % 360}, ${Math.min(mutedSat1 + 10, 54)}%, 52%)`,
+          // Muted Charcoal Ink
+          text: `hsl(${h1}, 26%, 15%)`,
           paper: "#FAF8F5",
           vignette: `hsla(${h1}, 25%, 15%, 0.14)`
         };
@@ -2767,29 +2778,31 @@
         // Dynamic entropy seed forces Gemini to explore fresh shopper angles on every click
         const sessionEntropy = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
 
-        const prompt = `You are an authentic, enthusiastic community deal curator writing for real shoppers. Analyze this product info: "${raw.slice(0, 320)}"
-(Entropy Seed: ${sessionEntropy})
+        const prompt = `You are a genuine, excited community deal curator sharing personal favorite finds with your followers. Analyze this product info: "${raw.slice(0, 320)}"
+(Dynamic Session Seed: ${sessionEntropy})
 
-Write scroll-stopping, natural shopper community copy that sounds like a real person sharing their favorite find.
-
+Generate 6 scroll-stopping, natural shopper headlines and 6 factual specs.
 CRITICAL RULES:
-1. NATURAL SHOPPER LANGUAGE (NO GENERIC MARKETING SLOGANS):
-   - Women's Apparel / Loungewear: Sound like an excited friend sharing cozy wardrobe essentials (e.g., "Pajama drawer upgrade ☁️", "Cozy weekend comfort on repeat", "Cannot stop wearing this set", "The softest loungewear favorite", "Lazy afternoon essential", "Instant bedtime favorite"). NEVER call clothing "elevated living" or "interior design".
-   - Food / Snacks / Groceries: Focus on delicious flavor, crunch, pantry convenience (e.g., "Pantry snack stash sorted 🥜", "Lightly salted & perfectly crunchy", "Grab-and-go snack favorite", "Afternoon snack craving sorted").
-   - Games / Appliances / Gadgets: Focus on game night fun, hosting friends, effortless setup (e.g., "Game night just got an upgrade ♠️", "Effortless shuffling in seconds", "The ultimate hosting essential", "Party setup made simple").
-   - Home / Storage / Organizing: Focus on clean organization, aesthetic storage (e.g., "Bookshelf styling sorted 📚", "Cozy reading corner complete", "Decluttered living made simple").
-   - Beauty / Skincare: Focus on glowing skin, daily refresh (e.g., "Daily hydration reset ✨", "Radiant skin routine goals", "Gentle everyday refresh").
+1. MULTI-ANGLE SHOPPER COPY (MIX THESE 4 DISTINCT ANGLES ACROSS THE 6 HEADLINES):
+   - Angle A: FUTURE-TENSE ANTICIPATION (Sound like you just spotted this today, snagged it, and cannot wait for it to arrive):
+     e.g. "Cannot wait for this to arrive ✨", "Heading my way for the weekend 📦", "Already counting down until this gets here", "Going to be living in this soon ☁️", "Patiently waiting by the door for this one", "Cannot wait to try this out this weekend ✨".
+   - Angle B: TACTILE / SENSORY FEEL (Describe the texture, crunch, or cozy comfort):
+     e.g. "The softest loungewear favorite ☁️", "Lightly salted & perfectly crunchy 🥜", "Effortless card shuffling in seconds ♠️", "Crisp & refreshing daily staple", "Silky soft comfort on repeat ☁️".
+   - Angle C: ROUTINE / LIFESTYLE INTEGRATION (How it fits seamlessly into daily life):
+     e.g. "Living in this set all weekend", "Pajama drawer upgrade sorted ☁️", "Pantry snack stash sorted 🥜", "Game night favorite unlocked ♠️", "Party hosting setup complete 🫕".
+   - Angle D: EXCITED DISCOVERY / FIRST IMPRESSION:
+     e.g. "Obsessed the second I saw this today ✨", "Best find I have spotted all week", "Just spotted this today, had to have it ☁️", "Instant favorite the moment I saw it".
 
-2. STRICT ABSOLUTE ZERO BLACKLIST (INSTANT REJECTION IF VIOLATED):
-   - NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or commercial checkout terms:
-   - FORBIDDEN TOKENS: "buy", "order", "price", "prices", "sale", "sales", "deal", "deals", "save", "savings", "discount", "cheap", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "was", "reg", "link", "cart".
+2. STRICT ABSOLUTE ZERO BLACKLIST (NEVER USE COMMERCIAL / TRANSACTIONAL WORDS):
+   - NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or checkout terms:
+   - FORBIDDEN TOKENS: "buy", "bought", "order", "ordered", "purchase", "purchased", "price", "prices", "sale", "sales", "deal", "deals", "save", "savings", "discount", "cheap", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "was", "reg", "link", "cart".
 
 3. FACTUAL SPEC TAGS ONLY (NO HALLUCINATIONS):
-   - Provide bold, uppercase factual curation specs based strictly on counts, sizes, pack quantities, or materials from the text (e.g., "SIZES S - XXL", "BUTTON DOWN SET", "32-PACK BUNDLE", "1.35 QUART CAPACITY", "2-DECK CAPACITY").
+   - Provide bold, uppercase factual specs derived ONLY from counts, sizes, pack quantities, or materials in the text (e.g., "SIZES S - XXL", "BUTTON DOWN SET", "32-PACK BUNDLE", "1.35 QUART CAPACITY", "2-DECK CAPACITY").
    - If no specific numbers exist, use neutral community curation tags (e.g., "COMMUNITY FAVORITE", "WEEKEND STAPLE", "SOLID CHOICE").
-   - NEVER invent unverified certifications (NEVER assume "organic", "artisan", "medical grade", "non-gmo", "handcrafted").
+   - NEVER invent unverified claims (NEVER say "organic", "artisan", "medical grade", "non-gmo", "handcrafted").
 
-4. SHORT & PUNCHY: Keep affirmations under 5-8 words so they fit cleanly as card headlines.
+4. SHORT & PUNCHY: Keep headlines under 5 to 8 words so they fit cleanly as card titles.
 
 Return ONLY valid JSON:
 {
