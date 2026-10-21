@@ -472,7 +472,7 @@
        APP BUILD VERSION & SILENT AUTO-UPDATE DETECTOR
        ========================================================================== */
     // Bump this ID whenever you push updates; all open tabs will detect it!
-    const APP_BUILD_ID = "v12.7.0-20261021";
+    const APP_BUILD_ID = "v12.7.2-20261021";
 
     async function checkForAppUpdates() {
       // Don't poll if testing offline or running directly from local file://
@@ -2034,7 +2034,7 @@
     }
 
     // =========================================================================
-    // 16. CONTINUOUS 360° PERIMETER SCATTER ENGINE (INFINITE POSITIONS - FROZEN ON DRAG)
+    // 16. CONTINUOUS 360° SCATTER ENGINE WITH BADGE COLLISION BUFFER
     // =========================================================================
     function createSeededPRNG(s) {
       let seed = Math.abs(s) % 2147483647;
@@ -2045,31 +2045,43 @@
       };
     }
 
-    function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum) {
+    function renderScatterDecorators(ctx, hash, accent, brightPop, cardNum, conf) {
       // Deterministic PRNG ensures elements NEVER jump or move while dragging the photo
       const prng = createSeededPRNG((hash || 12345) + cardNum * 83711);
 
-      // Helper function: Calculates an infinite coordinate along the outer 30% collar at ANY 360° angle
+      // Known badge location for this card layout
+      const bX = (conf && conf.layoutMode === "top_note_bottom_badge") ? 840 : 230;
+      const bY = (conf && conf.layoutMode === "top_note_bottom_badge") ? 880 : 140;
+
+      // Helper function: Calculates coordinates along the 360° collar, repelling from the badge
       function getPerimeterPoint(angleRad, distanceOffset) {
-        const cx = 540, cy = 460; // Center of canvas
-        const dist = 430 + distanceOffset; // Outside the 70% center exclusion zone
+        const cx = 540, cy = 460;
+        const dist = 435 + distanceOffset;
         let px = cx + Math.cos(angleRad) * dist;
         let py = cy + Math.sin(angleRad) * dist;
-        // Clamp strictly inside canvas visible safe area
+
+        // Repel from badge: if point lands within 180px of the badge, shift angle by 90°
+        const distToBadge = Math.sqrt((px - bX) ** 2 + (py - bY) ** 2);
+        if (distToBadge < 180) {
+          const shiftedAngle = angleRad + Math.PI * 0.55;
+          px = cx + Math.cos(shiftedAngle) * dist;
+          py = cy + Math.sin(shiftedAngle) * dist;
+        }
+
         px = Math.max(70, Math.min(1010, px));
         py = Math.max(70, Math.min(1010, py));
         return { x: px, y: py };
       }
 
-      // Pick 3 completely random, well-spaced angles around the 360° circle (e.g. 42°, 175°, 290°)
+      // Pick 3 random, well-spaced angles around the 360° circle
       const baseAngle = prng() * Math.PI * 2;
       const angle1 = baseAngle;
       const angle2 = (baseAngle + Math.PI * 0.75 + prng() * 0.4) % (Math.PI * 2);
       const angle3 = (baseAngle + Math.PI * 1.45 + prng() * 0.4) % (Math.PI * 2);
 
-      const pos1 = getPerimeterPoint(angle1, prng() * 70);
-      const pos2 = getPerimeterPoint(angle2, prng() * 60);
-      const pos3 = getPerimeterPoint(angle3, prng() * 60);
+      const pos1 = getPerimeterPoint(angle1, prng() * 60);
+      const pos2 = getPerimeterPoint(angle2, prng() * 55);
+      const pos3 = getPerimeterPoint(angle3, prng() * 55);
 
       // =========================================================================
       // ASSET 1: PRIMARY FRAMING STAMP (Infinite 360° Position around perimeter)
@@ -2295,7 +2307,7 @@
       ctx.restore();
 
       // 3. SCATTER DECORATORS (DRAWN OVER & AROUND MAT BORDERS - NEVER BURIED)
-      renderScatterDecorators(ctx, hash, pal.accent, pal.brightPop, cardNum);
+      renderScatterDecorators(ctx, hash, pal.accent, pal.brightPop, cardNum, conf);
 
       // 4. MAIN AFFIRMATION HEADLINE (BOOSTED 45px–52px FOR MOBILE IMPACT)
       if (note && !(conf.archetype === "polaroid" && conf.layoutMode === "polaroid_caption")) {
@@ -2778,31 +2790,42 @@
         // Dynamic entropy seed forces Gemini to explore fresh shopper angles on every click
         const sessionEntropy = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
 
-        const prompt = `You are a genuine, excited community deal curator sharing personal favorite finds with your followers. Analyze this product info: "${raw.slice(0, 320)}"
-(Dynamic Session Seed: ${sessionEntropy})
+        const prompt = `You are an authentic, conversational community deal curator sharing your personal favorite finds with your followers. Analyze this product info: "${raw.slice(0, 320)}"
+(Unique Session Seed: ${sessionEntropy})
 
-Generate 6 scroll-stopping, natural shopper headlines and 6 factual specs.
+Execute this 2-step curation process:
+
+STEP 1: PRODUCT CLASSIFICATION
+Identify what this specific product actually is (e.g. Car Detailing Kit, Hair Care/Shampoo, Women's Apparel, Food/Snack, Kitchen Appliance, Gaming/Tech, Home Storage, Pet Supply).
+
+STEP 2: COMPOSE 6 FRESH, 100% ORIGINAL SHOPPER HEADLINES
+Every single headline MUST be crafted from scratch using the product's actual real-world function, nouns, and verbs. Never use boilerplate filler.
+
+Distribute these 4 distinct psychological angles across the 6 headlines:
+- Angle 1 (Anticipation / Upcoming Use): Express personal excitement about what you plan to do with THIS exact item when you unpack it.
+- Angle 2 (Sensory / Physical Benefit): Describe the tangible benefit of THIS product (e.g. spotless dashboard vents for car detailing, clean hair repair for shampoo, crunchy savory taste for snacks, cozy ribbed fabric for loungewear).
+- Angle 3 (Daily Life Integration): Where this item actually belongs in a real household routine (e.g. glove box stash, shower shelf reset, game night table, snack drawer).
+- Angle 4 (Spontaneous Discovery): An authentic personal reaction to the design, color, or function of the item.
+
 CRITICAL RULES:
-1. MULTI-ANGLE SHOPPER COPY (MIX THESE 4 DISTINCT ANGLES ACROSS THE 6 HEADLINES):
-   - Angle A: FUTURE-TENSE ANTICIPATION (Sound like you just spotted this today, snagged it, and cannot wait for it to arrive):
-     e.g. "Cannot wait for this to arrive ✨", "Heading my way for the weekend 📦", "Already counting down until this gets here", "Going to be living in this soon ☁️", "Patiently waiting by the door for this one", "Cannot wait to try this out this weekend ✨".
-   - Angle B: TACTILE / SENSORY FEEL (Describe the texture, crunch, or cozy comfort):
-     e.g. "The softest loungewear favorite ☁️", "Lightly salted & perfectly crunchy 🥜", "Effortless card shuffling in seconds ♠️", "Crisp & refreshing daily staple", "Silky soft comfort on repeat ☁️".
-   - Angle C: ROUTINE / LIFESTYLE INTEGRATION (How it fits seamlessly into daily life):
-     e.g. "Living in this set all weekend", "Pajama drawer upgrade sorted ☁️", "Pantry snack stash sorted 🥜", "Game night favorite unlocked ♠️", "Party hosting setup complete 🫕".
-   - Angle D: EXCITED DISCOVERY / FIRST IMPRESSION:
-     e.g. "Obsessed the second I saw this today ✨", "Best find I have spotted all week", "Just spotted this today, had to have it ☁️", "Instant favorite the moment I saw it".
+1. FORBIDDEN REPETITIVE CLICHÉS (DO NOT USE THESE OVERUSED PHRASES):
+   - NEVER use the phrase "cannot wait for this to arrive" or any close variation.
+   - NEVER use the phrase "obsessed the second I saw this" or "the moment I saw this".
+   - NEVER use the phrase "already counting down until this gets here".
+   - NEVER use the phrase "best find I have spotted all week".
+   - NEVER use the phrase "on repeat" or "living in this".
+   Every headline must feel uniquely written for this specific product.
 
-2. STRICT ABSOLUTE ZERO BLACKLIST (NEVER USE COMMERCIAL / TRANSACTIONAL WORDS):
-   - NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or checkout terms:
-   - FORBIDDEN TOKENS: "buy", "bought", "order", "ordered", "purchase", "purchased", "price", "prices", "sale", "sales", "deal", "deals", "save", "savings", "discount", "cheap", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "was", "reg", "link", "cart".
+2. CATEGORY INTEGRITY:
+   - Stay strictly inside the product's actual domain. Never mention food/pantry for car kits, never mention hair/skin for snacks, never mention bedrooms for tools.
 
-3. FACTUAL SPEC TAGS ONLY (NO HALLUCINATIONS):
-   - Provide bold, uppercase factual specs derived ONLY from counts, sizes, pack quantities, or materials in the text (e.g., "SIZES S - XXL", "BUTTON DOWN SET", "32-PACK BUNDLE", "1.35 QUART CAPACITY", "2-DECK CAPACITY").
-   - If no specific numbers exist, use neutral community curation tags (e.g., "COMMUNITY FAVORITE", "WEEKEND STAPLE", "SOLID CHOICE").
-   - NEVER invent unverified claims (NEVER say "organic", "artisan", "medical grade", "non-gmo", "handcrafted").
+3. STRICT ZERO BLACKLIST:
+   - NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or commercial checkout terms ("buy", "bought", "order", "ordered", "purchase", "purchased", "price", "sale", "discount", "save", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "cart", "link").
 
-4. SHORT & PUNCHY: Keep headlines under 5 to 8 words so they fit cleanly as card titles.
+4. FACTUAL SPEC TAGS ONLY:
+   - Provide 6 bold, uppercase specs derived ONLY from counts, sizes, pack quantities, or materials in the text (e.g. "17-PIECE SET", "28 FL OZ", "SIZES S - XXL", "32-PACK BUNDLE"). NEVER invent unverified claims ("organic", "medical grade", "artisan", "handcrafted").
+
+5. SHORT & PUNCHY: Keep headlines under 5 to 8 words. 1 natural emoji per headline is allowed.
 
 Return ONLY valid JSON:
 {
