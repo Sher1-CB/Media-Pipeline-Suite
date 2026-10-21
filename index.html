@@ -263,10 +263,29 @@
           <span>🚨</span> <strong>Facebook OCR Blacklist Alert:</strong> <span id="ocrWarningText"></span>
         </div>
 
-        <!-- RAW DEAL PARSER -->
-        <div class="flex gap-2">
-          <textarea id="rawDealPaste" placeholder="Paste raw deal text or product notes here..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-16"></textarea>
-          <button type="button" onclick="extractDealInfo()" class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider cursor-pointer">⚡ Extract Info & Fan Out</button>
+        <!-- TENSE SWITCHER & RAW DEAL PARSER -->
+        <div class="space-y-2">
+          <div class="flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2">Voice:</span>
+              <button type="button" id="tenseFutureBtn" onclick="setCopyTense('future_anticipation')" class="px-2.5 py-1 bg-sky-600 text-white text-[11px] font-bold rounded-lg shadow transition-all cursor-pointer">
+                📦 Just Grabbed It (Arriving Soon)
+              </button>
+              <button type="button" id="tenseOwnBtn" onclick="setCopyTense('already_own')" class="px-2.5 py-1 text-slate-400 hover:text-white text-[11px] font-bold rounded-lg transition-all cursor-pointer">
+                ⭐ Already Own It (Tried & Tested)
+              </button>
+            </div>
+            <button type="button" onclick="clearDealCopy()" class="px-3 py-1 bg-slate-800 hover:bg-rose-900/60 border border-slate-700 hover:border-rose-500 text-slate-300 hover:text-rose-200 text-xs font-bold rounded-lg uppercase tracking-wider transition-all cursor-pointer">
+              ✕ Clear Copy
+            </button>
+          </div>
+
+          <div class="flex gap-2">
+            <textarea id="rawDealPaste" placeholder="Paste raw deal text or product notes here..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-sky-500 h-16"></textarea>
+            <button type="button" onclick="extractDealInfo()" class="px-5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl whitespace-nowrap uppercase tracking-wider cursor-pointer shadow-md">
+              ⚡ Extract Info & Fan Out
+            </button>
+          </div>
         </div>
 
         <!-- AI CHIPS CONTAINER -->
@@ -432,14 +451,25 @@
             <div class="space-y-1">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Background World:</label>
               <select id="activeBgWorld" onchange="updateActiveBgWorld(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-1.5 rounded-lg focus:outline-none">
-                <option value="wood">🪵 Wood Plank Board</option>
-                <option value="linen">🧵 Woven Studio Linen</option>
-                <option value="kraft">📦 Oatmeal Kraft Paper</option>
                 <option value="waves">🌊 70s Fluid Organic Waves</option>
+                <option value="linen">🧵 Woven Studio Linen</option>
                 <option value="grid">📐 Bullet Journal Grid</option>
+                <option value="watercolor">🌸 Watercolor Bloom</option>
                 <option value="splittone">🎨 Two-Tone Split</option>
-                <option value="watercolor">🌸 Watercolor Bloom Parchment</option>
+                <option value="kraft">📦 Muted Kraft Parchment</option>
               </select>
+            </div>
+
+            <!-- MANUAL COLOR OVERRIDE PICKER -->
+            <div class="space-y-1 pt-1.5 border-t border-slate-800">
+              <div class="flex justify-between items-center text-[10px] font-bold uppercase text-slate-400">
+                <span>🎨 Color Override:</span>
+                <button type="button" onclick="clearActiveColorOverride()" class="text-[9px] text-sky-400 hover:text-sky-300 hover:underline uppercase cursor-pointer">Auto (Photo)</button>
+              </div>
+              <div class="flex items-center gap-2 bg-slate-950 p-1 rounded-lg border border-slate-700">
+                <input type="color" id="activeColorPicker" oninput="updateActiveColorOverride(this.value)" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer p-0">
+                <span id="activeColorStatus" class="text-[11px] font-mono text-slate-300 truncate">Auto (Photo Derived)</span>
+              </div>
             </div>
 
             <div class="pt-1">
@@ -472,7 +502,7 @@
        APP BUILD VERSION & SILENT AUTO-UPDATE DETECTOR
        ========================================================================== */
     // Bump this ID whenever you push updates; all open tabs will detect it!
-    const APP_BUILD_ID = "v12.7.2-20261021";
+    const APP_BUILD_ID = "v13.0.0-20261021";
 
     async function checkForAppUpdates() {
       // Don't poll if testing offline or running directly from local file://
@@ -749,19 +779,48 @@
       const shuffledBadges = shuffleArray(badgeCatalog);
       const shuffledFonts = shuffleArray(fontCatalog);
 
-      // Dynamic Visual Composition Modes (Shuffled per deal to prevent any repeatable pattern)
+      // =========================================================================
+      // v13.0 LAYERED COMPOSITING ENGINE: ZERO-BUCKET MULTI-LAYER STACKING
+      // =========================================================================
+      // Layer 1: Base Canvas Textures (8 varieties)
+      const baseTextures = ["clean_wash", "linen", "kraft", "grid", "stipple_matrix", "splittone", "parchment", "earth_base"];
+      const shuffledTextures = shuffleArray(baseTextures);
+
+      // Layer 2: Macro Color Geometry (7 unpredictable shapes)
+      const macroShapes = ["corner_wave", "diagonal_sweep", "dune_bands", "amoeba_puddle", "arch_niche", "watercolor_bloom", "none"];
+      const shuffledMacro = shuffleArray(macroShapes);
+
+      // Layer 3: Physical Paper Scraps & Backdrops (5 accents)
+      const paperScraps = ["gingham_patch", "binder_scrap", "grid_swatch", "star_lattice", "none"];
+      const shuffledScraps = shuffleArray(paperScraps);
+
+      // Layer 4: Staging Mats (Clean Floating Cutout boosted to 35-40% so backgrounds aren't smothered!)
+      const matOptions = ["floating", "polaroid", "floating", "notebook", "stacked_pin", "squircle", "gallery"];
+      const shuffledMats = shuffleArray(matOptions);
+
+      // Layout Modes & Color Moods
       const layoutModes = ["top_badge_bottom_note", "top_note_bottom_badge", "corner_tag_grounded", "polaroid_caption"];
       const shuffledLayouts = shuffleArray(layoutModes);
 
+      const colorMoods = ["rich_colored_base", "high_contrast_split", "warm_monochrome", "airy_pastel"];
+      const shuffledMoods = shuffleArray(colorMoods);
+
+      const heroScales = [1.02, 0.90, 0.96, 1.08];
+      const shuffledScales = shuffleArray(heroScales);
+
       for (let i = 1; i <= 4; i++) {
         const c = cardCustoms[i];
+        // 5 Independent Orthogonal Layers (Millions of free combinations!)
+        c.baseTexture = shuffledTextures[i - 1];
+        c.macroShape = shuffledMacro[i - 1];
+        c.paperScrap = shuffledScraps[i - 1];
         c.archetype = shuffledMats[i - 1];
-        c.bgWorld = shuffledBgs[i - 1];
         c.badgeBg = shuffledBadges[i - 1];
         c.font = shuffledFonts[i - 1];
         c.layoutMode = shuffledLayouts[i - 1];
-        
-        // Only assign text if AI chips or extractions exist; otherwise start blank
+        c.colorMood = shuffledMoods[i - 1];
+        c.pScale = shuffledScales[i - 1];
+
         if (cachedExtractedAffirmations.length >= 4) {
           c.note = cachedExtractedAffirmations[i - 1] || "";
         }
@@ -769,7 +828,6 @@
           c.val = cachedExtractedSpecs[i - 1] || "";
         }
 
-        // Subtle organic tilts (-5° to +5°)
         c.bRot = (Math.random() * 10 - 5);
         c.nRot = (Math.random() * 3 - 1.5);
 
@@ -1327,8 +1385,60 @@
       }
     }
 
+    // Convert any Hex color to full HSL Harmonic Palette
+    function derivePaletteFromHex(hex) {
+      hex = hex.replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      const hsl = rgbToHsl(r, g, b);
+      const h1 = hsl.h;
+      const h2 = (h1 + 150) % 360;
+      const sat = Math.min(Math.max(hsl.s, 30), 55);
+
+      return {
+        h: h1,
+        h2: h2,
+        bg: `hsl(${h1}, 20%, 95%)`,
+        bgSecondary: `hsl(${h2}, 24%, 90%)`,
+        accent: `hsl(${h1}, ${sat}%, 42%)`,
+        accent2: `hsl(${h2}, ${sat}%, 38%)`,
+        brightPop: `hsl(${(h1 + 22) % 360}, ${sat + 10}%, 52%)`,
+        text: `hsl(${h1}, 30%, 14%)`,
+        paper: "#FAF8F5",
+        vignette: `hsla(${h1}, 25%, 15%, 0.14)`
+      };
+    }
+
+    function updateActiveColorOverride(hex) {
+      cardCustoms[activeCardIndex].colorOverride = hex;
+      document.getElementById('activeColorStatus').innerText = hex.toUpperCase();
+      renderAll4CreatorCards();
+    }
+
+    function clearActiveColorOverride() {
+      cardCustoms[activeCardIndex].colorOverride = null;
+      document.getElementById('activeColorStatus').innerText = "Auto (Photo Derived)";
+      renderAll4CreatorCards();
+    }
+
     function syncConsoleControls() {
       const conf = cardCustoms[activeCardIndex];
+
+      // Sync color override picker
+      const picker = document.getElementById('activeColorPicker');
+      const status = document.getElementById('activeColorStatus');
+      if (picker && status) {
+        if (conf.colorOverride) {
+          picker.value = conf.colorOverride;
+          status.innerText = conf.colorOverride.toUpperCase();
+        } else {
+          picker.value = "#38BDF8";
+          status.innerText = "Auto (Photo Derived)";
+        }
+      }
+
       // Sync text inputs to currently active card
       document.getElementById('mainNoteInput').value = conf.note || "";
       document.getElementById('simpleValueInput').value = conf.val || "";
@@ -2073,76 +2183,64 @@
         return { x: px, y: py };
       }
 
-      // Pick 3 random, well-spaced angles around the 360° circle
+      // Complete 13-Asset Free-Form Catalog
+      const allAssets = [
+        'vine', 'gingham_patch', 'boho_stamp', 'arches', 'binder_scrap', 
+        'star_lattice', 'crossed_tape', 'frequency_ribbon', 'topographic', 
+        'brush_lines', 'wildflower', 'constellation', 'stipple'
+      ];
+
+      // Shuffle and pick 2 or 3 distinct assets (NO mandatory stars or dots!)
+      const assetCount = 2 + Math.floor(prng() * 2);
+      const pickedAssets = [];
+      const assetPool = [...allAssets];
+
+      for (let k = 0; k < assetCount; k++) {
+        const idx = Math.floor(prng() * assetPool.length);
+        pickedAssets.push(assetPool.splice(idx, 1)[0]);
+      }
+
+      // Generate well-spaced 360° perimeter anchor points
       const baseAngle = prng() * Math.PI * 2;
-      const angle1 = baseAngle;
-      const angle2 = (baseAngle + Math.PI * 0.75 + prng() * 0.4) % (Math.PI * 2);
-      const angle3 = (baseAngle + Math.PI * 1.45 + prng() * 0.4) % (Math.PI * 2);
+      const angleSpacing = (Math.PI * 2) / assetCount;
 
-      const pos1 = getPerimeterPoint(angle1, prng() * 60);
-      const pos2 = getPerimeterPoint(angle2, prng() * 55);
-      const pos3 = getPerimeterPoint(angle3, prng() * 55);
+      pickedAssets.forEach((asset, idx) => {
+        ctx.save();
+        const angle = (baseAngle + idx * angleSpacing + (prng() * 0.35 - 0.17)) % (Math.PI * 2);
+        const pos = getPerimeterPoint(angle, prng() * 55);
 
-      // =========================================================================
-      // ASSET 1: PRIMARY FRAMING STAMP (Infinite 360° Position around perimeter)
-      // =========================================================================
-      ctx.save();
-      const stampPick = Math.floor(prng() * 7);
-      ctx.translate(pos1.x, pos1.y);
-      // Angle points inward toward product
-      ctx.rotate(angle1 + Math.PI + (prng() * 0.4 - 0.2));
+        ctx.translate(pos.x, pos.y);
+        ctx.rotate(angle + Math.PI + (prng() * 0.4 - 0.2));
 
-      if (stampPick === 0) {
-        ctx.scale(1.1, 1.1);
-        drawCornerFoliageVine(ctx, accent);
-      } else if (stampPick === 1) {
-        drawTornGinghamPatch(ctx, { accent: accent });
-      } else if (stampPick === 2) {
-        drawBohoArchStamp(ctx, { accent: accent, accent2: brightPop });
-      } else if (stampPick === 3) {
-        drawConcentricArches(ctx, accent);
-      } else if (stampPick === 4) {
-        drawTornBinderScrap(ctx, { accent: accent, bg: "#FAF8F5" });
-      } else if (stampPick === 5) {
-        drawDiamondStarLattice(ctx, accent);
-      } else {
-        drawCrossedWashiTape(ctx, accent, brightPop);
-      }
-      ctx.restore();
+        // SCALE DRAMA: First asset gets a JUMBO Macro presence (up to 400px), others get mid or micro scale
+        let scaleFactor = 1.0;
+        if (idx === 0) {
+          scaleFactor = 1.35 + prng() * 0.25; // JUMBO MACRO (1.35x to 1.6x)
+        } else if (idx === 1) {
+          scaleFactor = 0.90 + prng() * 0.25; // MID-SCALE (0.9x to 1.15x)
+        } else {
+          scaleFactor = 0.65 + prng() * 0.25; // MICRO ACCENT (0.65x to 0.9x)
+        }
+        ctx.scale(scaleFactor, scaleFactor);
 
-      // =========================================================================
-      // ASSET 2: SECONDARY PERIMETER RUNNER (Infinite position on opposite flank)
-      // =========================================================================
-      ctx.save();
-      const runnerPick = Math.floor(prng() * 4);
-      ctx.translate(pos2.x, pos2.y);
-      ctx.rotate(angle2 + (prng() * 0.5 - 0.25));
+        const col = (idx % 2 === 0) ? accent : (brightPop || accent);
 
-      if (runnerPick === 0) drawFrequencyWaveRibbon(ctx, brightPop || accent);
-      else if (runnerPick === 1) drawTopographicContour(ctx, brightPop || accent);
-      else if (runnerPick === 2) drawParallelBrushStrokes(ctx, accent);
-      else drawMinimalistWildflower(ctx, accent);
-      ctx.restore();
+        if (asset === 'vine') drawCornerFoliageVine(ctx, col);
+        else if (asset === 'gingham_patch') drawTornGinghamPatch(ctx, { accent: col });
+        else if (asset === 'boho_stamp') drawBohoArchStamp(ctx, { accent: col, accent2: brightPop });
+        else if (asset === 'arches') drawConcentricArches(ctx, col);
+        else if (asset === 'binder_scrap') drawTornBinderScrap(ctx, { accent: col, bg: "#FAF8F5" });
+        else if (asset === 'star_lattice') drawDiamondStarLattice(ctx, col);
+        else if (asset === 'crossed_tape') drawCrossedWashiTape(ctx, col, brightPop);
+        else if (asset === 'frequency_ribbon') drawFrequencyWaveRibbon(ctx, col);
+        else if (asset === 'topographic') drawTopographicContour(ctx, col);
+        else if (asset === 'brush_lines') drawParallelBrushStrokes(ctx, col);
+        else if (asset === 'wildflower') drawMinimalistWildflower(ctx, col);
+        else if (asset === 'constellation') drawStarConstellation(ctx, col);
+        else drawStippleClusters(ctx, col);
 
-      // =========================================================================
-      // ASSET 3: FINISHING ACCENTS (Infinite position along remaining collar)
-      // =========================================================================
-      ctx.save();
-      ctx.translate(pos3.x, pos3.y);
-      if (prng() > 0.5) {
-        drawStarConstellation(ctx, brightPop || accent);
-      } else {
-        drawElongatedStarburst(ctx, brightPop || accent);
-      }
-      ctx.restore();
-
-      // Delicate stipple dots near an edge
-      ctx.save();
-      const stippleAngle = (baseAngle + Math.PI * 0.35) % (Math.PI * 2);
-      const posStipple = getPerimeterPoint(stippleAngle, prng() * 40);
-      ctx.translate(posStipple.x, posStipple.y);
-      drawStippleClusters(ctx, accent);
-      ctx.restore();
+        ctx.restore();
+      });
     }
     /* ==========================================================================
        MAIN CARD COMPOSITOR: AUTHENTIC CANVA STAGING & SAFE PADDING
@@ -2155,21 +2253,93 @@
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1.0;
+      ctx.clearRect(0, 0, 1080, 1080);
 
-      // 1. RENDER DISTINCT BACKGROUND WORLD
-      const world = conf.bgWorld || "wood";
-      if (world === "wood") drawWoodBackground(ctx, pal, hash);
-      else if (world === "linen") drawLinenBackground(ctx, pal);
-      else if (world === "kraft") drawKraftBackground(ctx, pal);
-      else if (world === "waves") drawOrganicWavesBackground(ctx, pal, hash);
-      else if (world === "grid") drawGridJournalBackground(ctx, pal);
-      else if (world === "splittone") drawSplitTwoToneBackground(ctx, pal);
-      else drawWatercolorBloomBackground(ctx, pal);
+      // =========================================================================
+      // DYNAMIC COLOR MOOD CALIBRATION (BOLD DEPTH & HIGH CONTRAST)
+      // =========================================================================
+      const mood = conf.colorMood || "airy_pastel";
+      let activePal = { ...pal };
+
+      if (mood === "rich_colored_base") {
+        // Real, noticeable background color depth (Sage Green, Terracotta, Dusty Denim)
+        activePal.bg = `hsl(${pal.h}, 34%, 84%)`;
+        activePal.bgSecondary = `hsl(${pal.h2}, 38%, 76%)`;
+        activePal.text = `hsl(${pal.h}, 42%, 12%)`;
+      } else if (mood === "high_contrast_split") {
+        // High-contrast clean ivory with a saturated 40% secondary accent block
+        activePal.bg = "#FAF8F5";
+        activePal.bgSecondary = `hsl(${pal.h2}, 44%, 74%)`;
+      } else if (mood === "warm_monochrome") {
+        // Stepped tonal warmth
+        activePal.bg = `hsl(${pal.h}, 26%, 90%)`;
+        activePal.bgSecondary = `hsl(${pal.h}, 36%, 80%)`;
+      }
+
+      // =========================================================================
+      // LAYER 1: BASE TEXTURE RENDERING (Independent of shapes or scraps)
+      // =========================================================================
+      const bTex = conf.baseTexture || "clean_wash";
+      ctx.save();
+      if (bTex === "linen") {
+        drawLinenBackground(ctx, activePal);
+      } else if (bTex === "kraft") {
+        drawKraftBackground(ctx, activePal);
+      } else if (bTex === "grid") {
+        drawGridJournalBackground(ctx, activePal);
+      } else if (bTex === "splittone") {
+        drawSplitTwoToneBackground(ctx, activePal);
+      } else if (bTex === "stipple_matrix") {
+        ctx.fillStyle = activePal.bg; ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillStyle = "rgba(0,0,0,0.06)";
+        for (let x = 40; x < 1040; x += 40) {
+          for (let y = 40; y < 1040; y += 40) {
+            ctx.beginPath(); ctx.arc(x, y, 1.8, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+      } else {
+        // Clean high-key luminous studio gradient
+        const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
+        bgGrad.addColorStop(0, "#FFFFFF");
+        bgGrad.addColorStop(0.55, activePal.bg);
+        bgGrad.addColorStop(1, activePal.bgSecondary);
+        ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, 1080, 1080);
+      }
+      ctx.restore();
+
+      // =========================================================================
+      // LAYER 2: MACRO COLOR GEOMETRY (Large structural backdrop shapes)
+      // =========================================================================
+      const mShape = conf.macroShape || "corner_wave";
+      if (mShape === "corner_wave" || mShape === "dune_bands" || mShape === "diagonal_sweep") {
+        drawOrganicWavesBackground(ctx, activePal, hash);
+      } else if (mShape === "watercolor_bloom" || mShape === "amoeba_puddle") {
+        drawWatercolorBloomBackground(ctx, activePal, hash);
+      }
+
+      // =========================================================================
+      // LAYER 3: PHYSICAL PAPER SCRAP / BACKDROP ACCENT
+      // =========================================================================
+      const pScrap = conf.paperScrap || "none";
+      if (pScrap !== "none") {
+        ctx.save();
+        const scrapCorner = (hash % 4);
+        if (scrapCorner === 0) ctx.translate(35, 35);
+        else if (scrapCorner === 1) { ctx.translate(1045, 35); ctx.scale(-1, 1); }
+        else if (scrapCorner === 2) { ctx.translate(35, 1045); ctx.scale(1, -1); }
+        else { ctx.translate(1045, 1045); ctx.scale(-1, -1); }
+
+        if (pScrap === "gingham_patch") drawTornGinghamPatch(ctx, { accent: activePal.accent });
+        else if (pScrap === "binder_scrap") drawTornBinderScrap(ctx, { accent: activePal.accent, bg: activePal.bg });
+        else if (pScrap === "grid_swatch") drawCornerGridPatch(ctx, activePal);
+        else if (pScrap === "star_lattice") drawDiamondStarLattice(ctx, activePal.accent);
+        ctx.restore();
+      }
 
       // Subtle editorial vignette
       const vigGrad = ctx.createRadialGradient(540, 540, 280, 540, 540, 780);
       vigGrad.addColorStop(0, "transparent");
-      vigGrad.addColorStop(1, pal.vignette);
+      vigGrad.addColorStop(1, activePal.vignette);
       ctx.fillStyle = vigGrad;
       ctx.fillRect(0, 0, 1080, 1080);
 
@@ -2618,14 +2788,20 @@
         chosen4Variants = [{ id: 1, canvas: fallbackImg }, { id: 2, canvas: fallbackImg }, { id: 3, canvas: fallbackImg }, { id: 4, canvas: fallbackImg }];
       }
 
-      const sampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
+      const defaultSampledPal = sampleColorsFromCanvas(chosen4Variants[0]?.canvas || fallbackImg);
 
       for (let i = 1; i <= 4; i++) {
         const c = document.getElementById(`cardCanvas${i}`);
         if (!c) continue;
         let src = chosen4Variants[i - 1]?.canvas;
         if (!src || !src.width) src = fallbackImg;
-        renderCardWithStyle(c, src, cardCustoms[i].note, cardCustoms[i].val, sampledPal, cardCustoms[i], i);
+
+        // If a card has a manual color override, derive palette from that color; otherwise use photo
+        const cardPal = cardCustoms[i].colorOverride 
+          ? derivePaletteFromHex(cardCustoms[i].colorOverride) 
+          : defaultSampledPal;
+
+        renderCardWithStyle(c, src, cardCustoms[i].note, cardCustoms[i].val, cardPal, cardCustoms[i], i);
       }
     }
 
@@ -2672,6 +2848,38 @@
     /* ==========================================================================
        AI PARSER, COPYWRITING & RESET ROUTINES
        ========================================================================== */
+    let currentCopyTense = "future_anticipation"; // Default: Just Grabbed It / Arriving Soon
+
+    function setCopyTense(mode) {
+      currentCopyTense = mode;
+      const futureBtn = document.getElementById("tenseFutureBtn");
+      const ownBtn = document.getElementById("tenseOwnBtn");
+
+      if (mode === "already_own") {
+        ownBtn.className = "px-2.5 py-1 bg-emerald-600 text-white text-[11px] font-bold rounded-lg shadow transition-all cursor-pointer";
+        futureBtn.className = "px-2.5 py-1 text-slate-400 hover:text-white text-[11px] font-bold rounded-lg transition-all cursor-pointer";
+      } else {
+        futureBtn.className = "px-2.5 py-1 bg-sky-600 text-white text-[11px] font-bold rounded-lg shadow transition-all cursor-pointer";
+        ownBtn.className = "px-2.5 py-1 text-slate-400 hover:text-white text-[11px] font-bold rounded-lg transition-all cursor-pointer";
+      }
+    }
+
+    // 1-Click Complete Copy Wipe (Resets text cleanly without losing the photo)
+    function clearDealCopy() {
+      for (let i = 1; i <= 4; i++) {
+        cardCustoms[i].note = "";
+        cardCustoms[i].val = "";
+        cardCustoms[i].subNote = "";
+      }
+      cachedExtractedAffirmations = [];
+      cachedExtractedSpecs = [];
+      document.getElementById("mainNoteInput").value = "";
+      document.getElementById("simpleValueInput").value = "";
+      document.getElementById("subNoteInput").value = "";
+      document.getElementById("aiChipsWrapper").classList.add("hidden");
+      renderAll4CreatorCards();
+    }
+
     function masterResetDeal() {
       if (!confirm("Start brand new deal? All current edits will be cleared.")) return;
       rawLoadedImage = null; base64ApiPayload = ""; detectedBoxes = []; manualBoxes = [];
@@ -2790,31 +2998,42 @@
         // Dynamic entropy seed forces Gemini to explore fresh shopper angles on every click
         const sessionEntropy = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
 
-        const prompt = `You are an authentic, conversational community deal curator sharing your personal favorite finds with your followers. Analyze this product info: "${raw.slice(0, 320)}"
+        // Dynamic Tone Prompt based on User's Tense Switcher Selection
+        const tenseGuidance = (currentCopyTense === "already_own")
+          ? `VOICE & TENSE: PROVEN ENDORSEMENT / ALREADY OWN IT (PRESENT/PAST TENSE)
+Sound like a verified community member who has already been using this product:
+- Share authentic satisfaction and personal proof (e.g. loving this in our daily rotation, verified household staple, one of our best grabs, constantly in use at home).
+- DO NOT say "arriving soon" or "waiting for delivery" because we already own this item.`
+          : `VOICE & TENSE: JUST GRABBED IT / ARRIVING SOON (FUTURE TENSE ANTICIPATION - DEFAULT)
+Sound like an excited shopper who just spotted this item today, snagged it, and is eagerly anticipating delivery:
+- Express personal excitement about unpacking and using it soon (e.g. heading my way for the weekend 📦, so excited to test this out soon, counting down until it gets here, unboxing plans ready).
+- NEVER use banned transactional words: DO NOT say "buy", "bought", "order", "ordered", "purchased", or "shipped".`;
+
+        const prompt = `You are a real community deal curator writing authentic shopper copy. Analyze this product info: "${raw.slice(0, 320)}"
 (Unique Session Seed: ${sessionEntropy})
 
 Execute this 2-step curation process:
 
 STEP 1: PRODUCT CLASSIFICATION
-Identify what this specific product actually is (e.g. Car Detailing Kit, Hair Care/Shampoo, Women's Apparel, Food/Snack, Kitchen Appliance, Gaming/Tech, Home Storage, Pet Supply).
+Identify what this product actually is (e.g. Women's Pajamas/Apparel, Car Detailing, Kitchenware, Snack, Tech Gadget, Hair Care).
 
 STEP 2: COMPOSE 6 FRESH, 100% ORIGINAL SHOPPER HEADLINES
-Every single headline MUST be crafted from scratch using the product's actual real-world function, nouns, and verbs. Never use boilerplate filler.
+Every headline must be crafted from scratch using the product's actual function, nouns, and verbs.
+
+${tenseGuidance}
 
 Distribute these 4 distinct psychological angles across the 6 headlines:
-- Angle 1 (Anticipation / Upcoming Use): Express personal excitement about what you plan to do with THIS exact item when you unpack it.
-- Angle 2 (Sensory / Physical Benefit): Describe the tangible benefit of THIS product (e.g. spotless dashboard vents for car detailing, clean hair repair for shampoo, crunchy savory taste for snacks, cozy ribbed fabric for loungewear).
-- Angle 3 (Daily Life Integration): Where this item actually belongs in a real household routine (e.g. glove box stash, shower shelf reset, game night table, snack drawer).
-- Angle 4 (Spontaneous Discovery): An authentic personal reaction to the design, color, or function of the item.
+- Angle 1 (Tense-Specific Hook): Follow the Voice & Tense guidance above.
+- Angle 2 (Sensory Experience): Describe the physical texture, crunch, finish, or mechanism of THIS exact item.
+- Angle 3 (Household Routine): Where this item actually lives in a real routine (e.g. bedside nightstand, pantry snack stash, shower rack, glove box).
+- Angle 4 (Personal Delight): An authentic reaction to the color, design, or practical convenience.
 
 CRITICAL RULES:
-1. FORBIDDEN REPETITIVE CLICHÉS (DO NOT USE THESE OVERUSED PHRASES):
-   - NEVER use the phrase "cannot wait for this to arrive" or any close variation.
-   - NEVER use the phrase "obsessed the second I saw this" or "the moment I saw this".
-   - NEVER use the phrase "already counting down until this gets here".
-   - NEVER use the phrase "best find I have spotted all week".
-   - NEVER use the phrase "on repeat" or "living in this".
-   Every headline must feel uniquely written for this specific product.
+1. NO BORING CLICHÉS: Do NOT repeat the exact phrase "on repeat" or "living in this". Write original, conversational copy for this specific item.
+2. CATEGORY INTEGRITY: Never mix categories (never mention food for clothes; never mention hair for kitchenware; never mention bedrooms for tools).
+3. ZERO BLACKLIST: NEVER use prices, dollar signs ($), numbers in headlines, urgency words, or checkout terms ("buy", "bought", "order", "ordered", "purchase", "purchased", "price", "sale", "discount", "save", "free", "$", "%", "hurry", "drop", "amazon", "shipped", "total", "cart", "link").
+4. FACTUAL SPEC TAGS ONLY: Provide 6 bold, uppercase specs derived ONLY from counts, sizes, pack quantities, or materials in the text (e.g. "SIZES S - XXL", "BUTTON DOWN SET", "32-PACK BUNDLE"). NEVER invent unverified claims ("organic", "medical grade", "artisan", "handcrafted").
+5. SHORT & PUNCHY: Keep headlines under 5 to 8 words. 1 natural emoji per headline is allowed.
 
 2. CATEGORY INTEGRITY:
    - Stay strictly inside the product's actual domain. Never mention food/pantry for car kits, never mention hair/skin for snacks, never mention bedrooms for tools.
