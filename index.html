@@ -2984,7 +2984,7 @@
       const extractBtn = document.querySelector("button[onclick='extractDealInfo()']");
       const originalBtnText = extractBtn ? extractBtn.innerText : "⚡ Extract Info & Fan Out";
       if (extractBtn) {
-        extractBtn.innerText = "⏳ Curating Shopper Angles...";
+        extractBtn.innerText = "⏳ Curating 8 Angles...";
         extractBtn.disabled = true;
       }
 
@@ -3035,7 +3035,7 @@ Return ONLY valid JSON:
 {
   "spec_tags": ["SPEC 1", "SPEC 2", "SPEC 3", "SPEC 4", "SPEC 5", "SPEC 6", "SPEC 7", "SPEC 8"],
   "affirmations": ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5", "Note 6", "Note 7", "Note 8"]
-}
+}`;
 
         const payload = { 
           contents: [{ parts: [{ text: prompt }] }], 
@@ -3046,7 +3046,9 @@ Return ONLY valid JSON:
         };
 
         const aiData = await callGeminiLeapingMesh(key, payload);
-        let rawTxt = (aiData.candidates[0]?.content?.parts[0]?.text || "{}").replace(/```json/gi, '').replace(/```/g, '').trim();
+        let rawTxt = (aiData.candidates[0]?.content?.parts[0]?.text || "{}");
+        // Clean markdown code blocks cleanly without unescaped backtick conflicts
+        rawTxt = rawTxt.replace(new RegExp("```json", "gi"), "").replace(new RegExp("```", "g"), "").trim();
         const parsed = JSON.parse(rawTxt);
 
         // Strict client-side regex firewall (whole-word boundary check)
