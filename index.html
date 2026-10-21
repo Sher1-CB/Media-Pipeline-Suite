@@ -766,22 +766,10 @@
       return copy;
     }
 
-    // STRICT NON-REPEATING PERMUTATION GENERATOR (Zero Overlap Across the 4 Cards)
+    // =========================================================================
+    // v13.0 LAYERED COMPOSITING ENGINE: ZERO-DUPLICATE CLEAN GENERATOR
+    // =========================================================================
     function generateProceduralDeck() {
-      const matCatalog = ["polaroid", "notebook", "stacked_pin", "squircle", "gallery", "floating"];
-      // 100% Photo-Derived Backgrounds (Brown Wood permanently retired)
-      const bgCatalog = ["waves", "linen", "grid", "watercolor", "splittone", "kraft"];
-      const badgeCatalog = ["sticky", "pill", "kraft", "ticket", "scribble", "ribbon", "scallop", "highlighter", "dark_pill", "hairline"];
-      const fontCatalog = ["handwritten", "editorial", "playful", "modern_sans", "typewriter"];
-
-      const shuffledMats = shuffleArray(matCatalog);
-      const shuffledBgs = shuffleArray(bgCatalog);
-      const shuffledBadges = shuffleArray(badgeCatalog);
-      const shuffledFonts = shuffleArray(fontCatalog);
-
-      // =========================================================================
-      // v13.0 LAYERED COMPOSITING ENGINE: ZERO-BUCKET MULTI-LAYER STACKING
-      // =========================================================================
       // Layer 1: Base Canvas Textures (8 varieties)
       const baseTextures = ["clean_wash", "linen", "kraft", "grid", "stipple_matrix", "splittone", "parchment", "earth_base"];
       const shuffledTextures = shuffleArray(baseTextures);
@@ -797,6 +785,12 @@
       // Layer 4: Staging Mats (Clean Floating Cutout boosted to 35-40% so backgrounds aren't smothered!)
       const matOptions = ["floating", "polaroid", "floating", "notebook", "stacked_pin", "squircle", "gallery"];
       const shuffledMats = shuffleArray(matOptions);
+
+      // Badges & Fonts
+      const badgeCatalog = ["sticky", "pill", "kraft", "ticket", "scribble", "ribbon", "scallop", "highlighter", "dark_pill", "hairline"];
+      const fontCatalog = ["handwritten", "editorial", "playful", "modern_sans", "typewriter"];
+      const shuffledBadges = shuffleArray(badgeCatalog);
+      const shuffledFonts = shuffleArray(fontCatalog);
 
       // Layout Modes & Color Moods
       const layoutModes = ["top_badge_bottom_note", "top_note_bottom_badge", "corner_tag_grounded", "polaroid_caption"];
