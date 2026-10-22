@@ -502,7 +502,7 @@
        APP BUILD VERSION & SILENT AUTO-UPDATE DETECTOR
        ========================================================================== */
     // Bump this ID whenever you push updates; all open tabs will detect it!
-    const APP_BUILD_ID = "v13.0.0-20261021";
+    const APP_BUILD_ID = "v13.1.0-20261022";
 
     async function checkForAppUpdates() {
       // Don't poll if testing offline or running directly from local file://
@@ -644,6 +644,10 @@
       return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
     }
 
+    // =========================================================================
+    // REAL DOMINANT COLOR CLUSTERING ENGINE (ZERO INVENTED COLORS)
+    // Samples true product pixel frequency: Primary and Secondary MUST exist in image!
+    // =========================================================================
     function sampleColorsFromCanvas(canvas) {
       try {
         if (!canvas || !canvas.width || canvas.width === 0) return getDefaultPalette();
@@ -651,86 +655,129 @@
         const sCtx = s.getContext("2d"); sCtx.drawImage(canvas, 0, 0, 48, 48);
         const data = sCtx.getImageData(0, 0, 48, 48).data;
 
-        let maxScore1 = 0;
-        let r1 = 196, g1 = 138, b1 = 92;
+        // 12 Hue Buckets (30° each around the 360° color wheel)
+        const buckets = Array.from({ length: 12 }, () => ({
+          weight: 0,
+          totalR: 0, totalG: 0, totalB: 0,
+          totalSat: 0, totalLight: 0, count: 0
+        }));
 
-        // Pass 1: Find dominant primary vibrant color
-        for (let i = 0; i < data.length; i += 4) {
-          const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
-          if (a < 120) continue;
-          const br = (r + g + b) / 3;
-          if (br > 25 && br < 235) {
-            const max = Math.max(r, g, b), min = Math.min(r, g, b);
-            const sat = max - min;
-            const score = sat * 2.5 + (255 - Math.abs(br - 128));
-            if (score > maxScore1) {
-              maxScore1 = score;
-              r1 = r; g1 = g; b1 = b;
-            }
-          }
-        }
-
-        let hsl1 = rgbToHsl(r1, g1, b1);
-        let h1 = hsl1.h;
-
-        // =========================================================================
-        // GOLDEN-ANGLE CONTINUOUS SPECTRUM (FOR 2,100 DEALS / WEEK)
-        // If an item is neutral (black/grey/white, S < 14%), step continuously across 360°
-        // =========================================================================
-        const isNeutralItem = hsl1.s < 14 || maxScore1 < 40;
-        if (isNeutralItem) {
-          // Golden Angle stepping (137.5°) ensures every neutral deal lands on a completely unique hue
-          const goldenSeed = Math.round((Date.now() / 15000 * 137.5 + (cardNum || 1) * 47) % 360);
-          h1 = goldenSeed;
-          hsl1.s = 38;
-        }
-
-        // Pass 2: Find contrasting secondary accent (at least 45 degrees away in Hue, e.g. Teal vs Orange)
-        let maxScore2 = 0;
-        let r2 = r1, g2 = g1, b2 = b1;
+        let coloredPixelCount = 0;
 
         for (let i = 0; i < data.length; i += 4) {
           const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
-          if (a < 120) continue;
-          const br = (r + g + b) / 3;
-          if (br > 25 && br < 235) {
-            const max = Math.max(r, g, b), min = Math.min(r, g, b);
-            const sat = max - min;
-            const curHsl = rgbToHsl(r, g, b);
-            const hueDiff = Math.abs(curHsl.h - h1);
-            const dist = Math.min(hueDiff, 360 - hueDiff);
+          if (a < 120) continue; // Ignore transparent pixels
 
-            if (dist > 45 && sat > 20) {
-              const score2 = sat * 2.0 + dist * 1.5;
-              if (score2 > maxScore2) {
-                maxScore2 = score2;
-                r2 = r; g2 = g; b2 = b;
-              }
-            }
+          const br = (r + g + b) / 3;
+          // Filter out pure white backgrounds (br > 238) and pure black borders (br < 18)
+          if (br <= 18 || br >= 238) continue;
+
+          const max = Math.max(r, g, b), min = Math.min(r, g, b);
+          const sat = (max - min) / (max === 0 ? 1 : max); // 0 to 1.0
+
+          // Only cluster pixels that have real color presence (S > 12%)
+          if (sat > 0.12) {
+            const hsl = rgbToHsl(r, g, b);
+            const bucketIdx = Math.floor((hsl.h % 360) / 30);
+            const w = 1.0 + sat * 2.0; // Moderate saturation weight while honoring pixel volume
+
+            buckets[bucketIdx].weight += w;
+            buckets[bucketIdx].totalR += r;
+            buckets[bucketIdx].totalG += g;
+            buckets[bucketIdx].totalB += b;
+            buckets[bucketIdx].totalSat += hsl.s;
+            buckets[bucketIdx].totalLight += hsl.l;
+            buckets[bucketIdx].count++;
+            coloredPixelCount++;
           }
         }
 
-        let hsl2 = (maxScore2 > 0 && !isNeutralItem) ? rgbToHsl(r2, g2, b2) : { h: (h1 + 150) % 360, s: 42, l: 45 };
-        const h2 = hsl2.h;
+        // Check if item is truly 100% grayscale (e.g. pure black pan or plain white shirt)
+        if (coloredPixelCount < 15) {
+          // Strictly for pure black/white items: step through 360° golden-angle hue
+          const goldenHue = Math.round((Math.abs(Date.now() % 100000) * 137.5) % 360);
+          return {
+            h: goldenHue,
+            h2: (goldenHue + 150) % 360,
+            bg: `hsl(${goldenHue}, 18%, 96%)`,
+            bgSecondary: `hsl(${(goldenHue + 35) % 360}, 22%, 91%)`,
+            accent: `hsl(${goldenHue}, 42%, 40%)`,
+            accent2: `hsl(${(goldenHue + 150) % 360}, 40%, 36%)`,
+            brightPop: `hsl(${(goldenHue + 22) % 360}, 56%, 52%)`,
+            text: `hsl(${goldenHue}, 26%, 15%)`,
+            paper: "#FAF8F5",
+            vignette: `hsla(${goldenHue}, 25%, 15%, 0.14)`
+          };
+        }
 
-        // Sophisticated Muted Boutique Calibration (No harsh neon saturation)
-        const mutedSat1 = Math.min(Math.max(hsl1.s, 28), 48);
-        const mutedSat2 = Math.min(Math.max(hsl2.s, 26), 44);
+        // Sort buckets by real pixel volume/weight
+        const sortedBuckets = buckets
+          .map((b, idx) => ({ ...b, centerHue: idx * 30 + 15 }))
+          .filter(b => b.count > 0)
+          .sort((a, b) => b.weight - a.weight);
+
+        // =====================================================================
+        // CLUSTER 1: PRIMARY ACCENT (The #1 most prominent real color in the photo)
+        // =====================================================================
+        const primary = sortedBuckets[0];
+        const avgR1 = Math.round(primary.totalR / primary.count);
+        const avgG1 = Math.round(primary.totalG / primary.count);
+        const avgB1 = Math.round(primary.totalB / primary.count);
+        const rawHsl1 = rgbToHsl(avgR1, avgG1, avgB1);
+        const h1 = rawHsl1.h;
+
+        // =====================================================================
+        // CLUSTER 2: SECONDARY ACCENT (The #2 most prominent real color in the photo)
+        // Must physically exist in the image (separated in hue by at least 35°)
+        // =====================================================================
+        const secondary = sortedBuckets.slice(1).find(b => {
+          const diff = Math.abs(b.centerHue - h1);
+          const dist = Math.min(diff, 360 - diff);
+          return dist >= 35;
+        });
+
+        let h2, sat2;
+        if (secondary) {
+          // Found real second color physically in photo (e.g. Yellow or Blue on candy box!)
+          const avgR2 = Math.round(secondary.totalR / secondary.count);
+          const avgG2 = Math.round(secondary.totalG / secondary.count);
+          const avgB2 = Math.round(secondary.totalB / secondary.count);
+          const rawHsl2 = rgbToHsl(avgR2, avgG2, avgB2);
+          h2 = rawHsl2.h;
+          sat2 = rawHsl2.s;
+        } else {
+          // If product is 100% single-color (e.g. monochrome red), use harmonious neighboring hue (+22°)
+          h2 = (h1 + 22) % 360;
+          sat2 = rawHsl1.s;
+        }
+
+        // =====================================================================
+        // TRUE COLOR IDENTITY PRESERVATION
+        // Blues stay blue (sat 60-72%), Reds stay red, Earthy tones stay warm
+        // =====================================================================
+        const isBlueCyan = (h1 >= 180 && h1 <= 245);
+        const isRed = (h1 >= 345 || h1 <= 18);
+
+        let finalSat1 = Math.min(Math.max(rawHsl1.s, 35), 65);
+        if (isBlueCyan) finalSat1 = Math.min(Math.max(rawHsl1.s, 58), 75); // Protects blue from turning seafoam
+        if (isRed) finalSat1 = Math.min(Math.max(rawHsl1.s, 60), 80);      // Protects red from turning brown
+
+        const finalSat2 = Math.min(Math.max(sat2, 35), 65);
 
         return {
           h: h1,
           h2: h2,
-          // Airy, soft muted wash
+          // Clean, high-key tinted wash derived from primary packaging tone
           bg: `hsl(${h1}, 18%, 96%)`,
-          bgSecondary: `hsl(${h2}, 22%, 92%)`,
-          // Primary Muted Accent (e.g. Soft Terracotta, Dusty Navy, Muted Sage)
-          accent: `hsl(${h1}, ${mutedSat1}%, 42%)`,
-          // Secondary Muted Accent (e.g. Slate Teal, Dusty Olive, Warm Clay)
-          accent2: `hsl(${h2}, ${mutedSat2}%, 38%)`,
-          // Warm Softened Glow
-          brightPop: `hsl(${(h1 + 22) % 360}, ${Math.min(mutedSat1 + 10, 54)}%, 52%)`,
-          // Muted Charcoal Ink
-          text: `hsl(${h1}, 26%, 15%)`,
+          bgSecondary: `hsl(${h2}, 22%, 91%)`,
+          // Primary Accent: Physical #1 color from photo (e.g. Red for candy box)
+          accent: `hsl(${h1}, ${finalSat1}%, 44%)`,
+          // Secondary Accent: Physical #2 color from photo (e.g. Golden Yellow or Blue)
+          accent2: `hsl(${h2}, ${finalSat2}%, 42%)`,
+          // Warm complementary glow
+          brightPop: `hsl(${h2}, ${Math.min(finalSat2 + 10, 75)}%, 52%)`,
+          // Tinted deep charcoal ink
+          text: `hsl(${h1}, 30%, 15%)`,
           paper: "#FAF8F5",
           vignette: `hsla(${h1}, 25%, 15%, 0.14)`
         };
@@ -741,16 +788,16 @@
 
     function getDefaultPalette() {
       return {
-        h: 28,
-        h2: 175,
-        bg: "#FAF7F5",
-        bgSecondary: "#ECF1F0",
-        accent: "#A86D48",
-        accent2: "#336B6B",
-        brightPop: "#C98E58",
-        text: "#2B2320",
+        h: 355, // Warm red default
+        h2: 45,  // Warm golden yellow default
+        bg: "#FAF6F5",
+        bgSecondary: "#FDF4EB",
+        accent: "#C23B22",
+        accent2: "#D97706",
+        brightPop: "#F59E0B",
+        text: "#291815",
         paper: "#FAF8F5",
-        vignette: "rgba(40, 25, 15, 0.14)"
+        vignette: "rgba(40, 20, 15, 0.14)"
       };
     }
 
