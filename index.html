@@ -902,6 +902,10 @@
       const colorMoods = ["rich_colored_base", "high_contrast_split", "warm_monochrome", "airy_pastel"];
       const shuffledMoods = shuffleArray(colorMoods);
 
+      // Shuffled Palette Modes (Guarantees every card inside a deal has a different color strategy!)
+      const paletteModes = ["tonal_monochrome", "dual_accent", "triad_3color", "tonal_monochrome"];
+      const shuffledPalettes = shuffleArray(paletteModes);
+
       const heroScales = [1.02, 0.90, 0.96, 1.08];
       const shuffledScales = shuffleArray(heroScales);
 
@@ -916,6 +920,7 @@
         c.font = shuffledFonts[i - 1];
         c.layoutMode = shuffledLayouts[i - 1];
         c.colorMood = shuffledMoods[i - 1];
+        c.paletteMode = shuffledPalettes[i - 1]; // Automatically randomized!
         c.pScale = shuffledScales[i - 1];
 
         if (cachedExtractedAffirmations.length >= 4) {
