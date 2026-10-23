@@ -449,9 +449,14 @@
             </div>
 
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Background World:</label>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Background World (11 Styles):</label>
               <select id="activeBgWorld" onchange="updateActiveBgWorld(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-amber-400 p-1.5 rounded-lg focus:outline-none">
                 <option value="waves">🌊 70s Fluid Organic Waves</option>
+                <option value="niche">🏛️ Minimalist Archway Niche</option>
+                <option value="halo">✨ Spotlight Halo Glow</option>
+                <option value="ombre">🌅 Tonal Ombré Fade</option>
+                <option value="runner">〰️ Wavy Scalloped Runner</option>
+                <option value="terrazzo">🪨 Craft Terrazzo Speckle</option>
                 <option value="linen">🧵 Woven Studio Linen</option>
                 <option value="grid">📐 Bullet Journal Grid</option>
                 <option value="watercolor">🌸 Watercolor Bloom</option>
@@ -460,14 +465,20 @@
               </select>
             </div>
 
-            <!-- MANUAL COLOR OVERRIDE PICKER -->
-            <div class="space-y-1 pt-1.5 border-t border-slate-800">
+            <!-- 4-MODE PALETTE HARMONY ENGINE -->
+            <div class="space-y-1.5 pt-1.5 border-t border-slate-800">
               <div class="flex justify-between items-center text-[10px] font-bold uppercase text-slate-400">
-                <span>🎨 Color Override:</span>
+                <span>🎨 Palette Harmony Mode:</span>
                 <button type="button" onclick="clearActiveColorOverride()" class="text-[9px] text-sky-400 hover:text-sky-300 hover:underline uppercase cursor-pointer">Auto (Photo)</button>
               </div>
+              <select id="activePaletteMode" onchange="updateActivePaletteMode(this.value)" class="w-full bg-slate-950 border border-slate-700 text-xs text-sky-400 p-1.5 rounded-lg focus:outline-none">
+                <option value="dual_accent">🎨 Dual Accent (Contrasting 2-Tone)</option>
+                <option value="tonal_monochrome">🌸 Tonal Monochrome (Shades of 1 Color)</option>
+                <option value="triad_3color">🌈 3-Color Triad (Rich Multi-Tone)</option>
+                <option value="manual_override">🎯 Manual Color Override</option>
+              </select>
               <div class="flex items-center gap-2 bg-slate-950 p-1 rounded-lg border border-slate-700">
-                <input type="color" id="activeColorPicker" oninput="updateActiveColorOverride(this.value)" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer p-0">
+                <input type="color" id="activeColorPicker" oninput="handleColorPickerInput(this.value)" class="w-7 h-7 rounded border-0 bg-transparent cursor-pointer p-0">
                 <span id="activeColorStatus" class="text-[11px] font-mono text-slate-300 truncate">Auto (Photo Derived)</span>
               </div>
             </div>
@@ -502,7 +513,7 @@
        APP BUILD VERSION & SILENT AUTO-UPDATE DETECTOR
        ========================================================================== */
     // Bump this ID whenever you push updates; all open tabs will detect it!
-    const APP_BUILD_ID = "v13.1.0-20261022";
+    const APP_BUILD_ID = "v13.2.0-20261022";
 
     async function checkForAppUpdates() {
       // Don't poll if testing offline or running directly from local file://
@@ -738,7 +749,6 @@
 
         let h2, sat2;
         if (secondary) {
-          // Found real second color physically in photo (e.g. Yellow or Blue on candy box!)
           const avgR2 = Math.round(secondary.totalR / secondary.count);
           const avgG2 = Math.round(secondary.totalG / secondary.count);
           const avgB2 = Math.round(secondary.totalB / secondary.count);
@@ -746,37 +756,38 @@
           h2 = rawHsl2.h;
           sat2 = rawHsl2.s;
         } else {
-          // If product is 100% single-color (e.g. monochrome red), use harmonious neighboring hue (+22°)
           h2 = (h1 + 22) % 360;
           sat2 = rawHsl1.s;
         }
 
         // =====================================================================
-        // TRUE COLOR IDENTITY PRESERVATION
-        // Blues stay blue (sat 60-72%), Reds stay red, Earthy tones stay warm
+        // CLUSTER 3: TERTIARY ACCENT (For 3-Color Triad Mode)
         // =====================================================================
+        const tertiary = sortedBuckets.slice(1).find(b => {
+          const d1 = Math.min(Math.abs(b.centerHue - h1), 360 - Math.abs(b.centerHue - h1));
+          const d2 = Math.min(Math.abs(b.centerHue - h2), 360 - Math.abs(b.centerHue - h2));
+          return d1 >= 35 && d2 >= 35;
+        });
+        const h3 = tertiary ? tertiary.centerHue : ((h1 + 210) % 360);
+
         const isBlueCyan = (h1 >= 180 && h1 <= 245);
         const isRed = (h1 >= 345 || h1 <= 18);
 
         let finalSat1 = Math.min(Math.max(rawHsl1.s, 35), 65);
-        if (isBlueCyan) finalSat1 = Math.min(Math.max(rawHsl1.s, 58), 75); // Protects blue from turning seafoam
-        if (isRed) finalSat1 = Math.min(Math.max(rawHsl1.s, 60), 80);      // Protects red from turning brown
+        if (isBlueCyan) finalSat1 = Math.min(Math.max(rawHsl1.s, 58), 75);
+        if (isRed) finalSat1 = Math.min(Math.max(rawHsl1.s, 60), 80);
 
         const finalSat2 = Math.min(Math.max(sat2, 35), 65);
 
         return {
           h: h1,
           h2: h2,
-          // Clean, high-key tinted wash derived from primary packaging tone
+          h3: h3,
           bg: `hsl(${h1}, 18%, 96%)`,
           bgSecondary: `hsl(${h2}, 22%, 91%)`,
-          // Primary Accent: Physical #1 color from photo (e.g. Red for candy box)
           accent: `hsl(${h1}, ${finalSat1}%, 44%)`,
-          // Secondary Accent: Physical #2 color from photo (e.g. Golden Yellow or Blue)
           accent2: `hsl(${h2}, ${finalSat2}%, 42%)`,
-          // Warm complementary glow
           brightPop: `hsl(${h2}, ${Math.min(finalSat2 + 10, 75)}%, 52%)`,
-          // Tinted deep charcoal ink
           text: `hsl(${h1}, 30%, 15%)`,
           paper: "#FAF8F5",
           vignette: `hsla(${h1}, 25%, 15%, 0.14)`
@@ -788,8 +799,9 @@
 
     function getDefaultPalette() {
       return {
-        h: 355, // Warm red default
-        h2: 45,  // Warm golden yellow default
+        h: 355,
+        h2: 45,
+        h3: 210,
         bg: "#FAF6F5",
         bgSecondary: "#FDF4EB",
         accent: "#C23B22",
@@ -799,6 +811,50 @@
         paper: "#FAF8F5",
         vignette: "rgba(40, 20, 15, 0.14)"
       };
+    }
+
+    // Dynamic Palette Resolver: Implements Dual Accent, Tonal Monochrome, 3-Color Triad, and Manual Override
+    function resolveCardPalette(conf, defaultPal) {
+      if (conf.paletteMode === "manual_override" && conf.colorOverride) {
+        return derivePaletteFromHex(conf.colorOverride);
+      }
+
+      const h1 = defaultPal.h;
+      const h2 = defaultPal.h2;
+      const h3 = defaultPal.h3 || ((h1 + 210) % 360);
+
+      if (conf.paletteMode === "tonal_monochrome") {
+        // Pure Monochromatic Layering: Single Hue Stepped Across 4 Depths (All-Pink, All-Blue, All-Sage)
+        return {
+          h: h1, h2: h1, h3: h1,
+          bg: `hsl(${h1}, 18%, 96%)`,
+          bgSecondary: `hsl(${h1}, 28%, 88%)`,
+          accent: `hsl(${h1}, 52%, 42%)`,
+          accent2: `hsl(${h1}, 42%, 62%)`,
+          brightPop: `hsl(${h1}, 68%, 52%)`,
+          text: `hsl(${h1}, 28%, 14%)`,
+          paper: "#FAF8F5",
+          vignette: `hsla(${h1}, 25%, 15%, 0.14)`
+        };
+      }
+
+      if (conf.paletteMode === "triad_3color") {
+        // Rich 3-Color Triad: Primary + Secondary + Tertiary Pop Accent
+        return {
+          h: h1, h2: h2, h3: h3,
+          bg: `hsl(${h1}, 16%, 96%)`,
+          bgSecondary: `hsl(${h2}, 32%, 84%)`,
+          accent: `hsl(${h1}, 62%, 44%)`,
+          accent2: `hsl(${h2}, 54%, 40%)`,
+          brightPop: `hsl(${h3}, 75%, 50%)`,
+          text: `hsl(${h1}, 30%, 14%)`,
+          paper: "#FAF8F5",
+          vignette: `hsla(${h1}, 25%, 15%, 0.14)`
+        };
+      }
+
+      // Default: Dual Accent (Contrasting 2-Tone)
+      return defaultPal;
     }
 
     /* ==========================================================================
@@ -1454,14 +1510,23 @@
       };
     }
 
-    function updateActiveColorOverride(hex) {
+    function updateActivePaletteMode(mode) {
+      cardCustoms[activeCardIndex].paletteMode = mode;
+      renderAll4CreatorCards();
+    }
+
+    function handleColorPickerInput(hex) {
+      cardCustoms[activeCardIndex].paletteMode = "manual_override";
       cardCustoms[activeCardIndex].colorOverride = hex;
+      document.getElementById('activePaletteMode').value = "manual_override";
       document.getElementById('activeColorStatus').innerText = hex.toUpperCase();
       renderAll4CreatorCards();
     }
 
     function clearActiveColorOverride() {
+      cardCustoms[activeCardIndex].paletteMode = "dual_accent";
       cardCustoms[activeCardIndex].colorOverride = null;
+      document.getElementById('activePaletteMode').value = "dual_accent";
       document.getElementById('activeColorStatus').innerText = "Auto (Photo Derived)";
       renderAll4CreatorCards();
     }
@@ -1469,9 +1534,12 @@
     function syncConsoleControls() {
       const conf = cardCustoms[activeCardIndex];
 
-      // Sync color override picker
+      // Sync palette mode & color picker
+      const modeSelect = document.getElementById('activePaletteMode');
       const picker = document.getElementById('activeColorPicker');
       const status = document.getElementById('activeColorStatus');
+
+      if (modeSelect) modeSelect.value = conf.paletteMode || "dual_accent";
       if (picker && status) {
         if (conf.colorOverride) {
           picker.value = conf.colorOverride;
@@ -1845,12 +1913,123 @@
       ctx.fillStyle = pal.bg;
       ctx.fillRect(0, 0, 1080, 1080);
 
-      // Rich 40% bottom color block in secondary photo tone
       ctx.fillStyle = pal.bgSecondary || "#E6ECE9";
       ctx.fillRect(0, 680, 1080, 400);
 
       ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.65;
       ctx.beginPath(); ctx.moveTo(0, 680); ctx.lineTo(1080, 680); ctx.stroke();
+      ctx.restore();
+    }
+
+    // ARCHETYPE 8: MINIMALIST ARCHWAY NICHE (Recessed Boutique Display Niche)
+    function drawArchNicheBackground(ctx, pal) {
+      ctx.save();
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      const archW = 760, archH = 880;
+      const ax = 540, ay = 520;
+
+      // Recessed niche shadow
+      ctx.fillStyle = pal.bgSecondary;
+      ctx.shadowColor = "rgba(0, 0, 0, 0.12)"; ctx.shadowBlur = 24; ctx.shadowOffsetY = 10;
+      ctx.beginPath();
+      ctx.moveTo(ax - archW/2, ay + archH/2);
+      ctx.lineTo(ax - archW/2, ay - archH/2 + archW/2);
+      ctx.arc(ax, ay - archH/2 + archW/2, archW/2, Math.PI, 0, false);
+      ctx.lineTo(ax + archW/2, ay + archH/2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Hairline inner accent border
+      ctx.shadowColor = "transparent";
+      ctx.strokeStyle = pal.accent; ctx.lineWidth = 2; ctx.globalAlpha = 0.45;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ARCHETYPE 9: SPOTLIGHT HALO GLOW (Luminous Aura Behind Hero Product)
+    function drawSpotlightHaloBackground(ctx, pal) {
+      ctx.save();
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      const haloGrad = ctx.createRadialGradient(540, 450, 40, 540, 450, 440);
+      haloGrad.addColorStop(0, pal.brightPop || pal.accent);
+      haloGrad.addColorStop(0.5, pal.bgSecondary);
+      haloGrad.addColorStop(1, "transparent");
+
+      ctx.fillStyle = haloGrad;
+      ctx.globalAlpha = 0.38;
+      ctx.beginPath(); ctx.arc(540, 450, 440, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+
+    // ARCHETYPE 10: TONAL OMBRÉ FADE (Seamless 3-Stop Vertical Gradient)
+    function drawOmbreFadeBackground(ctx, pal) {
+      ctx.save();
+      const omb = ctx.createLinearGradient(0, 0, 0, 1080);
+      omb.addColorStop(0, pal.bg);
+      omb.addColorStop(0.55, pal.bgSecondary);
+      omb.addColorStop(1, pal.accent2 || pal.accent);
+
+      ctx.fillStyle = omb;
+      ctx.fillRect(0, 0, 1080, 1080);
+      ctx.restore();
+    }
+
+    // ARCHETYPE 11: WAVY SCALLOPED SIDE RUNNER (Decorative Flank Edge)
+    function drawWavyRunnerBackground(ctx, pal) {
+      ctx.save();
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Wavy band running down the entire right flank
+      ctx.fillStyle = pal.bgSecondary;
+      ctx.beginPath();
+      ctx.moveTo(1080, 0); ctx.lineTo(880, 0);
+      for (let y = 0; y <= 1080; y += 120) {
+        ctx.quadraticCurveTo(830, y + 60, 880, y + 120);
+      }
+      ctx.lineTo(1080, 1080);
+      ctx.closePath();
+      ctx.fill();
+
+      // Scalloped accent line
+      ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.5; ctx.globalAlpha = 0.55;
+      ctx.beginPath();
+      ctx.moveTo(880, 0);
+      for (let y = 0; y <= 1080; y += 120) {
+        ctx.quadraticCurveTo(830, y + 60, 880, y + 120);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ARCHETYPE 12: CRAFT TERRAZZO SPECKLE (Natural Embedded Craft Flecks)
+    function drawTerrazzoBackground(ctx, pal) {
+      ctx.save();
+      ctx.fillStyle = pal.bgSecondary || "#EBF0EE";
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // 60 soft irregular geometric flecks in photo colors
+      const colors = [pal.accent, pal.brightPop, pal.text, pal.bg];
+      for (let i = 0; i < 60; i++) {
+        const x = (i * 179 + 45) % 1080;
+        const y = (i * 313 + 60) % 1080;
+        const sz = 4 + (i % 8);
+        const col = colors[i % colors.length];
+
+        ctx.fillStyle = col;
+        ctx.globalAlpha = 0.22;
+        ctx.beginPath();
+        if (i % 2 === 0) {
+          ctx.arc(x, y, sz, 0, Math.PI * 2);
+        } else {
+          ctx.roundRect(x, y, sz * 1.8, sz, 2);
+        }
+        ctx.fill();
+      }
       ctx.restore();
     }
 
@@ -2305,64 +2484,34 @@
       let activePal = { ...pal };
 
       if (mood === "rich_colored_base") {
-        // Real, noticeable background color depth (Sage Green, Terracotta, Dusty Denim)
         activePal.bg = `hsl(${pal.h}, 34%, 84%)`;
         activePal.bgSecondary = `hsl(${pal.h2}, 38%, 76%)`;
         activePal.text = `hsl(${pal.h}, 42%, 12%)`;
       } else if (mood === "high_contrast_split") {
-        // High-contrast clean ivory with a saturated 40% secondary accent block
         activePal.bg = "#FAF8F5";
         activePal.bgSecondary = `hsl(${pal.h2}, 44%, 74%)`;
       } else if (mood === "warm_monochrome") {
-        // Stepped tonal warmth
         activePal.bg = `hsl(${pal.h}, 26%, 90%)`;
         activePal.bgSecondary = `hsl(${pal.h}, 36%, 80%)`;
       }
 
       // =========================================================================
-      // LAYER 1: BASE TEXTURE RENDERING (Independent of shapes or scraps)
+      // 1. RENDER FROM 11 DISTINCT BACKGROUND ARCHITECTURES
       // =========================================================================
-      const bTex = conf.baseTexture || "clean_wash";
-      ctx.save();
-      if (bTex === "linen") {
-        drawLinenBackground(ctx, activePal);
-      } else if (bTex === "kraft") {
-        drawKraftBackground(ctx, activePal);
-      } else if (bTex === "grid") {
-        drawGridJournalBackground(ctx, activePal);
-      } else if (bTex === "splittone") {
-        drawSplitTwoToneBackground(ctx, activePal);
-      } else if (bTex === "stipple_matrix") {
-        ctx.fillStyle = activePal.bg; ctx.fillRect(0, 0, 1080, 1080);
-        ctx.fillStyle = "rgba(0,0,0,0.06)";
-        for (let x = 40; x < 1040; x += 40) {
-          for (let y = 40; y < 1040; y += 40) {
-            ctx.beginPath(); ctx.arc(x, y, 1.8, 0, Math.PI * 2); ctx.fill();
-          }
-        }
-      } else {
-        // Clean high-key luminous studio gradient
-        const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
-        bgGrad.addColorStop(0, "#FFFFFF");
-        bgGrad.addColorStop(0.55, activePal.bg);
-        bgGrad.addColorStop(1, activePal.bgSecondary);
-        ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, 1080, 1080);
-      }
-      ctx.restore();
+      const world = conf.bgWorld || "waves";
+      if (world === "waves") drawOrganicWavesBackground(ctx, activePal, hash);
+      else if (world === "niche") drawArchNicheBackground(ctx, activePal);
+      else if (world === "halo") drawSpotlightHaloBackground(ctx, activePal);
+      else if (world === "ombre") drawOmbreFadeBackground(ctx, activePal);
+      else if (world === "runner") drawWavyRunnerBackground(ctx, activePal);
+      else if (world === "terrazzo") drawTerrazzoBackground(ctx, activePal);
+      else if (world === "linen") drawLinenBackground(ctx, activePal);
+      else if (world === "kraft") drawKraftBackground(ctx, activePal);
+      else if (world === "grid") drawGridJournalBackground(ctx, activePal);
+      else if (world === "splittone") drawSplitTwoToneBackground(ctx, activePal);
+      else drawWatercolorBloomBackground(ctx, activePal, hash);
 
-      // =========================================================================
-      // LAYER 2: MACRO COLOR GEOMETRY (Large structural backdrop shapes)
-      // =========================================================================
-      const mShape = conf.macroShape || "corner_wave";
-      if (mShape === "corner_wave" || mShape === "dune_bands" || mShape === "diagonal_sweep") {
-        drawOrganicWavesBackground(ctx, activePal, hash);
-      } else if (mShape === "watercolor_bloom" || mShape === "amoeba_puddle") {
-        drawWatercolorBloomBackground(ctx, activePal, hash);
-      }
-
-      // =========================================================================
-      // LAYER 3: PHYSICAL PAPER SCRAP / BACKDROP ACCENT
-      // =========================================================================
+      // Layer 3 Physical Paper Scrap (Gingham, Binder Scrap, Star Lattice)
       const pScrap = conf.paperScrap || "none";
       if (pScrap !== "none") {
         ctx.save();
@@ -2839,10 +2988,8 @@
         let src = chosen4Variants[i - 1]?.canvas;
         if (!src || !src.width) src = fallbackImg;
 
-        // If a card has a manual color override, derive palette from that color; otherwise use photo
-        const cardPal = cardCustoms[i].colorOverride 
-          ? derivePaletteFromHex(cardCustoms[i].colorOverride) 
-          : defaultSampledPal;
+        // Resolve palette based on Card's Mode: Dual Accent, Tonal Monochrome, 3-Color Triad, or Manual Override
+        const cardPal = resolveCardPalette(cardCustoms[i], defaultSampledPal);
 
         renderCardWithStyle(c, src, cardCustoms[i].note, cardCustoms[i].val, cardPal, cardCustoms[i], i);
       }
