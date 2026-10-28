@@ -889,6 +889,10 @@
       const matOptions = ["floating", "polaroid", "floating", "notebook", "stacked_pin", "squircle", "gallery"];
       const shuffledMats = shuffleArray(matOptions);
 
+      // ALL 11 BACKGROUND WORLDS SHUFFLED AUTOMATICALLY (Zero Fixed Defaults!)
+      const all11Backgrounds = ["waves", "niche", "halo", "ombre", "runner", "terrazzo", "linen", "grid", "watercolor", "splittone", "kraft"];
+      const shuffledBgWorlds = shuffleArray(all11Backgrounds);
+
       // Badges & Fonts
       const badgeCatalog = ["sticky", "pill", "kraft", "ticket", "scribble", "ribbon", "scallop", "highlighter", "dark_pill", "hairline"];
       const fontCatalog = ["handwritten", "editorial", "playful", "modern_sans", "typewriter"];
@@ -916,6 +920,7 @@
         c.macroShape = shuffledMacro[i - 1];
         c.paperScrap = shuffledScraps[i - 1];
         c.archetype = shuffledMats[i - 1];
+        c.bgWorld = shuffledBgWorlds[i - 1]; // AUTOMATICALLY RANDOMIZED ACROSS ALL 11 WORLDS!
         c.badgeBg = shuffledBadges[i - 1];
         c.font = shuffledFonts[i - 1];
         c.layoutMode = shuffledLayouts[i - 1];
