@@ -35,11 +35,21 @@
       user-select: none;
     }
     .coverflow-card.pos-center {
-      transform: translateX(0) scale(1) translateZ(60px);
+      transform: translate3d(0, 0, 0) scale(1);
       z-index: 30;
       opacity: 1;
       filter: drop-shadow(0 25px 35px rgba(0,0,0,0.5));
       cursor: default;
+      will-change: transform;
+    }
+    .coverflow-card canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+      border-radius: 14px;
+      background-color: #1e293b;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: auto;
     }
     .coverflow-card.pos-left-1 {
       transform: translateX(-340px) scale(0.82) rotateY(24deg);
@@ -1134,6 +1144,8 @@
 
     function renderOutputCanvas() {
       if (!rawLoadedImage) return;
+      oCtx.imageSmoothingEnabled = true;
+      oCtx.imageSmoothingQuality = "high";
       oCtx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
       oCtx.drawImage(rawLoadedImage, 0, 0);
       
@@ -1366,7 +1378,8 @@
       const src = sourceCanvas || outputCanvas || rawLoadedImage;
       if (!src) return;
       const rawW = src.width || src.naturalWidth || 800, rawH = src.height || src.naturalHeight || 800;
-      const maxDim = 1080;
+      // High-density 1440px buffer prevents generational blur when passing into Step 3
+      const maxDim = 1440;
       const scale = Math.min(1, maxDim / Math.max(rawW, rawH));
       const w = Math.round(rawW * scale), h = Math.round(rawH * scale);
 
@@ -1392,6 +1405,8 @@
       configs.forEach((cfg, idx) => {
         const c = document.createElement('canvas'); c.width = w; c.height = h;
         const cx = c.getContext('2d');
+        cx.imageSmoothingEnabled = true;
+        cx.imageSmoothingQuality = "high";
         cx.fillStyle = "#ffffff"; cx.fillRect(0, 0, w, h);
         cx.save();
         cx.translate(w/2, h/2);
@@ -2479,6 +2494,8 @@
        ========================================================================== */
     function renderCardWithStyle(c, srcCanvas, note, val, pal, conf, cardNum) {
       const ctx = c.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       const font = getFontFamily(conf.font);
       const proc = conf.procedural || { seedRotation: 0, washiOffset: 0, bgPatternSeed: cardNum * 12345 };
       const hash = proc.bgPatternSeed;
